@@ -1,0 +1,187 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use Carbon\Carbon;
+use Dompdf\Dompdf;
+use App\Models\Divisi;
+use App\Models\Golongan;
+use App\Models\Kendaraan;
+use Illuminate\Http\Request;
+use App\Models\Jenis_kendaraan;
+use App\Http\Controllers\Controller;
+use App\Models\Gambar;
+use App\Models\Marketing;
+use App\Models\Merek;
+use App\Models\Modelken;
+use App\Models\Pelanggan;
+use App\Models\Spesifikasi;
+use App\Models\Spk;
+use App\Models\Tipe;
+use App\Models\Typekaroseri;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Mockery\Matcher\Type;
+
+class InquerySpkController extends Controller
+{
+    public function index(Request $request)
+    {
+        $status = $request->status;
+        $tanggal_awal = $request->tanggal_awal;
+        $tanggal_akhir = $request->tanggal_akhir;
+
+        $inquery = Spk::query();
+
+        if ($status) {
+            $inquery->where('status', $status);
+        }
+
+        if ($tanggal_awal && $tanggal_akhir) {
+            $inquery->whereBetween('tanggal_awal', [$tanggal_awal, $tanggal_akhir]);
+        } elseif ($tanggal_awal) {
+            $inquery->where('tanggal_awal', '>=', $tanggal_awal);
+        } elseif ($tanggal_akhir) {
+            $inquery->where('tanggal_awal', '<=', $tanggal_akhir);
+        } else {
+            // Jika tidak ada filter tanggal hari ini
+            $inquery->whereDate('tanggal_awal', Carbon::today());
+        }
+
+        $inquery->orderBy('id', 'DESC');
+        $inquery = $inquery->get();
+
+        return view('admin/inqueryspk.index', compact('inquery'));
+    }
+
+
+    public function show($id)
+    {
+        $pembelians = Spk::where('id', $id)->first();
+
+        $kendaraans = Kendaraan::where('spk_id', $pembelians->id)->first();
+        $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
+        $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
+
+        return view('admin.inqueryspk.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
+    }
+
+
+    public function edit($id)
+    {
+        $pembelian = Spk::where('id', $id)->first();
+        $kendaraan = Kendaraan::where('spk_id', $pembelian->id)->first();
+        $mereks = Merek::all();
+        $tipes = Tipe::all();
+        $modelkens = Modelken::all();
+        $pelanggans = Pelanggan::all();
+        $marketings = Marketing::all();
+        $typekaroseris = Typekaroseri::all();
+        return view('admin/inqueryspk.update', compact('typekaroseris', 'marketings', 'modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'kategori' => 'required',
+                'pelanggan_id' => 'required',
+                'typekaroseri_id' => 'required',
+                // 'marketing_id' => 'required',
+                'merek_id' => 'required',
+                'harga' => 'required',
+            ],
+            [
+                'kategori.required' => 'Pilih kategori',
+                'pelanggan_id.required' => 'Pilih pelanggan',
+                'typekaroseri_id.required' => 'Pilih karoseri',
+                // 'marketing_id.required' => 'Pilih marketing',
+                'merek_id.required' => 'Pilih merek',
+                'harga.required' => 'Masukkan harga',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return back()->withInput()->with('error', $errors);
+        }
+
+        $spk = Spk::findOrFail($id);
+
+        if ($request->gambar_npwp) {
+            Storage::disk('local')->delete('public/uploads/' . $spk->gambar_npwp);
+            $gambar = str_replace(' ', '', $request->gambar_npwp->getClientOriginalName());
+            $namaGambar = 'gambar_npwp/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_npwp->storeAs('public/uploads/', $namaGambar);
+        } else {
+            $namaGambar = $spk->gambar_npwp;
+        }
+
+
+        $pembelian = Spk::where('id', $id)->update(
+            [
+                'kategori' => $request->kategori,
+                'pelanggan_id' => $request->pelanggan_id,
+                'typekaroseri_id' => $request->typekaroseri_id,
+                'no_npwp' => $request->no_npwp,
+                'gambar_npwp' => $namaGambar,
+                'aksesoris' => $request->aksesoris,
+                'harga' => $request->harga,
+                'status' => 'posting',
+            ]
+        );
+
+        $kendaraan = Kendaraan::findOrFail($id);
+
+
+        Kendaraan::where('id', $id)->update(
+            [
+                'merek_id' => $request->merek_id,
+            ]
+        );
+
+        $pembelians = Spk::find($id);
+
+        $kendaraans = Kendaraan::where('spk_id', $pembelians->id)->first();
+        $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
+        $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
+
+
+        return view('admin.inqueryspk.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
+    }
+
+
+    public function unpost($id)
+    {
+        $ban = Spk::where('id', $id)->first();
+
+        $ban->update([
+            'status' => 'unpost'
+        ]);
+
+        return back()->with('success', 'Berhasil');
+    }
+
+    public function posting($id)
+    {
+        $ban = Spk::where('id', $id)->first();
+
+        $ban->update([
+            'status' => 'posting'
+        ]);
+
+        return back()->with('success', 'Berhasil');
+    }
+
+    public function destroy($id)
+    {
+        $ban = Spk::find($id);
+        $ban->detail_kendaraan()->delete();
+        $ban->delete();
+
+        return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Spk');
+    }
+}

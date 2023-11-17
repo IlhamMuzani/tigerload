@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+
+class Pengambilanbahan extends Model
+{
+    use HasFactory;
+
+    protected $fillable =
+    [
+        'kode_pengambilan',
+        'qrcode_pengambilan',
+        'spk_id',
+        'tanggal',
+        'tanggal_awal',
+        'tanggal_akhir',
+        'status',
+        'status_notif',
+
+    ];
+
+    public static function getId()
+    {
+        return $getId = DB::table('pengambilanbahans')->orderBy('id', 'DESC')->take(1)->get();
+    }
+
+    public function spk()
+    {
+        return $this->belongsTo(Spk::class);
+    }
+    
+    public function detail_pengambilan()
+    {
+        return $this->hasMany(Detailpengambilan::class);
+    }
+}
