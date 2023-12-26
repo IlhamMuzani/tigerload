@@ -313,7 +313,7 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Kode Barang</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Nama Barang</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Jumlah</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Qty</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Satuan</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Harga</td>
         </tr>

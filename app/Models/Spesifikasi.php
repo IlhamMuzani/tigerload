@@ -14,6 +14,7 @@ class Spesifikasi extends Model
         'typekaroseri_id',
         'penjualan_id',
         'barang_id',
+        'kode_barang',
         'nama',
         'jumlah',
         'harga',

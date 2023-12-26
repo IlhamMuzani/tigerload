@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <div class="mb-3 mt-4">
                                 <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
-                                    Pilih Spk
+                                    <i class="fas fa-plus mr-2"></i> Pilih Spk
                                 </button>
                             </div>
                             <div class="form-group" hidden>
@@ -120,7 +120,8 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Spesifikasi</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
                                         <th>Qty</th>
                                         <th>Harga</th>
                                     </tr>
@@ -136,7 +137,13 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="nama-0"
+                                                <input type="text" class="form-control" readonly id="kode_barang-0"
+                                                    name="kode_barang[]">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" readonly id="nama-0"
                                                     name="nama[]">
                                             </div>
                                         </td>
@@ -198,8 +205,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}" data-nama_barang="{{ $barang->nama_barang }}"
-                                        data-param="{{ $loop->index }}">
+                                    <tr data-barang_id="{{ $barang->id }}" data-kode_barang="{{ $barang->kode_barang }}"
+                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
                                         <td>{{ $barang->nama_barang }}</td>
@@ -309,10 +316,12 @@
         function getBarang(rowIndex) {
             var selectedRow = $('#example1 tbody tr:eq(' + rowIndex + ')');
             var barang_id = selectedRow.data('barang_id');
+            var kode_barang = selectedRow.data('kode_barang');
             var nama_barang = selectedRow.data('nama_barang');
 
             // Update the form fields for the active specification
             $('#barang_id-' + activeSpecificationIndex).val(barang_id);
+            $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
             $('#nama-' + activeSpecificationIndex).val(nama_barang);
 
             $('#tableBarang').modal('hide');
@@ -368,13 +377,16 @@
 
 
         function itemPembelian(urutan, key, value = null) {
-            var nama = '';
             var barang_id = '';
+            var nama = '';
+            var kode_barang = '';
             var jumlah = '';
             var harga = '';
 
             if (value !== null) {
+                barang_id = value.barang_id;
                 nama = value.nama;
+                kode_barang = value.kode_barang;
                 jumlah = value.jumlah;
                 harga = value.harga;
             }
@@ -391,22 +403,27 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // kode_barang 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + urutan +
+                '" name="kode_barang[]" value="' + kode_barang + '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
             // nama 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="nama-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + urutan +
                 '" name="nama[]" value="' + nama + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+
             // jumlah 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" id="jumlah-' + urutan +
                 '" name="jumlah[]" value="' + jumlah + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
@@ -415,8 +432,6 @@
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="number" class="form-control" id="harga-' + urutan +
                 '" name="harga[]" value="' + harga + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
@@ -432,12 +447,6 @@
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
-
-            if (value !== null) {
-                $('#nama-' + key).val(value.nama);
-                $('#jumlah-' + key).val(value.jumlah);
-                $('#harga-' + key).val(value.harga);
-            }
         }
     </script>
 @endsection

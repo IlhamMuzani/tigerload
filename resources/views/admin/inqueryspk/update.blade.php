@@ -97,7 +97,7 @@
                         <div class="mb-3">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModalpelanggan(this.value)">
-                                Pilih Pelanggan
+                                <i class="fas fa-plus mr-2"></i> Pilih Pelanggan
                             </button>
                         </div>
                         <label class="form-label" for="nama_pelanggan">Nama Pelanggan *</label>
@@ -118,8 +118,8 @@
                         </div>
                         <div class="form-group">
                             <label for="kode_pelanggan">Kode Pelanggan</label>
-                            <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan" readonly
-                                placeholder=""
+                            <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan"
+                                readonly placeholder=""
                                 value="{{ old('kode_pelanggan', $pembelian->pelanggan->kode_pelanggan) }}">
                         </div>
                         {{-- <div class="form-group">
@@ -152,7 +152,7 @@
                         <div class="mb-3">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModal(this.value)">
-                                Pilih Merek
+                                <i class="fas fa-plus mr-2"></i> Pilih Merek
                             </button>
                         </div>
                         <div class="mb-3" hidden>
@@ -190,7 +190,7 @@
                         <div class="mb-3 mt-4">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModalkaroseri(this.value)">
-                                Pilih Karoseri
+                                <i class="fas fa-plus mr-2"></i> Pilih Karoseri
                             </button>
                         </div>
 
@@ -846,8 +846,7 @@
             $('#tableKaroseri').modal('show');
         }
 
-        function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, Panjang, Lebar, Tinggi, Spesifikasi,
-            ) {
+        function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, Panjang, Lebar, Tinggi, Spesifikasi, ) {
             document.getElementById('karoseri_id').value = karoseri_id;
             document.getElementById('kode_type').value = kodeKaroseri;
             document.getElementById('nama_karoseri').value = namaKaroseri;

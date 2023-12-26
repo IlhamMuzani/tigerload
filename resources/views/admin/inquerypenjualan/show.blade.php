@@ -225,25 +225,25 @@
         <tr>
             <!-- First column (Nama PT) -->
             <td style="width: 50%;">
-                <div class="info-catatan" style="max-width: 230px;">
+                <div class="info-catatan" style="max-width: 240px;">
                     <table>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">CV. TIGER LOAD ENGINEERING</td>
+                            <td class="info-catatan2" style="font-size: 15px;">CV. TIGER LOAD ENGINEERING</td>
                             {{-- <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">Company Name</td> --}}
                         </tr>
                         <tr>
-                            <td class="info-text info-left" style="font-size: 13px;">Jl. Ahmad Yani No. 42,</td>
+                            <td class="info-text info-left" style="font-size: 15px;">Jl. Ahmad Yani No. 42,</td>
                             {{-- <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">Company Address</td> --}}
                         </tr>
                         <tr>
-                            <td class="info-text info-left" style="font-size: 13px;">Procot Slawi, Tegal 52411</td>
+                            <td class="info-text info-left" style="font-size: 15px;">Procot Slawi, Tegal 52411</td>
                             {{-- <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
                         </tr>
                         <tr>
-                            <td class="info-text info-left" style="font-size: 13px;">Telp, (0283) 4563746
+                            <td class="info-text info-left" style="font-size: 15px;">Telp, (0283) 4563746
                             </td>
                             {{-- <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
@@ -256,30 +256,30 @@
                 <div class="info-catatan">
                     <table>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Nama Pelanggan</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
+                            <td class="info-catatan2" style="font-size: 15px;">Nama Pelanggan</td>
+                            <td class="info-item" style="font-size: 15px;">:</td>
+                            <td class="info-text info-left" style="font-size: 15px;">
                                 {{ $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Alamat</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
+                            <td class="info-catatan2" style="font-size: 15px;">Alamat</td>
+                            <td class="info-item" style="font-size: 15px;">:</td>
+                            <td class="info-text info-left" style="font-size: 15px;">
                                 {{ $penjualans->depositpemesanan->spk->pelanggan->alamat }} </span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">Telp</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
+                            <td class="info-catatan2" style="font-size: 15px;">Telp</td>
+                            <td class="info-item" style="font-size: 15px;">:</td>
+                            <td class="info-text info-left" style="font-size: 15px;">
                                 {{ $penjualans->depositpemesanan->spk->pelanggan->telp }}
                             </td>
                         </tr>
                         <tr>
-                            <td class="info-catatan2" style="font-size: 13px;">ID Pelanggan</td>
-                            <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">
+                            <td class="info-catatan2" style="font-size: 15px;">ID Pelanggan</td>
+                            <td class="info-item" style="font-size: 15px;">:</td>
+                            <td class="info-text info-left" style="font-size: 15px;">
                                 {{ $penjualans->depositpemesanan->spk->pelanggan->kode_pelanggan }} </span>
                             </td>
                         </tr>
@@ -311,9 +311,10 @@
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Nama Barang</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Qty</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Harga</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Kode Barang</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Nama Barang</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Qty</td>
+            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Harga</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;"></td>
@@ -327,12 +328,18 @@
             <td class="td" style="text-align: center;  font-size: 15px;">1
             </td>
             <td class="info-text info-left" style="font-size: 15px; text-align: center;">
+            </td>
+            <td class="info-text info-left" style="font-size: 15px; text-align: left;">
                 {{ $penjualans->depositpemesanan->spk->typekaroseri->nama_karoseri }}
             </td>
-            <td class="td" style="text-align: center;  font-size: 15px;">
+            <td class="td" style="text-align: left;  font-size: 15px;">
                 1 </td>
-            <td class="td" style="text-align: center;  font-size: 15px;">Rp.
-                {{ number_format($penjualans->depositpemesanan->spk->harga, 0, ',', '.') }}
+            <td class="td" style="font-size: 15px; text-align: right;">
+                <span style="float: center;">Rp.</span>
+                <span style="float: right">
+                    {{ number_format($penjualans->depositpemesanan->spk->harga, 0, ',', '.') }}
+
+                </span>
             </td>
         </tr>
         @php
@@ -347,11 +354,16 @@
                     $startFrom++;
                 @endphp
                 <td class="td" style="text-align: center; padding: 2px;">
+                    {{ $item->kode_barang }}
+                </td>
+                <td class="td" style="text-align: left; padding: 2px;">
                     {{ $item->nama }}
                 </td>
-                <td class="td" style="text-align: center; padding: 2px;">{{ $item->jumlah }}</td>
-                <td class="td" style="text-align: center; padding: 2px;">Rp
-                    {{ number_format($item->harga, 0, ',', '.') }}
+                <td class="td" style="text-align: left; padding: 2px;">{{ $item->jumlah }}</td>
+                <td class="td" style="font-size: 15px; text-align: right;">
+                    <span style="float: center;">Rp.</span>
+                    <span style="float: right"> {{ number_format($item->harga, 0, ',', '.') }}
+                    </span>
                 </td>
             </tr>
             @php
@@ -360,27 +372,45 @@
         @endforeach
 
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;">
+            <td colspan="5" style="padding: 0px;">
             </td>
         </tr>
 
         <tr>
-            <td colspan="3" style="text-align: right; font-weight: bold; padding: 5px;">Sub Total</td>
-            <td class="td" style="text-align: center; font-weight: bold; padding: 5px;">Rp.
+            <td colspan="4" style="text-align: right; font-weight: bold; padding: 5px;">Sub Total</td>
+            {{-- <td class="td" style="text-align: right; font-weight: bold;">Rp.
                 {{ number_format($totalSubtotal, 0, ',', '.') }}
+            </td> --}}
+            <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
+                <span style="float: center;">Rp.</span>
+                <span style="float: right"> {{ number_format($totalSubtotal, 0, ',', '.') }}
+                </span>
             </td>
         </tr>
         <tr>
-            <td colspan="3" style="text-align: right; font-weight: bold; padding: 5px;">DP 1 (Tgl )</td>
-            <td class="td" style="text-align: center; font-weight: bold; padding: 5px;">Rp.
+            <td colspan="4" style="text-align: right; font-weight: bold; padding: 5px;">DP 1
+                ({{ $penjualans->depositpemesanan->tanggal }})</td>
+            {{-- <td class="td" style="text-align: right; font-weight: bold;">Rp.
                 <span
-                    style="text-decoration: underline">({{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }})</span>
+                    style="text-decoration: underline">{{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}</span>
+            </td> --}}
+            <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
+                <span style="float: center;">Rp.</span>
+                <span style="float: right; text-decoration: underline">
+                    {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}
+                </span>
             </td>
         </tr>
         <tr>
-            <td colspan="3" style="text-align: right; font-weight: bold; padding: 5px;">Total</td>
-            <td class="td" style="text-align: center; font-weight: bold; padding: 5px;">Rp.
+            <td colspan="4" style="text-align: right; font-weight: bold; padding: 5px;">Total</td>
+            {{-- <td class="td" style="text-align: right; font-weight: bold;">Rp.
                 {{ number_format($totalSubtotal - $penjualans->depositpemesanan->harga, 0, ',', '.') }}
+            </td> --}}
+            <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
+                <span style="float: center;">Rp.</span>
+                <span style="float: right;">
+                    {{ number_format($totalSubtotal - $penjualans->depositpemesanan->harga, 0, ',', '.') }}
+                </span>
             </td>
         </tr>
     </table>
@@ -390,7 +420,7 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                    <td class="label" style="min-height: 16px;">&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
@@ -403,7 +433,7 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
+                        <td class="label" style="min-height: 16px;">&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
@@ -416,7 +446,7 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
                     </tr>
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
@@ -429,6 +459,7 @@
         </tr>
     </table>
 </body>
+
 
 <div class="container">
     <a href="{{ url('admin/inquerypenjualan') }}" class="blue-button">Kembali</a>

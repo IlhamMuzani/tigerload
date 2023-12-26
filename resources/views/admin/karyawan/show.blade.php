@@ -33,14 +33,6 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-5">
-                        {{-- @if ($karyawan->gambar)
-                                <img src="{{ asset('storage/uploads/' . $karyawan->gambar) }}"
-                        class="w-100 rounded border">
-                        @else
-                        <img src="{{ asset('storage/uploads/karyawan/user.png') }}" class="w-100 rounded border">
-                        @endif --}}
-                        {{-- <img src="{{ asset('storage/uploads/' . $karyawan->gambar) }}"
-                        alt="{{ $karyawan->nama_lengkap }}" class="w-100 rounded"> --}}
                         @if ($karyawan->gambar)
                         <img src="{{ asset('storage/uploads/' . $karyawan->gambar) }}"
                             alt="{{ $karyawan->nama_lengkap }}" class="w-100 rounded border">

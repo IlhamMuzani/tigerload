@@ -53,7 +53,7 @@
                         <div class="card-body">
                             <div class="mb-3 mt-4">
                                 <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
-                                    Pilih Spk
+                                    <i class="fas fa-plus mr-2"></i> Pilih Spk
                                 </button>
                             </div>
                             <div class="form-group" hidden>
@@ -126,45 +126,59 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Spesifikasi</th>
-                                        <th>Jumlah</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Qty</th>
                                         <th>Harga</th>
+                                        <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-pembelian">
                                     @foreach ($details as $detail)
                                         <tr id="pembelian-{{ $loop->index }}">
-                                            <td style="width: 70px" class="text-center" id="urutan">{{ $loop->index + 1 }}</td>
-                                            <td hidden>
+                                            <td class="text-center" id="urutan">{{ $loop->index + 1 }}</td>
+                                            <td style="width: 240px">
+                                                <div class="form-group" hidden>
+                                                    <input type="text" class="form-control" id="id-0"
+                                                        name="detail_ids[]" value="{{ $detail['id'] }}">
+                                                </div>
+                                                <div class="form-group" hidden>
+                                                    <input type="text" class="form-control"
+                                                        id="barang_id-{{ $loop->index }}" name="barang_id[]"
+                                                        value="{{ $detail['barang_id'] }}">
+                                                </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="barang_id-0"
-                                                        name="barang_id[]">
+                                                    <input type="text" class="form-control" readonly
+                                                        id="kode_barang-{{ $loop->index }}" name="kode_barang[]"
+                                                        value="{{ $detail['kode_barang'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="nama-0"
-                                                        name="nama[]">
+                                                    <input type="text" class="form-control" readonly
+                                                        id="nama-{{ $loop->index }}" name="nama[]"
+                                                        value="{{ $detail['nama'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="jumlah-0"
-                                                        name="jumlah[]">
+                                                        name="jumlah[]" value="{{ $detail['jumlah'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control" id="harga-0"
-                                                        name="harga[]">
+                                                    <input type="text" class="form-control" id="harga-0"
+                                                        name="harga[]" value="{{ $detail['harga'] }}">
                                                 </div>
                                             </td>
                                             <td style="width: 120px">
-                                                <button type="button" class="btn btn-primary" onclick="barang(0)">
+                                                <button type="button" class="btn btn-primary"
+                                                    onclick="barang({{ $loop->index }})">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                                 <button style="margin-left:5px" type="button" class="btn btn-danger"
-                                                    onclick="removeBan(0)">
+                                                    onclick="removeBan({{ $loop->index }})">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -207,6 +221,7 @@
                             <tbody>
                                 @foreach ($barangs as $barang)
                                     <tr data-barang_id="{{ $barang->id }}"
+                                        data-kode_barang="{{ $barang->kode_barang }}"
                                         data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
@@ -317,10 +332,12 @@
         function getBarang(rowIndex) {
             var selectedRow = $('#example1 tbody tr:eq(' + rowIndex + ')');
             var barang_id = selectedRow.data('barang_id');
+            var kode_barang = selectedRow.data('kode_barang');
             var nama_barang = selectedRow.data('nama_barang');
 
             // Update the form fields for the active specification
             $('#barang_id-' + activeSpecificationIndex).val(barang_id);
+            $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
             $('#nama-' + activeSpecificationIndex).val(nama_barang);
 
             $('#tableBarang').modal('hide');
@@ -340,112 +357,130 @@
             });
         }
 
+        function updateUrutan() {
+            var urutan = document.querySelectorAll('#urutan');
+            for (let i = 0; i < urutan.length; i++) {
+                urutan[i].innerText = i + 1;
+            }
+        }
+
+        var counter = 0;
+
         function addPesanan() {
+            counter++;
             jumlah_ban = jumlah_ban + 1;
 
             if (jumlah_ban === 1) {
                 $('#tabel-pembelian').empty();
-            }
-
-            itemPembelian(jumlah_ban, jumlah_ban - 1);
-        }
-
-        function removeBan(params) {
-            jumlah_ban = jumlah_ban - 1;
-
-            console.log(jumlah_ban);
-
-            var tabel_pesanan = document.getElementById('tabel-pembelian');
-            var pembelian = document.getElementById('pembelian-' + params);
-
-            tabel_pesanan.removeChild(pembelian);
-
-            if (jumlah_ban === 0) {
-                var item_pembelian = '<tr>';
-                item_pembelian += '<td class="text-center" colspan="5">- Spesifikasi belum ditambahkan -</td>';
-                item_pembelian += '</tr>';
-                $('#tabel-pembelian').html(item_pembelian);
             } else {
-                var urutan = document.querySelectorAll('#urutan');
-                for (let i = 0; i < urutan.length; i++) {
-                    urutan[i].innerText = i + 1;
-                }
+                // Find the last row and get its index to continue the numbering
+                var lastRow = $('#tabel-pembelian tr:last');
+                var lastRowIndex = lastRow.find('#urutan').text();
+                jumlah_ban = parseInt(lastRowIndex) + 1;
             }
+
+            console.log('Current jumlah_ban:', jumlah_ban);
+            itemPembelian(jumlah_ban, jumlah_ban - 1);
+            updateUrutan();
         }
 
+        function removeBan(identifier) {
+            var row = $('#pembelian-' + identifier);
+            var detailId = row.find("input[name='detail_ids[]']").val();
 
+            row.remove();
 
-        function itemPembelian(urutan, key, value = null) {
-            var nama = '';
+            if (detailId) {
+                $.ajax({
+                    url: "{{ url('admin/ban/') }}/" + detailId,
+                    type: "POST",
+                    data: {
+                        _method: 'DELETE',
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log('Data deleted successfully');
+                    },
+                    error: function(error) {
+                        console.error('Failed to delete data:', error);
+                    }
+                });
+            }
+
+            updateUrutan();
+        }
+
+        function itemPembelian(identifier, key, value = null) {
             var barang_id = '';
+            var kode_barang = '';
+            var nama = '';
             var jumlah = '';
             var harga = '';
 
             if (value !== null) {
+                barang_id = value.barang_id;
                 nama = value.nama;
+                kode_barang = value.kode_barang;
                 jumlah = value.jumlah;
                 harga = value.harga;
             }
 
             // urutan 
-            var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
+            var item_pembelian = '<tr id="pembelian-' + key + '">';
+            item_pembelian += '<td class="text-center" id="urutan">' + key + '</td>';
 
             // barang_id 
             item_pembelian += '<td hidden>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + urutan +
+            item_pembelian += '<div class="form-group" >'
+            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + key +
                 '" name="barang_id[]" value="' + barang_id + '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            // kode_barang 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + key +
+                '" name="kode_barang[]" value="' + kode_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
             // nama 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="nama-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + key +
                 '" name="nama[]" value="' + nama + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-            // jumlah 
+
+            // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="jumlah-' + urutan +
+            item_pembelian += '<input type="text" class="form-control jumlah" id="jumlah-' + key +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
 
-            // harga 
+            // kode_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control" id="harga-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" id="harga-' + key +
                 '" name="harga[]" value="' + harga + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
             item_pembelian += '<td style="width: 120px">';
-            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
+            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + key + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
             item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
-                urutan + ')">';
+                key + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';
             item_pembelian += '</td>';
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
-
-            if (value !== null) {
-                $('#nama-' + key).val(value.nama);
-                $('#jumlah-' + key).val(value.jumlah);
-                $('#harga-' + key).val(value.harga);
-            }
         }
     </script>
 @endsection

@@ -102,7 +102,7 @@
                         <div class="mb-3">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModalpelanggan(this.value)">
-                                Pilih Pelanggan
+                                <i class="fas fa-plus mr-2"></i> Pilih Pelanggan
                             </button>
                         </div>
                         <label class="form-label" for="nama_pelanggan">Nama Pelanggan *</label>
@@ -155,7 +155,7 @@
                         <div class="mb-3">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModal(this.value)">
-                                Pilih Merek
+                                <i class="fas fa-plus mr-2"></i> Pilih Merek
                             </button>
                         </div>
                         <div class="mb-3" hidden>
@@ -171,8 +171,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="tipe">Type *</label>
-                            <input class="form-control @error('tipe') is-invalid @enderror" id="tipe"
-                                name="tipe" readonly type="text" placeholder="" value="{{ old('tipe') }}" />
+                            <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
+                                readonly type="text" placeholder="" value="{{ old('tipe') }}" />
                         </div>
                     </div>
                 </div>
@@ -185,7 +185,7 @@
                         <div class="mb-3 mt-4">
                             <button class="btn btn-primary btn-sm" type="button"
                                 onclick="showCategoryModalkaroseri(this.value)">
-                                Pilih Karoseri
+                                <i class="fas fa-plus mr-2"></i> Pilih Karoseri
                             </button>
                         </div>
 
@@ -247,7 +247,8 @@
                         </div>
                         <div class="form-group">
                             <label for="aksesoris">Aksesoris</label>
-                            <input type="text" class="form-control" name="aksesoris" value="{{ old('harga') }}" id="aksesoris" placeholder="">
+                            <input type="text" class="form-control" name="aksesoris" value="{{ old('harga') }}"
+                                id="aksesoris" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -729,8 +730,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="tipe_id">Nama Type *</label>
                             <div class="mb-3 d-flex">
-                                <select class="form-control" id="tipe_id" name="tipe_id"
-                                    style="margin-right: 10px;">
+                                <select class="form-control" id="tipe_id" name="tipe_id" style="margin-right: 10px;">
                                     <option value="">- Pilih -</option>
                                     @foreach ($tipes as $tipe)
                                         <option value="{{ $tipe->id }}"
@@ -766,8 +766,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/tipe') }}" method="POST" enctype="multipart/form-data"
-                    autocomplete="off">
+                <form action="{{ url('admin/tipe') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                     @csrf
                     <div class="card-body">
                         <div class="mb-3">

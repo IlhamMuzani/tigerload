@@ -12,7 +12,8 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/deposit_pemesanan') }}">Faktur Deposit Pemesanan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/deposit_pemesanan') }}">Faktur Deposit
+                                Pemesanan</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -42,10 +43,9 @@
                         <h3 class="card-title">Tambah</h3>
                     </div>
                     <div class="card-body">
-
                         <div class="mb-3 mt-4">
                             <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
-                                Pilih Spk
+                                <i class="fas fa-plus mr-2"></i> Pilih Spk
                             </button>
                         </div>
                         <div class="form-group" hidden>

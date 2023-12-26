@@ -155,6 +155,79 @@ class PopembelianController extends Controller
         return $kode_pembelian_part;
     }
 
+    public function tambah_supplier(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama_supp' => 'required',
+                'alamat' => 'required',
+                // 'nama_person' => 'required',
+                // 'jabatan' => 'required',
+                // 'fax' => 'required',
+                // 'telp' => 'required',
+                // 'hp' => 'required',
+                // 'email' => 'required',
+                // 'npwp' => 'required',
+                // 'nama_bank' => 'required',
+                // 'atas_nama' => 'required',
+                // 'norek' => 'required',
+            ],
+            [
+                'nama_supp.required' => 'Masukkan nama supplier',
+                'alamat.required' => 'Masukkan Alamat',
+                // 'nama_person.required' => 'Masukkan nama',
+                // 'jabatan.required' => 'Masukkan jabatan',
+                // 'telp.required' => 'Masukkan no telepon',
+                // 'fax.required' => 'Masukkan no fax',
+                // 'hp.required' => 'Masukkan no hp',
+                // 'email.required' => 'Masukkan email',
+                // 'npwp.required' => 'Masukkan no npwp',
+                // 'nama_bank.required' => 'Masukkan nama bank',
+                // 'atas_nama.required' => 'Masukkan atas nama',
+                // 'norek.required' => 'Masukkan no rekening',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return back()->withInput()->with('error_pelanggans', $errors);
+        }
+
+
+        $kode_supp = $this->kode_supp();
+
+        Supplier::create(array_merge(
+            $request->all(),
+            [
+                'kode_supplier' => $this->kode_supp(),
+                'qrcode_supplier' => 'https://javaline.id/supplier/' . $kode_supp,
+                'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+                // 'qrcode_supplier' => 'http://192.168.1.46/javaline/supplier/' . $kode
+            ]
+        ));
+
+        return back()->with('success', 'Berhasil menambahkan supplier');
+    }
+
+    public function kode_supp()
+    {
+        $supplier = Supplier::all();
+        if ($supplier->isEmpty()) {
+            $num = "000001";
+        } else {
+            $id = Supplier::getId();
+            foreach ($id as $value);
+            $idlm = $value->id;
+            $idbr = $idlm + 1;
+            $num = sprintf("%06s", $idbr);
+        }
+
+        $data = 'AC';
+        $kode_supplier = $data . $num;
+        return $kode_supplier;
+    }
+
 
     public function show($id)
     {

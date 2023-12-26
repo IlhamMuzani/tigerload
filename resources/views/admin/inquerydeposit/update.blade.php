@@ -35,8 +35,8 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/inquery_deposit/' . $deposits->id) }}" method="POST"
-                enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/inquery_deposit/' . $deposits->id) }}" method="POST" enctype="multipart/form-data"
+                autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -47,7 +47,7 @@
 
                         <div class="mb-3 mt-4">
                             <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
-                                Pilih Spk
+                                <i class="fas fa-plus mr-2"></i> Pilih Spk
                             </button>
                         </div>
                         <div class="form-group" hidden>

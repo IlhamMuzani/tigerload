@@ -70,7 +70,7 @@
                                 </td>
                                 <td>
                                     @if ($kendaraan->merek)
-                                        {{ $kendaraan->merek->modelken->nama_model }}
+                                        {{ $kendaraan->merek->tipe->nama_tipe }}
                                     @else
                                         data tidak ada
                                     @endif

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Perbarui Pembelian Ban')
+@section('title', 'Perbarui Pengambilan')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -58,8 +58,10 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="spk_id">Nomor SPK</label>
-                            <select class="custom-select form-control" id="spk_id" name="spk_id" onchange="getData(0)">
-                                <option value="">- Pilih Nomor SPK -</option>
+                            <select class="select2bs4 select2-hidden-accessible" name="spk_id" onchange="getData(0)"
+                                data-placeholder="Cari SPK.." style="width: 100%;" tabindex="-1" aria-hidden="true"
+                                id="spk_id">
+                                <option value="">- Pilih -</option>
                                 @foreach ($spks as $spk)
                                     <option value="{{ $spk->id }}"
                                         {{ old('spk_id', $inquery->spk_id) == $spk->id ? 'selected' : '' }}>
@@ -84,7 +86,6 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
-                                    <th>id</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Qty</th>
@@ -100,21 +101,22 @@
                                                 <input type="text" class="form-control" id="id-0"
                                                     name="detail_ids[]" value="{{ $detail['id'] }}">
                                             </div>
+                                            <div class="form-group" hidden>
+                                                <input type="text" class="form-control"
+                                                    id="barang_id-{{ $loop->index }}" name="barang_id[]"
+                                                    value="{{ $detail['barang_id'] }}">
+                                            </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="barang_id-0"
-                                                    name="barang_id[]" value="{{ $detail['barang_id'] }}">
+                                                <input type="text" class="form-control" readonly
+                                                    id="kode_barang-{{ $loop->index }}" name="kode_barang[]"
+                                                    value="{{ $detail['kode_barang'] }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" readonly id="kode_barang-0"
-                                                    name="kode_barang[]" value="{{ $detail['kode_barang'] }}">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" readonly id="nama_barang-0"
-                                                    name="nama_barang[]" value="{{ $detail['nama_barang'] }}">
+                                                <input type="text" class="form-control" readonly
+                                                    id="nama_barang-{{ $loop->index }}" name="nama_barang[]"
+                                                    value="{{ $detail['nama_barang'] }}">
                                             </div>
                                         </td>
                                         <td>
@@ -124,11 +126,12 @@
                                             </div>
                                         </td>
                                         <td style="width: 120px">
-                                            <button type="button" class="btn btn-primary" onclick="barang(0)">
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="barang({{ $loop->index }})">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                             <button style="margin-left:5px" type="button" class="btn btn-danger"
-                                                onclick="removeBan(0)">
+                                                onclick="removeBan({{ $loop->index }})">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </td>
@@ -242,32 +245,40 @@
 
             if (jumlah_ban === 1) {
                 $('#tabel-pembelian').empty();
+            } else {
+                // Find the last row and get its index to continue the numbering
+                var lastRow = $('#tabel-pembelian tr:last');
+                var lastRowIndex = lastRow.find('#urutan').text();
+                jumlah_ban = parseInt(lastRowIndex) + 1;
             }
 
+            console.log('Current jumlah_ban:', jumlah_ban);
             itemPembelian(jumlah_ban, jumlah_ban - 1);
-
             updateUrutan();
         }
 
+        function removeBan(identifier) {
+            var row = $('#pembelian-' + identifier);
+            var detailId = row.find("input[name='detail_ids[]']").val();
 
-        function removeBan(identifier, detailId) {
-            var row = document.getElementById('pembelian-' + identifier);
             row.remove();
 
-            $.ajax({
-                url: "{{ url('admin/ban/') }}/" + detailId,
-                type: "POST",
-                data: {
-                    _method: 'DELETE',
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    console.log('Data deleted successfully');
-                },
-                error: function(error) {
-                    console.error('Failed to delete data:', error);
-                }
-            });
+            if (detailId) {
+                $.ajax({
+                    url: "{{ url('admin/ban/') }}/" + detailId,
+                    type: "POST",
+                    data: {
+                        _method: 'DELETE',
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log('Data deleted successfully');
+                    },
+                    error: function(error) {
+                        console.error('Failed to delete data:', error);
+                    }
+                });
+            }
 
             updateUrutan();
         }
@@ -286,11 +297,11 @@
             }
 
             // urutan 
-            var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td class="text-center" id="urutan">' + urutan + '</td>';
+            var item_pembelian = '<tr id="pembelian-' + key + '">';
+            item_pembelian += '<td class="text-center" id="urutan">' + key + '</td>';
 
             // barang_id 
-            item_pembelian += '<td>';
+            item_pembelian += '<td hidden>';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" id="barang_id-' + key +
                 '" name="barang_id[]" value="' + barang_id + '" ';
@@ -326,7 +337,7 @@
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
             item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
-                urutan + ')">';
+                key + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';
             item_pembelian += '</td>';

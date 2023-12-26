@@ -105,7 +105,6 @@ class InqueryPenjualanController extends Controller
             for ($i = 0; $i < count($request->barang_id); $i++) {
                 $validasi_produk = Validator::make($request->all(), [
                     'barang_id.' . $i => 'required',
-                    'kode_barang.' . $i => 'required',
                     'nama.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
@@ -117,7 +116,6 @@ class InqueryPenjualanController extends Controller
 
 
                 $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-                $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
                 $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
@@ -125,7 +123,6 @@ class InqueryPenjualanController extends Controller
                 $data_pembelians->push([
                     'detail_id' => $request->detail_ids[$i] ?? null,
                     'barang_id' => $barang_id,
-                    'kode_barang' => $kode_barang,
                     'nama' => $nama,
                     'jumlah' => $jumlah,
                     'harga' => $harga
@@ -166,7 +163,6 @@ class InqueryPenjualanController extends Controller
                 Spesifikasi::where('id', $detailId)->update([
                     'penjualan_id' => $transaksi->id,
                     'barang_id' => $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
                     'nama' => $data_pesanan['nama'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
@@ -174,14 +170,13 @@ class InqueryPenjualanController extends Controller
             } else {
                 $existingDetail = Spesifikasi::where([
                     'penjualan_id' => $transaksi->id,
-                    'barang_id' => $data_pesanan['barang_id'],
+                    'nama' => $data_pesanan['nama'],
                 ])->first();
 
                 if (!$existingDetail) {
                     Spesifikasi::create([
                         'penjualan_id' => $transaksi->id,
                         'barang_id' => $data_pesanan['barang_id'],
-                        'kode_barang' => $data_pesanan['kode_barang'],
                         'nama' => $data_pesanan['nama'],
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => $data_pesanan['harga'],

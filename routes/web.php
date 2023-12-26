@@ -69,6 +69,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('pembelian/supplier/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'supplier']);
     Route::get('inquery_pembelian', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'index']);
     Route::get('inquery_pelunasan', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'index']);
+    Route::post('tambah_supplier', [\App\Http\Controllers\Admin\PopembelianController::class, 'tambah_supplier']);
 
     Route::get('laporan_deposit', [\App\Http\Controllers\Admin\LaporanDepositController::class, 'index']);
     Route::get('laporan_pelunasan', [\App\Http\Controllers\Admin\LaporanPelunasanController::class, 'index']);

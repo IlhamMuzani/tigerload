@@ -130,7 +130,7 @@
             </td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Satuan
             </td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Jumlah
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Total
             </td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
@@ -162,10 +162,10 @@
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="5"
+            <td colspan="6"
                 style="text-align: right; font-weight: bold; padding: 5px; font-size: 15px; border: 1px solid black;">
                 Sub Total</td>
             <td class="td"

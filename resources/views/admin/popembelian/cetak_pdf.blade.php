@@ -107,15 +107,19 @@
     <div style="display: flex; justify-content: left; align-items: left; margin-top:30px">
         <table style="text-align: letf;">
             <tr>
-                <td style="font-size: 15px; font-weight: lighter;"> Dengan ini CV. Tiger Load engineering bermaksud untuk memesan barang dengan spesifikasi berikut :</td>
+                <td style="font-size: 15px; font-weight: lighter;"> Dengan ini CV. Tiger Load engineering bermaksud
+                    untuk memesan barang dengan spesifikasi berikut :</td>
             </tr>
         </table>
     </div>
 
-    <table style="width: 100%; border-collapse: collapse; margin-top:10px" cellpadding="2" cellspacing="0" border="1">
+    <table style="width: 100%; border-collapse: collapse; margin-top:10px" cellpadding="2" cellspacing="0"
+        border="1">
         <tr>
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">No.
             </td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">kode
+                Barang</td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Nama
                 Barang</td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Harga
@@ -124,11 +128,11 @@
             </td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Satuan
             </td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Jumlah
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Total
             </td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         @php
             $grandTotal = 0;
@@ -137,6 +141,8 @@
             <tr>
                 <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
                     {{ $loop->iteration }}</td>
+                <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
+                    {{ $item->kode_barang }}</td>
                 <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
                     {{ $item->nama_barang }}</td>
                 <td class="info-text info-left" style="font-size: 15px; text-align: left; border: 1px solid black;">
@@ -154,10 +160,10 @@
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="5"
+            <td colspan="6"
                 style="text-align: right; font-weight: bold; padding: 5px; font-size: 15px; border: 1px solid black;">
                 Sub Total</td>
             <td class="td"
