@@ -50,10 +50,10 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
 
-        <div class="preloader flex-column justify-content-center align-items-center">
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
             <img class="" src="{{ asset('storage/uploads/gambar_logo/login.png') }}" alt="Tigerload"
                 height="150" width="300">
-        </div>
+        </div> --}}
 
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -69,9 +69,8 @@
           </h4>
         </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
-                    <img class="animation__wobble" src="{{ asset('storage/uploads/gambar_logo/login2.png') }}"
+                    <img  src="{{ asset('storage/uploads/gambar_logo/login2.png') }}"
                         alt="Tigerload" height="40" width="170">
-                    {{-- <a href="#" class="nav-link">Sistem - Tigerload</a> --}}
                 </li>
             </ul>
         </nav>
