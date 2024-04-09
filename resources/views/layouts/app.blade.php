@@ -49,12 +49,6 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-
-        {{-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="" src="{{ asset('storage/uploads/gambar_logo/login.png') }}" alt="Tigerload"
-                height="150" width="300">
-        </div> --}}
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
@@ -63,14 +57,9 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
                             class="fas fa-bars"></i></a>
                 </li>
-                {{-- <li class="nav-item d-none d-sm-inline-block">
-          <h4 class="nav-link">
-            <span class="font-weight-bold">Selamat Datang di Sistem Java Snack</span>
-          </h4>
-        </li> --}}
                 <li class="nav-item d-none d-sm-inline-block">
-                    <img  src="{{ asset('storage/uploads/gambar_logo/login2.png') }}"
-                        alt="Tigerload" height="40" width="170">
+                    <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" alt="Tigerload" height="40"
+                        width="170">
                 </li>
             </ul>
         </nav>
@@ -85,12 +74,7 @@
                 <span style="font-size: 18px"
                     class="brand-text font-wight-bold">{{ auth()->user()->karyawan->nama_lengkap }}</span>
             </a>
-
-            <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-
-
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
