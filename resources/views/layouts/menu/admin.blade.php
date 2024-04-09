@@ -22,7 +22,7 @@
 
     </a>
     <ul class="nav nav-treeview">
-        @if (auth()->check() && auth()->user()->menu['karyawan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['karyawan'])
             <li class="nav-item">
                 <a href="{{ url('admin/karyawan') }}"
                     class="nav-link {{ request()->is('admin/karyawan*') ? 'active' : '' }}">
@@ -30,7 +30,7 @@
                     <p style="font-size: 14px;">Data Karyawan</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['user'])
             <li class="nav-item">
                 <a href="{{ url('admin/user') }}" class="nav-link {{ request()->is('admin/user*') ? 'active' : '' }}">
