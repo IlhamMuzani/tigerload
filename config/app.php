@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Livewire\LivewireServiceProvider::class,
 
     ])->toArray(),
 

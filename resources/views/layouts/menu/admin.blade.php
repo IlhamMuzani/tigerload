@@ -342,6 +342,7 @@
                 </a>
             </li>
         @endif
+        <p>test</p>
     </ul>
 </li>
 <li class="nav-header">Profile</li>
