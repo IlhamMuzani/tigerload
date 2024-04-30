@@ -17,6 +17,7 @@ class Pembelian extends Model
         'kode_pembelian',
         'qrcode_pembelian',
         'supplier_id',
+        'grand_total',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',

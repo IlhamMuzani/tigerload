@@ -167,11 +167,11 @@
                                 name="nama_merek" readonly type="text" placeholder=""
                                 value="{{ old('nama_merek') }}" />
                         </div>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label class="form-label" for="model">Model *</label>
                             <input class="form-control @error('model') is-invalid @enderror" id="model"
                                 name="model" readonly type="text" placeholder="" value="{{ old('model') }}" />
-                        </div>
+                        </div> --}}
                         <div class="mb-3">
                             <label class="form-label" for="tipe">Tipe *</label>
                             <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
@@ -283,7 +283,7 @@
                                     <th class="text-center">No</th>
                                     <th>Kode Merek</th>
                                     <th>Merek</th>
-                                    <th>Model</th>
+                                    {{-- <th>Model</th> --}}
                                     <th>Type</th>
                                     <th>Opsi</th>
                                 </tr>
@@ -294,11 +294,11 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $merek->kode_merek }}</td>
                                         <td>{{ $merek->nama_merek }}</td>
-                                        <td>{{ $merek->modelken->nama_model }}</td>
+                                        {{-- <td>{{ $merek->modelken->nama_model }}</td> --}}
                                         <td>{{ $merek->tipe->nama_tipe }}</td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
-                                                onclick="getSelectedData('{{ $merek->id }}', '{{ $merek->nama_merek }}', '{{ $merek->modelken->nama_model }}', '{{ $merek->tipe->nama_tipe }}')">
+                                                onclick="getSelectedData('{{ $merek->id }}', '{{ $merek->nama_merek }}', '{{ $merek->tipe->nama_tipe }}')">
                                                 <i class="fas fa-plus"></i>
                                             </button>
 
@@ -416,7 +416,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modal-model">
+        {{-- <div class="modal fade" id="modal-model">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -447,7 +447,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         <script>
@@ -455,11 +455,11 @@
                 $('#tableKategori').modal('show');
             }
 
-            function getSelectedData(merek_id, namaMerek, namaModel, namaTipe) {
+            function getSelectedData(merek_id, namaMerek, namaTipe) {
                 // Set the values in the form fields
                 document.getElementById('merek_id').value = merek_id;
                 document.getElementById('nama_merek').value = namaMerek;
-                document.getElementById('model').value = namaModel;
+                // document.getElementById('model').value = namaModel;
                 document.getElementById('tipe').value = namaTipe;
 
                 // Close the modal (if needed)

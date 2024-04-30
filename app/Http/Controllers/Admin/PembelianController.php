@@ -180,6 +180,7 @@ class PembelianController extends Controller
             'supplier_id' => $request->supplier_id,
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,
+            'grand_total' => str_replace(',', '.', str_replace('.', '', $request->grand_total)),
             'status' => 'posting',
             'status_notif' => false,
         ]);

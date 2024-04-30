@@ -237,6 +237,24 @@
             })
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#datatables66').DataTable({
+                "lengthMenu": [
+                    [-1],
+                    ["All"]
+                ] // Use -1 to display all rows, and "All" as the label
+            });
+        });
+
+        $(document).ready(function() {
+            $('#datatables').DataTable();
+        });
+        $(document).ready(function() {
+            $('#datatables1').DataTable();
+        });
+    </script>
 </body>
 
 </html>

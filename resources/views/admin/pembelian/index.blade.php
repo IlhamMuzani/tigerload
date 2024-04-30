@@ -171,6 +171,12 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="form-group">
+                            <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
+                            <input style="font-size:14px" type="text" class="form-control text-right"
+                                id="grand_total" name="grand_total" readonly placeholder=""
+                                value="{{ old('grand_total') }}">
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <button type="reset" class="btn btn-secondary">Reset</button>
@@ -475,6 +481,7 @@
                     urutan[i].innerText = i + 1;
                 }
             }
+            updateGrandTotal()
         }
 
         function itemPembelian(urutan, key, value = null) {
@@ -572,5 +579,28 @@
                 $('#harga-' + key).val(value.harga);
             }
         }
+    </script>
+
+    <script>
+        function updateGrandTotal() {
+            var grandTotal = 0;
+            // Loop through all elements with name "harga[]"
+            $('input[name^="harga"]').each(function() {
+                var nominalValue = parseFloat($(this).val()) || 0;
+                grandTotal += nominalValue;
+            });
+
+            $('#grand_total').val(grandTotal.toLocaleString(
+                'id-ID'));
+        }
+
+        $('body').on('input', 'input[name^="harga"]', function() {
+            updateGrandTotal();
+        });
+
+        // Panggil fungsi saat halaman dimuat untuk menginisialisasi grand total
+        $(document).ready(function() {
+            updateGrandTotal();
+        });
     </script>
 @endsection
