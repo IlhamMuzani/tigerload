@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -19,6 +22,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    use HasFactory;
+    use LogsActivity;
     protected $fillable = [
         'karyawan_id',
         'kode_user',
@@ -71,7 +76,7 @@ class User extends Authenticatable
         }
         return false;
     }
-
+    
     public function isOwner()
     {
         if ($this->level == 'owner') {
@@ -79,12 +84,21 @@ class User extends Authenticatable
         }
         return false;
     }
-
+    
     public function karyawan()
     {
         return $this->belongsTo(Karyawan::class);
     }
+    
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
+    
     public function kendaraan()
     {
         return $this->hasMany(Kendaraan::class);

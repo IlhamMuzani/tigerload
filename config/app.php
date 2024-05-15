@@ -171,6 +171,7 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Livewire\LivewireServiceProvider::class,
+        Spatie\Activitylog\ActivitylogServiceProvider::class,
 
     ])->toArray(),
 

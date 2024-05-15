@@ -34,7 +34,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('mereks', [\App\Http\Controllers\Admin\KendaraanController::class, 'merek']);
     Route::post('marketings', [\App\Http\Controllers\Admin\KomisiController::class, 'tambah_marketing']);
     Route::get('penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenjualanController::class, 'cetakpdf']);
-    Route::get('pelunasan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'cetakpdf']);
+    Route::get('pelunasan_penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'cetakpdf']);
     Route::get('unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan'])->name('unpostpenjualan');
     Route::get('postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan'])->name('postingpenjualan');
     Route::get('print_laporanpenjualan', [\App\Http\Controllers\Admin\LaporanPenjualanController::class, 'print_laporanpenjualan']);
@@ -47,10 +47,17 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('deposit_pemesanan/spk/{id}', [\App\Http\Controllers\Admin\DepositpemesananController::class, 'spk']);
     Route::resource('supplier', \App\Http\Controllers\Admin\SupplierController::class);
     Route::get('spk/cetak-pdf/{id}', [\App\Http\Controllers\Admin\SpkController::class, 'cetakpdf']);
+    Route::get('surat_penawaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\SuratPenawaranController::class, 'cetakpdf']);
     Route::get('deposit_pemesanan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\DepositpemesananController::class, 'cetakpdf']);
     // Route::resource('sparepart', \App\Http\Controllers\Admin\SparepartController::class);
     Route::get('unpost/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'unpost'])->name('unpost');
     Route::get('posting/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'posting'])->name('posting');
+    Route::get('laporan_slipgaji', [\App\Http\Controllers\Admin\LaporanSlipgajiController::class, 'index']);
+    Route::get('print_slipgaji', [\App\Http\Controllers\Admin\LaporanSlipgajiController::class, 'print_slipgaji']);
+    Route::resource('laporan_slipgaji', \App\Http\Controllers\Admin\LaporanSlipgajiController::class);
+
+    Route::get('unpostpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'unpostpenawaran'])->name('unpostpenawaran');
+    Route::get('postingpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'postingpenawaran'])->name('postingpenawaran');
     Route::get('unpostdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'unpostdeposit'])->name('unpostdeposit');
     Route::get('postingdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'postingdeposit'])->name('postingdeposit');
     Route::get('print_laporanspk', [\App\Http\Controllers\Admin\LaporanSpkController::class, 'print_laporanspk']);
@@ -59,6 +66,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_pembelian', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'index']);
     Route::get('inquery_pelunasan', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'index']);
     Route::post('tambah_supplier', [\App\Http\Controllers\Admin\PopembelianController::class, 'tambah_supplier']);
+    Route::get('inquery_slipgaji', [\App\Http\Controllers\Admin\InqueryslipgajiController::class, 'index']);
 
     Route::get('laporan_deposit', [\App\Http\Controllers\Admin\LaporanDepositController::class, 'index']);
     Route::get('laporan_pelunasan', [\App\Http\Controllers\Admin\LaporanPelunasanController::class, 'index']);
@@ -98,8 +106,62 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('hapuspelunasapembeliann/{id}', [\App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class, 'hapuspelunasanpembelian'])->name('hapuspelunasanpembelian');
     Route::get('laporan_fakturpelunasanpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'index']);
 
-    Route::resource('pelunasan', \App\Http\Controllers\Admin\PelunasanController::class);
+    Route::get('inquery_penerimaankaskecil/unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan']);
+    Route::get('inquery_penerimaankaskecil/postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan']);
+
+    Route::get('unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan'])->name('unpostpenerimaan');
+    Route::get('postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan'])->name('postingpenerimaan');
+    Route::get('hapuspenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'hapuspenerimaan'])->name('hapuspenerimaan');
+    Route::get('perhitungan_gaji/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PerhitungangajiController::class, 'cetakpdf']);
+    Route::get('perhitungan_gajibulanan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PerhitungangajibulananController::class, 'cetakpdf']);
+    Route::delete('inquery_perhitungangaji/deletedetailperhitungangaji/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajiController::class, 'deletedetailperhitungangaji']);
+    Route::delete('inquery_perhitungangajibulanan/deletedetailperhitungan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class, 'deletedetailperhitungan']);
+    Route::get('inquery_perhitungangaji/unpostperhitungan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajiController::class, 'unpostperhitungan']);
+    Route::get('inquery_perhitungangaji/postingperhitungan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajiController::class, 'postingperhitungan']);
+    Route::get('hapusperhitungan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajiController::class, 'hapusperhitungan'])->name('hapusperhitungan');
+    Route::get('inquery_perhitungangajibulanan/unpostperhitunganbulanan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class, 'unpostperhitunganbulanan']);
+    Route::get('inquery_perhitungangajibulanan/postingperhitunganbulanan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class, 'postingperhitunganbulanan']);
+    Route::get('hapusperhitunganbulanan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class, 'hapusperhitunganbulanan'])->name('hapusperhitunganbulanan');
+    Route::get('kasbon_karyawan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\KasbonkaryawanController::class, 'cetakpdf']);
+    Route::get('inquery_kasbonkaryawan/unpostkasbon/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'unpostkasbon']);
+    Route::get('inquery_kasbonkaryawan/postingkasbon/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'postingkasbon']);
+    Route::delete('inquery_kasbonkaryawan/deletedetailcicilan/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'deletedetailcicilan']);
+    Route::get('hapuskasbon/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'hapuskasbon'])->name('hapuskasbon');
+
+    Route::get('inquery_pengeluarankaskecil/unpostpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'unpostpengeluaran']);
+    Route::get('inquery_pengeluarankaskecil/postingpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'postingpengeluaran']);
+    Route::get('laporan_pengeluarankaskecil', [\App\Http\Controllers\Admin\LaporanPengeluarankaskecilController::class, 'index']);
+    Route::get('print_pengeluarankaskecil', [\App\Http\Controllers\Admin\LaporanPengeluarankaskecilController::class, 'print_pengeluarankaskecil']);
+    Route::get('laporan_pengeluarankaskecilakun', [\App\Http\Controllers\Admin\LaporanPengeluarankaskecilakunController::class, 'index']);
+    Route::get('print_pengeluarankaskecilakun', [\App\Http\Controllers\Admin\LaporanPengeluarankaskecilakunController::class, 'print_pengeluarankaskecilakun']);
+    Route::get('unpostpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'unpostpengeluaran'])->name('unpostpengeluaran');
+    Route::get('postingpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'postingpengeluaran'])->name('postingpengeluaran');
+    Route::get('hapuspengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'hapuspengeluaran'])->name('hapuspengeluaran');
+    Route::get('pengeluaran_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengeluarankaskecilController::class, 'cetakpdf']);
+    Route::delete('inquery_pengeluarankaskecil/deletedetailpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'deletedetailpengeluaran']);
+    Route::get('postingpengeluaranfilter', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'postingpengeluaranfilter']);
+    Route::get('unpostpengeluaranfilter', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'unpostpengeluaranfilter']);
+    // Route::get('cetak_pengeluaranfilter', [\App\Http\Controllers\Admin\InqueryMemoekspedisiController::class, 'cetak_pengeluaranfilter']);
+    Route::get('laporan_saldokas', [\App\Http\Controllers\Admin\LaporanSaldokasController::class, 'index']);
+    Route::get('print_saldokas', [\App\Http\Controllers\Admin\LaporanSaldokasController::class, 'print_saldokas']);
+    Route::get('laporan_penerimaankaskecil', [\App\Http\Controllers\Admin\LaporanPenerimaankaskecilController::class, 'index']);
+    Route::get('print_penerimaankaskecil', [\App\Http\Controllers\Admin\LaporanPenerimaankaskecilController::class, 'print_penerimaankaskecil']);
+    Route::resource('laporan_kasbonkaryawan', \App\Http\Controllers\Admin\LaporanKasbonkaryawanController::class);
+    Route::get('print_kasbonkaryawan', [\App\Http\Controllers\Admin\LaporanKasbonkaryawanController::class, 'print_kasbonkaryawan']);
+
+    Route::get('laporan_perhitungangaji', [\App\Http\Controllers\Admin\LaporanPerhitungangajiController::class, 'index']);
+    Route::get('print_perhitungangaji', [\App\Http\Controllers\Admin\LaporanPerhitungangajiController::class, 'print_perhitungangaji']);
+    Route::get('laporan_perhitungangajibulanan', [\App\Http\Controllers\Admin\LaporanPerhitungangajibulananController::class, 'index']);
+    Route::get('print_perhitungangajibulanan', [\App\Http\Controllers\Admin\LaporanPerhitungangajibulananController::class, 'print_perhitungangajibulanan']);
+
+    Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
+    Route::get('penerimaan_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaankaskecilController::class, 'cetakpdf']);
+    Route::resource('tablepengeluaran', \App\Http\Controllers\Admin\TablepengeluaranController::class);
+    Route::resource('inquery_penerimaankaskecil', \App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class);
+    Route::resource('penerimaan_kaskecil', \App\Http\Controllers\Admin\PenerimaankaskecilController::class);
+    Route::resource('pelunasan_penjualan', \App\Http\Controllers\Admin\PelunasanController::class);
     Route::resource('spk', \App\Http\Controllers\Admin\SpkController::class);
+    Route::resource('surat_penawaran', \App\Http\Controllers\Admin\SuratPenawaranController::class);
     Route::resource('penjualan', \App\Http\Controllers\Admin\PenjualanController::class);
     Route::resource('karyawan', \App\Http\Controllers\Admin\KaryawanController::class);
     Route::resource('user', \App\Http\Controllers\Admin\UserController::class);
@@ -111,8 +173,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('kendaraan', \App\Http\Controllers\Admin\KendaraanController::class);
     Route::resource('pelanggan', \App\Http\Controllers\Admin\PelangganController::class);
     Route::resource('inquery_penjualan', \App\Http\Controllers\Admin\InqueryPenjualanController::class);
-Route::resource('inquery_deposit', \App\Http\Controllers\Admin\InqueryDepositController::class);
+    Route::resource('inquery_deposit', \App\Http\Controllers\Admin\InqueryDepositController::class);
     Route::resource('inquery_spk', \App\Http\Controllers\Admin\InquerySpkController::class);
+    Route::resource('inquery_penawaran', \App\Http\Controllers\Admin\InquerySuratpenawaranController::class);
     Route::resource('barang', \App\Http\Controllers\Admin\BarangController::class);
     Route::resource('typekaroseri', \App\Http\Controllers\Admin\TypekaroseriController::class);
     Route::resource('deposit_pemesanan', \App\Http\Controllers\Admin\DepositpemesananController::class);
@@ -126,5 +189,15 @@ Route::resource('inquery_deposit', \App\Http\Controllers\Admin\InqueryDepositCon
     Route::resource('pelunasan_pembelian', \App\Http\Controllers\Admin\PelunasanpembelianController::class);
     Route::resource('faktur_pelunasanpembelian', \App\Http\Controllers\Admin\PelunasanpembelianController::class);
     Route::resource('inquery_fakturpelunasanpembelian', \App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class);
+    Route::resource('perhitungan_gaji', \App\Http\Controllers\Admin\PerhitungangajiController::class);
+    Route::resource('perhitungan_gajibulanan', \App\Http\Controllers\Admin\PerhitungangajibulananController::class);
+    Route::resource('kasbon_karyawan', \App\Http\Controllers\Admin\KasbonkaryawanController::class);
+    Route::resource('inquery_kasbonkaryawan', \App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class);
+    Route::resource('inquery_perhitungangaji', \App\Http\Controllers\Admin\InqueryPerhitungangajiController::class);
+    Route::resource('inquery_perhitungangajibulanan', \App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class);
+    Route::resource('pengeluaran_kaskecil', \App\Http\Controllers\Admin\PengeluarankaskecilController::class);
+    Route::resource('inquery_pengeluarankaskecil', \App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class);
+    Route::resource('akun', \App\Http\Controllers\Admin\BarangakunController::class);
+    Route::resource('gaji_karyawan', \App\Http\Controllers\Admin\GajikaryawanController::class);
 
 });

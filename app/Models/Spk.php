@@ -5,32 +5,54 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Spk extends Model
 {
+    use HasFactory;
+    use LogsActivity;
     protected $fillable =
     [
+        'kode_spk',
         'kategori',
         'no_npwp',
         'gambar_npwp',
-        'kategori',
-        'kode_spk',
-        'qrcode_spk',
-        'typekaroseri_id',
-        'marketing_id',
         'pelanggan_id',
-        'warna_dalam',
-        'warna_luar',
+        'nama_pelanggan',
+        'kode_pelanggan',
+        'alamat',
+        'telp',
+        'merek_id',
+        'nama_merek',
+        'tipe',
+        'typekaroseri_id',
+        'kode_type',
+        'nama_karoseri',
+        'panjang',
+        'lebar',
+        'tinggi',
+        'spesifikasi',
         'aksesoris',
+        'jumlah_unit',
         'harga',
-        'vi_marketing',
-        'status',
-        'status_komisi',
+        'qrcode_spk',
         'tanggal',
         'tanggal_awal',
-        'tanggal_akhir',
+        'status',
+        'status_komisi',
     ];
 
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
+    
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);

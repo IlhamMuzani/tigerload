@@ -17,6 +17,7 @@ use App\Models\Modelken;
 use App\Models\Pelanggan;
 use App\Models\Spesifikasi;
 use App\Models\Spk;
+use App\Models\Surat_penawaran;
 use App\Models\Tipe;
 use App\Models\Typekaroseri;
 use App\Models\User;
@@ -72,14 +73,8 @@ class InquerySpkController extends Controller
     public function edit($id)
     {
         $pembelian = Spk::where('id', $id)->first();
-        $kendaraan = Kendaraan::where('spk_id', $pembelian->id)->first();
-        $mereks = Merek::all();
-        $tipes = Tipe::all();
-        $modelkens = Modelken::all();
-        $pelanggans = Pelanggan::all();
-        $marketings = Marketing::all();
-        $typekaroseris = Typekaroseri::all();
-        return view('admin/inqueryspk.update', compact('typekaroseris', 'marketings', 'modelkens', 'kendaraan', 'pembelian', 'mereks', 'tipes', 'pelanggans'));
+        $suratpenawarans = Surat_penawaran::all();
+        return view('admin/inqueryspk.update', compact('suratpenawarans','pembelian'));
     }
 
     public function update(Request $request, $id)
@@ -123,13 +118,25 @@ class InquerySpkController extends Controller
 
         $pembelian = Spk::where('id', $id)->update(
             [
+                'no_npwp' => $request->no_npwp,
                 'kategori' => $request->kategori,
                 'pelanggan_id' => $request->pelanggan_id,
+                'nama_pelanggan' => $request->nama_pelanggan,
+                'kode_pelanggan' => $request->kode_pelanggan,
+                'alamat' => $request->alamat,
+                'telp' => $request->telp,
+                'merek_id' => $request->merek_id,
+                'nama_merek' => $request->nama_merek,
+                'tipe' => $request->tipe,
                 'typekaroseri_id' => $request->typekaroseri_id,
-                'no_npwp' => $request->no_npwp,
-                'gambar_npwp' => $namaGambar,
+                'kode_type' => $request->kode_type,
+                'nama_karoseri' => $request->nama_karoseri,
+                'panjang' => $request->panjang,
+                'lebar' => $request->lebar,
+                'tinggi' => $request->tinggi,
+                'spesifikasi' => $request->spesifikasi,
                 'aksesoris' => $request->aksesoris,
-                'harga' => $request->harga,
+                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'status' => 'posting',
             ]
         );

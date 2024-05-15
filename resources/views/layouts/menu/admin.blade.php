@@ -8,11 +8,49 @@
         </p>
     </a>
 </li>
+<li class="nav-header">Search</li>
+
+<div class="form-inline">
+    <div class="input-group" data-widget="sidebar-search">
+        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+            <button class="btn btn-sidebar">
+                <i class="fas fa-search fa-fw"></i>
+            </button>
+        </div>
+    </div>
+</div>
 <li class="nav-header">Menu</li>
 <li
-    class="nav-item {{ request()->is('admin/karyawan*') || request()->is('admin/supplier*') || request()->is('admin/user*') || request()->is('admin/akses*') || request()->is('admin/departemen*') || request()->is('admin/pelanggan*') || request()->is('admin/merek*') || request()->is('admin/typekaroseri*') || request()->is('admin/barang*') || request()->is('admin/kendaraan*') ? 'menu-open' : '' }}">
+    class="nav-item {{ request()->is('admin/karyawan*') ||
+    request()->is('admin/gaji_karyawan*') ||
+    request()->is('admin/akun*') ||
+    request()->is('admin/supplier*') ||
+    request()->is('admin/user*') ||
+    request()->is('admin/akses*') ||
+    request()->is('admin/departemen*') ||
+    request()->is('admin/pelanggan*') ||
+    request()->is('admin/merek*') ||
+    request()->is('admin/typekaroseri*') ||
+    request()->is('admin/barang*') ||
+    request()->is('admin/kendaraan*')
+        ? 'menu-open'
+        : '' }}">
     <a href="#"
-        class="nav-link {{ request()->is('admin/karyawan*') || request()->is('admin/supplier*') || request()->is('admin/user*') || request()->is('admin/akses*') || request()->is('admin/departemen*') || request()->is('admin/pelanggan*') || request()->is('admin/merek*') || request()->is('admin/typekaroseri*') || request()->is('admin/barang*') || request()->is('admin/kendaraan*') ? 'active' : '' }}">
+        class="nav-link {{ request()->is('admin/karyawan*') ||
+        request()->is('admin/gaji_karyawan*') ||
+        request()->is('admin/akun*') ||
+        request()->is('admin/supplier*') ||
+        request()->is('admin/user*') ||
+        request()->is('admin/akses*') ||
+        request()->is('admin/departemen*') ||
+        request()->is('admin/pelanggan*') ||
+        request()->is('admin/merek*') ||
+        request()->is('admin/typekaroseri*') ||
+        request()->is('admin/barang*') ||
+        request()->is('admin/kendaraan*')
+            ? 'active'
+            : '' }}">
 
         <i class="nav-icon fas fa-grip-horizontal"></i>
         <p>
@@ -53,6 +91,15 @@
                     class="nav-link {{ request()->is('admin/departemen*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Departemen</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['karyawan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/gaji_karyawan') }}"
+                    class="nav-link {{ request()->is('admin/gaji_karyawan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Gaji Karyawan</p>
                 </a>
             </li>
         @endif
@@ -110,45 +157,49 @@
                 </a>
             </li>
         @endif
+        @if (auth()->check() && auth()->user()->menu['barang'])
+            <li class="nav-item">
+                <a href="{{ url('admin/akun') }}" class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Barang Akun</p>
+                </a>
+            </li>
+        @endif
     </ul>
 </li>
 
 <li
     class="nav-item {{ request()->is('admin/pengambilanbahan*') ||
-    request()->is('admin/inquery_pengambilanbahan*') ||
+    request()->is('admin/perhitungan_gaji*') ||
+    request()->is('admin/kasbon_karyawan*') ||
     request()->is('admin/popembelian*') ||
-    request()->is('admin/inquery_popembelian*') ||
-    request()->is('admin/inquery_pelunasan*') ||
     request()->is('admin/pembelian*') ||
-    request()->is('admin/inquery_pembelian*') ||
-    request()->is('admin/inquery_fakturpelunasanpembelian*') ||
+    request()->is('admin/surat_penawaran*') ||
     request()->is('admin/spk*') ||
-    request()->is('admin/pelunasan*') ||
+    request()->is('admin/penawaran*') ||
+    request()->is('admin/pelunasan_penjualan*') ||
     request()->is('admin/penjualan*') ||
     request()->is('admin/deposit_pemesanan*') ||
-    request()->is('admin/inquery_deposit*') ||
-    request()->is('admin/inquery_spk*') ||
-    request()->is('admin/pelunasan_pembelian*') ||
-    request()->is('admin/inquery_penjualan*')
+    request()->is('admin/pengeluaran_kaskecil*') ||
+        request()->is('admin/tablepengeluaran*') ||
+    request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
     <a href="#"
         class="nav-link {{ request()->is('admin/pengambilanbahan*') ||
-        request()->is('admin/inquery_pengambilanbahan*') ||
+        request()->is('admin/perhitungan_gaji*') ||
+        request()->is('admin/kasbon_karyawan*') ||
         request()->is('admin/popembelian*') ||
-        request()->is('admin/inquery_popembelian*') ||
-        request()->is('admin/inquery_pembelian*') ||
-        request()->is('admin/inquery_fakturpelunasanpembelian*') ||
-        request()->is('admin/inquery_pelunasan*') ||
         request()->is('admin/pembelian*') ||
+        request()->is('admin/surat_penawaran*') ||
         request()->is('admin/spk*') ||
-        request()->is('admin/pelunasan*') ||
+        request()->is('admin/penawaran*') ||
+        request()->is('admin/pelunasan_penjualan*') ||
         request()->is('admin/penjualan*') ||
         request()->is('admin/deposit_pemesanan*') ||
-        request()->is('admin/inquery-deposit*') ||
-        request()->is('admin/inquery_spk*') ||
-        request()->is('admin/pelunasan_pembelian*') ||
-        request()->is('admin/inquery_penjualan*')
+        request()->is('admin/pengeluaran_kaskecil*') ||
+            request()->is('admin/tablepengeluaran*') ||
+        request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
 
@@ -160,6 +211,24 @@
 
     </a>
     <ul class="nav nav-treeview">
+        @if (auth()->check() && auth()->user()->menu['pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/perhitungan_gaji') }}"
+                    class="nav-link {{ request()->is('admin/perhitungan_gaji*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Perhitungan Gaji Karyawan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/kasbon_karyawan') }}"
+                    class="nav-link {{ request()->is('admin/kasbon_karyawan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Memo Hutang Karyawan</p>
+                </a>
+            </li>
+        @endif
         @if (auth()->check() && auth()->user()->menu['po pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/popembelian') }}"
@@ -184,6 +253,15 @@
                     class="nav-link {{ request()->is('admin/pelunasan_pembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pelunasan Pembelian</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['spk'])
+            <li class="nav-item">
+                <a href="{{ url('admin/surat_penawaran') }}"
+                    class="nav-link {{ request()->is('admin/surat_penawaran*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Surat Penawaran Karoseri</p>
                 </a>
             </li>
         @endif
@@ -224,10 +302,104 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
-                <a href="{{ url('admin/pelunasan') }}"
-                    class="nav-link {{ request()->is('admin/pelunasan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/pelunasan_penjualan') }}"
+                    class="nav-link {{ request()->is('admin/pelunasan_penjualan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pelunasan Penjualan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/tablepengeluaran') }}"
+                    class="nav-link {{ request()->is('admin/tablepengeluaran*') || request()->is('admin/pengeluaran_kaskecil*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Pengambilan kas kecil</p>
+                </a>
+            </li>
+        @endif
+    </ul>
+</li>
+
+<li
+    class="nav-item {{ request()->is('admin/inquery_pengambilanbahan*') ||
+    request()->is('admin/inquery_perhitungangaji*') ||
+    request()->is('admin/penerimaan_kaskecil*') ||
+    request()->is('admin/inquery_kasbonkaryawan*') ||
+    request()->is('admin/inquery_popembelian*') ||
+    request()->is('admin/inquery_pembelian*') ||
+    request()->is('admin/inquery_fakturpelunasanpembelian*') ||
+    request()->is('admin/inquery_pelunasan*') ||
+    request()->is('admin/inquery-deposit*') ||
+    request()->is('admin/inquery_spk*') ||
+    request()->is('admin/inquery_penawaran*') ||
+    request()->is('admin/inquery_penerimaankaskecil*') ||
+    request()->is('admin/inquery_pengeluarankaskecil*') ||
+    request()->is('admin/inquery_penjualan*')
+        ? 'menu-open'
+        : '' }}">
+    <a href="#"
+        class="nav-link {{ request()->is('admin/inquery_pengambilanbahan*') ||
+        request()->is('admin/inquery_perhitungangaji*') ||
+        request()->is('admin/penerimaan_kaskecil*') ||
+        request()->is('admin/inquery_kasbonkaryawan*') ||
+        request()->is('admin/inquery_popembelian*') ||
+        request()->is('admin/inquery_pembelian*') ||
+        request()->is('admin/inquery_fakturpelunasanpembelian*') ||
+        request()->is('admin/inquery_pelunasan*') ||
+        request()->is('admin/inquery-deposit*') ||
+        request()->is('admin/inquery_spk*') ||
+        request()->is('admin/inquery_penawaran*') ||
+        request()->is('admin/inquery_penerimaankaskecil*') ||
+        request()->is('admin/inquery_pengeluarankaskecil*') ||
+        request()->is('admin/inquery_penjualan*')
+            ? 'active'
+            : '' }}">
+
+        <i class="nav-icon fas fa-exchange-alt"></i>
+        <p>
+            <strong style="color: rgb(255, 255, 255);">FINANCE</strong>
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/penerimaan_kaskecil') }}"
+                    class="nav-link {{ request()->is('admin/penerimaan_kaskecil*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Saldo Kas Kecil</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_penerimaankaskecil') }}"
+                    class="nav-link {{ request()->is('admin/inquery_penerimaankaskecil*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Saldo Kas Kecil
+                    </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_perhitungangaji') }}"
+                    class="nav-link {{ request()->is('admin/inquery_perhitungangaji*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Perhitungan Gaji
+                    </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_kasbonkaryawan') }}"
+                    class="nav-link {{ request()->is('admin/inquery_kasbonkaryawan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Memo Hutang-<br>
+                        <span style="margin-left: 32px">Karyawan</span>
+                    </p>
                 </a>
             </li>
         @endif
@@ -258,6 +430,17 @@
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Pelunasan -<br>
                         <span style="margin-left: 32px">Pembelian</span>
+                    </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery spk'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_penawaran') }}"
+                    class="nav-link {{ request()->is('admin/inquery_penawaran*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Surat Penawaran -<br>
+                        <span style="margin-left: 32px">Karoseri</span>
                     </p>
                 </a>
             </li>
@@ -311,13 +494,43 @@
                 </a>
             </li>
         @endif
+        @if (auth()->check() && auth()->user()->menu['inquery pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_pengeluarankaskecil') }}"
+                    class="nav-link {{ request()->is('admin/inquery_pengeluarankaskecil*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 13px;">Inquery Pengambilan Kas Kecil
+                    </p>
+                </a>
+            </li>
+        @endif
     </ul>
 </li>
 
 <li
-    class="nav-item {{ request()->is('admin/laporan_pengambilanbahan*') || request()->is('admin/laporan_pembelian*') || request()->is('admin/laporan_popembelian*') || request()->is('admin/laporan_spk*') || request()->is('admin/laporan_deposit*') || request()->is('admin/laporan_pelunasan*') || request()->is('admin/laporan_penjualan*') ? 'menu-open' : '' }}">
+    class="nav-item {{ request()->is('admin/laporan_pengambilanbahan*') ||
+    request()->is('admin/laporan_perhitungangaji*') ||
+    request()->is('admin/laporan_kasbonkaryawan*') ||
+    request()->is('admin/laporan_pembelian*') ||
+    request()->is('admin/laporan_popembelian*') ||
+    request()->is('admin/laporan_spk*') ||
+    request()->is('admin/laporan_deposit*') ||
+    request()->is('admin/laporan_pelunasan*') ||
+    request()->is('admin/laporan_penjualan*')
+        ? 'menu-open'
+        : '' }}">
     <a href="#"
-        class="nav-link {{ request()->is('admin/laporan_pengambilanbahan*') || request()->is('admin/laporan_pembelian*') || request()->is('admin/laporan_popembelian*') || request()->is('admin/laporan_spk*') || request()->is('admin/laporan_deposit*') || request()->is('admin/laporan_pelunasan*') || request()->is('admin/laporan_penjualan*') ? 'active' : '' }}">
+        class="nav-link {{ request()->is('admin/laporan_pengambilanbahan*') ||
+        request()->is('admin/laporan_perhitungangaji*') ||
+        request()->is('admin/laporan_kasbonkaryawan*') ||
+        request()->is('admin/laporan_pembelian*') ||
+        request()->is('admin/laporan_popembelian*') ||
+        request()->is('admin/laporan_spk*') ||
+        request()->is('admin/laporan_deposit*') ||
+        request()->is('admin/laporan_pelunasan*') ||
+        request()->is('admin/laporan_penjualan*')
+            ? 'active'
+            : '' }}">
 
         <i class="nav-icon fas fa-clipboard-list"></i>
         <p>
@@ -404,6 +617,35 @@
                     <p style="font-size: 14px;">Laporan Pelunasan -<br>
                         <span style="margin-left: 32px">Faktur Pembelian</span>
                     </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['laporan pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/pilih_laporankaskecil') }}"
+                    class="nav-link {{ request()->is('admin/pilih_laporankaskecil*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Laporan Kas Kecil</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['laporan pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/laporan_kasbonkaryawan') }}"
+                    class="nav-link {{ request()->is('admin/laporan_kasbonkaryawan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Laporan Memo Hutang-<br>
+                        <span style="margin-left: 32px">Karyawan</span>
+                    </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['laporan pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/laporan_perhitungangaji') }}"
+                    class="nav-link {{ request()->is('admin/laporan_perhitungangaji*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Laporan Gaji Karyawan</p>
                 </a>
             </li>
         @endif

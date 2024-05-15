@@ -50,6 +50,7 @@ class DepositpemesananController extends Controller
                 'qrcode_deposit' => 'https://tigerload.id/deposit_pemesanan/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
+                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'status' => 'posting',
 
             ]

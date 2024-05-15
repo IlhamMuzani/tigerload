@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pembelian')->nullable();
+            $table->unsignedBigInteger('supplier_id')->nullable();
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
             $table->string('qrcode_pembelian')->nullable();
             $table->string('nama_supplier')->nullable();
             $table->string('alamat')->nullable();
@@ -29,8 +31,8 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('status_pelunasan')->nullable();
             $table->string('status_notif')->nullable();
-            $table->unsignedBigInteger('supplier_id')->nullable();
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
+            $table->timestamp('deleted_at')->nullable();
+
             $table->timestamps();
         });
     }

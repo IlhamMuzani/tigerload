@@ -118,7 +118,7 @@ class PenjualanController extends Controller
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama' => $data_pesanan['nama'],
                     'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => $data_pesanan['harga'],
+                    'harga' => str_replace('.', '', $data_pesanan['harga']),
                 ]);
             }
         }

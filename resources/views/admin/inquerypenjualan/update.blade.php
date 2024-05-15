@@ -104,8 +104,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
-                                <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->harga) }}">
+                                <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
+                                    placeholder=""
+                                    value="{{ number_format(old('harga_awal', $penjualans->depositpemesanan->spk->harga), 0, ',', '.') }}">
                             </div>
                         </div>
                     </div>
@@ -169,7 +170,10 @@
                                             <td>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="harga-0"
-                                                        name="harga[]" value="{{ $detail['harga'] }}">
+                                                        name="harga[]"
+                                                        value="{{ number_format($detail['harga'], 0, ',', '.') }}"
+                                                        oninput="formatRupiahform(this)"
+                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                 </div>
                                             </td>
                                             <td style="width: 120px">
@@ -285,7 +289,7 @@
                                                      '{{ $spk->typekaroseri->kode_type }}',
                                                      '{{ $spk->typekaroseri->nama_karoseri }}',
                                                       '{{ $spk->harga }}',
-                                                      {{ $spk->detail_deposit->first()->id }})">
+                                                       {{ $spk->detail_deposit->first() ? $spk->detail_deposit->first()->id : 'null' }})">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
@@ -481,6 +485,19 @@
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
+        }
+    </script>
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
         }
     </script>
 @endsection

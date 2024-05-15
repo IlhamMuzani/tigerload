@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Faktur_pelunasanpembelian extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable =
     [
@@ -43,6 +44,15 @@ class Faktur_pelunasanpembelian extends Model
         'status_notif',
     ];
 
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
+    
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);

@@ -140,7 +140,7 @@
             <td>
                 <div id="logo-container">
                     <!-- Tambahkan gambar logo di sini -->
-                    <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" alt="Logo Tigerload">
+                    <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" alt="Logo Tigerload">
                 </div>
             </td>
         </tr>

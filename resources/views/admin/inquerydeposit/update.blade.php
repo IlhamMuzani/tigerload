@@ -87,13 +87,16 @@
                         </div>
                         <div class="form-group">
                             <label for="nama">Harga Pemesanan</label>
-                            <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                value="{{ old('harga', $deposits->spk->harga) }}">
+                            <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
+                                placeholder=""
+                                value="{{ number_format(old('harga_awal', $deposits->spk->harga), 0, ',', '.') }}">
                         </div>
                         <div class="form-group mb-3">
                             <label for="nama">DP</label>
                             <input type="text" class="form-control" id="harga" name="harga" placeholder=""
-                                value="{{ old('harga', $deposits->harga) }}">
+                                value="{{ number_format(old('harga', $deposits->harga), 0, ',', '.') }}"
+                                oninput="formatRupiahform(this)"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -175,9 +178,24 @@
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;
             document.getElementById('nama_karoseri').value = BentukKaroseri;
-            document.getElementById('harga_awal').value = Harga;
+
+            var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga_awal').value = formattedNominal;
             // Close the modal (if needed)
             $('#tableSpk').modal('hide');
+        }
+    </script>
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
         }
     </script>
 @endsection

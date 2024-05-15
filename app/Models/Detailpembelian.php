@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Detailpembelian extends Model
 {
     use HasFactory;
+    use LogsActivity;
 
     protected $fillable = [
         'kode_barang',
@@ -26,16 +28,14 @@ class Detailpembelian extends Model
         'tanggal_awal',
         'tanggal_akhir',
     ];
-    
-    public function pembelian_part()
-    {
-        return $this->belongsTo(Pembelian_part::class);
-    }
 
-    public function detail_part()
-    {
-        return $this->hasMany(Detail_pemasanganpartdua::class);
-    }
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
 
 }

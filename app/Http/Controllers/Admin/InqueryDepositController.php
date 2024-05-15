@@ -99,7 +99,7 @@ class InqueryDepositController extends Controller
         $deposits = Depositpemesanan::where('id', $id)->update(
             [
                 'spk_id' => $request->spk_id,
-                'harga' => $request->harga,
+                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'status' => 'posting',
             ]
         );
@@ -141,6 +141,4 @@ class InqueryDepositController extends Controller
 
         return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Spk');
     }
-
-  
 }

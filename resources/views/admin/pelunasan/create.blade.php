@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan') }}">Faktur Pelunasan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan_penjualan') }}">Faktur Pelunasan</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -34,7 +34,8 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/pelunasan') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/pelunasan_penjualan') }}" method="POST" enctype="multipart/form-data"
+                autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -157,9 +158,12 @@
                     </div>
                 </div>
         </div>
-        <div class="card-footer text-right">
-            <button type="reset" class="btn btn-secondary">Reset</button>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+        <div class="card-footer text-right mt-3">
+            <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
+            <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+            <div id="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
+            </div>
         </div>
         </div>
         </form>
@@ -519,5 +523,20 @@
         //         }
         //     }
         // });
+    </script>
+
+     <script>
+        $(document).ready(function() {
+            // Tambahkan event listener pada tombol "Simpan"
+            $('#btnSimpan').click(function() {
+                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
+                $(this).hide();
+                $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
+                $('#loading').show();
+
+                // Lakukan pengiriman formulir
+                $('form').submit();
+            });
+        });
     </script>
 @endsection

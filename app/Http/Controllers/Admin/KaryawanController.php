@@ -13,16 +13,45 @@ use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->check() && auth()->user()->menu['karyawan']) {
-            $karyawans = Karyawan::all();
+            if ($request->has('keyword')) {
+                $keyword = $request->keyword;
+                $karyawans = Karyawan::with('departemen')
+                    ->select('id', 'kode_karyawan', 'nama_lengkap', 'telp', 'departemen_id', 'qrcode_karyawan')
+                    ->where(function ($query) use ($keyword) {
+                        $query->whereHas('departemen', function ($query) use ($keyword) {
+                            $query->where('nama', 'like', "%$keyword%");
+                        })
+                            ->orWhere('kode_karyawan', 'like', "%$keyword%")
+                            ->orWhere('nama_lengkap', 'like', "%$keyword%")
+                            ->orWhere('telp', 'like', "%$keyword%");
+                    })
+                    ->orderBy('created_at')
+                    ->paginate(10);
+            } else {
+                $karyawans = Karyawan::with('departemen')
+                    ->select('id', 'kode_karyawan', 'nama_lengkap', 'telp', 'departemen_id', 'qrcode_karyawan')
+                    ->orderBy('created_at')
+                    ->paginate(10);
+            }
+
             return view('admin.karyawan.index', compact('karyawans'));
-        } else {
-            // tidak memiliki akses
-            return back()->with('error', array('Anda tidak memiliki akses'));
         }
+        return back()->with('error', array('Anda tidak memiliki akses'));
     }
+
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $karyawans = Karyawan::with('departemen')
+            ->where('nama_lengkap', 'like', "%$keyword%")
+            ->paginate(10);
+        return response()->json($karyawans);
+    }
+
 
     public function create()
     {
@@ -83,16 +112,33 @@ class KaryawanController extends Controller
         }
 
         $kode = $this->kode();
+        $kodedriver = $this->kodedriver();
+        $departemen = $request->departemen_id;
+
+        if ($departemen == 1) {
+            $kode_karyawan = $kode;
+        } elseif ($departemen == 2) {
+            $kode_karyawan = $kodedriver;
+        } else {
+            // Handle other cases if needed
+            $kode_karyawan =  $kode;
+        }
 
         Karyawan::create(array_merge(
             $request->all(),
             [
                 'gambar' => $namaGambar,
                 'tanggal_keluar' => '-',
-                'gaji' => '-',
-                'pembayaran' => '-',
+                'gaji' => 0,
+                'pembayaran' => 0,
+                'tabungan' => 0,
+                'kasbon' => 0,
+                'bayar_kasbon' => 0,
+                'deposit' => 0,
+                'bayar_kasbon' => 0,
+                'pembayaran' => 0,
                 'status' => 'null',
-                'kode_karyawan' => $this->kode(),
+                'kode_karyawan' => $kode_karyawan,
                 'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode,
                 // 'qrcode_karyawan' => 'http://192.168.1.46/javaline/karyawan/' . $kode
                 'tanggal' => Carbon::now('Asia/Jakarta'),
@@ -105,16 +151,63 @@ class KaryawanController extends Controller
 
     public function kode()
     {
-        $id = Karyawan::getId();
-        foreach ($id as $value);
-        $idlm = $value->id;
-        $idbr = $idlm + 1;
-        $num = sprintf("%06s", $idbr);
-        $data = 'AA';
-        $kode_karyawan = $data . $num;
-
-        return $kode_karyawan;
+        $lastBarang = Karyawan::latest()->first();
+        if (!$lastBarang) {
+            $num = 1;
+        } else {
+            $lastCode = $lastBarang->kode_karyawan;
+            $num = (int) substr($lastCode, strlen('FE')) + 1;
+        }
+        $formattedNum = sprintf("%06s", $num);
+        $prefix = 'AA';
+        $newCode = $prefix . $formattedNum;
+        return $newCode;
     }
+
+    public function kodedriver()
+    {
+        $lastBarang = Karyawan::latest()->first();
+        if (!$lastBarang) {
+            $num = 1;
+        } else {
+            $lastCode = $lastBarang->kode_karyawan;
+            $num = (int) substr($lastCode, strlen('FE')) + 1;
+        }
+        $formattedNum = sprintf("%06s", $num);
+        $prefix = 'AD';
+        $newCode = $prefix . $formattedNum;
+        return $newCode;
+    }
+
+    // public function kode()
+    // {
+    //     $lastBarang = Karyawan::latest()->first();
+    //     if (!$lastBarang) {
+    //         $num = 1;
+    //     } else {
+    //         $lastCode = $lastBarang->kode_karyawan;
+    //         $num = (int) substr($lastCode, strlen('AA')) + 1;
+    //     }
+    //     $formattedNum = sprintf("%06s", $num);
+    //     $prefix = 'AA';
+    //     $newCode = $prefix . $formattedNum;
+    //     return $newCode;
+    // }
+
+    // public function kodedriver()
+    // {
+    //     $lastBarang = Karyawan::latest()->first();
+    //     if (!$lastBarang) {
+    //         $num = 1;
+    //     } else {
+    //         $lastCode = $lastBarang->kode_karyawan;
+    //         $num = (int) substr($lastCode, strlen('AD')) + 1;
+    //     }
+    //     $formattedNum = sprintf("%06s", $num);
+    //     $prefix = 'AD';
+    //     $newCode = $prefix . $formattedNum;
+    //     return $newCode;
+    // }
 
     public function cetakpdf($id)
     {
@@ -205,25 +298,23 @@ class KaryawanController extends Controller
             $namaGambar = $karyawan->gambar;
         }
 
-        Karyawan::where('id', $karyawan->id)
-            ->update([
-                'departemen_id' => $request->departemen_id,
-                'no_ktp' => $request->no_ktp,
-                'no_sim' => $request->no_sim,
-                'nama_lengkap' => $request->nama_lengkap,
-                'nama_kecil' => $request->nama_kecil,
-                'gender' => $request->gender,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'tanggal_gabung' => $request->tanggal_gabung,
-                // 'jabatan' => $request->jabatan,
-                'telp' => $request->telp,
-                'alamat' => $request->alamat,
-                'gambar' => $namaGambar,
-                'tanggal_awal' => Carbon::now('Asia/Jakarta'),
-            ]);
+        $karyawan->departemen_id = $request->departemen_id;
+        $karyawan->no_ktp = $request->no_ktp;
+        $karyawan->no_sim = $request->no_sim;
+        $karyawan->nama_lengkap = $request->nama_lengkap;
+        $karyawan->nama_kecil = $request->nama_kecil;
+        $karyawan->gender = $request->gender;
+        $karyawan->tanggal_lahir = $request->tanggal_lahir;
+        $karyawan->tanggal_gabung = $request->tanggal_gabung;
+        $karyawan->telp = $request->telp;
+        $karyawan->alamat = $request->alamat;
+        $karyawan->gambar = $namaGambar;
+        $karyawan->tanggal_awal = Carbon::now('Asia/Jakarta');
+        $karyawan->save();
 
         return redirect('admin/karyawan')->with('success', 'Berhasil mengubah karyawan');
     }
+
     public function destroy($id)
     {
         $karyawan = Karyawan::find($id);

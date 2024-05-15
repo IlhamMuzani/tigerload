@@ -14,6 +14,7 @@ use App\Models\Gambar;
 use App\Models\Marketing;
 use App\Models\Spesifikasi;
 use App\Models\Spk;
+use App\Models\Surat_penawaran;
 use App\Models\Typekaroseri;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -22,13 +23,8 @@ class SpkController extends Controller
 {
     public function index()
     {
-        $pelanggans = Pelanggan::all();
-        $mereks = Merek::all();
-        // $modelkens = Modelken::all();
-        $tipes = Tipe::all();
-        $marketings = Marketing::all();
-        $typekaroseris = Typekaroseri::all();
-        return view('admin/spk.create', compact('typekaroseris', 'marketings', 'pelanggans', 'mereks', 'tipes'));
+        $suratpenawarans = Surat_penawaran::all();
+        return view('admin/spk.create', compact('suratpenawarans'));
     }
 
     public function store(Request $request)
@@ -73,11 +69,25 @@ class SpkController extends Controller
         $pembelian = Spk::create(array_merge(
             $request->all(),
             [
-                'gambar_npwp' => $namaGambar,
+                'no_npwp' => $request->no_npwp,
+                'kategori' => $request->kategori,
                 'pelanggan_id' => $request->pelanggan_id,
+                'nama_pelanggan' => $request->nama_pelanggan,
+                'kode_pelanggan' => $request->kode_pelanggan,
+                'alamat' => $request->alamat,
+                'telp' => $request->telp,
+                'merek_id' => $request->merek_id,
+                'nama_merek' => $request->nama_merek,
+                'tipe' => $request->tipe,
                 'typekaroseri_id' => $request->typekaroseri_id,
-                // 'marketing_id' => $request->marketing_id,
-                'harga' => $request->harga,
+                'kode_type' => $request->kode_type,
+                'nama_karoseri' => $request->nama_karoseri,
+                'panjang' => $request->panjang,
+                'lebar' => $request->lebar,
+                'tinggi' => $request->tinggi,
+                'spesifikasi' => $request->spesifikasi,
+                'aksesoris' => $request->aksesoris,
+                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
                 'qrcode_spk' => 'https:///tigerload.id/spk/' . $kode,
                 'tanggal' => $format_tanggal,

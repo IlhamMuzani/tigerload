@@ -97,8 +97,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
-                                <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                    value="">
+                                <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
+                                    placeholder="" value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
                             </div>
 
                         </div>
@@ -155,8 +155,9 @@
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" class="form-control" id="harga-0"
-                                                    name="harga[]">
+                                                <input type="text" class="form-control" id="harga-0" name="harga[]"
+                                                    oninput="formatRupiahform(this)"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
                                         </td>
                                         <td style="width: 120px">
@@ -298,8 +299,10 @@
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;
             document.getElementById('nama_karoseri').value = BentukKaroseri;
-            document.getElementById('harga_awal').value = Harga;
             document.getElementById('depositpemesanan_id').value = Dp_id;
+
+            var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga_awal').value = formattedNominal;
             // Close the modal (if needed)
             $('#tableSpk').modal('hide');
         }
@@ -430,10 +433,13 @@
             // harga 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control" id="harga-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" id="harga-' + urutan +
                 '" name="harga[]" value="' + harga + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
+
 
             item_pembelian += '<td style="width: 120px">';
             item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
@@ -447,6 +453,19 @@
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
+        }
+    </script>
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
         }
     </script>
 @endsection

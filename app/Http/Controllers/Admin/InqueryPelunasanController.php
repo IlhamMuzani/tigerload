@@ -114,7 +114,7 @@ class InqueryPelunasanController extends Controller
             $statusPelunasan = 'BELUM LUNAS';
         }
 
-        $penjualan = Pelunasan::where('id', $id)->update(
+        $pelunasans = Pelunasan::where('id', $id)->update(
             [
                 'penjualan_id' => $request->penjualan_id,
                 'potongan' => $request->potongan,
@@ -131,7 +131,12 @@ class InqueryPelunasanController extends Controller
             ]
         );
 
-        return redirect('admin/inquery_pelunasan')->with('success', 'Berhasil memperbarui pelunasan');
+        $pelunasans = Pelunasan::where('id', $id)->first();
+
+        $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
+        $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
+        
+        return view('admin.inquerypelunasan.show', compact('pelunasans','penjualans', 'spesifikasis'));
     }
 
 

@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Karyawan extends Model
 {
+    use LogsActivity;
     use HasFactory;
     protected $fillable = [
         'kode_karyawan',
@@ -27,10 +31,28 @@ class Karyawan extends Model
         'gambar',
         'pembayaran',
         'gaji',
+        'tabungan',
+        'kasbon',
+        'deposit',
+        'bayar_kasbon',
+        'bpjs',
+        'potongan_ke',
+        'potongan_backup',
+        'kasbon_backup',
         'status',
         'tanggal_awal',
         'tanggal_akhir',
     ];
+
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable('*');
+    }
 
     public static function getId()
     {
@@ -40,6 +62,16 @@ class Karyawan extends Model
     public function departemen()
     {
         return $this->belongsTo(Departemen::class);
+    }
+
+    public function kasbon_karyyawan()
+    {
+        return $this->hasMany(Kasbon_karyawan::class, 'karyawan_id');
+    }
+
+    public function detail_cicilan()
+    {
+        return $this->hasMany(Detail_cicilan::class);
     }
 
     public function user()

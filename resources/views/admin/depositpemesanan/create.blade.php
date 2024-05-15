@@ -85,17 +85,22 @@
                         <div class="form-group">
                             <label for="nama">Harga Pemesanan</label>
                             <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                value="">
+                                placeholder="" value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
+
                         </div>
                         <div class="form-group mb-3">
                             <label for="nama">DP</label>
                             <input type="text" class="form-control" id="harga" name="harga" placeholder=""
-                                value="{{ old('harga') }}">
+                                value="{{ number_format(old('harga'), 0, ',', '.') }}" oninput="formatRupiahform(this)"
+                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                     </div>
-                    <div class="card-footer text-right">
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="card-footer text-right mt-3">
+                        <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
+                        <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+                        <div id="loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
+                        </div>
                     </div>
                 </div>
             </form>
@@ -172,9 +177,40 @@
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;
             document.getElementById('nama_karoseri').value = BentukKaroseri;
-            document.getElementById('harga_awal').value = Harga;
+
+            var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga_awal').value = formattedNominal;
             // Close the modal (if needed)
             $('#tableSpk').modal('hide');
         }
     </script>
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Tambahkan event listener pada tombol "Simpan"
+            $('#btnSimpan').click(function() {
+                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
+                $(this).hide();
+                $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
+                $('#loading').show();
+
+                // Lakukan pengiriman formulir
+                $('form').submit();
+            });
+        });
+    </script>
+
 @endsection
