@@ -211,7 +211,7 @@
 
     </a>
     <ul class="nav nav-treeview">
-        @if (auth()->check() && auth()->user()->menu['pembelian'])
+        @if (auth()->check() && auth()->user()->menu['perhitungan gaji'])
             <li class="nav-item">
                 <a href="{{ url('admin/perhitungan_gaji') }}"
                     class="nav-link {{ request()->is('admin/perhitungan_gaji*') ? 'active' : '' }}">
@@ -220,7 +220,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pembelian'])
+        @if (auth()->check() && auth()->user()->menu['memo hutang karyawan'])
             <li class="nav-item">
                 <a href="{{ url('admin/kasbon_karyawan') }}"
                     class="nav-link {{ request()->is('admin/kasbon_karyawan*') ? 'active' : '' }}">
@@ -247,7 +247,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pembelian'])
+        @if (auth()->check() && auth()->user()->menu['pelunasan pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/pelunasan_pembelian') }}"
                     class="nav-link {{ request()->is('admin/pelunasan_pembelian*') ? 'active' : '' }}">
@@ -256,7 +256,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['spk'])
+        @if (auth()->check() && auth()->user()->menu['surat penawaran karoseri'])
             <li class="nav-item">
                 <a href="{{ url('admin/surat_penawaran') }}"
                     class="nav-link {{ request()->is('admin/surat_penawaran*') ? 'active' : '' }}">
@@ -309,7 +309,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pelunasan'])
+        @if (auth()->check() && auth()->user()->menu['pengambilan kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepengeluaran') }}"
                     class="nav-link {{ request()->is('admin/tablepengeluaran*') || request()->is('admin/pengeluaran_kaskecil*') ? 'active' : '' }}">
@@ -363,7 +363,7 @@
         </p>
     </a>
     <ul class="nav nav-treeview">
-        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+        @if (auth()->check() && auth()->user()->menu['saldo kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/penerimaan_kaskecil') }}"
                     class="nav-link {{ request()->is('admin/penerimaan_kaskecil*') ? 'active' : '' }}">
@@ -372,7 +372,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+        @if (auth()->check() && auth()->user()->menu['inquery saldo kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_penerimaankaskecil') }}"
                     class="nav-link {{ request()->is('admin/inquery_penerimaankaskecil*') ? 'active' : '' }}">
@@ -382,7 +382,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+        @if (auth()->check() && auth()->user()->menu['inquery perhitungan gaji'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_perhitungangaji') }}"
                     class="nav-link {{ request()->is('admin/inquery_perhitungangaji*') ? 'active' : '' }}">
@@ -392,7 +392,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery po pembelian'])
+        @if (auth()->check() && auth()->user()->menu['inquery memo hutang karyawan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_kasbonkaryawan') }}"
                     class="nav-link {{ request()->is('admin/inquery_kasbonkaryawan*') ? 'active' : '' }}">
@@ -423,7 +423,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery pembelian'])
+        @if (auth()->check() && auth()->user()->menu['inquery pelunasan pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_fakturpelunasanpembelian') }}"
                     class="nav-link {{ request()->is('admin/inquery_fakturpelunasanpembelian*') ? 'active' : '' }}">
@@ -434,7 +434,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery spk'])
+        @if (auth()->check() && auth()->user()->menu['inquery surat penawaran'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_penawaran') }}"
                     class="nav-link {{ request()->is('admin/inquery_penawaran*') ? 'active' : '' }}">
@@ -494,7 +494,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery pelunasan'])
+        @if (auth()->check() && auth()->user()->menu['inquery pengambilan kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_pengeluarankaskecil') }}"
                     class="nav-link {{ request()->is('admin/inquery_pengeluarankaskecil*') ? 'active' : '' }}">
