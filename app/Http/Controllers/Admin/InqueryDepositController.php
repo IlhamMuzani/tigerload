@@ -69,7 +69,8 @@ class InqueryDepositController extends Controller
 
     public function edit($id)
     {
-        $spks = Spk::where('status_deposit', null)->get();
+        $spks = Spk::where(['status' => 'posting', 'status_deposit' => null])->get();
+
         $deposits = Depositpemesanan::where('id', $id)->first();
 
         return view('admin/inquerydeposit.update', compact('deposits', 'spks'));

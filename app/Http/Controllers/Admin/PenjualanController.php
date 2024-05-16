@@ -26,7 +26,7 @@ class PenjualanController extends Controller
     {
         $deposits = Depositpemesanan::all();
         $barangs = Barang::all();
-        $spks = Spk::where('status_penjualan', null)->get();
+        $spks = Spk::where(['status' => 'posting', 'status_penjualan' => null])->get();
         return view('admin/penjualan.create', compact('deposits', 'barangs', 'spks'));
     }
 
@@ -75,7 +75,7 @@ class PenjualanController extends Controller
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
 
-                $data_pembelians->push(['barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama' => $nama, 'barang_id' => $barang_id, 'jumlah' =>$jumlah, 'harga' => $harga]);
+                $data_pembelians->push(['barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama' => $nama, 'barang_id' => $barang_id, 'jumlah' => $jumlah, 'harga' => $harga]);
             }
         } else {
         }
@@ -124,7 +124,7 @@ class PenjualanController extends Controller
             }
         }
 
-        
+
         $spks = Spk::where('id', $penjualans->spk_id)->update(['status_penjualan' => 'penjualan']);
 
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();

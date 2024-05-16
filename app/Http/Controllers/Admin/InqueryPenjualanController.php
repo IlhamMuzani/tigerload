@@ -74,7 +74,7 @@ class InqueryPenjualanController extends Controller
     {
         $penjualans = Penjualan::where('id', $id)->first();
         $barangs = Barang::all();
-        $spks = Spk::all();
+        $spks = Spk::where(['status' => 'posting', 'status_penjualan' => null])->get();
         $details = Spesifikasi::where('penjualan_id', $id)->get();
 
         return view('admin/inquerypenjualan.update', compact('spks', 'barangs', 'penjualans', 'details'));

@@ -15,7 +15,7 @@ class DepositpemesananController extends Controller
 {
     public function index()
     {
-        $spks = Spk::where('status_deposit', null)->get();
+        $spks = Spk::where(['status' => 'posting', 'status_deposit' => null])->get();
         return view('admin/depositpemesanan.create', compact('spks'));
     }
 
