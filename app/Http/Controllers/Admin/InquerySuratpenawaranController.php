@@ -229,4 +229,23 @@ class InquerySuratpenawaranController extends Controller
 
         return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Surat_penawaran');
     }
+
+    public function hapuspenawaran($id)
+    {
+        $tagihan = Surat_penawaran::where('id', $id)->first();
+
+        if ($tagihan) {
+            $detailtagihan = Detail_suratpenawaran::where('surat_penawaran_id', $id)->get();
+            // Delete related Detail_tagihan instances
+            Detail_suratpenawaran::where('surat_penawaran_id', $id)->delete();
+
+            // Delete the main Surat_penawaran instance
+            $tagihan->delete();
+
+            return back()->with('success', 'Berhasil menghapus Surat penawaran');
+        } else {
+            // Handle the case where the Pembelian with the given ID is not found
+            return back()->with('error', 'Pembelian tidak ditemukan');
+        }
+    }
 }

@@ -98,7 +98,7 @@
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
                                 <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
-                                    placeholder="" value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
+                                    placeholder="" value="{{ 'harga_awal' }}">
                             </div>
 
                         </div>
@@ -174,8 +174,11 @@
                             </table>
                         </div>
                         <div class="card-footer text-right">
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
+                            <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+                            <div id="loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
+                            </div>
                         </div>
                     </div>
             </div>
@@ -467,5 +470,20 @@
             // Tampilkan nilai yang sudah diformat ke dalam input
             input.value = value;
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Tambahkan event listener pada tombol "Simpan"
+            $('#btnSimpan').click(function() {
+                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
+                $(this).hide();
+                $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
+                $('#loading').show();
+
+                // Lakukan pengiriman formulir
+                $('form').submit();
+            });
+        });
     </script>
 @endsection

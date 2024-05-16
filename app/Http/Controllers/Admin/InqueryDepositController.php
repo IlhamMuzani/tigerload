@@ -133,12 +133,10 @@ class InqueryDepositController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
-    public function destroy($id)
+    public function hapusdeposit($id)
     {
-        $ban = Spk::find($id);
-        $ban->detail_kendaraan()->delete();
-        $ban->delete();
-
-        return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Spk');
+        $tagihan = Depositpemesanan::where('id', $id)->first();
+        $tagihan->delete();
+        return back()->with('success', 'Berhasil menghapus Surat penawaran');
     }
 }

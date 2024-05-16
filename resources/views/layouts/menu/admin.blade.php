@@ -181,7 +181,7 @@
     request()->is('admin/penjualan*') ||
     request()->is('admin/deposit_pemesanan*') ||
     request()->is('admin/pengeluaran_kaskecil*') ||
-        request()->is('admin/tablepengeluaran*') ||
+    request()->is('admin/tablepengeluaran*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -198,7 +198,7 @@
         request()->is('admin/penjualan*') ||
         request()->is('admin/deposit_pemesanan*') ||
         request()->is('admin/pengeluaran_kaskecil*') ||
-            request()->is('admin/tablepengeluaran*') ||
+        request()->is('admin/tablepengeluaran*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -273,21 +273,21 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pengambilan bahan baku'])
-            <li class="nav-item">
-                <a href="{{ url('admin/pengambilanbahan') }}"
-                    class="nav-link {{ request()->is('admin/pengambilanbahan*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Pengambilan Bahan Baku</p>
-                </a>
-            </li>
-        @endif
         @if (auth()->check() && auth()->user()->menu['deposit pemesanan'])
             <li class="nav-item">
                 <a href="{{ url('admin/deposit_pemesanan') }}"
                     class="nav-link {{ request()->is('admin/deposit_pemesanan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Deposit Pemesanan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['pengambilan bahan baku'])
+            <li class="nav-item">
+                <a href="{{ url('admin/pengambilanbahan') }}"
+                    class="nav-link {{ request()->is('admin/pengambilanbahan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Pengambilan Bahan Baku</p>
                 </a>
             </li>
         @endif
@@ -330,7 +330,7 @@
     request()->is('admin/inquery_pembelian*') ||
     request()->is('admin/inquery_fakturpelunasanpembelian*') ||
     request()->is('admin/inquery_pelunasan*') ||
-    request()->is('admin/inquery-deposit*') ||
+    request()->is('admin/inquery_deposit*') ||
     request()->is('admin/inquery_spk*') ||
     request()->is('admin/inquery_penawaran*') ||
     request()->is('admin/inquery_penerimaankaskecil*') ||
@@ -347,7 +347,7 @@
         request()->is('admin/inquery_pembelian*') ||
         request()->is('admin/inquery_fakturpelunasanpembelian*') ||
         request()->is('admin/inquery_pelunasan*') ||
-        request()->is('admin/inquery-deposit*') ||
+        request()->is('admin/inquery_deposit*') ||
         request()->is('admin/inquery_spk*') ||
         request()->is('admin/inquery_penawaran*') ||
         request()->is('admin/inquery_penerimaankaskecil*') ||

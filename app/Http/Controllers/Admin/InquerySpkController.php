@@ -74,7 +74,7 @@ class InquerySpkController extends Controller
     {
         $pembelian = Spk::where('id', $id)->first();
         $suratpenawarans = Surat_penawaran::all();
-        return view('admin/inqueryspk.update', compact('suratpenawarans','pembelian'));
+        return view('admin/inqueryspk.update', compact('suratpenawarans', 'pembelian'));
     }
 
     public function update(Request $request, $id)
@@ -190,5 +190,24 @@ class InquerySpkController extends Controller
         $ban->delete();
 
         return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Spk');
+    }
+
+    public function hapusspk($id)
+    {
+        $tagihan = Spk::where('id', $id)->first();
+
+        if ($tagihan) {
+            $detailtagihan = Kendaraan::where('spk_id', $id)->get();
+            // Delete related Detail_tagihan instances
+            Kendaraan::where('spk_id', $id)->delete();
+
+            // Delete the main Spk instance
+            $tagihan->delete();
+
+            return back()->with('success', 'Berhasil menghapus SPK');
+        } else {
+            // Handle the case where the Pembelian with the given ID is not found
+            return back()->with('error', 'SPK tidak ditemukan');
+        }
     }
 }

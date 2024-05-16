@@ -225,28 +225,6 @@ class InqueryPengambilanbahanController extends Controller
     public function unpostpengambilan($id)
     {
         $ban = Pengambilanbahan::where('id', $id)->first();
-
-        $ban->update([
-            'status' => 'unpost'
-        ]);
-
-        return back()->with('success', 'Berhasil');
-    }
-
-    public function postingpengambilan($id)
-    {
-        $ban = Pengambilanbahan::where('id', $id)->first();
-
-        $ban->update([
-            'status' => 'posting'
-        ]);
-
-        return back()->with('success', 'Berhasil');
-    }
-
-    public function destroy($id)
-    {
-        $part = Pengambilanbahan::find($id);
         $detailpenggantianoli = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
 
 
@@ -259,11 +237,75 @@ class InqueryPengambilanbahanController extends Controller
             $sparepart->update(['jumlah' => $newQuantity]);
         }
 
-        $pembelian = Pengambilanbahan::find($id);
-        $pembelian->detail_pengambilan()->delete();
-        $pembelian->delete();
+        $ban->update([
+            'status' => 'unpost'
+        ]);
 
-
-        return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus pengambilan');
+        return back()->with('success', 'Berhasil');
     }
+
+    public function postingpengambilan($id)
+    {
+        $ban = Pengambilanbahan::where('id', $id)->first();
+
+        $detailpenggantianoli = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
+
+
+        foreach ($detailpenggantianoli as $detail) {
+            $sparepartId = $detail->barang_id;
+            $sparepart = Barang::find($sparepartId);
+
+            // Add the quantity back to the stock in the Sparepart record
+            $newQuantity = $sparepart->jumlah - $detail->jumlah;
+            $sparepart->update(['jumlah' => $newQuantity]);
+        }
+
+        $ban->update([
+            'status' => 'posting'
+        ]);
+
+        return back()->with('success', 'Berhasil');
+    }
+
+    public function hapuspengambilan($id)
+    {
+        $tagihan = Pengambilanbahan::where('id', $id)->first();
+
+        if ($tagihan) {
+            $detailtagihan = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
+            // Delete related Detail_tagihan instances
+            Detailpengambilan::where('pengambilanbahan_id', $id)->delete();
+
+            // Delete the main Pembelian instance
+            $tagihan->delete();
+
+            return back()->with('success', 'Berhasil menghapus Pengambilan');
+        } else {
+            // Handle the case where the Pengambilan with the given ID is not found
+            return back()->with('error', 'Pengambilan tidak ditemukan');
+        }
+    }
+
+    // public function destroy($id)
+    // {
+    //     $part = Pengambilanbahan::find($id);
+    //     $detailpenggantianoli = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
+
+
+    //     foreach ($detailpenggantianoli as $detail) {
+    //         $sparepartId = $detail->barang_id;
+    //         $sparepart = Barang::find($sparepartId);
+
+    //         // Add the quantity back to the stock in the Sparepart record
+    //         $newQuantity = $sparepart->jumlah + $detail->jumlah;
+    //         $sparepart->update(['jumlah' => $newQuantity]);
+    //     }
+
+    //     $pembelian = Pengambilanbahan::find($id);
+    //     $pembelian->detail_pengambilan()->delete();
+    //     $pembelian->delete();
+
+
+    //     return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus pengambilan');
+    // }
 }

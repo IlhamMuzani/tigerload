@@ -38,7 +38,7 @@ class PenjualanController extends Controller
                 'depositpemesanan_id' => 'required',
             ],
             [
-                'depositpemesanan_id.required' => 'Pilih spk',
+                'depositpemesanan_id.required' => 'Lakukan input DP terlebih dahulu',
             ]
         );
 

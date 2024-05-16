@@ -56,6 +56,26 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('print_slipgaji', [\App\Http\Controllers\Admin\LaporanSlipgajiController::class, 'print_slipgaji']);
     Route::resource('laporan_slipgaji', \App\Http\Controllers\Admin\LaporanSlipgajiController::class);
 
+
+    Route::get('inquery_pembelian/unpostpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpostpembelian']);
+    Route::get('inquery_pembelian/postingpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'postingpembelian']);
+
+    Route::get('inquery_penjualan/unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan']);
+    Route::get('inquery_penjualan/postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan']);
+
+    Route::get('inquery_penawaran/unpostpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'unpostpenawaran']);
+    Route::get('inquery_penawaran/postingpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'postingpenawaran']);
+
+    Route::get('inquery_deposit/unpostdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'unpostdeposit']);
+    Route::get('inquery_deposit/postingdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'postingdeposit']);
+
+    Route::get('inquery_spk/unpost/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'unpost']);
+    Route::get('inquery_spk/posting/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'posting']);
+
+    Route::get('inquery_pengambilanbahan/unpostpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'unpostpengambilan']);
+    Route::get('inquery_pengambilanbahan/postingpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'postingpengambilan']);
+    
+    
     Route::get('unpostpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'unpostpenawaran'])->name('unpostpenawaran');
     Route::get('postingpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'postingpenawaran'])->name('postingpenawaran');
     Route::get('unpostdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'unpostdeposit'])->name('unpostdeposit');
@@ -74,11 +94,16 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('print_laporanpelunasan', [\App\Http\Controllers\Admin\LaporanPelunasanController::class, 'print_laporanpelunasan']);
     Route::get('laporan_pelunasanglobalpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'indexglobalpembelian']);
     Route::get('print_pelunasanglobalpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'print_pelunasanglobalpembelian']);
-
-    Route::get('unpostbarang/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpostbarang'])->name('unpostbarang');
-    Route::get('postingbarang/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'postingbarang'])->name('postingbarang');
     Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
 
+    Route::get('hapuspenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'hapuspenjualan'])->name('hapuspenjualan');
+
+    Route::get('hapusdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'hapusdeposit'])->name('hapusdeposit');
+    Route::get('hapuspengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'hapuspengambilan'])->name('hapuspengambilan');
+    Route::get('hapuspenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'hapuspenawaran'])->name('hapuspenawaran');
+    Route::get('hapusspk/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'hapusspk'])->name('hapusspk');
+
+    Route::get('hapuspembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'hapuspembelian'])->name('hapuspembelian');
     Route::get('unpostpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'unpostpengambilan'])->name('unpostpengambilan');
     Route::get('postingpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'postingpengambilan'])->name('postingpengambilan');
     Route::get('pengambilanbahan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PengambilanbahanController::class, 'cetakpdf']);

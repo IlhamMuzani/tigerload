@@ -207,15 +207,15 @@
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                     onclick="getSelectedData('{{ $penjualan->id }}',
-                                                     '{{ $penjualan->kode_penjualan }}',
-                                                     '{{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}',
-                                                      '{{ $penjualan->tanggal }}',
-                                                      '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}',
+                                                    '{{ $penjualan->kode_penjualan }}',
+                                                    '{{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}',
+                                                    '{{ $penjualan->tanggal }}',
+                                                    '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}',
                                                     '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}',
                                                     '{{ number_format($penjualan->depositpemesanan->harga, 0, ',', '.') }}',
                                                     '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->depositpemesanan->harga, 0, ',', '.') }}',
                                                     
-                                                      )">
+                                                    )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>

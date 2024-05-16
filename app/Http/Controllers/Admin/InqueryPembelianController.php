@@ -224,7 +224,7 @@ class InqueryPembelianController extends Controller
     }
 
 
-    public function unpostbarang($id)
+    public function unpostpembelian($id)
     {
         $ban = Pembelian::where('id', $id)->first();
 
@@ -235,7 +235,7 @@ class InqueryPembelianController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
-    public function postingbarang($id)
+    public function postingpembelian($id)
     {
         $ban = Pembelian::where('id', $id)->first();
 
@@ -254,5 +254,32 @@ class InqueryPembelianController extends Controller
 
 
         return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus pembelian');
+    }
+
+    public function hapuspembelian($id)
+    {
+        $tagihan = Pembelian::where('id', $id)->first();
+
+        if ($tagihan) {
+            $detailtagihan = Detailpembelian::where('pembelian_id', $id)->get();
+
+            // Loop through each Detailpembelian and update associated Faktur_ekspedisi records
+            // foreach ($detailtagihan as $detail) {
+            //     if ($detail->faktur_ekspedisi_id) {
+            //         Faktur_ekspedisi::where('id', $detail->faktur_ekspedisi_id)->update(['status_faktur' => null]);
+            //     }
+            // }
+
+            // Delete related Detail_tagihan instances
+            Detailpembelian::where('pembelian_id', $id)->delete();
+
+            // Delete the main Pembelian instance
+            $tagihan->delete();
+
+            return back()->with('success', 'Berhasil menghapus Pembelian');
+        } else {
+            // Handle the case where the Pembelian with the given ID is not found
+            return back()->with('error', 'Pembelian tidak ditemukan');
+        }
     }
 }

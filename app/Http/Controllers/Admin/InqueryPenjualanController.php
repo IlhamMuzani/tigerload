@@ -218,6 +218,18 @@ class InqueryPenjualanController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
+
+    public function hapuspenjualan($id)
+    {
+        $penjualan = Penjualan::where('id', $id)->first();
+
+        Kendaraan::where('id', $penjualan->kendaraan_id)->update([
+            'status' => 'stok',
+        ]);
+        $penjualan->delete();
+        return back()->with('success', 'Berhasil menghapus Penjualan');
+    }
+
     public function destroy($id)
     {
         $penjualan = Penjualan::find($id);
@@ -225,8 +237,6 @@ class InqueryPenjualanController extends Controller
             'status' => 'stok',
         ]);
         $penjualan->delete();
-
-
         return redirect('admin/inquery_penjualan')->with('success', 'Berhasil menghapus Penjualan');
     }
 }
