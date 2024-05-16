@@ -151,6 +151,7 @@ class InqueryPenjualanController extends Controller
 
         // Update the main transaction
         $transaksi->update([
+            'spk_id' => $request->spk_id,
             'depositpemesanan_id' => $request->depositpemesanan_id,
             'status' => 'posting',
         ]);
@@ -189,6 +190,9 @@ class InqueryPenjualanController extends Controller
                 }
             }
         }
+
+        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
+
         $penjualans = Penjualan::find($transaksi_id);
 
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
@@ -198,9 +202,11 @@ class InqueryPenjualanController extends Controller
 
     public function unpostpenjualan($id)
     {
-        $ban = Penjualan::where('id', $id)->first();
+        $transaksi = Penjualan::where('id', $id)->first();
 
-        $ban->update([
+        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => null]);
+
+        $transaksi->update([
             'status' => 'unpost'
         ]);
 
@@ -209,9 +215,11 @@ class InqueryPenjualanController extends Controller
 
     public function postingpenjualan($id)
     {
-        $ban = Penjualan::where('id', $id)->first();
+        $transaksi = Penjualan::where('id', $id)->first();
 
-        $ban->update([
+        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
+
+        $transaksi->update([
             'status' => 'posting'
         ]);
 

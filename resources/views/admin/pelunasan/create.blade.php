@@ -393,60 +393,6 @@
             window.addEventListener('load', hitungSelisih);
         }
 
-
-        // Selisih()
-
-        // function Selisih() {
-        //     // pembayaran 
-        //     function hapusTitik(string) {
-        //         return string.replace(/\./g, '');
-        //     }
-
-        //     // Fungsi untuk mengubah angka menjadi format mata uang Rupiah
-        //     function formatRupiah(angka) {
-        //         var reverse = angka.toString().split('').reverse().join('');
-        //         var ribuan = reverse.match(/\d{1,3}/g);
-        //         var formatted = ribuan.join('.').split('').reverse().join('');
-        //         return 'Rp ' + formatted;
-        //     }
-
-
-        //     // Fungsi untuk menghitung selisih dan menampilkannya
-        //     function hitungSelisih() {
-        //         // Dapatkan nilai dari input "Total Pembayaran" dan hapus titik
-        //         var totalPembayaranInput = document.getElementById('KurangiDP');
-        //         var totalPembayaranValue = totalPembayaranInput.value;
-        //         var totalPembayaran = parseFloat(hapusTitik(totalPembayaranValue)) || 0;
-
-        //         // Dapatkan nilai dari input "Nominal" dan hapus titik
-        //         var nominalInput = document.getElementById('nominal');
-        //         var nominalValue = nominalInput.value;
-        //         var nominal = parseFloat(hapusTitik(nominalValue)) || 0;
-
-        //         // Hitung selisih
-        //         var selisih = totalPembayaran - nominal;
-
-        //         // Tampilkan hasil selisih dalam format mata uang Rupiah dengan tanda negatif
-        //         var hasilDP = document.getElementById('hasilDP');
-
-        //         // Tambahkan tanda negatif jika selisih negatif
-        //         if (selisih < 0) {
-        //             hasilDP.value = ' ' + formatRupiah(selisih);
-        //         } else {
-        //             hasilDP.value = '-' + formatRupiah(-selisih);
-        //         }
-
-        //         // Jika Anda ingin menampilkan selisih dalam format lain, sesuaikan kode di atas.
-        //     }
-
-
-        //     // Panggil fungsi hitungSelisih saat input "Nominal" berubah
-        //     document.getElementById('nominal').addEventListener('input', hitungSelisih);
-
-        //     // Panggil fungsi hitungSelisih saat halaman dimuat (untuk menginisialisasi nilai selisih)
-        //     window.addEventListener('load', hitungSelisih);
-        // }
-
         function toggleLabels() {
             var kategori = document.getElementById('kategori');
             var bgLabel = document.getElementById('bg');

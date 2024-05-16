@@ -38,6 +38,7 @@ class Surat_penawaran extends Model
         'jumlah_unit',
         'harga',
         'qrcode_penawaran',
+        'status_spk',
         'tanggal',
         'tanggal_awal',
         'status',

@@ -162,6 +162,27 @@ class InqueryPelunasanController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
+    public function hapuspelunasan($id)
+    {
+        $item = Pelunasan::where('id', $id)->first();
+
+        if ($item) {
+            // $detailpelunasan = Detail_pelunasan::where('faktur_pelunasan_id', $id)->get();
+            // // Delete related Detail_pelunasan instances
+            // Detail_pelunasan::where('faktur_pelunasan_id', $id)->delete();
+            // Detail_pelunasanreturn::where('faktur_pelunasan_id', $id)->delete();
+            // Detail_pelunasanpotongan::where('faktur_pelunasan_id', $id)->delete();
+
+            // Delete the main Faktur_pelunasan instance
+            $item->delete();
+
+            return back()->with('success', 'Berhasil menghapus Pelunasan');
+        } else {
+            // Handle the case where the Faktur_pelunasan with the given ID is not found
+            return back()->with('error', 'Pelunasan tidak ditemukan');
+        }
+    }
+
     public function destroy($id)
     {
         $penjualan = Pelunasan::find($id);

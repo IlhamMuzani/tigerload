@@ -83,18 +83,12 @@ class InquerySpkController extends Controller
             $request->all(),
             [
                 'kategori' => 'required',
-                'pelanggan_id' => 'required',
-                'typekaroseri_id' => 'required',
-                // 'marketing_id' => 'required',
-                'merek_id' => 'required',
+
                 'harga' => 'required',
             ],
             [
                 'kategori.required' => 'Pilih kategori',
-                'pelanggan_id.required' => 'Pilih pelanggan',
-                'typekaroseri_id.required' => 'Pilih karoseri',
-                // 'marketing_id.required' => 'Pilih marketing',
-                'merek_id.required' => 'Pilih merek',
+
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -118,6 +112,7 @@ class InquerySpkController extends Controller
 
         $pembelian = Spk::where('id', $id)->update(
             [
+                'surat_penawaran_id' => $request->surat_penawaran_id,
                 'no_npwp' => $request->no_npwp,
                 'kategori' => $request->kategori,
                 'pelanggan_id' => $request->pelanggan_id,

@@ -136,7 +136,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modal-unpost-{{ $pembelian->id }}">
+                                {{-- <div class="modal fade" id="modal-unpost-{{ $pembelian->id }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -238,7 +238,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             @endforeach
                         </tbody>
                     </table>

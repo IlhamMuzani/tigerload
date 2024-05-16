@@ -15,7 +15,7 @@ class DepositpemesananController extends Controller
 {
     public function index()
     {
-        $spks = Spk::all();
+        $spks = Spk::where('status_deposit', null)->get();
         return view('admin/depositpemesanan.create', compact('spks'));
     }
 
@@ -54,7 +54,9 @@ class DepositpemesananController extends Controller
                 'status' => 'posting',
 
             ]
-        )); 
+        ));
+
+        $spk = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit']);
         
         return view('admin.depositpemesanan.show', compact('deposits'));
     }

@@ -26,7 +26,7 @@ class PenjualanController extends Controller
     {
         $deposits = Depositpemesanan::all();
         $barangs = Barang::all();
-        $spks = Spk::all();
+        $spks = Spk::where('status_penjualan', null)->get();
         return view('admin/penjualan.create', compact('deposits', 'barangs', 'spks'));
     }
 
@@ -97,6 +97,7 @@ class PenjualanController extends Controller
         $penjualans = Penjualan::create(array_merge(
             $request->all(),
             [
+                'spk_id' => $request->spk_id,
                 'depositpemesanan_id' => $request->depositpemesanan_id,
                 // 'harga' => $request->harga,
                 'kode_penjualan' => $this->kode(),
@@ -122,6 +123,9 @@ class PenjualanController extends Controller
                 ]);
             }
         }
+
+        
+        $spks = Spk::where('id', $penjualans->spk_id)->update(['status_penjualan' => 'penjualan']);
 
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 

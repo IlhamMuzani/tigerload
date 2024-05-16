@@ -32,19 +32,13 @@ class SpkController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'kategori' => 'required',
-                'pelanggan_id' => 'required',
-                'typekaroseri_id' => 'required',
-                // 'marketing_id' => 'required',
-                'merek_id' => 'required',
+                'surat_penawaran_id' => 'required',
+
                 'harga' => 'required',
             ],
             [
-                'kategori.required' => 'Pilih kategori',
-                'pelanggan_id.required' => 'Pilih pelanggan',
-                'typekaroseri_id.required' => 'Pilih karoseri',
-                // 'marketing_id.required' => 'Pilih marketing',
-                'merek_id.required' => 'Pilih merek',
+                'surat_penawaran_id.required' => 'Pilih Surat Penawaran',
+
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -69,6 +63,7 @@ class SpkController extends Controller
         $pembelian = Spk::create(array_merge(
             $request->all(),
             [
+                'surat_penawaran_id' => $request->surat_penawaran_id,
                 'no_npwp' => $request->no_npwp,
                 'kategori' => $request->kategori,
                 'pelanggan_id' => $request->pelanggan_id,

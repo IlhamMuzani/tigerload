@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('spks', function (Blueprint $table) {
             $table->id();
             $table->string('kategori')->nullable();
+            $table->unsignedBigInteger('surat_penawaran_id')->nullable();
+            $table->foreign('surat_penawaran_id')->references('id')->on('surat_penawarans')->onDelete('set null');
             $table->string('no_npwp')->nullable();
             $table->string('gambar_npwp')->nullable();
             $table->string('kode_spk')->nullable();
@@ -47,6 +49,8 @@ return new class extends Migration
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->string('status')->nullable();
+            $table->string('status_deposit')->nullable();
+            $table->string('status_penjualan')->nullable();
             $table->string('status_komisi')->nullable();
             $table->timestamp('deleted_at')->nullable();
 

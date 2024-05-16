@@ -16,6 +16,7 @@ class Spk extends Model
     protected $fillable =
     [
         'kode_spk',
+        'surat_penawaran_id',
         'kategori',
         'no_npwp',
         'gambar_npwp',
@@ -41,6 +42,8 @@ class Spk extends Model
         'tanggal',
         'tanggal_awal',
         'status',
+        'status_deposit',
+        'status_penjualan',
         'status_komisi',
     ];
 

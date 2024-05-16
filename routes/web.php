@@ -74,7 +74,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
     Route::get('inquery_pengambilanbahan/unpostpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'unpostpengambilan']);
     Route::get('inquery_pengambilanbahan/postingpengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'postingpengambilan']);
-    
+
+    Route::get('inquery_pelunasan/unpostpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'unpostpelunasan']);
+    Route::get('inquery_pelunasan/postingpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'postingpelunasan']);
     
     Route::get('unpostpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'unpostpenawaran'])->name('unpostpenawaran');
     Route::get('postingpenawaran/{id}', [\App\Http\Controllers\Admin\InquerySuratpenawaranController::class, 'postingpenawaran'])->name('postingpenawaran');
@@ -128,8 +130,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('faktur_pelunasanpembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanpembelianController::class, 'cetakpdf']);
     Route::get('unpostpelunasanpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class, 'unpostpelunasanpembelian'])->name('unpostpelunasanpembelian');
     Route::get('postingpelunasanpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class, 'postingpelunasanpembelian'])->name('postingpelunasanpembelian');
-    Route::get('hapuspelunasapembeliann/{id}', [\App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class, 'hapuspelunasanpembelian'])->name('hapuspelunasanpembelian');
+    Route::get('hapuspelunasanpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpelunasanpembelianController::class, 'hapuspelunasanpembelian'])->name('hapuspelunasanpembelian');
     Route::get('laporan_fakturpelunasanpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'index']);
+    Route::get('hapuspelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'hapuspelunasan'])->name('hapuspelunasan');
 
     Route::get('inquery_penerimaankaskecil/unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan']);
     Route::get('inquery_penerimaankaskecil/postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan']);
