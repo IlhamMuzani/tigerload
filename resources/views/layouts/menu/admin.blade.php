@@ -94,7 +94,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['karyawan'])
+        @if (auth()->check() && auth()->user()->menu['gaji karyawan'])
             <li class="nav-item">
                 <a href="{{ url('admin/gaji_karyawan') }}"
                     class="nav-link {{ request()->is('admin/gaji_karyawan*') ? 'active' : '' }}">
