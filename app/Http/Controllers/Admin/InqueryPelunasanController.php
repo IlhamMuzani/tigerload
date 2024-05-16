@@ -76,7 +76,7 @@ class InqueryPelunasanController extends Controller
     public function edit($id)
     {
         $pelunasans = pelunasan::where('id', $id)->first();
-        $penjualans = Penjualan::all();
+        $penjualans = Penjualan::where(['status' => 'posting', 'status_pelunasan' => null])->get();
 
         return view('admin/inquerypelunasan.update', compact('pelunasans', 'penjualans'));
     }
@@ -132,6 +132,7 @@ class InqueryPelunasanController extends Controller
         );
 
         $pelunasans = Pelunasan::where('id', $id)->first();
+        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
 
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
@@ -142,9 +143,11 @@ class InqueryPelunasanController extends Controller
 
     public function unpostpelunasan($id)
     {
-        $ban = Pelunasan::where('id', $id)->first();
+        $pelunasan = Pelunasan::where('id', $id)->first();
 
-        $ban->update([
+        $penjualan = Penjualan::where('id', $pelunasan->penjualan_id)->update(['status_pelunasan' => null]);
+
+        $pelunasan->update([
             'status' => 'unpost'
         ]);
 
@@ -153,9 +156,11 @@ class InqueryPelunasanController extends Controller
 
     public function postingpelunasan($id)
     {
-        $ban = Pelunasan::where('id', $id)->first();
+        $pelunasan = Pelunasan::where('id', $id)->first();
 
-        $ban->update([
+        $penjualan = Penjualan::where('id', $pelunasan->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
+
+        $pelunasan->update([
             'status' => 'posting'
         ]);
 

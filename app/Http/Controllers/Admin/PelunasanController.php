@@ -25,7 +25,7 @@ class PelunasanController extends Controller
 {
     public function index()
     {
-        $penjualans = Penjualan::all();
+        $penjualans = Penjualan::where(['status' => 'posting', 'status_pelunasan' => null])->get();
         return view('admin/pelunasan.create', compact('penjualans'));
     }
 
@@ -86,6 +86,8 @@ class PelunasanController extends Controller
 
             ]
         ));
+
+        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
 
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
 

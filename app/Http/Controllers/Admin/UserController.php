@@ -106,6 +106,7 @@ class UserController extends Controller
                     'karyawan' => false,
                     'user' => false,
                     'departemen' => false,
+                    'gaji karyawan' => false,
                     'supplier' => false,
                     'pelanggan' => false,
                     'merek' => false,
