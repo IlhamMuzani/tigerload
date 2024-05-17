@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Depositpemesanan;
 use App\Models\Marketing;
 use App\Models\Merek;
 use App\Models\Modelken;
@@ -74,7 +75,7 @@ class InqueryPenjualanController extends Controller
     {
         $penjualans = Penjualan::where('id', $id)->first();
         $barangs = Barang::all();
-        $spks = Spk::where(['status' => 'posting', 'status_penjualan' => null])->get();
+        $spks = Spk::where(['status' => 'selesai', 'status_penjualan' => null])->get();
         $details = Spesifikasi::where('penjualan_id', $id)->get();
 
         return view('admin/inquerypenjualan.update', compact('spks', 'barangs', 'penjualans', 'details'));
@@ -85,10 +86,10 @@ class InqueryPenjualanController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
-                'depositpemesanan_id' => 'required',
+                'spk_id' => 'required',
             ],
             [
-                'depositpemesanan_id.required' => 'Pilih spk',
+                'spk_id.required' => 'Pilih nomor spk terlebih dahulu',
             ]
         );
 
@@ -191,7 +192,12 @@ class InqueryPenjualanController extends Controller
             }
         }
 
+        $spk = Spk::where('id', $transaksi->spk_id)->first();
         $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
+        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        if ($deposit) {
+            $deposit->update(['status' => 'selesai']);
+        }
 
         $penjualans = Penjualan::find($transaksi_id);
 
@@ -203,9 +209,12 @@ class InqueryPenjualanController extends Controller
     public function unpostpenjualan($id)
     {
         $transaksi = Penjualan::where('id', $id)->first();
-
+        $spk = Spk::where('id', $transaksi->spk_id)->first();
         $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => null]);
-
+        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'selesai'])->first();
+        if ($deposit) {
+            $deposit->update(['status' => 'posting']);
+        }
         $transaksi->update([
             'status' => 'unpost'
         ]);
@@ -216,9 +225,12 @@ class InqueryPenjualanController extends Controller
     public function postingpenjualan($id)
     {
         $transaksi = Penjualan::where('id', $id)->first();
-
+        $spk = Spk::where('id', $transaksi->spk_id)->first();
         $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
-
+        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        if ($deposit) {
+            $deposit->update(['status' => 'selesai']);
+        }
         $transaksi->update([
             'status' => 'posting'
         ]);

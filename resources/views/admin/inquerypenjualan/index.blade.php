@@ -91,28 +91,28 @@
                                         @if ($penjualan->depositpemesanan)
                                             {{ $penjualan->depositpemesanan->spk->kode_spk }}
                                         @else
-                                            data tidak ada
+                                            {{ $penjualan->spk->kode_spk }}
                                         @endif
                                     </td>
                                     <td>
                                         @if ($penjualan->depositpemesanan)
                                             {{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
                                         @else
-                                            data tidak ada
+                                            {{ $penjualan->spk->pelanggan->nama_pelanggan }}
                                         @endif
                                     </td>
                                     <td>
                                         @if ($penjualan->depositpemesanan)
                                             {{ $penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
                                         @else
-                                            data tidak ada
+                                            {{ $penjualan->spk->typekaroseri->kode_type }}
                                         @endif
                                     </td>
                                     <td>
                                         @if ($penjualan->depositpemesanan)
                                             {{ $penjualan->depositpemesanan->kode_deposit }}
                                         @else
-                                            data tidak ada
+                                            tidak DP
                                         @endif
                                     </td>
                                     <td>{{ $penjualan->tanggal_awal }}</td>
@@ -122,6 +122,10 @@
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
+                                        @endif
+                                        @if ($penjualan->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
+                                                width="40" alt="Roda Mobil">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($penjualan->status == 'unpost')

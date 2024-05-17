@@ -98,14 +98,16 @@
                                     <td>Rp {{ number_format($pembelian->harga, 0, ',', '.') }}</td>
 
                                     <td class="text-center">
-                                        @if ($pembelian->status == 'posting')
-                                            <button type="button" class="btn btn-success btn-sm">
-                                                <i class="fas fa-check"></i>
-                                            </button>
+                                        @if ($pembelian->status_deposit == null)
+                                            @if ($pembelian->status == 'posting')
+                                                <button type="button" class="btn btn-success btn-sm">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            @endif
                                         @endif
-                                        @if ($pembelian->status == 'selesai')
+                                        @if ($pembelian->status_deposit == 'deposit')
                                             <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
-                                                width="40" alt="Roda Mobil">
+                                                width="40" alt="fakturs">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($pembelian->status == 'unpost')
@@ -127,11 +129,15 @@
                                                 </form>
                                             @endif
                                             @if ($pembelian->status == 'posting')
-                                                <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $pembelian->id }}">Unpost</a>
-
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
+                                                @if ($pembelian->status_deposit == null)
+                                                    <a class="dropdown-item unpost-btn"
+                                                        data-memo-id="{{ $pembelian->id }}">Unpost</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
+                                                @else
+                                                    <a class="dropdown-item"
+                                                        href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
+                                                @endif
                                             @endif
                                             @if ($pembelian->status == 'selesai')
                                                 <a class="dropdown-item"

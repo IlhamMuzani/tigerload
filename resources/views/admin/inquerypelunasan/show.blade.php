@@ -259,28 +259,46 @@
                             <td class="info-catatan2" style="font-size: 13px;">Nama Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                @if ($penjualans->depositpemesanan)
+                                    {{ $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                @else
+                                    {{ $penjualans->spk->pelanggan->nama_pelanggan }}
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Alamat</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $penjualans->depositpemesanan->spk->pelanggan->alamat }} </span>
+                                @if ($penjualans->depositpemesanan)
+                                    {{ $penjualans->depositpemesanan->spk->pelanggan->alamat }}
+                                @else
+                                    {{ $penjualans->spk->pelanggan->alamat }}
+                                @endif
+                                </span>
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Telp</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $penjualans->depositpemesanan->spk->pelanggan->telp }}
+                                @if ($penjualans->depositpemesanan)
+                                    {{ $penjualans->depositpemesanan->spk->pelanggan->telp }}
+                                @else
+                                    {{ $penjualans->spk->pelanggan->telp }}
+                                @endif
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">ID Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $penjualans->depositpemesanan->spk->pelanggan->kode_pelanggan }} </span>
+                                @if ($penjualans->depositpemesanan)
+                                    {{ $penjualans->depositpemesanan->spk->pelanggan->kode_pelanggan }}
+                                @else
+                                    {{ $penjualans->spk->pelanggan->kode_pelanggan }}
+                                @endif
+                                </span>
                             </td>
                         </tr>
                     </table>
@@ -409,7 +427,11 @@
                 </td>
                 <td style="text-align: right; padding-right: 156px;">
                     <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->totalpenjualan - $pelunasans->penjualan->depositpemesanan->harga - $pelunasans->nominal, 0, ',', '.') }}
+                        @if ($pelunasans->penjualan->depositpemesanan)
+                            {{ number_format($pelunasans->totalpenjualan - $pelunasans->penjualan->depositpemesanan->harga - $pelunasans->nominal, 0, ',', '.') }}
+                        @else
+                            {{ number_format($pelunasans->totalpenjualan - $pelunasans->penjualan->harga - $pelunasans->nominal, 0, ',', '.') }}
+                        @endif
                         {{-- {{ number_format($pelunasans->selisih, 0, ',', '.') }} --}}
                 </td>
             </tr>
@@ -438,14 +460,23 @@
                 </td>
                 <td style="">
                     <span class="info-item" style="font-size: 15px;">Dp
-                        ({{ $penjualans->depositpemesanan->tanggal }})</span>
+                        @if ($penjualans->depositpemesanan)
+                            ({{ $penjualans->depositpemesanan->tanggal }})
+                        @else
+                        @endif
+                    </span>
                 </td>
                 <td style="text-align: right; padding-right: 144px;">
                     <span class="info-item" style="font-size: 15px; margin;"></span>
                 </td>
                 <td style="text-align: right; padding-right: 128px;">
                     <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}</span>
+                        @if ($penjualans->depositpemesanan)
+                            {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}
+                        @else
+                            0
+                        @endif
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -493,59 +524,116 @@
     </table>
     <br>
 
-    @if ($pelunasans->penjualan->depositpemesanan->spk->kategori == 'NON PPN')
-        <table width="100%">
-            <tr>
-                <td>
-                    <div class="info-catatan" style="max-width: 400px;">
-                        <table>
-                            <tr>
-                                <td class="info-catatan2">Nama Bank</td>
-                                <td class="info-item">:</td>
-                                <td>BCA</td>
-                            </tr>
-                            <tr>
-                                <td class="info-catatan2">No. Rekening</td>
-                                <td class="info-item">:</td>
-                                <td>3629888889</td>
-                            </tr>
-                            <tr>
-                                <td class="info-catatan2">Atas Nama</td>
-                                <td class="info-item">:</td>
-                                <td>DJOHAN WAHYUDI</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-        </table>
+    @if ($pelunasans->penjualan->depositpemesanan)
+        @if ($pelunasans->penjualan->depositpemesanan->spk->kategori == 'NON PPN')
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div class="info-catatan" style="max-width: 400px;">
+                            <table>
+                                <tr>
+                                    <td class="info-catatan2">Nama Bank</td>
+                                    <td class="info-item">:</td>
+                                    <td>BCA</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">No. Rekening</td>
+                                    <td class="info-item">:</td>
+                                    <td>3629888889</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">Atas Nama</td>
+                                    <td class="info-item">:</td>
+                                    <td>DJOHAN WAHYUDI</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        @else
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div class="info-catatan" style="max-width: 400px;">
+                            <table>
+                                <tr>
+                                    <td class="info-catatan2">Nama Bank</td>
+                                    <td class="info-item">:</td>
+                                    <td>BCA</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">No. Rekening</td>
+                                    <td class="info-item">:</td>
+                                    <td>3611889999</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">Atas Nama</td>
+                                    <td class="info-item">:</td>
+                                    <td>CV Tiger Load Engineering</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        @endif
     @else
-        <table width="100%">
-            <tr>
-                <td>
-                    <div class="info-catatan" style="max-width: 400px;">
-                        <table>
-                            <tr>
-                                <td class="info-catatan2">Nama Bank</td>
-                                <td class="info-item">:</td>
-                                <td>BCA</td>
-                            </tr>
-                            <tr>
-                                <td class="info-catatan2">No. Rekening</td>
-                                <td class="info-item">:</td>
-                                <td>3611889999</td>
-                            </tr>
-                            <tr>
-                                <td class="info-catatan2">Atas Nama</td>
-                                <td class="info-item">:</td>
-                                <td>CV Tiger Load Engineering</td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-        </table>
+        @if ($pelunasans->penjualan->spk->kategori == 'NON PPN')
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div class="info-catatan" style="max-width: 400px;">
+                            <table>
+                                <tr>
+                                    <td class="info-catatan2">Nama Bank</td>
+                                    <td class="info-item">:</td>
+                                    <td>BCA</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">No. Rekening</td>
+                                    <td class="info-item">:</td>
+                                    <td>3629888889</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">Atas Nama</td>
+                                    <td class="info-item">:</td>
+                                    <td>DJOHAN WAHYUDI</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        @else
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div class="info-catatan" style="max-width: 400px;">
+                            <table>
+                                <tr>
+                                    <td class="info-catatan2">Nama Bank</td>
+                                    <td class="info-item">:</td>
+                                    <td>BCA</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">No. Rekening</td>
+                                    <td class="info-item">:</td>
+                                    <td>3611889999</td>
+                                </tr>
+                                <tr>
+                                    <td class="info-catatan2">Atas Nama</td>
+                                    <td class="info-item">:</td>
+                                    <td>CV Tiger Load Engineering</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        @endif
     @endif
+
 
 
 

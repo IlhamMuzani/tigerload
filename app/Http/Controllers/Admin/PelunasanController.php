@@ -87,7 +87,7 @@ class PelunasanController extends Controller
             ]
         ));
 
-        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
+        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
 
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
 

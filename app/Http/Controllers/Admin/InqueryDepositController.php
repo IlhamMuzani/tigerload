@@ -104,7 +104,7 @@ class InqueryDepositController extends Controller
                 'status' => 'posting',
             ]
         );
-        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit']);
+        $spk = Spk::where('id', $deposits->spk_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
         $deposits = Depositpemesanan::where('id', $id)->first();
         $spk = Spk::where('id', $deposits->spk_id)->first();
 
@@ -116,7 +116,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => null]);
+        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => null, 'status' => 'posting',]);
 
         $deposits->update([
             'status' => 'unpost'
@@ -129,7 +129,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit']);
+        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit', 'status' => 'selesai',]);
 
         $deposits->update([
             'status' => 'posting'

@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label for="nopol">Nama Pelanggan</label>
                             <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                value="{{ old('nama_pelanggan', $pelunasans->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan) }}">
+                                value="@if ($pelunasans->penjualan->depositpemesanan) {{ old('nama_pelanggan', $pelunasans->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan) }} @else {{ old('nama_pelanggan', $pelunasans->penjualan->spk->pelanggan->nama_pelanggan) }} @endif">
                         </div>
                         <div class="form-group">
                             <label for="nama">Tanggal Penjualan</label>
@@ -73,11 +73,15 @@
                         <div class="form-group">
                             <label for="nama">Total</label>
                             <input type="text" class="form-control" id="total" readonly placeholder=""
-                                value="{{ old(
+                                value="@if ($pelunasans->penjualan->depositpemesanan) {{ old(
                                     'total',
                                     $pelunasans->penjualan->depositpemesanan->spk->harga +
                                         $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'),
-                                ) }}">
+                                ) }}@else{{ old(
+                                    'total',
+                                    $pelunasans->penjualan->spk->harga +
+                                        $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'),
+                                ) }} @endif">
                         </div>
                     </div>
                 </div>
@@ -137,13 +141,14 @@
                                     <label for="totalpenjualan">Sub Total</label>
                                     <input style="text-align: end" type="text" class="form-control"
                                         id="totalpembayaran" readonly name="totalpenjualan" placeholder=""
-                                        value="{{ number_format(old('totalpenjualan', $pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }}">
+                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('totalpenjualan', $pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }}
+                                        @else{{ number_format(old('totalpenjualan', $pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }} @endif">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">DP</label>
                                     <input style="text-align: end" type="text" class="form-control" id="dp"
                                         readonly name="dp" placeholder=""
-                                        value="{{ number_format(old('dp', $pelunasans->penjualan->depositpemesanan->harga), 0, ',', '.') }}">
+                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('dp', $pelunasans->penjualan->depositpemesanan->harga), 0, ',', '.') }}@else 0 @endif">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">Potongan</label>
@@ -156,7 +161,7 @@
                                     <label for="tinggi">Total Pembayaran</label>
                                     <input style="text-align: end" type="text" class="form-control" id="KurangiDP"
                                         readonly name="totalpembayaran"
-                                        value="{{ number_format($pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga') - $pelunasans->penjualan->depositpemesanan->harga, 0, ',', '.') }}"
+                                        value="@if($pelunasans->penjualan->depositpemesanan){{ number_format($pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga') - $pelunasans->penjualan->depositpemesanan->harga, 0, ',', '.') }}@else{{ number_format($pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'), 0, ',', '.') }}@endif"
                                         placeholder="">
                                 </div>
                                 <div class="form-group">
@@ -204,24 +209,35 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $penjualan->kode_penjualan }}</td>
-                                            <td>{{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}</td>
+                                            <td>
+                                                @if ($penjualan->depositpemesanan)
+                                                    {{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                                @else
+                                                    {{ $penjualan->spk->pelanggan->nama_pelanggan }}
+                                                @endif
+                                            </td>
                                             <td>{{ $penjualan->tanggal }}</td>
                                             <td>Rp
-                                                {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
+                                                @if ($penjualan->depositpemesanan)
+                                                    {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
+                                                @else
+                                                    {{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
+                                                @endif
                                             </td> {{-- <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek }}</td>
                                             <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
                                             <td>{{ $penjualan->depositpemesanan->spk->typekaroseri->kode_type }}</td> --}}
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                     onclick="getSelectedData('{{ $penjualan->id }}',
-                                                     '{{ $penjualan->kode_penjualan }}',
-                                                     '{{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}',
-                                                      '{{ $penjualan->tanggal }}',
-                                                      '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}',
-                                                    '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}',
-                                                    '{{ number_format($penjualan->depositpemesanan->harga) }}',
-                                                    '{{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->depositpemesanan->harga, 0, ',', '.') }}',
-                                                      )">
+                                                    '{{ $penjualan->kode_penjualan }}',
+                                                    '@if ($penjualan->depositpemesanan) {{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }} @else {{ $penjualan->spk->pelanggan->nama_pelanggan }} @endif',
+                                                    '{{ $penjualan->tanggal }}',
+                                                    '@if ($penjualan->depositpemesanan) {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->depositpemesanan) {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->depositpemesanan) {{ number_format($penjualan->depositpemesanan->harga, 0, ',', '.') }}@else {{ 0 }} @endif',
+                                                    '@if ($penjualan->depositpemesanan) {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->depositpemesanan->harga, 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    
+                                                    )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>

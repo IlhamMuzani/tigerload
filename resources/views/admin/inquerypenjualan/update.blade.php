@@ -60,53 +60,53 @@
                                 <label for="nopol">Id Deposit</label>
                                 <input type="text" class="form-control" id="depositpemesanan_id"
                                     name="depositpemesanan_id"
-                                    value="{{ old('depositpemesanan_id', $penjualans->depositpemesanan->id) }}" readonly
-                                    placeholder="" value="">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('depositpemesanan_id', $penjualans->depositpemesanan->id) }}@else @endif"
+                                    readonly placeholder="" value="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id SPK</label>
                                 <input type="text" class="form-control" id="spk_id" name="spk_id"
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->id) }}" readonly
-                                    placeholder="" value="">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->id) }}@else{{ old('spk_id', $penjualans->spk->id) }} @endif"
+                                    readonly placeholder="" value="">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
                                 <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->kode_spk) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->kode_spk) }}@else{{ old('spk_id', $penjualans->spk->kode_spk) }} @endif">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Nama Pelanggan</label>
                                 <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan) }}@else{{ old('spk_id', $penjualans->spk->pelanggan->nama_pelanggan) }} @endif">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Merek Kendaraan</label>
                                 <input type="text" class="form-control" id="merek" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek) }}@else{{ old('spk_id', $penjualans->spk->detail_kendaraan->first()->merek->nama_merek) }} @endif">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Type Kendaraan</label>
                                 <input type="text" class="form-control" id="tipe" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe) }}@else{{ old('spk_id', $penjualans->spk->detail_kendaraan->first()->merek->tipe->nama_tipe) }} @endif">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Kode Karoseri</label>
                                 <input type="text" class="form-control" id="kode_type"readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->kode_type) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->kode_type) }}@else{{ old('spk_id', $penjualans->spk->typekaroseri->kode_type) }} @endif">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Bentuk Karoseri</label>
                                 <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
-                                    value="{{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->nama_karoseri) }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->nama_karoseri) }}@else{{ old('spk_id', $penjualans->spk->typekaroseri->nama_karoseri) }} @endif">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
                                 <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
                                     placeholder=""
-                                    value="{{ number_format(old('harga_awal', $penjualans->depositpemesanan->spk->harga), 0, ',', '.') }}">
+                                    value="@if ($penjualans->depositpemesanan) {{ number_format(old('harga_awal', $penjualans->depositpemesanan->spk->harga), 0, ',', '.') }}@else{{ number_format(old('harga_awal', $penjualans->spk->harga), 0, ',', '.') }} @endif">
                             </div>
                         </div>
                     </div>

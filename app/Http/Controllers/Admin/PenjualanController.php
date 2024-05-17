@@ -26,7 +26,12 @@ class PenjualanController extends Controller
     {
         $deposits = Depositpemesanan::all();
         $barangs = Barang::all();
-        $spks = Spk::where(['status' => 'posting', 'status_penjualan' => null])->get();
+        $spks = Spk::where(function ($query) {
+            $query->where('status', 'selesai')
+                ->orWhere('status', 'posting');
+        })
+            ->where('status_penjualan', null)
+            ->get();
         return view('admin/penjualan.create', compact('deposits', 'barangs', 'spks'));
     }
 
@@ -35,10 +40,10 @@ class PenjualanController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
-                'depositpemesanan_id' => 'required',
+                'spk_id' => 'required',
             ],
             [
-                'depositpemesanan_id.required' => 'Lakukan input DP terlebih dahulu',
+                'spk_id.required' => 'Pilih nomor spk terlebih dahulu',
             ]
         );
 
@@ -125,7 +130,13 @@ class PenjualanController extends Controller
         }
 
 
+        $spk = Spk::where('id', $penjualans->spk_id)->first();
         $spks = Spk::where('id', $penjualans->spk_id)->update(['status_penjualan' => 'penjualan']);
+
+        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        if ($deposit) {
+            $deposit->update(['status' => 'selesai']);
+        }
 
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 

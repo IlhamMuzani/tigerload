@@ -56,7 +56,7 @@ class DepositpemesananController extends Controller
             ]
         ));
 
-        $spk = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit']);
+        $spk = Spk::where('id', $deposits->spk_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
         
         return view('admin.depositpemesanan.show', compact('deposits'));
     }

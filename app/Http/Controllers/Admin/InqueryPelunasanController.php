@@ -132,8 +132,7 @@ class InqueryPelunasanController extends Controller
         );
 
         $pelunasans = Pelunasan::where('id', $id)->first();
-        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
-
+        $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
         
@@ -145,7 +144,7 @@ class InqueryPelunasanController extends Controller
     {
         $pelunasan = Pelunasan::where('id', $id)->first();
 
-        $penjualan = Penjualan::where('id', $pelunasan->penjualan_id)->update(['status_pelunasan' => null]);
+        $penjualan = Penjualan::where(['id' => $pelunasan->penjualan_id, 'status' => 'selesai'])->update(['status' => 'posting', 'status_pelunasan' => null]);
 
         $pelunasan->update([
             'status' => 'unpost'
@@ -158,7 +157,7 @@ class InqueryPelunasanController extends Controller
     {
         $pelunasan = Pelunasan::where('id', $id)->first();
 
-        $penjualan = Penjualan::where('id', $pelunasan->penjualan_id)->update(['status_pelunasan' => 'pelunasan']);
+        $penjualan = Penjualan::where(['id' => $pelunasan->penjualan_id, 'status' => 'posting'])->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
 
         $pelunasan->update([
             'status' => 'posting'

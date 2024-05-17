@@ -90,28 +90,44 @@
                                     <td>{{ $pelunasan->kode_pelunasan }}</td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            {{ $pelunasan->penjualan->depositpemesanan->spk->kode_spk }}
+                                            @if ($pelunasan->penjualan->depositpemesanan)
+                                                {{ $pelunasan->penjualan->depositpemesanan->spk->kode_spk }}
+                                            @else
+                                                {{ $pelunasan->penjualan->spk->kode_spk }}
+                                            @endif
                                         @else
                                             data tidak ada
                                         @endif
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            {{ $pelunasan->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                            @if ($pelunasan->penjualan->depositpemesanan)
+                                                {{ $pelunasan->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                            @else
+                                                {{ $pelunasan->penjualan->spk->pelanggan->nama_pelanggan }}
+                                            @endif
                                         @else
                                             data tidak ada
                                         @endif
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            {{ $pelunasan->penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
+                                            @if ($pelunasan->penjualan->depositpemesanan)
+                                                {{ $pelunasan->penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
+                                            @else
+                                                {{ $pelunasan->penjualan->spk->typekaroseri->kode_type }}
+                                            @endif
                                         @else
                                             data tidak ada
                                         @endif
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            {{ $pelunasan->penjualan->depositpemesanan->kode_deposit }}
+                                            @if ($pelunasan->penjualan->depositpemesanan)
+                                                {{ $pelunasan->penjualan->depositpemesanan->kode_deposit }}
+                                            @else
+                                                tidak dp
+                                            @endif
                                         @else
                                             data tidak ada
                                         @endif
@@ -130,6 +146,10 @@
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
+                                        @endif
+                                        @if ($pelunasan->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
+                                                width="40" alt="Roda Mobil">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($pelunasan->status == 'unpost')

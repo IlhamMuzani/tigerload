@@ -13,33 +13,15 @@ use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         if (auth()->check() && auth()->user()->menu['karyawan']) {
-            if ($request->has('keyword')) {
-                $keyword = $request->keyword;
-                $karyawans = Karyawan::with('departemen')
-                    ->select('id', 'kode_karyawan', 'nama_lengkap', 'telp', 'departemen_id', 'qrcode_karyawan')
-                    ->where(function ($query) use ($keyword) {
-                        $query->whereHas('departemen', function ($query) use ($keyword) {
-                            $query->where('nama', 'like', "%$keyword%");
-                        })
-                            ->orWhere('kode_karyawan', 'like', "%$keyword%")
-                            ->orWhere('nama_lengkap', 'like', "%$keyword%")
-                            ->orWhere('telp', 'like', "%$keyword%");
-                    })
-                    ->orderBy('created_at')
-                    ->paginate(10);
-            } else {
-                $karyawans = Karyawan::with('departemen')
-                    ->select('id', 'kode_karyawan', 'nama_lengkap', 'telp', 'departemen_id', 'qrcode_karyawan')
-                    ->orderBy('created_at')
-                    ->paginate(10);
-            }
-
+            $karyawans = Karyawan::all();
             return view('admin.karyawan.index', compact('karyawans'));
+        } else {
+            // tidak memiliki akses
+            return back()->with('error', array('Anda tidak memiliki akses'));
         }
-        return back()->with('error', array('Anda tidak memiliki akses'));
     }
 
 
@@ -108,21 +90,9 @@ class KaryawanController extends Controller
             $namaGambar = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar->storeAs('public/uploads/', $namaGambar);
         } else {
-            $namaGambar = '';
+            $namaGambar = null;
         }
-
         $kode = $this->kode();
-        $kodedriver = $this->kodedriver();
-        $departemen = $request->departemen_id;
-
-        if ($departemen == 1) {
-            $kode_karyawan = $kode;
-        } elseif ($departemen == 2) {
-            $kode_karyawan = $kodedriver;
-        } else {
-            // Handle other cases if needed
-            $kode_karyawan =  $kode;
-        }
 
         Karyawan::create(array_merge(
             $request->all(),
@@ -138,7 +108,7 @@ class KaryawanController extends Controller
                 'bayar_kasbon' => 0,
                 'pembayaran' => 0,
                 'status' => 'null',
-                'kode_karyawan' => $kode_karyawan,
+                'kode_karyawan' => $this->kode(),
                 'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode,
                 // 'qrcode_karyawan' => 'http://192.168.1.46/javaline/karyawan/' . $kode
                 'tanggal' => Carbon::now('Asia/Jakarta'),
@@ -163,51 +133,6 @@ class KaryawanController extends Controller
         $newCode = $prefix . $formattedNum;
         return $newCode;
     }
-
-    public function kodedriver()
-    {
-        $lastBarang = Karyawan::latest()->first();
-        if (!$lastBarang) {
-            $num = 1;
-        } else {
-            $lastCode = $lastBarang->kode_karyawan;
-            $num = (int) substr($lastCode, strlen('FE')) + 1;
-        }
-        $formattedNum = sprintf("%06s", $num);
-        $prefix = 'AD';
-        $newCode = $prefix . $formattedNum;
-        return $newCode;
-    }
-
-    // public function kode()
-    // {
-    //     $lastBarang = Karyawan::latest()->first();
-    //     if (!$lastBarang) {
-    //         $num = 1;
-    //     } else {
-    //         $lastCode = $lastBarang->kode_karyawan;
-    //         $num = (int) substr($lastCode, strlen('AA')) + 1;
-    //     }
-    //     $formattedNum = sprintf("%06s", $num);
-    //     $prefix = 'AA';
-    //     $newCode = $prefix . $formattedNum;
-    //     return $newCode;
-    // }
-
-    // public function kodedriver()
-    // {
-    //     $lastBarang = Karyawan::latest()->first();
-    //     if (!$lastBarang) {
-    //         $num = 1;
-    //     } else {
-    //         $lastCode = $lastBarang->kode_karyawan;
-    //         $num = (int) substr($lastCode, strlen('AD')) + 1;
-    //     }
-    //     $formattedNum = sprintf("%06s", $num);
-    //     $prefix = 'AD';
-    //     $newCode = $prefix . $formattedNum;
-    //     return $newCode;
-    // }
 
     public function cetakpdf($id)
     {

@@ -35,11 +35,17 @@ class Penjualan extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public function depositpemesanan()
     {
         return $this->belongsTo(Depositpemesanan::class);
     }
+
+    public function spk()
+    {
+        return $this->belongsTo(Spk::class);
+    }
+
 
     public function detail_penjualan()
     {
