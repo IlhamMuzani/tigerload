@@ -102,8 +102,46 @@ class InqueryPenjualanController extends Controller
         $error_pesanans = array();
         $data_pembelians = collect();
 
-        if ($request->has('barang_id')) {
+        // if ($request->has('barang_id')) {
+        //     for ($i = 0; $i < count($request->barang_id); $i++) {
+        //         $validasi_produk = Validator::make($request->all(), [
+        //             'barang_id.' . $i => 'required',
+        //             'kode_barang.' . $i => 'required',
+        //             'nama.' . $i => 'required',
+        //             'jumlah.' . $i => 'required',
+        //             'harga.' . $i => 'required',
+        //         ]);
+
+        //         if ($validasi_produk->fails()) {
+        //             array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
+        //         }
+
+
+        //         $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
+        //         $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
+        //         $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
+        //         $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
+        //         $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
+
+        //         $data_pembelians->push([
+        //             'detail_id' => $request->detail_ids[$i] ?? null,
+        //             'barang_id' => $barang_id,
+        //             'kode_barang' => $kode_barang,
+        //             'nama' => $nama,
+        //             'jumlah' => $jumlah,
+        //             'harga' => $harga
+        //         ]);
+        //     }
+        // } else {
+        // }
+
+        if ($request->has('barang_id') || $request->has('kode_barang') || $request->has('nama') || $request->has('jumlah') || $request->has('harga')) {
             for ($i = 0; $i < count($request->barang_id); $i++) {
+                // Check if either 'keterangan_tambahan' or 'nominal_tambahan' has input
+                if (empty($request->barang_id[$i]) && empty($request->kode_barang[$i]) && empty($request->nama[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
+                    continue; // Skip validation if both are empty
+                }
+
                 $validasi_produk = Validator::make($request->all(), [
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
@@ -113,18 +151,16 @@ class InqueryPenjualanController extends Controller
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
+                    array_push($error_pesanans, "Spesifikasi nomor " . ($i + 1) . " belum dilengkapi!");
                 }
 
-
-                $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-                $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
-                $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
-                $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
-                $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
-
+                $barang_id = $request->barang_id[$i] ?? '';
+                $kode_barang = $request->kode_barang[$i] ?? '';
+                $nama = $request->nama[$i] ?? '';
+                $jumlah = $request->jumlah[$i] ?? '';
+                $harga = $request->harga[$i] ?? '';
                 $data_pembelians->push([
-                    'detail_id' => $request->detail_ids[$i] ?? null,
+                    'detail_idd' => $request->detail_idss[$i] ?? null,
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama' => $nama,
@@ -132,7 +168,6 @@ class InqueryPenjualanController extends Controller
                     'harga' => $harga
                 ]);
             }
-        } else {
         }
 
         if ($validasi_pelanggan->fails() || $error_pesanans) {

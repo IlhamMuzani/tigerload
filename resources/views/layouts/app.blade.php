@@ -49,7 +49,10 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <!-- Navbar -->
+        {{-- <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="" src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" alt="javaline" height="50"
+                width="100">
+        </div> --}}
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">

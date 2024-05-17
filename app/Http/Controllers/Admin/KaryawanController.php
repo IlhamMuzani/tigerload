@@ -109,8 +109,8 @@ class KaryawanController extends Controller
                 'pembayaran' => 0,
                 'status' => 'null',
                 'kode_karyawan' => $this->kode(),
-                'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode,
-                // 'qrcode_karyawan' => 'http://192.168.1.46/javaline/karyawan/' . $kode
+                'qrcode_karyawan' => 'https://tigerload.id/karyawan/' . $kode,
+                // 'qrcode_karyawan' => 'http://192.168.1.46/tigerload/karyawan/' . $kode
                 'tanggal' => Carbon::now('Asia/Jakarta'),
 
             ]

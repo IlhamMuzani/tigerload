@@ -83,11 +83,46 @@ class PengeluarankaskecilController extends Controller
         ]);
 
         $allKeterangan = ''; // Initialize an empty string to accumulate keterangan values
-        foreach ($data_pembelians as $data_pesanan) {
+        // Ambil nomor terakhir untuk kode_detailakun yang ada di database
+        $lastDetail = Detail_pengeluaran::where('kode_detailakun', 'like', 'KKA%')->orderBy('id', 'desc')->first();
+        $lastNum = 0;
+        // return $lastDetail;
+        $currentMonth = date('m'); // Ambil bulan saat ini
+
+        // Jika tidak ada kode terakhir atau bulan saat ini berbeda dari bulan kode terakhir
+        if (!$lastDetail || $currentMonth != date('m', strtotime($lastDetail->created_at))) {
+            $lastNum = 0; // Mulai dari 0 jika bulan berbeda
+        } else {
+            // Ambil nomor terakhir dari kode terakhir
+            $lastCode = substr($lastDetail->kode_detailakun, -6);
+            $lastNum = (int)$lastCode; // Ubah menjadi integer
+        }
+
+        foreach ($data_pembelians as $index => $data_pesanan) {
+            // Cek apakah bulan berbeda dari kode terakhir
+            if (!$lastDetail || $currentMonth != date('m', strtotime($lastDetail->created_at))) {
+                $lastNum = 0; // Mulai dari 0 jika bulan berbeda atau tidak ada detail terakhir
+            } else {
+                // Ambil nomor terakhir dari kode terakhir
+                $lastCode = substr($lastDetail->kode_detailakun, -6);
+                $lastNum = (int)$lastCode; // Ubah menjadi integer
+            }
+
+            $num = $lastNum + $index + 1; // Tambahkan index untuk menghasilkan nomor unik
+            $formattedNum = sprintf("%06s", $num);
+
+            // Awalan untuk kode baru
+            $prefix = 'KKA';
+            $tahun = date('y');
+            $tanggal = date('dm');
+
+            // Buat kode baru dengan menggabungkan awalan, tanggal, tahun, dan nomor yang diformat
+            $newCode = $prefix . "/" . $tanggal . $tahun . "/" . $formattedNum;
+
             Detail_pengeluaran::create([
                 'pengeluaran_kaskecil_id' => $cetakpdf->id,
                 'status' => 'unpost',
-                'kode_detailakun' => $this->kodeakuns(),
+                'kode_detailakun' => $newCode,
                 'barangakun_id' => $data_pesanan['barangakun_id'],
                 'kode_akun' => $data_pesanan['kode_akun'],
                 'nama_akun' => $data_pesanan['nama_akun'],

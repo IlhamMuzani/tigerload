@@ -58,42 +58,42 @@
                                 <label for="nopol">Id Deposit</label>
                                 <input type="text" class="form-control" id="depositpemesanan_id"
                                     name="depositpemesanan_id" value="{{ old('depositpemesanan_id') }}" readonly
-                                    placeholder="" value="">
+                                    placeholder="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id SPK</label>
                                 <input type="text" class="form-control" id="spk_id" name="spk_id"
-                                    value="{{ old('spk_id') }}" readonly placeholder="" value="">
+                                    value="{{ old('spk_id') }}" readonly placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
                                 <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
-                                    value="">
+                                    value="{{ old('kode_spk') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Nama Pelanggan</label>
                                 <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                    value="">
+                                    value="{{ old('nama_pelanggan') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Merek Kendaraan</label>
                                 <input type="text" class="form-control" id="merek" readonly placeholder=""
-                                    value="">
+                                    value="{{ old('merek') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Type Kendaraan</label>
                                 <input type="text" class="form-control" id="tipe" readonly placeholder=""
-                                    value="">
+                                    value="{{ old('tipe') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Kode Karoseri</label>
                                 <input type="text" class="form-control" id="kode_type"readonly placeholder=""
-                                    value="">
+                                    value="{{ old('kode_type') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Bentuk Karoseri</label>
                                 <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
-                                    value="">
+                                    value="{{ 'nama_karoseri' }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
@@ -209,7 +209,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}" data-kode_barang="{{ $barang->kode_barang }}"
+                                    <tr data-barang_id="{{ $barang->id }}"
+                                        data-kode_barang="{{ $barang->kode_barang }}"
                                         data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
