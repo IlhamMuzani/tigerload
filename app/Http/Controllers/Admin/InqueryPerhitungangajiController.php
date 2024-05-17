@@ -63,8 +63,8 @@ class InqueryPerhitungangajiController extends Controller
         // if (auth()->check() && auth()->user()->menu['inquery pembelian ban']) {
 
         $inquery = Perhitungan_gajikaryawan::where('id', $id)->first();
-        $karyawans = Karyawan::where('departemen_id', 3)
-            ->orderBy('nama_lengkap')
+        $karyawans = Karyawan::where('departemen_id', 2)
+        ->orderBy('nama_lengkap')
             ->get();
         $details = Detail_gajikaryawan::where('perhitungan_gajikaryawan_id', $id)->get();
 
