@@ -659,7 +659,7 @@ class InqueryPerhitungangajibulananController extends Controller
         $item->detail_gajikaryawan()->delete();
         $item->pengeluaran_kaskecil()->delete();
         $item->detail_pengeluaran()->delete();
-        $item->pelunasan_deposit()->delete();
+        // $item->pelunasan_deposit()->delete();
         $item->delete();
         return back()->with('success', 'Berhasil');
     }
