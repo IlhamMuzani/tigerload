@@ -569,7 +569,7 @@
             row.remove();
 
             $.ajax({
-                url: "{{ url('admin/inquery_perhitungangaji/deletedetailgaji/') }}/" + detailId,
+                url: "{{ url('admin/inquery_perhitungangaji/deletedetailperhitungangaji/') }}/" + detailId,
                 type: "POST",
                 data: {
                     _method: 'DELETE',
