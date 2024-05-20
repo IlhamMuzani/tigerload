@@ -90,8 +90,8 @@
                 ID KARYAWAN</td>
             <td class="td" style="text-align: left; padding: 0px; font-size: 12px;  font-weight:bold; width:10%">
                 NAMA LENGKAP</td>
-            {{-- <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
-                GAPOK</td> --}}
+            <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
+                GAPOK</td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
                 HK</td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
@@ -101,8 +101,8 @@
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold;">
                 LEMBUR</td>
             {{-- <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold;">
-                STORING</td> --}}
-            </td>
+                STORING</td>
+            </td> --}}
             <td class="td" style="text-align: center; padding: 0px; font-size: 12px;  font-weight:bold;">
                 GAJI <span> <br>KOTOR</span></td>
             </td>
@@ -122,13 +122,22 @@
         </tr>
         <!-- Add horizontal line below this row -->
         <tr>
-            <td colspan="13" style="padding: 0px;">
+            <td colspan="14" style="padding: 0px;">
                 <hr style="border: 0.5px solid; margin-top:3px; margin-bottom: 1px; padding: 0;">
                 <hr style="border: 0.5px solid; margin-top:1px; margin-bottom: 1px; padding: 0;">
             </td>
         </tr>
         @php
             $Grandtotal = 0;
+            $Grandpelunasan = 0;
+            $Grandbpjs = 0;
+            $Grandtdkabsen = 0;
+            $Grandterlambat15 = 0;
+            $Grandterlambat30 = 0;
+            $Grandgajikotor = 0;
+            $Grandlembur = 0;
+            $Granduh = 0;
+            $Grandum = 0;
         @endphp
         @foreach ($details as $item)
             <tr>
@@ -149,9 +158,9 @@
                     echo implode(' ', $shortened_words);
                     ?>
                 </td>
-                {{-- <td class="td" style="text-align: right; padding: 0px; font-size: 12px;">
+                <td class="td" style="text-align: right; padding: 0px; font-size: 12px;">
                     {{ number_format($item->gaji, 0, ',', '.') }}
-                </td> --}}
+                </td>
                 <td class="td" style="text-align: right; padding: 0px; font-size: 12px;">
                     {{ $item->hari_kerja }}
                 </td>
@@ -198,22 +207,68 @@
             </tr>
             @php
                 $Grandtotal += $item->gaji_bersih;
+                $Grandpelunasan += $item->pelunasan_kasbon;
+                $Grandbpjs += $item->potongan_bpjs;
+                $Grandtdkabsen += $item->hasil_absen;
+                $Grandterlambat15 += $item->hasilkurang;
+                $Grandterlambat30 += $item->hasillebih;
+                $Grandgajikotor += $item->gaji_kotor;
+                $Grandlembur += $item->hasil_lembur;
+                $Granduh += $item->uang_hadir;
+                $Grandum += $item->uang_makan;
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
             <td colspan="13" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="12"
-                style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 12px;">
-                {{-- GRAND
-                TOTAL --}}
+            <td colspan="5"
+                style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 9px;font-weight:bold;">
+                {{-- GRAND TOTAL --}}
             </td>
-            <td class="td" style="text-align: right; font-weight: bold; font-size: 12px;">
-                Rp. {{ number_format($Grandtotal, 0, ',', '.') }}
+
+            <td class="td" style="text-align: right; padding: 0px; font-size: 12px;font-weight:bold;">
+                {{ number_format($Grandum, 0, ',', '.') }}
+
+            </td>
+            <td class="td" style="text-align: right; padding: 0px; font-size: 12px;font-weight:bold;">
+                {{ number_format($Granduh, 0, ',', '.') }}
+
+            </td>
+            <td class="td" style="text-align: right; padding: 1px; font-size: 12px;font-weight:bold;">
+                {{ number_format($Grandlembur, 0, ',', '.') }}
+            </td>
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;font-weight:bold;">
+                {{ number_format($Grandgajikotor, 0, ',', '.') }}
+            </td>
+            <td class="td" style="text-align: center; padding: 1px; font-size: 12px;font-weight:bold;">
+                <table style="width: 100%; text-align: right; padding-right:5px">
+                    <tr>
+                        <td style="width: 50%;">
+                            {{ number_format($Grandterlambat15, 0, ',', '.') }}
+                        </td>
+                        <td style="width: 50%;">
+                            {{ number_format($Grandterlambat30, 0, ',', '.') }}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
+                {{ number_format($Grandbpjs, 0, ',', '.') }}
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
+                {{ number_format($Grandtdkabsen, 0, ',', '.') }}
+            </td>
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
+                {{ number_format($Grandpelunasan, 0, ',', '.') }}
+            </td>
+            <td class="td" style="text-align: right; font-size: 12px; font-weight:bold;">
+                {{ number_format($Grandtotal, 0, ',', '.') }}
             </td>
         </tr>
     </table>
+    <br>
+
+    <br>
     <br>
 
     <table style="width: 50%; border-top: 1px solid #000;" cellpadding="2" cellspacing="0">
@@ -354,9 +409,6 @@
             </td>
         </tr>
     </table>
-    <br>
-    <br>
-
     <br>
     <br>
 </body>

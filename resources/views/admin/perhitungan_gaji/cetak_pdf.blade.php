@@ -184,6 +184,15 @@
                 </tr>
                 @php
                     $Grandtotal = 0;
+                    $Grandpelunasan = 0;
+                    $Grandbpjs = 0;
+                    $Grandtdkabsen = 0;
+                    $Grandterlambat15 = 0;
+                    $Grandterlambat30 = 0;
+                    $Grandgajikotor = 0;
+                    $Grandlembur = 0;
+                    $Granduh = 0;
+                    $Grandum = 0;
                 @endphp
                 @foreach ($details as $item)
                     <tr>
@@ -275,15 +284,77 @@
                     </tr>
                     @php
                         $Grandtotal += $item->gaji_bersih;
+                        $Grandpelunasan += $item->pelunasan_kasbon;
+                        $Grandbpjs += $item->potongan_bpjs;
+                        $Grandtdkabsen += $item->hasil_absen;
+                        $Grandterlambat15 += $item->hasilkurang;
+                        $Grandterlambat30 += $item->hasillebih;
+                        $Grandgajikotor += $item->gaji_kotor;
+                        $Grandlembur += $item->hasil_lembur;
+                        $Granduh += $item->uang_hadir;
+                        $Grandum += $item->uang_makan;
                     @endphp
                 @endforeach
                 <tr style="border-bottom: 1px solid black;">
                     <td colspan="14" style="padding: 2px;"></td>
                 </tr>
                 <tr>
-                    <td colspan="13"
+                    <td colspan="5"
                         style="text-align: right; font-weight: bold; margin-top:5px; margin-bottom:5px; font-size: 9px;">
                         {{-- GRAND TOTAL --}}
+                    </td>
+
+                    <td class="td" style="text-align: right; padding: 2px; font-size: 9px; font-weight: bold;">Rp.
+                        {{ number_format($Grandum, 0, ',', '.') }}</td>
+                    <td class="td" style="text-align: right; padding: 2px; font-size: 9px; font-weight: bold;">Rp.
+                        {{ number_format($Granduh, 0, ',', '.') }}</td>
+                    <td class="td" style="text-align: center; padding: 1px; font-size: 9px; font-weight: bold;">
+                        <table style="width: 100%; text-align: right;">
+                            <tr>
+                                <td style="width: 50%;">Rp.</td>
+                                <td style="width: 50%;">{{ number_format($Grandlembur, 0, ',', '.') }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="td" style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
+                        Rp. {{ number_format($Grandgajikotor, 0, ',', '.') }}</td>
+                    <td class="td" style="text-align: center; padding: 1px; font-size: 9px; font-weight: bold;">
+                        <table style="width: 100%; text-align: right; padding-right:9px">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <table style="width: 100%; text-align: right;">
+                                        <tr>
+                                            <td style="width: 20%;">Rp.</td>
+                                            <td style="width: 80%;">
+                                                {{ number_format($Grandterlambat15, 0, ',', '.') }}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 50%;">
+                                    <table style="width: 100%; text-align: right;">
+                                        <tr>
+                                            <td style="width: 20%;">Rp.</td>
+                                            <td style="width: 80%;">
+                                                {{ number_format($Grandterlambat30, 0, ',', '.') }}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="td" style="text-align: right; padding-right: 15px; font-size: 9px; font-weight: bold;">
+                        Rp. {{ number_format($Grandtdkabsen, 0, ',', '.') }}
+                    </td>
+                    <td class="td" style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
+                        Rp. {{ number_format($Grandbpjs, 0, ',', '.') }}</td>
+                    <td class="td" style="text-align: center; padding: 1px; font-size: 9px; font-weight: bold;">
+                        <table style="width: 100%; text-align: right; padding-right: 24px;">
+                            <tr>
+                                <td style="width: 50%;">Rp.</td>
+                                <td style="width: 50%;">{{ number_format($Grandpelunasan, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                     <td class="td" style="text-align: right; font-weight: bold; font-size: 9px;">
                         Rp. {{ number_format($Grandtotal, 0, ',', '.') }}
