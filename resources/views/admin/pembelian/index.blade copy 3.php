@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pembelian_part') }}">Transaksi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pembelian') }}">Transaksi</a></li>
                         <li class="breadcrumb-item active">Pembelian</li>
                     </ol>
                 </div><!-- /.col -->
@@ -122,12 +122,7 @@
                             </thead>
                             <tbody id="tabel-pembelian">
                                 <tr id="pembelian-0">
-                                    <td style="width: 70px" class="text-center" id="urutan">1</td>
-                                    <td hidden>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="barang_id-0" name="barang_id[]">
-                                        </div>
-                                    </td>
+                                    <td class="text-center" id="urutan">1</td>
                                     <td>
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="kode_barang-0" readonly
@@ -195,20 +190,18 @@
                                         <button type="button" class="btn btn-primary" onclick="barang(0)">
                                             <i class="fas fa-plus"></i>
                                         </button>
-                                        <button style="margin-left:5px" type="button" class="btn btn-danger"
-                                            onclick="removeBan(0)">
+                                        <button type="button" class="btn btn-danger" onclick="removeBan(0)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="form-group">
-                            <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
-                            <input style="font-size:14px" type="text" class="form-control text-right"
-                                id="grand_total" name="grand_total" readonly placeholder=""
-                                value="{{ old('grand_total') }}">
-                        </div>
+                    </div>
+                    <div style="margin-right: 20px; margin-left:20px" class="form-group">
+                        <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
+                        <input style="font-size:14px" type="text" class="form-control text-right" id="grand_total"
+                            name="grand_total" readonly placeholder="" value="{{ old('grand_total') }}">
                     </div>
                     <div class="card-footer text-right mt-3">
                         <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
@@ -387,16 +380,102 @@
             </div>
         </div>
 
-        <div class="modal fade" id="tableBarang" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="modal-part">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Data Barang</h4>
+                        <h4 class="modal-title">Tambah Part</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div style="text-align: center;">
+                            <form id="form-sparepart" action="{{ url('admin/tambah_sparepart') }}" method="POST"
+                                enctype="multipart/form-data" autocomplete="off">
+                                @csrf
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label class="form-label" for="kategori">Kategori</label>
+                                            <select class="form-control" id="kategori" name="kategori">
+                                                <option value="">- Pilih -</option>
+                                                <option value="oli" {{ old('kategori') == 'oli' ? 'selected' : null }}>
+                                                    oli</option>
+                                                <option value="body"
+                                                    {{ old('kategori') == 'body' ? 'selected' : null }}>
+                                                    body</option>
+                                                <option value="mesin"
+                                                    {{ old('kategori') == 'mesin' ? 'selected' : null }}>
+                                                    mesin</option>
+                                                <option value="sasis"
+                                                    {{ old('kategori') == 'sasis' ? 'selected' : null }}>
+                                                    sasis</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Nama Barang</label>
+                                            <input type="text" class="form-control" id="nama_barang"
+                                                name="nama_barang" placeholder="Masukan nama pemilik" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">Keterangan</label>
+                                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Harga</label>
+                                            <input type="number" class="form-control" id="total" name="total"
+                                                placeholder="Masukan total" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Stok</label>
+                                            <input type="number" class="form-control" id="jumlah" name="jumlah"
+                                                placeholder="Tersedia" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="satuan">Satuan</label>
+                                            <select class="form-control" id="satuan" name="satuan">
+                                                <option value="">- Pilih -</option>
+                                                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : null }}>
+                                                    pcs</option>
+                                                <option value="ltr" {{ old('satuan') == 'ltr' ? 'selected' : null }}>
+                                                    ltr</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <button type="reset" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="tableKategori" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Data Part</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <div class="float-right">
+                            <button type="button" data-toggle="modal" data-target="#modal-part"
+                                class="btn btn-primary btn-sm mb-3" data-dismiss="modal">
+                                Tambah
+                            </button>
+                        </div> --}}
+                        <button type="button" data-toggle="modal" data-target="#modal-part"
+                            class="btn btn-primary btn-sm mb-2" data-dismiss="modal">
+                            Tambah
+                        </button>
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -448,13 +527,12 @@
             });
         }
 
-
         var activeSpecificationIndex = 0;
 
         function barang(param) {
             activeSpecificationIndex = param;
             // Show the modal and filter rows if necessary
-            $('#tableBarang').modal('show');
+            $('#tableKategori').modal('show');
         }
 
         function getBarang(rowIndex) {
@@ -468,8 +546,9 @@
             $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
             $('#nama_barang-' + activeSpecificationIndex).val(nama_barang);
 
-            $('#tableBarang').modal('hide');
+            $('#tableKategori').modal('hide');
         }
+
 
         $(document).on("input", ".harga, .jumlah, .diskon", function() {
             var currentRow = $(this).closest('tr');
@@ -483,13 +562,22 @@
 
         });
 
+        // $(document).on("input", ".total, .jumlah", function() {
+
+        //     var currentRow = $(this).closest('tr');
+        //     var total = parseFloat(currentRow.find(".total").val()) || 0;
+        //     var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+        //     var harga = total / jumlah;
+        //     currentRow.find(".harga").val(harga);
+        // });
+
 
 
         var data_pembelian = @json(session('data_pembelians'));
-        var jumlah_ban = 1;
+        var jumlah_part = 1;
 
         if (data_pembelian != null) {
-            jumlah_ban = data_pembelian.length;
+            jumlah_part = data_pembelian.length;
             $('#tabel-pembelian').empty();
             var urutan = 0;
             $.each(data_pembelian, function(key, value) {
@@ -499,28 +587,27 @@
         }
 
         function addPesanan() {
-            jumlah_ban = jumlah_ban + 1;
+            console.log();
+            jumlah_part = jumlah_part + 1;
 
-            if (jumlah_ban === 1) {
+            if (jumlah_part === 1) {
                 $('#tabel-pembelian').empty();
             }
 
-            itemPembelian(jumlah_ban, jumlah_ban - 1);
+            itemPembelian(jumlah_part, jumlah_part - 1);
         }
 
         function removeBan(params) {
-            jumlah_ban = jumlah_ban - 1;
-
-            console.log(jumlah_ban);
+            jumlah_part = jumlah_part - 1;
 
             var tabel_pesanan = document.getElementById('tabel-pembelian');
             var pembelian = document.getElementById('pembelian-' + params);
 
             tabel_pesanan.removeChild(pembelian);
 
-            if (jumlah_ban === 0) {
+            if (jumlah_part === 0) {
                 var item_pembelian = '<tr>';
-                item_pembelian += '<td class="text-center" colspan="5">- Barang belum ditambahkan -</td>';
+                item_pembelian += '<td class="text-center" colspan="8">- Barang belum ditambahkan -</td>';
                 item_pembelian += '</tr>';
                 $('#tabel-pembelian').html(item_pembelian);
             } else {
@@ -551,12 +638,11 @@
                 harga = value.harga;
                 diskon = value.diskon;
                 total = value.total;
-
             }
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
+            item_pembelian += '<td class="text-center" id="urutan">' + urutan + '</td>';
 
             // barang_id 
             item_pembelian += '<td hidden>';
@@ -611,6 +697,7 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+
             // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
@@ -643,6 +730,7 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // opsi
             item_pembelian += '<td style="width: 120px">';
             item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
@@ -656,16 +744,6 @@
 
             $('#tabel-pembelian').append(item_pembelian);
 
-            if (value !== null) {
-                $('#barang_id-' + urutan).val(value.barang_id);
-                $('#kode_barang-' + urutan).val(value.kode_barang);
-                $('#nama_barang-' + urutan).val(value.nama_barang);
-                $('#satuan-' + urutan).val(value.satuan);
-                $('#jumlah-' + urutan).val(value.jumlah);
-                $('#harga-' + urutan).val(value.harga);
-                $('#diskon-' + urutan).val(value.diskon);
-                $('#total-' + urutan).val(value.total);
-            }
         }
     </script>
 
@@ -701,6 +779,7 @@
             return '' + formatted;
         }
     </script>
+
     <script>
         $(document).ready(function() {
             // Tambahkan event listener pada tombol "Simpan"

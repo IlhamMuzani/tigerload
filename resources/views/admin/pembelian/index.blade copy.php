@@ -115,8 +115,6 @@
                                     <th>Satuan</th>
                                     <th>Jumlah</th>
                                     <th>Harga</th>
-                                    <th>Diskon</th>
-                                    <th>Total</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -144,51 +142,47 @@
                                         <div class="form-group">
                                             <select class="form-control" id="satuan-0" name="satuan[]">
                                                 <option value="">- Pilih -</option>
-                                                <option value="M3" {{ old('satuan') == 'M3' ? 'selected' : null }}>
+                                                <option value="M3"
+                                                    {{ old('satuan') == 'M3' ? 'selected' : null }}>
                                                     M&sup3;</option>
-                                                <option value="ton" {{ old('satuan') == 'ton' ? 'selected' : null }}>
+                                                <option value="ton"
+                                                    {{ old('satuan') == 'ton' ? 'selected' : null }}>
                                                     ton</option>
-                                                <option value="krtn" {{ old('satuan') == 'krtn' ? 'selected' : null }}>
+                                                <option value="krtn"
+                                                    {{ old('satuan') == 'krtn' ? 'selected' : null }}>
                                                     krtn</option>
-                                                <option value="dus" {{ old('satuan') == 'dus' ? 'selected' : null }}>
+                                                <option value="dus"
+                                                    {{ old('satuan') == 'dus' ? 'selected' : null }}>
                                                     dus</option>
-                                                <option value="rit" {{ old('satuan') == 'rit' ? 'selected' : null }}>
+                                                <option value="rit"
+                                                    {{ old('satuan') == 'rit' ? 'selected' : null }}>
                                                     rit</option>
-                                                <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : null }}>
+                                                <option value="kg"
+                                                    {{ old('satuan') == 'kg' ? 'selected' : null }}>
                                                     kg</option>
-                                                <option value="ltr" {{ old('satuan') == 'ltr' ? 'selected' : null }}>
+                                                <option value="ltr"
+                                                    {{ old('satuan') == 'ltr' ? 'selected' : null }}>
                                                     ltr</option>
-                                                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : null }}>
+                                                <option value="pcs"
+                                                    {{ old('satuan') == 'pcs' ? 'selected' : null }}>
                                                     pcs</option>
-                                                <option value="hr" {{ old('satuan') == 'hr' ? 'selected' : null }}>
+                                                <option value="hr"
+                                                    {{ old('satuan') == 'hr' ? 'selected' : null }}>
                                                     hr</option>
-                                                <option value="ZAK" {{ old('satuan') == 'ZAK' ? 'selected' : null }}>
+                                                <option value="ZAK"
+                                                    {{ old('satuan') == 'ZAK' ? 'selected' : null }}>
                                                     ZAK</option>
                                             </select>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control jumlah" id="jumlah-0"
-                                                name="jumlah[]" data-row-id="0">
+                                            <input type="text" class="form-control" id="jumlah-0" name="jumlah[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga" id="harga-0"
-                                                name="harga[]" data-row-id="0">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" class="form-control diskon" id="diskon-0"
-                                                name="diskon[]" data-row-id="0">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control total" id="total-0"
-                                                name="total[]">
+                                            <input type="text" class="form-control" id="harga-0" name="harga[]">
                                         </div>
                                     </td>
                                     <td style="width: 120px">
@@ -471,19 +465,6 @@
             $('#tableBarang').modal('hide');
         }
 
-        $(document).on("input", ".harga, .jumlah, .diskon", function() {
-            var currentRow = $(this).closest('tr');
-            var harga = parseFloat(currentRow.find(".harga").val()) || 0;
-            var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
-            var diskon = parseFloat(currentRow.find(".diskon").val()) || 0;
-            var total = harga * jumlah - diskon;
-            currentRow.find(".total").val(total);
-
-            updateGrandTotal()
-
-        });
-
-
 
         var data_pembelian = @json(session('data_pembelians'));
         var jumlah_ban = 1;
@@ -539,8 +520,6 @@
             var satuan = '';
             var jumlah = '';
             var harga = '';
-            var diskon = '';
-            var total = '';
 
             if (value !== null) {
                 barang_id = value.barang_id;
@@ -549,9 +528,6 @@
                 satuan = value.satuan;
                 jumlah = value.jumlah;
                 harga = value.harga;
-                diskon = value.diskon;
-                total = value.total;
-
             }
 
             // urutan 
@@ -585,7 +561,7 @@
             // satuan 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + urutan +
+            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + key +
                 '" name="satuan[]">';
             item_pembelian += '<option value="">- Pilih -</option>';
             item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
@@ -614,7 +590,7 @@
             // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control jumlah" id="jumlah-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" id="jumlah-' + urutan +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -622,24 +598,8 @@
             // harga
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" id="harga-' + urutan +
                 '" name="harga[]" value="' + harga + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-
-            // diskon
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control diskon" id="diskon-' + urutan +
-                '" name="diskon[]" value="' + diskon + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-
-            // total
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control total" id="total-' + urutan +
-                '" name="total[]" value="' + total + '" readonly';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
@@ -657,14 +617,12 @@
             $('#tabel-pembelian').append(item_pembelian);
 
             if (value !== null) {
-                $('#barang_id-' + urutan).val(value.barang_id);
-                $('#kode_barang-' + urutan).val(value.kode_barang);
-                $('#nama_barang-' + urutan).val(value.nama_barang);
-                $('#satuan-' + urutan).val(value.satuan);
-                $('#jumlah-' + urutan).val(value.jumlah);
-                $('#harga-' + urutan).val(value.harga);
-                $('#diskon-' + urutan).val(value.diskon);
-                $('#total-' + urutan).val(value.total);
+                $('#barang_id-' + key).val(value.barang_id);
+                $('#kode_barang-' + key).val(value.kode_barang);
+                $('#nama_barang-' + key).val(value.nama_barang);
+                $('#satuan-' + key).val(value.satuan);
+                $('#jumlah-' + key).val(value.jumlah);
+                $('#harga-' + key).val(value.harga);
             }
         }
     </script>
@@ -672,19 +630,17 @@
     <script>
         function updateGrandTotal() {
             var grandTotal = 0;
-
-            // Loop through all elements with name "total[]"
-            $('input[name^="total"]').each(function() {
-                var nominalValue = parseFloat($(this).val().replace(/\./g, '').replace(',', '.')) || 0;
+            // Loop through all elements with name "harga[]"
+            $('input[name^="harga"]').each(function() {
+                var nominalValue = parseFloat($(this).val()) || 0;
                 grandTotal += nominalValue;
             });
-            // $('#sub_total').val(grandTotal.toLocaleString('id-ID'));
-            // $('#pph2').val(pph2Value.toLocaleString('id-ID'));
-            $('#grand_total').val(formatRupiahsss(grandTotal));
-            console.log(grandTotal);
+
+            $('#grand_total').val(grandTotal.toLocaleString(
+                'id-ID'));
         }
 
-        $('body').on('input', 'input[name^="total"]', function() {
+        $('body').on('input', 'input[name^="harga"]', function() {
             updateGrandTotal();
         });
 
@@ -692,15 +648,8 @@
         $(document).ready(function() {
             updateGrandTotal();
         });
-
-        function formatRupiahsss(number) {
-            var formatted = new Intl.NumberFormat('id-ID', {
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 1
-            }).format(number);
-            return '' + formatted;
-        }
     </script>
+
     <script>
         $(document).ready(function() {
             // Tambahkan event listener pada tombol "Simpan"

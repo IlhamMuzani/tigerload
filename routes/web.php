@@ -155,6 +155,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_kasbonkaryawan/postingkasbon/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'postingkasbon']);
     Route::delete('inquery_kasbonkaryawan/deletedetailcicilan/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'deletedetailcicilan']);
     Route::get('hapuskasbon/{id}', [\App\Http\Controllers\Admin\InqueryKasbonkaryawanController::class, 'hapuskasbon'])->name('hapuskasbon');
+    Route::delete('inquery_pembelian/deletebarangs/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'deletebarangs']);
 
     Route::get('inquery_pengeluarankaskecil/unpostpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'unpostpengeluaran']);
     Route::get('inquery_pengeluarankaskecil/postingpengeluaran/{id}', [\App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class, 'postingpengeluaran']);

@@ -23,6 +23,8 @@ class Detailpembelian extends Model
         'jumlah',
         'satuan',
         'harga',
+        'diskon',
+        'total',
         'spesifikasi',
         'keterangan',
         'tanggal_awal',

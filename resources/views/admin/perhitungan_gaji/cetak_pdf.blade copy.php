@@ -141,7 +141,7 @@
                     <td class="td"
                         style="text-align: left; padding: 2px; font-size: 9px; font-weight:bold; width:3%;">NO.</td>
                     <td class="td"
-                        style="text-align: left; padding: 2px; font-size: 9px; font-weight:bold; width:10%">ID KARYAWAN
+                        style="text-align: left; padding: 2px; font-size: 9px; font-weight:bold; width:12%">ID KARYAWAN
                     </td>
                     <td class="td"
                         style="text-align: left; padding: 2px; font-size: 9px; font-weight:bold; width:13%">NAMA LENGKAP
@@ -151,29 +151,26 @@
                     <td class="td"
                         style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:4%">HK</td>
                     <td class="td"
-                        style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:12%">GAJI
-                    </td>
-                    <td class="td"
                         style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:9%">UM</td>
                     <td class="td"
                         style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:10%">UH</td>
                     <td class="td"
                         style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:10%">LEMBUR</td>
-                    {{-- <td class="td"
-                        style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:12%">GAJI KOTOR
-                    </td> --}}
                     <td class="td"
-                        style="text-align: center; padding: 2px; font-size: 9px; font-weight:bold; width:12%">
+                        style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:12%">GAJI KOTOR
+                    </td>
+                    <td class="td"
+                        style="text-align: center; padding: 2px; font-size: 9px; font-weight:bold; width:17%">
                         KETERLAMBATAN <span> <br>(&lt; 30 MNT) (&gt; 30 MNT)</span></td>
                     <td class="td"
-                        style="text-align: center; padding-left: 2px; font-size: 9px; font-weight:bold; width:10%">TIDAK
+                        style="text-align: center; padding-left: 2px; font-size: 9px; font-weight:bold; width:13%">TIDAK
                         ABSEN <span> <br>ISTRAHAT</span></td>
                     <td class="td"
-                        style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:10%">BPJS</td>
+                        style="text-align: right; padding: 2px; font-size: 9px; font-weight:bold; width:12%">BPJS</td>
                     <td class="td"
-                        style="text-align: center; padding-left: 1px; font-size: 9px; font-weight:bold; width:10%">
+                        style="text-align: center; padding-left: 1px; font-size: 9px; font-weight:bold; width:12%">
                         PELUNASAN <span> <br>KASBON</span></td>
-                    <td class="td" style="text-align: right; font-size: 9px; font-weight:bold; width:10%">GAJI
+                    <td class="td" style="text-align: right; font-size: 9px; font-weight:bold; width:12%">GAJI
                         BERSIH</td>
                 </tr>
             </thead>
@@ -210,7 +207,7 @@
                         </td>
                         <td class="td"
                             style="text-align: left; padding: 2px; font-size: 9px; border-bottom: 1px solid black;">
-                            {{ substr($item->nama_lengkap, 0, 15) }}</td>
+                            {{ substr($item->nama_lengkap, 0, 12) }}</td>
                         <td class="td"
                             style="text-align: center; padding: 1px; font-size: 9px; border-bottom: 1px solid black;">
                             <table style="width: 100%; text-align: right;">
@@ -223,9 +220,6 @@
                         <td class="td"
                             style="text-align: right; padding: 2px; font-size: 9px; border-bottom: 1px solid black;">
                             {{ $item->hari_kerja }}</td>
-                        <td class="td"
-                            style="text-align: right; padding-right: 7px; font-size: 9px; border-bottom: 1px solid black;">
-                            Rp. {{ number_format($item->hari_kerja * $item->gaji, 0, ',', '.') }}</td>
                         <td class="td"
                             style="text-align: right; padding: 2px; font-size: 9px; border-bottom: 1px solid black;">Rp.
                             {{ number_format($item->uang_makan, 0, ',', '.') }}</td>
@@ -241,9 +235,9 @@
                                 </tr>
                             </table>
                         </td>
-                        {{-- <td class="td"
+                        <td class="td"
                             style="text-align: right; padding-right: 7px; font-size: 9px; border-bottom: 1px solid black;">
-                            Rp. {{ number_format($item->gaji_kotor, 0, ',', '.') }}</td> --}}
+                            Rp. {{ number_format($item->gaji_kotor, 0, ',', '.') }}</td>
                         <td class="td"
                             style="text-align: center; padding: 1px; font-size: 9px; border-bottom: 1px solid black;">
                             <table style="width: 100%; text-align: right; padding-right:9px">
@@ -295,7 +289,7 @@
                         $Grandtdkabsen += $item->hasil_absen;
                         $Grandterlambat15 += $item->hasilkurang;
                         $Grandterlambat30 += $item->hasillebih;
-                        $Grandgajikotor += $item->gaji * $item->hari_kerja;
+                        $Grandgajikotor += $item->gaji_kotor;
                         $Grandlembur += $item->hasil_lembur;
                         $Granduh += $item->uang_hadir;
                         $Grandum += $item->uang_makan;
@@ -310,9 +304,6 @@
                         {{-- GRAND TOTAL --}}
                     </td>
 
-                    <td class="td"
-                        style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
-                        Rp. {{ number_format($Grandgajikotor, 0, ',', '.') }}</td>
                     <td class="td" style="text-align: right; padding: 2px; font-size: 9px; font-weight: bold;">Rp.
                         {{ number_format($Grandum, 0, ',', '.') }}</td>
                     <td class="td" style="text-align: right; padding: 2px; font-size: 9px; font-weight: bold;">Rp.
@@ -325,9 +316,8 @@
                             </tr>
                         </table>
                     </td>
-                    {{-- <td class="td"
-                        style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
-                        Rp. {{ number_format($Grandgajikotor, 0, ',', '.') }}</td> --}}
+                    <td class="td" style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
+                        Rp. {{ number_format($Grandgajikotor, 0, ',', '.') }}</td>
                     <td class="td" style="text-align: center; padding: 1px; font-size: 9px; font-weight: bold;">
                         <table style="width: 100%; text-align: right; padding-right:9px">
                             <tr>
@@ -352,12 +342,10 @@
                             </tr>
                         </table>
                     </td>
-                    <td class="td"
-                        style="text-align: right; padding-right: 15px; font-size: 9px; font-weight: bold;">
+                    <td class="td" style="text-align: right; padding-right: 15px; font-size: 9px; font-weight: bold;">
                         Rp. {{ number_format($Grandtdkabsen, 0, ',', '.') }}
                     </td>
-                    <td class="td"
-                        style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
+                    <td class="td" style="text-align: right; padding-right: 7px; font-size: 9px; font-weight: bold;">
                         Rp. {{ number_format($Grandbpjs, 0, ',', '.') }}</td>
                     <td class="td" style="text-align: center; padding: 1px; font-size: 9px; font-weight: bold;">
                         <table style="width: 100%; text-align: right; padding-right: 24px;">

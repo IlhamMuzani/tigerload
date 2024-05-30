@@ -85,24 +85,20 @@ class InqueryPembelianController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validasi_pelanggan = Validator::make(
-            $request->all(),
-            [
-                'supplier_id' => 'required',
-            ],
-            [
-                'supplier_id.required' => 'Pilih nama supplier!',
-            ]
-        );
+        $validasi_pelanggan = Validator::make($request->all(), [
+            'supplier_id' => 'required',
+        ], [
+            'supplier_id.required' => 'Pilih nama supplier!',
+        ]);
 
         $error_pelanggans = array();
+        $error_pesanans = array();
+        $data_pembelians = collect();
+
 
         if ($validasi_pelanggan->fails()) {
             array_push($error_pelanggans, $validasi_pelanggan->errors()->all()[0]);
         }
-
-        $error_pesanans = array();
-        $data_pembelians = collect();
 
         if ($request->has('barang_id')) {
             for ($i = 0; $i < count($request->barang_id); $i++) {
@@ -139,16 +135,14 @@ class InqueryPembelianController extends Controller
                     'jumlah' => $jumlah,
                     'harga' => $harga,
                     'diskon' => $diskon,
-                    'total' => $total
+                    'total' => $total,
                 ]);
             }
         }
 
-
-        if ($error_pelanggans || $error_pesanans) {
+        if ($error_pesanans) {
             return back()
                 ->withInput()
-                ->with('error_pelanggans', $error_pelanggans)
                 ->with('error_pesanans', $error_pesanans)
                 ->with('data_pembelians', $data_pembelians);
         }
@@ -167,14 +161,13 @@ class InqueryPembelianController extends Controller
         ]);
 
         $transaksi_id = $transaksi->id;
-
         $detailIds = $request->input('detail_ids');
+        $allKeterangan = ''; // Initialize an empty string to accumulate keterangan values
 
         foreach ($data_pembelians as $data_pesanan) {
             $detailId = $data_pesanan['detail_id'];
 
             if ($detailId) {
-                // Update Detailpembelian
                 Detailpembelian::where('id', $detailId)->update([
                     'pembelian_id' => $transaksi->id,
                     'barang_id' =>  $data_pesanan['barang_id'],
@@ -185,9 +178,9 @@ class InqueryPembelianController extends Controller
                     'harga' => $data_pesanan['harga'],
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
+
                 ]);
             } else {
-                // Check if the detail already exists
                 $existingDetail = Detailpembelian::where([
                     'pembelian_id' => $transaksi->id,
                     'barang_id' =>  $data_pesanan['barang_id'],
@@ -198,9 +191,8 @@ class InqueryPembelianController extends Controller
                     'harga' => $data_pesanan['harga'],
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
-                ])->first();
 
-                // If the detail does not exist, create a new one
+                ])->first();
                 if (!$existingDetail) {
                     Detailpembelian::create([
                         'pembelian_id' => $transaksi->id,
@@ -215,9 +207,6 @@ class InqueryPembelianController extends Controller
                     ]);
                 }
             }
-
-            // Increment the quantity of the barang
-            Barang::where('id', $data_pesanan['barang_id'])->increment('jumlah', $data_pesanan['jumlah']);
         }
 
 
@@ -231,18 +220,9 @@ class InqueryPembelianController extends Controller
 
     public function unpostpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
-        $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
+        $ban = Pembelian::where('id', $id)->first();
 
-        foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
-
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah - $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
-        }
-        $pembelian->update([
+        $ban->update([
             'status' => 'unpost'
         ]);
 
@@ -251,18 +231,9 @@ class InqueryPembelianController extends Controller
 
     public function postingpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
-        $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
+        $ban = Pembelian::where('id', $id)->first();
 
-        foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
-
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah + $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
-        }
-        $pembelian->update([
+        $ban->update([
             'status' => 'posting'
         ]);
 

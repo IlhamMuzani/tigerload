@@ -1,19 +1,33 @@
 @extends('layouts.app')
 
-@section('title', 'Pembelian')
+@section('title', 'Pembelian Part')
 
 @section('content')
+
+    <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("loadingSpinner").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                document.getElementById("mainContentSection").style.display = "block";
+            }, 2000); // Adjust the delay time as needed
+        });
+    </script>
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div class="content-header" style="display: none;" id="mainContent">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Pembelian</h1>
+                    <h1 class="m-0">Pembelian Part</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('admin/pembelian_part') }}">Transaksi</a></li>
-                        <li class="breadcrumb-item active">Pembelian</li>
+                        <li class="breadcrumb-item active">Pembelian part</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -21,7 +35,7 @@
     </div>
     <!-- /.content-header -->
 
-    <section class="content">
+    <section class="content" style="display: none;" id="mainContentSection">
         <div class="container-fluid">
             @if (session('error_pelanggans') || session('error_pesanans'))
                 <div class="alert alert-danger alert-dismissible">
@@ -61,7 +75,7 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/pembelian') }}" method="post" autocomplete="off">
+            <form action="{{ url('admin/pembelian_part') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -97,7 +111,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah Barang</h3>
+                        <h3 class="card-title">Tambah Part</h3>
                         <div class="float-right">
                             <button type="button" class="btn btn-primary btn-sm" onclick="addPesanan()">
                                 <i class="fas fa-plus"></i>
@@ -110,61 +124,47 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
+                                    <th>Kategori</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Satuan</th>
+                                    <th>Harga Satuan</th>
                                     <th>Jumlah</th>
-                                    <th>Harga</th>
-                                    <th>Diskon</th>
                                     <th>Total</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody id="tabel-pembelian">
                                 <tr id="pembelian-0">
-                                    <td style="width: 70px" class="text-center" id="urutan">1</td>
-                                    <td hidden>
+                                    <td class="text-center" id="urutan">1</td>
+                                    <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="barang_id-0" name="barang_id[]">
+                                            <input type="text" class="form-control" readonly id="kategori-0"
+                                                name="kategori[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="kode_barang-0" readonly
-                                                name="kode_barang[]">
+                                            <input type="text" class="form-control" readonly id="kode_partdetail-0"
+                                                name="kode_partdetail[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="nama_barang-0" readonly
+                                            <input type="text" class="form-control" readonly id="nama_barang-0"
                                                 name="nama_barang[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <select class="form-control" id="satuan-0" name="satuan[]">
-                                                <option value="">- Pilih -</option>
-                                                <option value="M3" {{ old('satuan') == 'M3' ? 'selected' : null }}>
-                                                    M&sup3;</option>
-                                                <option value="ton" {{ old('satuan') == 'ton' ? 'selected' : null }}>
-                                                    ton</option>
-                                                <option value="krtn" {{ old('satuan') == 'krtn' ? 'selected' : null }}>
-                                                    krtn</option>
-                                                <option value="dus" {{ old('satuan') == 'dus' ? 'selected' : null }}>
-                                                    dus</option>
-                                                <option value="rit" {{ old('satuan') == 'rit' ? 'selected' : null }}>
-                                                    rit</option>
-                                                <option value="kg" {{ old('satuan') == 'kg' ? 'selected' : null }}>
-                                                    kg</option>
-                                                <option value="ltr" {{ old('satuan') == 'ltr' ? 'selected' : null }}>
-                                                    ltr</option>
-                                                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : null }}>
-                                                    pcs</option>
-                                                <option value="hr" {{ old('satuan') == 'hr' ? 'selected' : null }}>
-                                                    hr</option>
-                                                <option value="ZAK" {{ old('satuan') == 'ZAK' ? 'selected' : null }}>
-                                                    ZAK</option>
-                                            </select>
+                                            <input type="text" class="form-control" readonly id="satuan-0"
+                                                name="satuan[]">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control hargasatuan" id="hargasatuan-0"
+                                                name="hargasatuan[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
@@ -175,47 +175,30 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga" id="harga-0"
-                                                name="harga[]" data-row-id="0">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" class="form-control diskon" id="diskon-0"
-                                                name="diskon[]" data-row-id="0">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control total" id="total-0"
-                                                name="total[]">
+                                            <input type="text" class="form-control harga" id="harga-0"
+                                                name="harga[]">
                                         </div>
                                     </td>
                                     <td style="width: 120px">
                                         <button type="button" class="btn btn-primary" onclick="barang(0)">
                                             <i class="fas fa-plus"></i>
                                         </button>
-                                        <button style="margin-left:5px" type="button" class="btn btn-danger"
-                                            onclick="removeBan(0)">
+                                        <button type="button" class="btn btn-danger" onclick="removeBan(0)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="form-group">
-                            <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
-                            <input style="font-size:14px" type="text" class="form-control text-right"
-                                id="grand_total" name="grand_total" readonly placeholder=""
-                                value="{{ old('grand_total') }}">
-                        </div>
                     </div>
-                    <div class="card-footer text-right mt-3">
-                        <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
-                        <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
-                        <div id="loading" style="display: none;">
-                            <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
-                        </div>
+                    {{-- <div style="margin-right: 20px; margin-left:20px" class="form-group">
+                        <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
+                        <input style="font-size:14px" type="text" class="form-control text-right" id="grand_total"
+                            name="grand_total" readonly placeholder="" value="{{ old('grand_total') }}">
+                    </div> --}}
+                    <div class="card-footer text-right">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                 </div>
             </form>
@@ -387,58 +370,90 @@
             </div>
         </div>
 
-        <div class="modal fade" id="tableBarang" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="modal-part">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Data Barang</h4>
+                        <h4 class="modal-title">Tambah Part</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama barang</th>
-                                    <th>Spesifikasi</th>
-                                    <th>Keterangan</th>
-                                    <th>Opsi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $barang->kode_barang }}</td>
-                                        <td>{{ $barang->nama_barang }}</td>
-                                        <td>{{ $barang->spesifikasi }}</td>
-                                        <td>{{ $barang->keterangan }}</td>
-                                        <td class="text-center">
-                                            <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
-                                                onclick="getBarang({{ $loop->index }})">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div style="text-align: center;">
+                            <form id="form-sparepart" action="{{ url('admin/tambah_sparepart') }}" method="POST"
+                                enctype="multipart/form-data" autocomplete="off">
+                                @csrf
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label class="form-label" for="kategori">Kategori</label>
+                                            <select class="form-control" id="kategori" name="kategori">
+                                                <option value="">- Pilih -</option>
+                                                <option value="oli" {{ old('kategori') == 'oli' ? 'selected' : null }}>
+                                                    oli</option>
+                                                <option value="body"
+                                                    {{ old('kategori') == 'body' ? 'selected' : null }}>
+                                                    body</option>
+                                                <option value="mesin"
+                                                    {{ old('kategori') == 'mesin' ? 'selected' : null }}>
+                                                    mesin</option>
+                                                <option value="sasis"
+                                                    {{ old('kategori') == 'sasis' ? 'selected' : null }}>
+                                                    sasis</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Nama Barang</label>
+                                            <input type="text" class="form-control" id="nama_barang"
+                                                name="nama_barang" placeholder="Masukan nama pemilik" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="keterangan">Keterangan</label>
+                                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Harga</label>
+                                            <input type="number" class="form-control" id="harga" name="harga"
+                                                placeholder="Masukan harga" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Stok</label>
+                                            <input type="number" class="form-control" id="jumlah" name="jumlah"
+                                                placeholder="Tersedia" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" for="satuan">Satuan</label>
+                                            <select class="form-control" id="satuan" name="satuan">
+                                                <option value="">- Pilih -</option>
+                                                <option value="pcs" {{ old('satuan') == 'pcs' ? 'selected' : null }}>
+                                                    pcs</option>
+                                                <option value="ltr" {{ old('satuan') == 'ltr' ? 'selected' : null }}>
+                                                    ltr</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <button type="reset" class="btn btn-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+       
 
     </section>
     <script>
         function getData(id) {
             var supplier_id = document.getElementById('supplier_id');
             $.ajax({
-                url: "{{ url('admin/pembelian/supplier') }}" + "/" + supplier_id.value,
+                url: "{{ url('admin/pembelian_ban/supplier') }}" + "/" + supplier_id.value,
                 type: "GET",
                 dataType: "json",
                 success: function(supplier_id) {
@@ -448,48 +463,55 @@
             });
         }
 
-
         var activeSpecificationIndex = 0;
 
         function barang(param) {
             activeSpecificationIndex = param;
             // Show the modal and filter rows if necessary
-            $('#tableBarang').modal('show');
+            $('#tableKategori').modal('show');
         }
 
         function getBarang(rowIndex) {
-            var selectedRow = $('#example1 tbody tr:eq(' + rowIndex + ')');
-            var barang_id = selectedRow.data('barang_id');
-            var kode_barang = selectedRow.data('kode_barang');
+            var selectedRow = $('#datatables66 tbody tr:eq(' + rowIndex + ')');
+            var kategori = selectedRow.data('kategori');
+            var kode_partdetail = selectedRow.data('kode_partdetail');
             var nama_barang = selectedRow.data('nama_barang');
+            var satuan = selectedRow.data('satuan');
 
             // Update the form fields for the active specification
-            $('#barang_id-' + activeSpecificationIndex).val(barang_id);
-            $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
+            $('#kategori-' + activeSpecificationIndex).val(kategori);
+            $('#kode_partdetail-' + activeSpecificationIndex).val(kode_partdetail);
             $('#nama_barang-' + activeSpecificationIndex).val(nama_barang);
+            $('#satuan-' + activeSpecificationIndex).val(satuan);
 
-            $('#tableBarang').modal('hide');
+            $('#tableKategori').modal('hide');
         }
 
-        $(document).on("input", ".harga, .jumlah, .diskon", function() {
+
+        $(document).on("input", ".hargasatuan, .jumlah", function() {
             var currentRow = $(this).closest('tr');
-            var harga = parseFloat(currentRow.find(".harga").val()) || 0;
+            var hargasatuan = parseFloat(currentRow.find(".hargasatuan").val()) || 0;
             var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
-            var diskon = parseFloat(currentRow.find(".diskon").val()) || 0;
-            var total = harga * jumlah - diskon;
-            currentRow.find(".total").val(total);
-
-            updateGrandTotal()
-
+            var harga = hargasatuan * jumlah;
+            currentRow.find(".harga").val(harga);
         });
+
+        // $(document).on("input", ".harga, .jumlah", function() {
+
+        //     var currentRow = $(this).closest('tr');
+        //     var harga = parseFloat(currentRow.find(".harga").val()) || 0;
+        //     var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+        //     var hargasatuan = harga / jumlah;
+        //     currentRow.find(".hargasatuan").val(hargasatuan);
+        // });
 
 
 
         var data_pembelian = @json(session('data_pembelians'));
-        var jumlah_ban = 1;
+        var jumlah_part = 1;
 
         if (data_pembelian != null) {
-            jumlah_ban = data_pembelian.length;
+            jumlah_part = data_pembelian.length;
             $('#tabel-pembelian').empty();
             var urutan = 0;
             $.each(data_pembelian, function(key, value) {
@@ -499,28 +521,27 @@
         }
 
         function addPesanan() {
-            jumlah_ban = jumlah_ban + 1;
+            console.log();
+            jumlah_part = jumlah_part + 1;
 
-            if (jumlah_ban === 1) {
+            if (jumlah_part === 1) {
                 $('#tabel-pembelian').empty();
             }
 
-            itemPembelian(jumlah_ban, jumlah_ban - 1);
+            itemPembelian(jumlah_part, jumlah_part - 1);
         }
 
         function removeBan(params) {
-            jumlah_ban = jumlah_ban - 1;
-
-            console.log(jumlah_ban);
+            jumlah_part = jumlah_part - 1;
 
             var tabel_pesanan = document.getElementById('tabel-pembelian');
             var pembelian = document.getElementById('pembelian-' + params);
 
             tabel_pesanan.removeChild(pembelian);
 
-            if (jumlah_ban === 0) {
+            if (jumlah_part === 0) {
                 var item_pembelian = '<tr>';
-                item_pembelian += '<td class="text-center" colspan="5">- Barang belum ditambahkan -</td>';
+                item_pembelian += '<td class="text-center" colspan="8">- Part belum ditambahkan -</td>';
                 item_pembelian += '</tr>';
                 $('#tabel-pembelian').html(item_pembelian);
             } else {
@@ -533,81 +554,78 @@
         }
 
         function itemPembelian(urutan, key, value = null) {
-            var barang_id = '';
-            var kode_barang = '';
+            var kategori = '';
+            var kode_partdetail = '';
             var nama_barang = '';
             var satuan = '';
             var jumlah = '';
+            var type_ban = '';
+            var hargasatuan = '';
             var harga = '';
-            var diskon = '';
-            var total = '';
+            var kondisi_ban = '';
 
             if (value !== null) {
-                barang_id = value.barang_id;
-                kode_barang = value.kode_barang;
+                kategori = value.kategori;
+                kode_partdetail = value.kode_partdetail;
                 nama_barang = value.nama_barang;
                 satuan = value.satuan;
                 jumlah = value.jumlah;
+                type_ban = value.type_ban;
+                hargasatuan = value.hargasatuan;
                 harga = value.harga;
-                diskon = value.diskon;
-                total = value.total;
-
+                kondisi_ban = value.kondisi_ban;
             }
 
+            console.log(kategori);
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
+            item_pembelian += '<td class="text-center" id="urutan">' + urutan + '</td>';
 
-            // barang_id 
-            item_pembelian += '<td hidden>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + urutan +
-                '" name="barang_id[]" value="' + barang_id + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-
-            // kode_barang 
+            // kategori 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + urutan +
-                '" name="kode_barang[]" value="' + kode_barang + '" ';
+            item_pembelian += '<input type="text" class="form-control" readonly id="kategori-' + urutan +
+                '" name="kategori[]" value="' +
+                kategori +
+                '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // nama_barang 
+            //kode barang
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_partdetail-' + urutan +
+                '" name="kode_partdetail[]" value="' +
+                kode_partdetail +
+                '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            //nama barang
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" readonly id="nama_barang-' + urutan +
-                '" name="nama_barang[]" value="' + nama_barang + '" ';
+                '" name="nama_barang[]" value="' +
+                nama_barang +
+                '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // satuan 
+            //satuan
             item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + urutan +
-                '" name="satuan[]">';
-            item_pembelian += '<option value="">- Pilih -</option>';
-            item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
-                '>M&sup3;</option>';
-            item_pembelian += '<option value="ton"' + (satuan === 'ton' ? ' selected' : '') +
-                '>ton</option>';
-            item_pembelian += '<option value="krtn"' + (satuan === 'krtn' ? ' selected' : '') +
-                '>krtn</option>';
-            item_pembelian += '<option value="dus"' + (satuan === 'dus' ? ' selected' : '') +
-                '>dus</option>';
-            item_pembelian += '<option value="rit"' + (satuan === 'rit' ? ' selected' : '') +
-                '>rit</option>';
-            item_pembelian += '<option value="kg"' + (satuan === 'kg' ? ' selected' : '') +
-                '>kg</option>';
-            item_pembelian += '<option value="ltr"' + (satuan === 'ltr' ? ' selected' : '') +
-                '>ltr</option>';
-            item_pembelian += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
-            item_pembelian += '<option value="hr"' + (satuan === 'hr' ? ' selected' : '') +
-                '>hr</option>';
-            item_pembelian += '<option value="ZAK"' + (satuan === 'ZAK' ? ' selected' : '') +
-                '>ZAK</option>';
-            item_pembelian += '</select>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" readonly id="satuan-' + urutan +
+                '" name="satuan[]" value="' +
+                satuan +
+                '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            // harga
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="number" class="form-control hargasatuan" id="hargasatuan-' + urutan +
+                '" name="hargasatuan[]" value="' + hargasatuan + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
@@ -619,30 +637,16 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // harga
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
-                '" name="harga[]" value="' + harga + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-
-            // diskon
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control diskon" id="diskon-' + urutan +
-                '" name="diskon[]" value="' + diskon + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
 
             // total
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control total" id="total-' + urutan +
-                '" name="total[]" value="' + total + '" readonly';
+            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
+                '" name="harga[]" value="' + harga + '" readonly';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // opsi
             item_pembelian += '<td style="width: 120px">';
             item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
@@ -656,35 +660,63 @@
 
             $('#tabel-pembelian').append(item_pembelian);
 
-            if (value !== null) {
-                $('#barang_id-' + urutan).val(value.barang_id);
-                $('#kode_barang-' + urutan).val(value.kode_barang);
-                $('#nama_barang-' + urutan).val(value.nama_barang);
-                $('#satuan-' + urutan).val(value.satuan);
-                $('#jumlah-' + urutan).val(value.jumlah);
-                $('#harga-' + urutan).val(value.harga);
-                $('#diskon-' + urutan).val(value.diskon);
-                $('#total-' + urutan).val(value.total);
-            }
         }
+
+        // Panggil fungsi refreshTable saat dokumen siap
+        $(document).ready(function() {
+            // Memproses pengiriman form
+            $('#form-sparepart').on('submit', function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                // Mengirim permintaan Ajax
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ url('admin/tambah_sparepart') }}",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Sparepart berhasil ditambahkan');
+                            // Setelah berhasil menambahkan data, panggil refreshTable untuk memperbarui tabel
+                            refreshTable();
+                        } else {
+                            alert('Gagal menambahkan sparepart. Silakan coba lagi.');
+                        }
+                    },
+                    error: function(error) {
+                        alert('Terjadi kesalahan saat mengirim permintaan. Silakan coba lagi.');
+                    }
+                });
+            });
+
+            // Panggil fungsi refreshTable saat dokumen siap
+            refreshTable();
+        });
+
+        // setInterval(function() {
+        //     refreshTable();
+        // }, 5000);
     </script>
 
     <script>
         function updateGrandTotal() {
             var grandTotal = 0;
 
-            // Loop through all elements with name "total[]"
-            $('input[name^="total"]').each(function() {
+            // Loop through all elements with name "nominal_tambahan[]"
+            $('input[name^="harga"]').each(function() {
                 var nominalValue = parseFloat($(this).val().replace(/\./g, '').replace(',', '.')) || 0;
                 grandTotal += nominalValue;
             });
             // $('#sub_total').val(grandTotal.toLocaleString('id-ID'));
             // $('#pph2').val(pph2Value.toLocaleString('id-ID'));
-            $('#grand_total').val(formatRupiahsss(grandTotal));
+            $('#grand_total').val(formatRupiah(grandTotal));
             console.log(grandTotal);
         }
 
-        $('body').on('input', 'input[name^="total"]', function() {
+        $('body').on('input', 'input[name^="harga"]', function() {
             updateGrandTotal();
         });
 
@@ -693,26 +725,16 @@
             updateGrandTotal();
         });
 
-        function formatRupiahsss(number) {
-            var formatted = new Intl.NumberFormat('id-ID', {
-                minimumFractionDigits: 1,
-                maximumFractionDigits: 1
-            }).format(number);
-            return '' + formatted;
+        function formatRupiah(value) {
+            return value.toLocaleString('id-ID');
         }
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Tambahkan event listener pada tombol "Simpan"
-            $('#btnSimpan').click(function() {
-                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
-                $(this).hide();
-                $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
-                $('#loading').show();
 
-                // Lakukan pengiriman formulir
-                $('form').submit();
-            });
-        });
+        // function formatRupiahsss(number) {
+        //     var formatted = new Intl.NumberFormat('id-ID', {
+        //         minimumFractionDigits: 1,
+        //         maximumFractionDigits: 1
+        //     }).format(number);
+        //     return '' + formatted;
+        // }
     </script>
 @endsection

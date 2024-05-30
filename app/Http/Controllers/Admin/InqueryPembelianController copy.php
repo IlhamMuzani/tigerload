@@ -85,24 +85,21 @@ class InqueryPembelianController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validasi_pelanggan = Validator::make(
-            $request->all(),
-            [
-                'supplier_id' => 'required',
-            ],
-            [
-                'supplier_id.required' => 'Pilih nama supplier!',
-            ]
-        );
+        $validasi_pelanggan = Validator::make($request->all(), [
+            'supplier_id' => 'required',
+        ], [
+            'supplier_id.required' => 'Pilih nama supplier!',
+        ]);
 
         $error_pelanggans = array();
+        $error_pesanans = array();
+        $data_pembelians = collect();
+
 
         if ($validasi_pelanggan->fails()) {
             array_push($error_pelanggans, $validasi_pelanggan->errors()->all()[0]);
         }
 
-        $error_pesanans = array();
-        $data_pembelians = collect();
 
         if ($request->has('barang_id')) {
             for ($i = 0; $i < count($request->barang_id); $i++) {
@@ -118,8 +115,9 @@ class InqueryPembelianController extends Controller
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Barang nomor " . ($i + 1) . " belum dilengkapi!"); // Corrected the syntax for concatenation and indexing
+                    array_push($error_pesanans, "Barang nomor " . $i + 1 . " belum dilengkapi!");
                 }
+
 
                 $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
                 $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
@@ -131,20 +129,10 @@ class InqueryPembelianController extends Controller
                 $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
                 $data_pembelians->push([
-                    'detail_id' => $request->detail_ids[$i] ?? null,
-                    'barang_id' => $barang_id,
-                    'kode_barang' => $kode_barang,
-                    'nama_barang' => $nama_barang,
-                    'satuan' => $satuan,
-                    'jumlah' => $jumlah,
-                    'harga' => $harga,
-                    'diskon' => $diskon,
-                    'total' => $total
+                    'detail_id' => $request->detail_ids[$i] ?? null, 'barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'satuan' => $satuan, 'jumlah' => $jumlah, 'harga' => $harga, 'diskon' => $diskon, 'total' => $total
                 ]);
             }
         }
-
-
         if ($error_pelanggans || $error_pesanans) {
             return back()
                 ->withInput()
@@ -153,13 +141,11 @@ class InqueryPembelianController extends Controller
                 ->with('data_pembelians', $data_pembelians);
         }
 
+        // format tanggal indo
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
-
-        $tanggal = Carbon::now()->format('Y-m-d');
         $transaksi = Pembelian::findOrFail($id);
 
-        // Update the main transaction
         $transaksi->update([
             'supplier_id' => $request->supplier_id,
             'grand_total' => str_replace(',', '.', str_replace('.', '', $request->grand_total)),
@@ -168,43 +154,25 @@ class InqueryPembelianController extends Controller
 
         $transaksi_id = $transaksi->id;
 
+
         $detailIds = $request->input('detail_ids');
 
         foreach ($data_pembelians as $data_pesanan) {
             $detailId = $data_pesanan['detail_id'];
 
             if ($detailId) {
-                // Update Detailpembelian
-                Detailpembelian::where('id', $detailId)->update([
-                    'pembelian_id' => $transaksi->id,
-                    'barang_id' =>  $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama_barang' => $data_pesanan['nama_barang'],
-                    'satuan' => $data_pesanan['satuan'],
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => $data_pesanan['harga'],
-                    'diskon' => $data_pesanan['diskon'],
-                    'total' => $data_pesanan['total'],
-                ]);
-            } else {
-                // Check if the detail already exists
-                $existingDetail = Detailpembelian::where([
-                    'pembelian_id' => $transaksi->id,
-                    'barang_id' =>  $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama_barang' => $data_pesanan['nama_barang'],
-                    'satuan' => $data_pesanan['satuan'],
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => $data_pesanan['harga'],
-                    'diskon' => $data_pesanan['diskon'],
-                    'total' => $data_pesanan['total'],
-                ])->first();
+                // Mendapatkan data Detail_pembelianpart yang akan diupdate
+                $detailToUpdate = Detailpembelian::find($detailId);
 
-                // If the detail does not exist, create a new one
-                if (!$existingDetail) {
-                    Detailpembelian::create([
+                if ($detailToUpdate) {
+                    // Menghitung jumlah baru berdasarkan perubahan
+                    $jumlahLamaDetail = $detailToUpdate->jumlah;
+                    $jumlahBaruDetail = $data_pesanan['jumlah'];
+                    $jumlahSparepart = $jumlahLamaDetail - $jumlahBaruDetail + $jumlahBaruDetail;
+
+                    // Update Detail_pembelianpart
+                    $detailToUpdate->update([
                         'pembelian_id' => $transaksi->id,
-                        'barang_id' =>  $data_pesanan['barang_id'],
                         'kode_barang' => $data_pesanan['kode_barang'],
                         'nama_barang' => $data_pesanan['nama_barang'],
                         'satuan' => $data_pesanan['satuan'],
@@ -213,11 +181,41 @@ class InqueryPembelianController extends Controller
                         'diskon' => $data_pesanan['diskon'],
                         'total' => $data_pesanan['total'],
                     ]);
-                }
-            }
 
-            // Increment the quantity of the barang
-            Barang::where('id', $data_pesanan['barang_id'])->increment('jumlah', $data_pesanan['jumlah']);
+                    // Temukan semua Detail_pembelianpart dengan sparepart_id yang sama
+                    $detailParts = Detailpembelian::where('barang_id', $detailToUpdate->barang_id)->get();
+
+                    // Update jumlah dan harga di Sparepart untuk semua Detail_pembelianpart yang sesuai
+                    foreach ($detailParts as $detail) {
+                        $sparepart = Barang::find($detail->barang_id);
+
+                        if ($sparepart) {
+                            // Menghitung jumlah baru untuk Sparepart
+                            $jumlahLamaSparepart = $sparepart->jumlah;
+                            $jumlahBaruSparepart = $data_pesanan['jumlah'];
+                            $jumlahTotalSparepart = $jumlahLamaSparepart - $jumlahLamaDetail + $jumlahBaruSparepart;
+
+                            // Update jumlah dan harga di Sparepart
+                            $sparepart->update([
+                                'jumlah' => $jumlahTotalSparepart,
+                                // 'harga' => $data_pesanan['harga'],
+                            ]);
+                        }
+                    }
+                }
+            } else {
+                Detailpembelian::create([
+                    'pembelian_id' => $transaksi->id,
+                    'barang_id' => $data_pesanan['barang_id'],
+                    'kode_barang' => $data_pesanan['kode_barang'],
+                    'nama_barang' => $data_pesanan['nama_barang'],
+                    'satuan' => $data_pesanan['satuan'],
+                    'jumlah' => $data_pesanan['jumlah'],
+                    'harga' => $data_pesanan['harga'],
+                    'diskon' => $data_pesanan['diskon'],
+                    'total' => $data_pesanan['total'],
+                ]);
+            }
         }
 
 
@@ -231,18 +229,9 @@ class InqueryPembelianController extends Controller
 
     public function unpostpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
-        $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
+        $ban = Pembelian::where('id', $id)->first();
 
-        foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
-
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah - $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
-        }
-        $pembelian->update([
+        $ban->update([
             'status' => 'unpost'
         ]);
 
@@ -251,18 +240,9 @@ class InqueryPembelianController extends Controller
 
     public function postingpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
-        $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
+        $ban = Pembelian::where('id', $id)->first();
 
-        foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
-
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah + $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
-        }
-        $pembelian->update([
+        $ban->update([
             'status' => 'posting'
         ]);
 
@@ -309,12 +289,7 @@ class InqueryPembelianController extends Controller
     public function deletebarangs($id)
     {
         $item = Detailpembelian::find($id);
-
-        if ($item) {
-            $item->delete();
-            return response()->json(['message' => 'Data deleted successfully']);
-        } else {
-            return response()->json(['message' => 'Detail Faktur not found'], 404);
-        }
+        $item->delete();
+        return response()->json(['message' => 'Data deleted successfully']);
     }
 }

@@ -90,6 +90,7 @@ class PembelianController extends Controller
         ));
 
         return Redirect::back()->with('success', 'Berhasil menambahkan supplier');
+
     }
 
     public function kode_supp()
@@ -142,8 +143,6 @@ class PembelianController extends Controller
                     'satuan.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
-                    // 'diskon.' . $i => 'required',
-                    'total.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
@@ -157,12 +156,8 @@ class PembelianController extends Controller
                 $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
-                $diskon = is_null($request->diskon[$i]) ? '' : $request->diskon[$i];
-                $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
-                $data_pembelians->push([
-                    'barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'satuan' => $satuan, 'jumlah' => $jumlah, 'harga' => $harga, 'diskon' => $diskon, 'total' => $total
-                ]);
+                $data_pembelians->push(['barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'satuan' => $satuan, 'jumlah' => $jumlah, 'harga' => $harga,]);
             }
         } else {
         }
@@ -194,21 +189,52 @@ class PembelianController extends Controller
 
         if ($transaksi) {
             foreach ($data_pembelians as $data_pesanan) {
-                // Create a new Detailpembelian
-                Detailpembelian::create([
-                    'pembelian_id' => $transaksi->id,
-                    'barang_id' => $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama_barang' => $data_pesanan['nama_barang'],
-                    'satuan' => $data_pesanan['satuan'],
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => $data_pesanan['harga'],
-                    'diskon' => $data_pesanan['diskon'],
-                    'total' => $data_pesanan['total'],
-                ]);
+                if (array_key_exists('kode_barang', $data_pesanan)) {
+                    $kodePembelianPart = $data_pesanan['kode_barang'];
 
-                // Increment the quantity of the barang
-                Barang::where('id', $data_pesanan['barang_id'])->increment('jumlah', $data_pesanan['jumlah']);
+                    $spareparts = Barang::where('kode_barang', $kodePembelianPart)->get();
+
+                    if ($spareparts->count() > 0) {
+                        foreach ($spareparts as $sparepart) {
+                            $jumlahLama = $sparepart->jumlah;
+
+                            $jumlahBaru = $data_pesanan['jumlah'];
+
+                            $jumlahTotal = $jumlahLama + $jumlahBaru;
+
+                            $sparepart->update([
+                                'pembelian_id' => $transaksi->id,
+                                'jumlah' => $jumlahTotal,
+                                // 'harga' => $data_pesanan['harga'],
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($transaksi) {
+            foreach ($data_pembelians as $data_pesanan) {
+                if (array_key_exists('kode_barang', $data_pesanan)) {
+                    $kodePembelianPart = $data_pesanan['kode_barang'];
+
+                    // Cari Sparepart yang memiliki kode_partdetail yang sesuai
+                    $sparepart = Barang::where('kode_barang', $kodePembelianPart)->first();
+
+                    if ($sparepart) {
+                        // Buat Detail_pembelianpart dan hubungkan dengan Sparepart yang sesuai
+                        Detailpembelian::create([
+                            'pembelian_id' => $transaksi->id,
+                            'barang_id' => $sparepart->id, // Mengambil sparepart_id dari hasil pencarian di atas
+                            'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+                            'kode_barang' => $data_pesanan['kode_barang'],
+                            'nama_barang' => $data_pesanan['nama_barang'],
+                            'satuan' => $data_pesanan['satuan'],
+                            'jumlah' => $data_pesanan['jumlah'],
+                            'harga' => $data_pesanan['harga'],
+                        ]);
+                    }
+                }
             }
         }
 

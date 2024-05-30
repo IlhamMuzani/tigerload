@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Pembelian')
+@section('title', 'Perbarui Pembelian')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,35 +8,21 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Pembelian</h1>
+                    <h1 class="m-0">Perbarui Pembelian</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/inquery_pembelian') }}">Pembelian
-                                Kecil</a>
-                        </li>
-                        <li class="breadcrumb-item active">Perbarui</li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pembelian_ban') }}">Transaksi</a></li>
+                        <li class="breadcrumb-item active">Perbarui Pembelian ban</li>
                     </ol>
-                </div>
-            </div>
-        </div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
-
+    <!-- /.content-header -->
 
     <section class="content">
         <div class="container-fluid">
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissible">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <h5>
-                        <i class="icon fas fa-ban"></i> Error!
-                    </h5>
-                    @foreach (session('error') as $error)
-                        - {{ $error }} <br>
-                    @endforeach
-                </div>
-            @endif
-
             @if (session('error_pelanggans') || session('error_pesanans'))
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -55,8 +41,7 @@
                     @endif
                 </div>
             @endif
-            <form action="{{ url('admin/inquery_pembelian/' . $inquery->id) }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/inquery_pembelian/' . $inquery->id) }}" method="post" autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -69,7 +54,7 @@
                             </button>
                         </div>
                     </div>
-
+                    <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group">
                             <label for="supplier_id">Nama Supplier</label>
@@ -90,165 +75,153 @@
                                 value="">{{ old('alamat', $inquery->supplier->alamat) }}</textarea>
                         </div>
                     </div>
-                    <!-- /.card-header -->
                 </div>
-                <div>
-                    <div class="card" id="form_biayatambahan">
-                        <div class="card-header">
-                            <h3 class="card-title">Tambahkan Barang <span>
-                                </span></h3>
-                            <div class="float-right">
-                                <button type="button" class="btn btn-primary btn-sm" onclick="addPesanan()">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Barang</h3>
+                        <div class="float-right">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="addPesanan()">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Satuan</th>
-                                        <th>Jumlah</th>
-                                        <th>Harga</th>
-                                        <th>Diskon</th>
-                                        <th>Total</th>
-                                        <th>Opsi</th>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Satuan</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Total</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-pembelian">
+                                @foreach ($details as $detail)
+                                    <tr id="pembelian-{{ $loop->index }}">
+                                        <td style="width: 70px; font-size:14px" class="text-center" id="urutan">
+                                            {{ $loop->index + 1 }}
+                                        </td>
+                                        <div class="form-group" hidden>
+                                            <input type="text" class="form-control" id="nomor_seri-{{ $loop->index }}"
+                                                name="detail_ids[]" value="{{ $detail['id'] }}">
+                                        </div>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    id="barang_id-{{ $loop->index }}" name="barang_id[]"
+                                                    value="{{ $detail['barang_id'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" readonly
+                                                    id="kode_barang-{{ $loop->index }}" name="kode_barang[]"
+                                                    value="{{ $detail['kode_barang'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" readonly
+                                                    id="nama_barang-{{ $loop->index }}" name="nama_barang[]"
+                                                    value="{{ $detail['nama_barang'] }}">
+                                            </div>
+                                        </td>
+                                        <td style="width: 150px">
+                                            <div class="form-group">
+                                                <select class="form-control" id="satuan-0" name="satuan[]">
+                                                    <option value="">- Pilih -</option>
+                                                    <option value="M3"
+                                                        {{ old('satuan', $detail['satuan']) == 'M3' ? 'selected' : null }}>
+                                                        M&sup3;</option>
+                                                    <option value="ton"
+                                                        {{ old('satuan', $detail['satuan']) == 'ton' ? 'selected' : null }}>
+                                                        ton</option>
+                                                    <option value="krtn"
+                                                        {{ old('satuan', $detail['satuan']) == 'krtn' ? 'selected' : null }}>
+                                                        krtn</option>
+                                                    <option value="dus"
+                                                        {{ old('satuan', $detail['satuan']) == 'dus' ? 'selected' : null }}>
+                                                        dus</option>
+                                                    <option value="rit"
+                                                        {{ old('satuan', $detail['satuan']) == 'rit' ? 'selected' : null }}>
+                                                        rit</option>
+                                                    <option value="kg"
+                                                        {{ old('satuan', $detail['satuan']) == 'kg' ? 'selected' : null }}>
+                                                        kg</option>
+                                                    <option value="ltr"
+                                                        {{ old('satuan', $detail['satuan']) == 'ltr' ? 'selected' : null }}>
+                                                        ltr</option>
+                                                    <option value="pcs"
+                                                        {{ old('satuan', $detail['satuan']) == 'pcs' ? 'selected' : null }}>
+                                                        pcs</option>
+                                                    <option value="hr"
+                                                        {{ old('satuan', $detail['satuan']) == 'hr' ? 'selected' : null }}>
+                                                        hr</option>
+                                                    <option value="ZAK"
+                                                        {{ old('satuan', $detail['satuan']) == 'ZAK' ? 'selected' : null }}>
+                                                        ZAK</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control jumlah" id="jumlah-0"
+                                                    name="jumlah[]" data-row-id="0" value="{{ $detail['jumlah'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control harga" id="harga-0"
+                                                    name="harga[]" data-row-id="0" value="{{ $detail['harga'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control diskon" id="diskon-0"
+                                                    name="diskon[]" data-row-id="0" value="{{ $detail['diskon'] }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control total" id="total-0"
+                                                    name="total[]" value="{{ $detail['total'] }}">
+                                            </div>
+                                        </td>
+                                        <td style="width: 120px">
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="barang({{ $loop->index }})">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <button style="margin-left:5px" type="button" class="btn btn-danger"
+                                                onclick="removeBan({{ $loop->index }}, {{ $detail['id'] }})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody id="tabel-pembelian">
-                                    @foreach ($details as $detail)
-                                        <tr id="pembelian-{{ $loop->index }}">
-                                            <td style="width: 70px; font-size:14px" class="text-center" id="urutan">
-                                                {{ $loop->index + 1 }}
-                                            </td>
-                                            <td hidden>
-                                                <div class="form-group" >
-                                                    <input type="text" class="form-control" id="id-{{ $loop->index }}"
-                                                        name="detail_ids[]" value="{{ $detail['id'] }}">
-                                                </div>
-                                            </td>
-                                            <td hidden>
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" type="text" class="form-control"
-                                                        id="barang_id-{{ $loop->index }}" name="barang_id[]"
-                                                        value="{{ $detail['barang_id'] }}">
-                                                </div>
-                                            </td>
-                                            <td onclick="barang({{ $loop->index }})">
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" type="text" readonly
-                                                        class="form-control" id="kode_barang-{{ $loop->index }}"
-                                                        name="kode_barang[]" value="{{ $detail['kode_barang'] }}">
-                                                </div>
-                                            </td>
-                                            <td onclick="barang({{ $loop->index }})">
-                                                <div class="form-group">
-                                                    <input style="font-size:14px" type="text" readonly
-                                                        class="form-control" id="nama_barang-{{ $loop->index }}"
-                                                        name="nama_barang[]" value="{{ $detail['nama_barang'] }}">
-                                                </div>
-                                            </td>
-                                            <td style="width: 150px">
-                                                <div class="form-group">
-                                                    <select class="form-control" id="satuan-0" name="satuan[]">
-                                                        <option value="">- Pilih -</option>
-                                                        <option value="M3"
-                                                            {{ old('satuan', $detail['satuan']) == 'M3' ? 'selected' : null }}>
-                                                            M&sup3;</option>
-                                                        <option value="ton"
-                                                            {{ old('satuan', $detail['satuan']) == 'ton' ? 'selected' : null }}>
-                                                            ton</option>
-                                                        <option value="krtn"
-                                                            {{ old('satuan', $detail['satuan']) == 'krtn' ? 'selected' : null }}>
-                                                            krtn</option>
-                                                        <option value="dus"
-                                                            {{ old('satuan', $detail['satuan']) == 'dus' ? 'selected' : null }}>
-                                                            dus</option>
-                                                        <option value="rit"
-                                                            {{ old('satuan', $detail['satuan']) == 'rit' ? 'selected' : null }}>
-                                                            rit</option>
-                                                        <option value="kg"
-                                                            {{ old('satuan', $detail['satuan']) == 'kg' ? 'selected' : null }}>
-                                                            kg</option>
-                                                        <option value="ltr"
-                                                            {{ old('satuan', $detail['satuan']) == 'ltr' ? 'selected' : null }}>
-                                                            ltr</option>
-                                                        <option value="pcs"
-                                                            {{ old('satuan', $detail['satuan']) == 'pcs' ? 'selected' : null }}>
-                                                            pcs</option>
-                                                        <option value="hr"
-                                                            {{ old('satuan', $detail['satuan']) == 'hr' ? 'selected' : null }}>
-                                                            hr</option>
-                                                        <option value="ZAK"
-                                                            {{ old('satuan', $detail['satuan']) == 'ZAK' ? 'selected' : null }}>
-                                                            ZAK</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control jumlah" id="jumlah-0"
-                                                        name="jumlah[]" data-row-id="0" value="{{ $detail['jumlah'] }}">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control harga" id="harga-0"
-                                                        name="harga[]" data-row-id="0" value="{{ $detail['harga'] }}">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="number" class="form-control diskon" id="diskon-0"
-                                                        name="diskon[]" data-row-id="0" value="{{ $detail['diskon'] }}">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control total" id="total-0"
-                                                        name="total[]" value="{{ $detail['total'] }}">
-                                                </div>
-                                            </td>
-                                            <td style="width: 100px">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="barang({{ $loop->index }})">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                                <button style="margin-left:5px" type="button"
-                                                    class="btn btn-danger btn-sm"
-                                                    onclick="removePesanan({{ $loop->index }}, {{ $detail['id'] }})">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            {{-- <div class="form-group">
-                                <label style="font-size:14px" class="mt-3" for="nopol">Keterangan</label>
-                                <textarea style="font-size:14px" type="text" class="form-control" id="keterangan" name="keterangan"
-                                    placeholder="Masukan keterangan">{{ old('keterangan', $inquery->keterangan) }}</textarea>
-                            </div> --}}
-                            <div class="form-group">
-                                <label style="font-size:14px" class="mt-0" for="nopol">Grand Total</label>
-                                <input style="font-size:14px" type="text" class="form-control text-right"
-                                    id="grand_total" name="grand_total" readonly placeholder=""
-                                    value="{{ old('grand_total', number_format($inquery->grand_total, 0, ',', '.')) }}">
-                            </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <label style="font-size:14px" class="mt-3" for="nopol">Grand Total</label>
+                            <input style="font-size:14px" type="text" class="form-control text-right"
+                                id="grand_total" name="grand_total" readonly placeholder=""
+                                value="{{ $inquery->grand_total }}">
                         </div>
                     </div>
                 </div>
+                <div class="card-footer text-right">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
             </form>
-        </div>
 
+        </div>
         <div class="modal fade" id="modal-supplier">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -410,7 +383,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="tableBarang" data-backdrop="static">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -457,7 +429,6 @@
             </div>
         </div>
     </section>
-
     <script>
         function getData(id) {
             var supplier_id = document.getElementById('supplier_id');
@@ -504,9 +475,7 @@
             updateGrandTotal()
 
         });
-    </script>
 
-    <script>
         var data_pembelian = @json(session('data_pembelians'));
         var jumlah_ban = 1;
 
@@ -518,13 +487,6 @@
                 urutan = urutan + 1;
                 itemPembelian(urutan, key, value);
             });
-        }
-
-        function updateUrutan() {
-            var urutan = document.querySelectorAll('#urutan');
-            for (let i = 0; i < urutan.length; i++) {
-                urutan[i].innerText = i + 1;
-            }
         }
 
         var counter = 0;
@@ -544,10 +506,17 @@
 
             console.log('Current jumlah_ban:', jumlah_ban);
             itemPembelian(jumlah_ban, jumlah_ban - 1);
-            updateUrutan();
+            updateUrutans();
         }
 
-        function removePesanan(identifier) {
+        function updateUrutans() {
+            var urutan = document.querySelectorAll('#urutan');
+            for (let i = 0; i < urutan.length; i++) {
+                urutan[i].innerText = i + 1;
+            }
+        }
+
+        function removeBan(identifier) {
             var row = $('#pembelian-' + identifier);
             var detailId = row.find("input[name='detail_ids[]']").val();
 
@@ -569,8 +538,8 @@
                     }
                 });
             }
-            updateGrandTotal()
-            updateUrutan();
+            updateGrandTotal();
+            updateUrutans();
         }
 
         function itemPembelian(identifier, key, value = null) {
@@ -596,13 +565,12 @@
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + key + '">';
-            item_pembelian += '<td style="width: 70px; font-size:14px" class="text-center" id="urutan">' + key + '</td>';
+            item_pembelian += '<td class="text-center" id="urutan">' + key + '</td>';
 
             // barang_id 
-            item_pembelian += '<td hidden>';
+            item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="barang_id-' +
-                key +
+            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + key +
                 '" name="barang_id[]" value="' + barang_id + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -610,8 +578,7 @@
             // kode_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' +
-                key +
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + key +
                 '" name="kode_barang[]" value="' + kode_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -619,8 +586,7 @@
             // nama_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' +
-                key +
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama_barang-' + key +
                 '" name="nama_barang[]" value="' + nama_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -685,15 +651,11 @@
                 '" name="total[]" value="' + total + '" readonly';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-
-
-            item_pembelian += '<td style="width: 100px">';
-            item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + key +
-                ')">';
+            item_pembelian += '<td style="width: 120px">';
+            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + key + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
-            item_pembelian +=
-                '<button style="margin-left:10px" type="button" class="btn btn-danger btn-sm" onclick="removePesanan(' +
+            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
                 key + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';
@@ -735,5 +697,4 @@
             return '' + formatted;
         }
     </script>
-
 @endsection

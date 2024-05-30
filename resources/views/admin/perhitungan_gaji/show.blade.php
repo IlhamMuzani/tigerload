@@ -94,6 +94,9 @@
                 GAPOK</td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
                 HK</td>
+            <td class="td" style="text-align: center; padding: 0px; font-size: 12px;  font-weight:bold;">
+                GAJI</td>
+            </td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
                 UM</td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
@@ -103,9 +106,9 @@
             {{-- <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold;">
                 STORING</td>
             </td> --}}
-            <td class="td" style="text-align: center; padding: 0px; font-size: 12px;  font-weight:bold;">
+            {{-- <td class="td" style="text-align: center; padding: 0px; font-size: 12px;  font-weight:bold;">
                 GAJI <span> <br>KOTOR</span></td>
-            </td>
+            </td> --}}
             <td class="td" style="text-align: center; padding: 0px; font-size: 12px; font-weight:bold; width:15%">
                 KETERLAMBATAN <span> <br>(&lt; 30 MNT) (> 30 MNT)</span></td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;  font-weight:bold; ">
@@ -164,6 +167,9 @@
                 <td class="td" style="text-align: right; padding: 0px; font-size: 12px;">
                     {{ $item->hari_kerja }}
                 </td>
+                <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;">
+                    {{ number_format($item->gaji * $item->hari_kerja, 0, ',', '.') }}
+                </td>
                 <td class="td" style="text-align: right; padding: 0px; font-size: 12px;">
                     {{ number_format($item->uang_makan, 0, ',', '.') }}
 
@@ -178,9 +184,9 @@
                 {{-- <td class="td" style="text-align: right; padding: 1px; font-size: 12px;">
                     {{ number_format($item->hasil_storing, 1, ',', '.') }}
                 </td> --}}
-                <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;">
+                {{-- <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;">
                     {{ number_format($item->gaji_kotor, 0, ',', '.') }}
-                </td>
+                </td> --}}
                 <td class="td" style="text-align: center; padding: 1px; font-size: 12px;">
                     <table style="width: 100%; text-align: right; padding-right:5px">
                         <tr>
@@ -212,7 +218,7 @@
                 $Grandtdkabsen += $item->hasil_absen;
                 $Grandterlambat15 += $item->hasilkurang;
                 $Grandterlambat30 += $item->hasillebih;
-                $Grandgajikotor += $item->gaji_kotor;
+                $Grandgajikotor += $item->hari_kerja * $item->gaji;
                 $Grandlembur += $item->hasil_lembur;
                 $Granduh += $item->uang_hadir;
                 $Grandum += $item->uang_makan;
@@ -227,6 +233,9 @@
                 {{-- GRAND TOTAL --}}
             </td>
 
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;font-weight:bold;">
+                {{ number_format($Grandgajikotor, 0, ',', '.') }}
+            </td>
             <td class="td" style="text-align: right; padding: 0px; font-size: 12px;font-weight:bold;">
                 {{ number_format($Grandum, 0, ',', '.') }}
 
@@ -238,9 +247,9 @@
             <td class="td" style="text-align: right; padding: 1px; font-size: 12px;font-weight:bold;">
                 {{ number_format($Grandlembur, 0, ',', '.') }}
             </td>
-            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;font-weight:bold;">
+            {{-- <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;font-weight:bold;">
                 {{ number_format($Grandgajikotor, 0, ',', '.') }}
-            </td>
+            </td> --}}
             <td class="td" style="text-align: center; padding: 1px; font-size: 12px;font-weight:bold;">
                 <table style="width: 100%; text-align: right; padding-right:5px">
                     <tr>

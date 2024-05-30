@@ -125,13 +125,11 @@
                                             <td style="width: 70px; font-size:14px" class="text-center" id="urutan">
                                                 {{ $loop->index + 1 }}
                                             </td>
-                                            <td hidden>
-                                                <div class="form-group" >
-                                                    <input type="text" class="form-control" id="id-{{ $loop->index }}"
-                                                        name="detail_ids[]" value="{{ $detail['id'] }}">
+                                            <td>
+                                                <div class="form-group" hidden>
+                                                    <input type="text" class="form-control" name="detail_ids[]"
+                                                        value="{{ $detail['id'] }}">
                                                 </div>
-                                            </td>
-                                            <td hidden>
                                                 <div class="form-group">
                                                     <input style="font-size:14px" type="text" class="form-control"
                                                         id="barang_id-{{ $loop->index }}" name="barang_id[]"
@@ -152,65 +150,39 @@
                                                         name="nama_barang[]" value="{{ $detail['nama_barang'] }}">
                                                 </div>
                                             </td>
-                                            <td style="width: 150px">
+                                            <td>
                                                 <div class="form-group">
-                                                    <select class="form-control" id="satuan-0" name="satuan[]">
-                                                        <option value="">- Pilih -</option>
-                                                        <option value="M3"
-                                                            {{ old('satuan', $detail['satuan']) == 'M3' ? 'selected' : null }}>
-                                                            M&sup3;</option>
-                                                        <option value="ton"
-                                                            {{ old('satuan', $detail['satuan']) == 'ton' ? 'selected' : null }}>
-                                                            ton</option>
-                                                        <option value="krtn"
-                                                            {{ old('satuan', $detail['satuan']) == 'krtn' ? 'selected' : null }}>
-                                                            krtn</option>
-                                                        <option value="dus"
-                                                            {{ old('satuan', $detail['satuan']) == 'dus' ? 'selected' : null }}>
-                                                            dus</option>
-                                                        <option value="rit"
-                                                            {{ old('satuan', $detail['satuan']) == 'rit' ? 'selected' : null }}>
-                                                            rit</option>
-                                                        <option value="kg"
-                                                            {{ old('satuan', $detail['satuan']) == 'kg' ? 'selected' : null }}>
-                                                            kg</option>
-                                                        <option value="ltr"
-                                                            {{ old('satuan', $detail['satuan']) == 'ltr' ? 'selected' : null }}>
-                                                            ltr</option>
-                                                        <option value="pcs"
-                                                            {{ old('satuan', $detail['satuan']) == 'pcs' ? 'selected' : null }}>
-                                                            pcs</option>
-                                                        <option value="hr"
-                                                            {{ old('satuan', $detail['satuan']) == 'hr' ? 'selected' : null }}>
-                                                            hr</option>
-                                                        <option value="ZAK"
-                                                            {{ old('satuan', $detail['satuan']) == 'ZAK' ? 'selected' : null }}>
-                                                            ZAK</option>
-                                                    </select>
+                                                    <input style="font-size:14px" type="text" class="form-control"
+                                                        id="satuan-{{ $loop->index }}" name="satuan[]"
+                                                        value="{{ $detail['satuan'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control jumlah" id="jumlah-0"
-                                                        name="jumlah[]" data-row-id="0" value="{{ $detail['jumlah'] }}">
+                                                    <input style="font-size:14px" type="number" class="form-control"
+                                                        id="jumlah-{{ $loop->index }}" name="jumlah[]"
+                                                        value="{{ $detail['jumlah'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control harga" id="harga-0"
-                                                        name="harga[]" data-row-id="0" value="{{ $detail['harga'] }}">
+                                                    <input style="font-size:14px" type="number" class="form-control"
+                                                        id="harga-{{ $loop->index }}" name="harga[]"
+                                                        value="{{ $detail['harga'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control diskon" id="diskon-0"
-                                                        name="diskon[]" data-row-id="0" value="{{ $detail['diskon'] }}">
+                                                    <input style="font-size:14px" type="number" class="form-control"
+                                                        id="diskon-{{ $loop->index }}" name="diskon[]"
+                                                        value="{{ $detail['diskon'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control total" id="total-0"
-                                                        name="total[]" value="{{ $detail['total'] }}">
+                                                    <input style="font-size:14px" type="number" class="form-control"
+                                                        id="total-{{ $loop->index }}" name="total[]"
+                                                        value="{{ $detail['total'] }}">
                                                 </div>
                                             </td>
                                             <td style="width: 100px">
@@ -592,6 +564,7 @@
                 harga = value.harga;
                 diskon = value.diskon;
                 total = value.total;
+
             }
 
             // urutan 
@@ -599,7 +572,7 @@
             item_pembelian += '<td style="width: 70px; font-size:14px" class="text-center" id="urutan">' + key + '</td>';
 
             // barang_id 
-            item_pembelian += '<td hidden>';
+            item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="barang_id-' +
                 key +
@@ -608,7 +581,8 @@
             item_pembelian += '</td>';
 
             // kode_barang 
-            item_pembelian += '<td>';
+            item_pembelian += '<td onclick="barang(' + key +
+                ')">';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' +
                 key +
@@ -617,7 +591,8 @@
             item_pembelian += '</td>';
 
             // nama_barang 
-            item_pembelian += '<td>';
+            item_pembelian += '<td onclick="barang(' + key +
+                ')">';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' +
                 key +
@@ -627,65 +602,48 @@
 
             // satuan 
             item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + key +
-                '" name="satuan[]">';
-            item_pembelian += '<option value="">- Pilih -</option>';
-            item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
-                '>M&sup3;</option>';
-            item_pembelian += '<option value="ton"' + (satuan === 'ton' ? ' selected' : '') +
-                '>ton</option>';
-            item_pembelian += '<option value="krtn"' + (satuan === 'krtn' ? ' selected' : '') +
-                '>krtn</option>';
-            item_pembelian += '<option value="dus"' + (satuan === 'dus' ? ' selected' : '') +
-                '>dus</option>';
-            item_pembelian += '<option value="rit"' + (satuan === 'rit' ? ' selected' : '') +
-                '>rit</option>';
-            item_pembelian += '<option value="kg"' + (satuan === 'kg' ? ' selected' : '') +
-                '>kg</option>';
-            item_pembelian += '<option value="ltr"' + (satuan === 'ltr' ? ' selected' : '') +
-                '>ltr</option>';
-            item_pembelian += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
-            item_pembelian += '<option value="hr"' + (satuan === 'hr' ? ' selected' : '') +
-                '>hr</option>';
-            item_pembelian += '<option value="ZAK"' + (satuan === 'ZAK' ? ' selected' : '') +
-                '>ZAK</option>';
-            item_pembelian += '</select>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="satuan-' +
+                key +
+                '" name="satuan[]" value="' + satuan + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // jumlah
+            // jumlah 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control jumlah" id="jumlah-' + key +
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="jumlah-' +
+                key +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // harga
+            // harga 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + key +
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="harga-' +
+                key +
                 '" name="harga[]" value="' + harga + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // diskon
+            // diskon 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control diskon" id="diskon-' + key +
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="diskon-' +
+                key +
                 '" name="diskon[]" value="' + diskon + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // total
+            // total 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control total" id="total-' + key +
-                '" name="total[]" value="' + total + '" readonly';
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="total-' +
+                key +
+                '" name="total[]" value="' + total + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-
 
             item_pembelian += '<td style="width: 100px">';
             item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + key +
