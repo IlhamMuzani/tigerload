@@ -47,7 +47,10 @@
     <script src="{{ asset('js/pusher.js') }}"></script>
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini @if (request()->is('admin/perhitungan_gaji*') ||
+        request()->is('admin/perhitungan_gajibulanan*') ||
+        request()->is('admin/inquery_perhitungangaji*') ||
+        request()->is('admin/inquery_perhitungangajibulanan*')) sidebar-open sidebar-collapse @endif">
     <div class="wrapper">
         {{-- <div class="preloader flex-column justify-content-center align-items-center">
             <img class="" src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" alt="javaline" height="50"
