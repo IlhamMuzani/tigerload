@@ -107,6 +107,7 @@ class PerhitungangajibulananController extends Controller
                 $pelunasan_kasbon = $request->pelunasan_kasbon[$i] ?? 0;
                 $potongan_bpjs = $request->potongan_bpjs[$i] ?? '';
                 $lainya = $request->lainya[$i] ?? 0;
+                $tambahan_lainya = $request->tambahan_lainya[$i] ?? 0;
                 $absen = $request->absen[$i] ?? 0;
                 $hasil_absen = $request->hasil_absen[$i] ?? 0;
                 $gajinol_pelunasan = $request->gajinol_pelunasan[$i] ?? 0;
@@ -137,6 +138,7 @@ class PerhitungangajibulananController extends Controller
                     'pelunasan_kasbon' => $pelunasan_kasbon,
                     'potongan_bpjs' => $potongan_bpjs,
                     'lainya' => $lainya,
+                    'tambahan_lainya' => $tambahan_lainya,
                     'absen' => $absen,
                     'hasil_absen' => $hasil_absen,
                     'gajinol_pelunasan' => $gajinol_pelunasan,
@@ -212,6 +214,7 @@ class PerhitungangajibulananController extends Controller
                     'pelunasan_kasbon' => str_replace(',', '.', str_replace('.', '', $data_pesanan['pelunasan_kasbon'])),
                     'potongan_bpjs' => !empty($data_pesanan['potongan_bpjs']) ? str_replace('.', '', $data_pesanan['potongan_bpjs']) : null,
                     'lainya' => str_replace('.', '', $data_pesanan['lainya']),
+                    'tambahan_lainya' => str_replace('.', '', $data_pesanan['tambahan_lainya']),
                     'absen' => $data_pesanan['absen'],
                     'hasil_absen' => str_replace(',', '.', str_replace('.', '', $data_pesanan['hasil_absen'])),
                     'gajinol_pelunasan' => str_replace(',', '.', str_replace('.', '', $data_pesanan['gajinol_pelunasan'])),

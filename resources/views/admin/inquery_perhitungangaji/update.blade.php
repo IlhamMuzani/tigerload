@@ -144,7 +144,8 @@
                                     <th style="font-size:14px; text-align:center; min-width: 150px;">ABSEN</th>
                                     <th style="font-size:14px; text-align:center; min-width: 150px;">HASIL ABSEN</th>
                                     <th style="font-size:14px; text-align:center; min-width: 150px;">BPJS</th>
-                                    <th style="font-size:14px; text-align:center; min-width: 150px;">LAINYA</th>
+                                    <th style="font-size:14px; text-align:center; min-width: 150px;">POTONGAN LAINYA</th>
+                                    <th style="font-size:14px; text-align:center; min-width: 150px;">TAMBAHAN LAINYA</th>
                                     <th style="font-size:14px; text-align:center; min-width: 150px;">PELUNASAN</th>
                                     {{-- <th style="font-size:14px; text-align:center; min-width: 150px;">GAJI NOL PELUNASAN</th> --}}
                                     <th style="font-size:14px; text-align:center; min-width: 150px;">GAJI BERSIH</th>
@@ -334,6 +335,15 @@
                                                 <input style="font-size:14px" type="text" class="form-control lainya"
                                                     id="lainya-{{ $loop->index }}" name="lainya[]"
                                                     value="{{ number_format($detail['lainya'], 0, ',', '.') }}"
+                                                    oninput="formatRupiahform(this)"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                        </td>
+                                        <td style="width: 150px;">
+                                            <div class="form-group">
+                                                <input style="font-size:14px" type="text" class="form-control tambahan_lainya"
+                                                    id="tambahan_lainya-{{ $loop->index }}" name="tambahan_lainya[]"
+                                                    value="{{ number_format($detail['tambahan_lainya'], 0, ',', '.') }}"
                                                     oninput="formatRupiahform(this)"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
@@ -612,6 +622,7 @@
             var hasil_absen = '';
             var potongan_bpjs = '';
             var lainya = '';
+            var tambahan_lainya = '';
             var gajinol_pelunasan = '';
             var gaji_bersih = '';
 
@@ -637,6 +648,7 @@
                 hasil_absen = value.hasil_absen;
                 potongan_bpjs = value.potongan_bpjs;
                 lainya = value.lainya;
+                tambahan_lainya = value.tambahan_lainya;
                 gajinol_pelunasan = value.gajinol_pelunasan;
                 gaji_bersih = value.gaji_bersih;
             }
@@ -851,6 +863,18 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // tambahan_lainya 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">';
+            item_pembelian +=
+                '<input type="text" class="form-control tambahan_lainya" style="font-size:14px" id="tambahan_lainya-' +
+                key +
+                '" name="tambahan_lainya[]" value="' + tambahan_lainya + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
             // pelunasan_kasbon 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">';
@@ -940,6 +964,7 @@
             $('#absen-' + activeSpecificationIndex).val(nol);
             $('#hasil_absen-' + activeSpecificationIndex).val(nol);
             $('#lainya-' + activeSpecificationIndex).val(nol);
+            $('#tambahan_lainya-' + activeSpecificationIndex).val(nol);
             $('#gajinol_pelunasan-' + activeSpecificationIndex).val(nol);
 
             // Check if bpjs is not null or has a value
@@ -965,7 +990,7 @@
     {{-- hasil --}}
     <script>
         $(document).on("input",
-            ".gaji, .lembur, .storing, .kurangtigapuluh, .lebihtigapuluh, .pelunasan_kasbon, .lainya, .absen, .hari_kerja, .potongan_bpjs",
+            ".gaji, .lembur, .storing, .kurangtigapuluh, .lebihtigapuluh, .pelunasan_kasbon, .lainya, .tambahan_lainya, .absen, .hari_kerja, .potongan_bpjs",
             function() {
                 // Ambil baris saat ini
                 var currentRow = $(this).closest('tr');
@@ -979,6 +1004,7 @@
                 var lebihtigapuluh = parseFloat(currentRow.find(".lebihtigapuluh").val()) || 0;
                 var pelunasan_kasbon = parseFloat(currentRow.find(".pelunasan_kasbon").val().replace(/[.]/g, '')) || 0;
                 var lainya = parseFloat(currentRow.find(".lainya").val().replace(/[.]/g, '')) || 0;
+                var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) || 0;
                 var absen = parseFloat(currentRow.find(".absen").val()) || 0;
                 var potongan_bpjs = parseFloat(currentRow.find(".potongan_bpjs").val().replace(/[.]/g, '')) || 0;
 
@@ -1009,7 +1035,7 @@
                 var gaji_kotor_bulat = Math.round(gaji_kotor);
 
                 var gaji_bersih = gaji_kotor - hasil_kurangtigapuluh - hasil_lebihtigapuluh - hasil_absen -
-                    potongan_bpjs - lainya;
+                    potongan_bpjs - lainya + tambahan_lainya;
                 var gaji_bersih_bulat = Math.round(gaji_bersih);
                 var hasil_gajibersih = gaji_bersih - pelunasan_kasbon;
                 var hasil_gajibersih_bulat = Math.round(hasil_gajibersih);
