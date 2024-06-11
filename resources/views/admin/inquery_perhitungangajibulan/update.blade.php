@@ -265,8 +265,8 @@
                                                 <input style="font-size:14px" type="text"
                                                     class="form-control hari_kerja" id="hari_kerja-{{ $loop->index }}"
                                                     name="hari_kerja[]" data-row-id="0"
-                                                    value="{{ $detail['hari_kerja'] }}"
-                                                    onkeypress="return isNumberKey(event)">
+                                                    value="{{ str_replace('.', ',', $detail['hari_kerja']) }}"
+                                                    oninput="this.value = this.value.replace('.', ',')"onkeypress="return isNumberKey(event)">
                                             </div>
                                         </td>
                                         <td style="width: 150px;">
@@ -397,7 +397,8 @@
                                         </td>
                                         <td style="width: 150px;">
                                             <div class="form-group">
-                                                <input style="font-size:14px" type="text" class="form-control tambahan_lainya"
+                                                <input style="font-size:14px" type="text"
+                                                    class="form-control tambahan_lainya"
                                                     id="tambahan_lainya-{{ $loop->index }}" name="tambahan_lainya[]"
                                                     value="{{ number_format($detail['tambahan_lainya'], 0, ',', '.') }}"
                                                     oninput="formatRupiahform(this)"
@@ -1139,7 +1140,8 @@
                     var pelunasan_kasbon = parseFloat(currentRow.find(".pelunasan_kasbon").val().replace(/[.]/g, '')) ||
                         0;
                     var lainya = parseFloat(currentRow.find(".lainya").val().replace(/[.]/g, '')) || 0;
-                    var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) || 0;
+                    var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) ||
+                    0;
                     var absen = parseFloat(currentRow.find(".absen").val()) || 0;
                     var potongan_bpjs = parseFloat(currentRow.find(".potongan_bpjs").val().replace(/[.]/g, '')) || 0;
 
