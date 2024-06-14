@@ -142,6 +142,7 @@ class PembelianController extends Controller
                     'satuan.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
+                    'harga_jual.' . $i => 'required',
                     // 'diskon.' . $i => 'required',
                     'total.' . $i => 'required',
                 ]);
@@ -157,11 +158,13 @@ class PembelianController extends Controller
                 $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
+                $harga_jual = is_null($request->harga_jual[$i]) ? '' : $request->harga_jual[$i];
                 $diskon = is_null($request->diskon[$i]) ? '' : $request->diskon[$i];
                 $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
                 $data_pembelians->push([
-                    'barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'satuan' => $satuan, 'jumlah' => $jumlah, 'harga' => $harga, 'diskon' => $diskon, 'total' => $total
+                    'barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'satuan' => $satuan, 'jumlah' => $jumlah, 'harga' => $harga,
+                    'harga_jual' => $harga_jual, 'diskon' => $diskon, 'total' => $total
                 ]);
             }
         } else {
@@ -203,6 +206,7 @@ class PembelianController extends Controller
                     'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
+                    'harga_jual' => $data_pesanan['harga_jual'],
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
                 ]);

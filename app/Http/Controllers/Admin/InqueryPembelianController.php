@@ -113,6 +113,7 @@ class InqueryPembelianController extends Controller
                     'satuan.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
+                    'harga_jual.' . $i => 'required',
                     // 'diskon.' . $i => 'required',
                     'total.' . $i => 'required',
                 ]);
@@ -127,6 +128,7 @@ class InqueryPembelianController extends Controller
                 $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
+                $harga_jual = is_null($request->harga_jual[$i]) ? '' : $request->harga_jual[$i];
                 $diskon = is_null($request->diskon[$i]) ? '' : $request->diskon[$i];
                 $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
@@ -138,6 +140,7 @@ class InqueryPembelianController extends Controller
                     'satuan' => $satuan,
                     'jumlah' => $jumlah,
                     'harga' => $harga,
+                    'harga_jual' => $harga_jual,
                     'diskon' => $diskon,
                     'total' => $total
                 ]);
@@ -183,6 +186,7 @@ class InqueryPembelianController extends Controller
                     'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
+                    'harga_jual' => $data_pesanan['harga_jual'],
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
                 ]);
@@ -196,6 +200,7 @@ class InqueryPembelianController extends Controller
                     'satuan' => $data_pesanan['satuan'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
+                    'harga_jual' => $data_pesanan['harga_jual'],
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
                 ])->first();
@@ -210,6 +215,7 @@ class InqueryPembelianController extends Controller
                         'satuan' => $data_pesanan['satuan'],
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => $data_pesanan['harga'],
+                        'harga_jual' => $data_pesanan['harga_jual'],
                         'diskon' => $data_pesanan['diskon'],
                         'total' => $data_pesanan['total'],
                     ]);

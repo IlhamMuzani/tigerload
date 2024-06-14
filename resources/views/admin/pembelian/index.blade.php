@@ -115,6 +115,7 @@
                                     <th>Satuan</th>
                                     <th>Jumlah</th>
                                     <th>Harga</th>
+                                    <th>Harga Jual</th>
                                     <th>Diskon</th>
                                     <th>Total</th>
                                     <th>Opsi</th>
@@ -177,6 +178,12 @@
                                         <div class="form-group">
                                             <input type="number" class="form-control harga" id="harga-0"
                                                 name="harga[]" data-row-id="0">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control harga_jual" id="harga_jual-0"
+                                                name="harga_jual[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
@@ -539,6 +546,7 @@
             var satuan = '';
             var jumlah = '';
             var harga = '';
+            var harga_jual = '';
             var diskon = '';
             var total = '';
 
@@ -549,6 +557,7 @@
                 satuan = value.satuan;
                 jumlah = value.jumlah;
                 harga = value.harga;
+                harga_jual = value.harga_jual;
                 diskon = value.diskon;
                 total = value.total;
 
@@ -627,6 +636,14 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // harga_jual
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="number" class="form-control harga_jual" id="harga_jual-' + urutan +
+                '" name="harga_jual[]" value="' + harga_jual + '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
             // diskon
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
@@ -663,6 +680,7 @@
                 $('#satuan-' + urutan).val(value.satuan);
                 $('#jumlah-' + urutan).val(value.jumlah);
                 $('#harga-' + urutan).val(value.harga);
+                $('#harga_jual-' + urutan).val(value.harga_jual);
                 $('#diskon-' + urutan).val(value.diskon);
                 $('#total-' + urutan).val(value.total);
             }
