@@ -60,6 +60,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_pembelian/unpostpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpostpembelian']);
     Route::get('inquery_pembelian/postingpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'postingpembelian']);
 
+    Route::get('inquery_pembelianreturn/unpostpembelianreturn/{id}', [\App\Http\Controllers\Admin\InqueryReturnpembelianController::class, 'unpostpembelianreturn']);
+    Route::get('inquery_pembelianreturn/postingpembelianreturn/{id}', [\App\Http\Controllers\Admin\InqueryReturnpembelianController::class, 'postingpembelianreturn']);
+
     Route::get('inquery_penjualan/unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan']);
     Route::get('inquery_penjualan/postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan']);
 
@@ -97,6 +100,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_pelunasanglobalpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'indexglobalpembelian']);
     Route::get('print_pelunasanglobalpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'print_pelunasanglobalpembelian']);
     Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
+    Route::get('return_pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\ReturnpembelianController::class, 'cetakpdf']);
 
     Route::get('hapuspenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'hapuspenjualan'])->name('hapuspenjualan');
 
@@ -122,9 +126,11 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_pembelian', [\App\Http\Controllers\Admin\LaporanPembelianController::class, 'index']);
     Route::get('laporan_popembelian', [\App\Http\Controllers\Admin\LaporanPopembelianController::class, 'index']);
     Route::get('laporan_pengambilanbahan', [\App\Http\Controllers\Admin\LaporanPengambilanbahanController::class, 'index']);
+    Route::get('laporan_pembelianreturn', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'index']);
 
     Route::get('print_laporanpopembelian', [\App\Http\Controllers\Admin\LaporanPopembelianController::class, 'print_laporanpopembelian']);
     Route::get('print_laporanpembelian', [\App\Http\Controllers\Admin\LaporanPembelianController::class, 'print_laporanpembelian']);
+    Route::get('print_laporanpembelianreturn', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'print_laporanpembelianreturn']);
     Route::get('print_laporanpengambilanbahan', [\App\Http\Controllers\Admin\LaporanPengambilanbahanController::class, 'print_laporanpengambilanbahan']);
 
     Route::get('faktur_pelunasanpembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanpembelianController::class, 'cetakpdf']);
@@ -212,6 +218,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('popembelian', \App\Http\Controllers\Admin\PopembelianController::class);
     Route::resource('pengambilanbahan', \App\Http\Controllers\Admin\PengambilanbahanController::class);
     Route::resource('inquery_pembelian', \App\Http\Controllers\Admin\InqueryPembelianController::class);
+    Route::resource('inquery_pembelianreturn', \App\Http\Controllers\Admin\InqueryReturnpembelianController::class);
     Route::resource('inquery_popembelian', \App\Http\Controllers\Admin\InqueryPopembelianController::class);
     Route::resource('inquery_pelunasan', \App\Http\Controllers\Admin\InqueryPelunasanController::class);
     Route::resource('inquery_pengambilanbahan', \App\Http\Controllers\Admin\InqueryPengambilanbahanController::class);
@@ -228,5 +235,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_pengeluarankaskecil', \App\Http\Controllers\Admin\InqueryPengeluarankaskecilController::class);
     Route::resource('akun', \App\Http\Controllers\Admin\BarangakunController::class);
     Route::resource('gaji_karyawan', \App\Http\Controllers\Admin\GajikaryawanController::class);
+    Route::resource('return_pembelian', \App\Http\Controllers\Admin\ReturnpembelianController::class);
 
 });

@@ -256,6 +256,15 @@
                 </a>
             </li>
         @endif
+        @if (auth()->check() && auth()->user()->menu['pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/return_pembelian') }}"
+                    class="nav-link {{ request()->is('admin/return_pembelian*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Return Pembelian</p>
+                </a>
+            </li>
+        @endif
         @if (auth()->check() && auth()->user()->menu['surat penawaran karoseri'])
             <li class="nav-item">
                 <a href="{{ url('admin/surat_penawaran') }}"
@@ -328,6 +337,7 @@
     request()->is('admin/inquery_kasbonkaryawan*') ||
     request()->is('admin/inquery_popembelian*') ||
     request()->is('admin/inquery_pembelian*') ||
+    request()->is('admin/inquery_pembelianreturn*') ||
     request()->is('admin/inquery_fakturpelunasanpembelian*') ||
     request()->is('admin/inquery_pelunasan*') ||
     request()->is('admin/inquery_deposit*') ||
@@ -345,6 +355,7 @@
         request()->is('admin/inquery_kasbonkaryawan*') ||
         request()->is('admin/inquery_popembelian*') ||
         request()->is('admin/inquery_pembelian*') ||
+        request()->is('admin/inquery_pembelianreturn*') ||
         request()->is('admin/inquery_fakturpelunasanpembelian*') ||
         request()->is('admin/inquery_pelunasan*') ||
         request()->is('admin/inquery_deposit*') ||
@@ -431,6 +442,15 @@
                     <p style="font-size: 14px;">Inquery Pelunasan -<br>
                         <span style="margin-left: 32px">Pembelian</span>
                     </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_pembelianreturn') }}"
+                    class="nav-link {{ request()->is('admin/inquery_pembelianreturn*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Return Pembelian</p>
                 </a>
             </li>
         @endif
@@ -557,6 +577,15 @@
                     class="nav-link {{ request()->is('admin/laporan_pembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Laporan Pembelian</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['laporan pembelian'])
+            <li class="nav-item">
+                <a href="{{ url('admin/laporan_pembelianreturn') }}"
+                    class="nav-link {{ request()->is('admin/laporan_pembelianreturn*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Laporan Return Pembelian</p>
                 </a>
             </li>
         @endif
