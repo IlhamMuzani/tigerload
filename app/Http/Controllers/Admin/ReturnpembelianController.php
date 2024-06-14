@@ -14,7 +14,7 @@ use App\Models\Barang;
 use App\Models\Detail_pembelian;
 use App\Models\Detail_pembelianpart;
 use App\Models\Detailpembelianreturn;
-use App\Models\ReturnPembelian;
+use App\Models\Returnpembelian;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +24,7 @@ class ReturnpembelianController extends Controller
     {
         if (auth()->check() && auth()->user()->menu['pembelian']) {
 
-            $pembelian_parts = ReturnPembelian::all();
+            $pembelian_parts = Returnpembelian::all();
             $suppliers = Supplier::all();
             $barangs = Barang::all();
 
@@ -104,7 +104,7 @@ class ReturnpembelianController extends Controller
         $format_tanggal = $tanggal1->format('d F Y');
 
         $tanggal = Carbon::now()->format('Y-m-d');
-        $transaksi = ReturnPembelian::create([
+        $transaksi = Returnpembelian::create([
             'kode_pembelianreturn' => $this->kode(),
             'supplier_id' => $request->supplier_id,
             'tanggal' => $format_tanggal,
@@ -136,7 +136,7 @@ class ReturnpembelianController extends Controller
             }
         }
 
-        $pembelians = ReturnPembelian::find($transaksi_id);
+        $pembelians = Returnpembelian::find($transaksi_id);
 
         $parts = Detailpembelianreturn::where('returnpembelian_id', $pembelians->id)->get();
 
@@ -145,11 +145,11 @@ class ReturnpembelianController extends Controller
 
     public function kode()
     {
-        $pembelian_part = ReturnPembelian::all();
+        $pembelian_part = Returnpembelian::all();
         if ($pembelian_part->isEmpty()) {
             $num = "000001";
         } else {
-            $id = ReturnPembelian::getId();
+            $id = Returnpembelian::getId();
             foreach ($id as $value);
             $idlm = $value->id;
             $idbr = $idlm + 1;
@@ -165,11 +165,11 @@ class ReturnpembelianController extends Controller
     {
         if (auth()->check() && auth()->user()->menu['pembelian']) {
 
-            $pembelian_part = ReturnPembelian::find($id);
+            $pembelian_part = Returnpembelian::find($id);
             $parts = Detailpembelianreturn::where('pembelian_part_id', $pembelian_part->id)->get();
 
 
-            $pembelians = ReturnPembelian::where('id', $id)->first();
+            $pembelians = Returnpembelian::where('id', $id)->first();
 
             return view('admin.return_pembelian.show', compact('parts', 'pembelians'));
         } else {
@@ -182,11 +182,11 @@ class ReturnpembelianController extends Controller
     {
         if (auth()->check() && auth()->user()->menu['pembelian']) {
 
-            $pembelians = ReturnPembelian::find($id);
+            $pembelians = Returnpembelian::find($id);
             $parts = Detailpembelianreturn::where('returnpembelian_id', $pembelians->id)->get();
 
             // Load the view and set the paper size to portrait letter
-            $pembelianbans = ReturnPembelian::where('id', $id)->first();
+            $pembelianbans = Returnpembelian::where('id', $id)->first();
             $pdf = PDF::loadView('admin.return_pembelian.cetak_pdf', compact('parts', 'pembelians', 'pembelianbans'));
             $pdf->setPaper('letter', 'portrait'); // Set the paper size to portrait letter
 
