@@ -54,6 +54,36 @@ class TipeController extends Controller
         return back()->with('success', 'Berhasil menambahkan tipe');
     }
 
+    public function add_tipe(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama_tipe' => 'required',
+            ],
+            [
+                'nama_tipe.required' => 'Masukkan nama tipe',
+            ]
+        );
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->all();
+            return back()->withInput()->with('error', $error);
+        }
+
+        $kode = $this->kode();
+
+        Tipe::create(array_merge(
+            $request->all(),
+            [
+                'kode_tipe' => $this->kode(),
+                'qrcode_tipe' => 'https://tigerload.id/tipe/' . $kode,
+                'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+            ],
+        ));
+
+        return redirect('admin/tipe')->with('success', 'Berhasil menambahkan tipe');
+    }
     public function kode()
     {
         $tipe = Tipe::all();

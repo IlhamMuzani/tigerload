@@ -148,36 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tambah Merek</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <button class="btn btn-primary btn-sm" type="button"
-                                onclick="showCategoryModal(this.value)">
-                                <i class="fas fa-plus mr-2"></i> Pilih Merek
-                            </button>
-                        </div>
-                        <div class="mb-3" hidden>
-                            <label class="form-label" for="merek_id">Merek_id *</label>
-                            <input class="form-control @error('merek_id') is-invalid @enderror" id="merek_id"
-                                name="merek_id" readonly type="text" placeholder="" value="{{ old('merek_id') }}" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="nama_merek">Merek *</label>
-                            <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek"
-                                name="nama_merek" readonly type="text" placeholder=""
-                                value="{{ old('nama_merek') }}" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tipe">Type *</label>
-                            <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
-                                readonly type="text" placeholder="" value="{{ old('tipe') }}" />
-                        </div>
-                    </div>
-                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Karoseri</h3>
@@ -210,6 +181,31 @@
                             <label for="karoseri_id">Id Karoseri</label>
                             <input type="text" class="form-control" id="karoseri_id" name="typekaroseri_id"
                                 placeholder="" value="{{ old('typekaroseri_id') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Merek</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="mb-3" hidden>
+                            <label class="form-label" for="merek_id">Merek_id *</label>
+                            <input class="form-control @error('merek_id') is-invalid @enderror" id="merek_id"
+                                name="merek_id" readonly type="text" placeholder="" value="{{ old('merek_id') }}" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="nama_merek">Merek *</label>
+                            <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek"
+                                name="nama_merek" readonly type="text" placeholder=""
+                                value="{{ old('nama_merek') }}" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="tipe">Type *</label>
+                            <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
+                                readonly type="text" placeholder="" value="{{ old('tipe') }}" />
                         </div>
                     </div>
                 </div>
@@ -604,7 +600,7 @@
                                         <td>{{ $typekaroseri->nama_karoseri }}</td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
-                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}', '{{ $typekaroseri->aksesoris }}')">
+                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}', '{{ $typekaroseri->aksesoris }}')">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </td>
@@ -866,11 +862,14 @@
             $('#tableKaroseri').modal('show');
         }
 
-        function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, Panjang, Lebar, Tinggi, Spesifikasi,
+        function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, MerekId, NamaMerek, Tipe, Panjang, Lebar, Tinggi, Spesifikasi,
             Aksesoris) {
             document.getElementById('karoseri_id').value = karoseri_id;
             document.getElementById('kode_type').value = kodeKaroseri;
             document.getElementById('nama_karoseri').value = namaKaroseri;
+            document.getElementById('merek_id').value = MerekId;
+            document.getElementById('nama_merek').value = NamaMerek;
+            document.getElementById('tipe').value = Tipe;
             document.getElementById('panjang').value = Panjang;
             document.getElementById('lebar').value = Lebar;
             document.getElementById('tinggi').value = Tinggi;

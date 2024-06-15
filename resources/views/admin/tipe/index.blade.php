@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Type Karoseri')
+@section('title', 'Data Type')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Type Karoseri</h1>
+                    <h1 class="m-0">Data Type</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Data Type Karoseri</li>
+                        <li class="breadcrumb-item active">Data Type</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -34,9 +34,9 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Type Karoseri</h3>
+                    <h3 class="card-title">Data Type</h3>
                     <div class="float-right">
-                        <a href="{{ url('admin/typekaroseri/create') }}" class="btn btn-primary btn-sm">
+                        <a href="{{ url('admin/tipe/create') }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-plus"></i> Tambah
                         </a>
                     </div>
@@ -44,72 +44,55 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
-                        <thead>
+                        <thead class="bg-200 text-900">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Kode Type Karoseri</th>
-                                <th>Nama Karoseri</th>
-                                <th>Merek</th>
-                                <th>Type Unit</th>
+                                <th>Kode Type</th>
+                                <th>Type</th>
                                 <th class="text-center">Qr Code</th>
-                                <th class="text-center" width="50">Opsi</th>
+                                <th class="text-center" width="120">Opsi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($typekaroseris as $typekaroseri)
+                        <tbody class="list">
+                            @foreach ($tipes as $tipe)
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $typekaroseri->kode_type }}</td>
-                                    <td>{{ $typekaroseri->nama_karoseri }}</td>
-                                    <td>
-                                        @if ($typekaroseri->merek)
-                                            {{ $typekaroseri->merek->nama_merek }}
-                                        @else
-                                            tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($typekaroseri->merek)
-                                            {{ $typekaroseri->merek->tipe->nama_tipe }}
-                                        @else
-                                            tidak ada
-                                        @endif
-                                    </td>
-                                    <td data-toggle="modal" data-target="#modal-qrcode-{{ $typekaroseri->id }}"
+                                    <td>{{ $tipe->kode_tipe }}</td>
+                                    <td>{{ $tipe->nama_tipe }}</td>
+                                    <td data-bs-toggle="modal" data-bs-target="#modal-qrcode-{{ $tipe->id }}"
                                         style="text-align: center;">
                                         <div style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$typekaroseri->qrcode_karoseri", 'QRCODE', 1, 1) !!}
+                                            {!! DNS2D::getBarcodeHTML("$tipe->qrcode_tipe", 'QRCODE', 2, 2) !!}
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/typekaroseri/' . $typekaroseri->id . '/edit') }}"
+                                        <a href="{{ url('admin/tipe/' . $tipe->id . '/edit') }}"
                                             class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#modal-hapus-{{ $typekaroseri->id }}">
+                                        <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-hapus-{{ $tipe->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modal-hapus-{{ $typekaroseri->id }}">
+                                <div class="modal fade" id="modal-hapus-{{ $tipe->id }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Hapus typekaroseri</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <h4 class="modal-title">Hapus Type</h4>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Yakin hapus typekaroseri <strong>{{ $typekaroseri->nama }}</strong>?</p>
+                                                <p>Yakin hapus tipe <strong>{{ $tipe->nama_merek }}</strong>?</p>
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-default"
                                                     data-dismiss="modal">Batal</button>
-                                                <form action="{{ url('admin/typekaroseri/' . $typekaroseri->id) }}"
-                                                    method="POST">
+                                                <form action="{{ url('admin/tipe/' . $tipe->id) }}" method="POST">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger">Hapus</button>
@@ -119,12 +102,12 @@
                                     </div>
                                 </div>
 
-                                <div class="modal fade" id="modal-qrcode-{{ $typekaroseri->id }}">
+                                <div class="modal fade" id="modal-qrcode-{{ $tipe->id }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title">Gambar QR Code</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -132,13 +115,13 @@
                                             <div class="modal-body">
                                                 <div style="text-align: center;">
                                                     <div style="display: inline-block;">
-                                                        {!! DNS2D::getBarcodeHTML("$typekaroseri->qrcode_karoseri", 'QRCODE', 15, 15) !!}
+                                                        {!! DNS2D::getBarcodeHTML("$tipe->qrcode_tipe", 'QRCODE', 15, 15) !!}
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer justify-content-between">
                                                     <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">Batal</button>
-                                                    <a href="{{ url('admin/typekaroseri/cetak-pdf/' . $typekaroseri->id) }}"
+                                                        data-bs-dismiss="modal">Batal</button>
+                                                    <a href="{{ url('admin/tipe/cetak-qrcode/' . $tipe->id) }}"
                                                         class="btn btn-primary btn-sm">
                                                         <i class=""></i> Cetak
                                                     </a>
@@ -155,6 +138,5 @@
             </div>
         </div>
     </section>
-
     <!-- /.card -->
 @endsection

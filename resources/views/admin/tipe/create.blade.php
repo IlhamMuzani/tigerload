@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah Departemen')
+@section('title', 'Tambah Type')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,11 +8,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Departemen</h1>
+                    <h1 class="m-0">Type</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/departemen') }}">Departemen</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/tipe') }}">Type</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div><!-- /.col -->
@@ -34,19 +34,28 @@
                     @endforeach
                 </div>
             @endif
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Tambah Departemen</h3>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5>
+                        <i class="icon fas fa-check"></i> Success!
+                    </h5>
+                    {{ session('success') }}
                 </div>
-                <!-- /.card-header -->
-                <form action="{{ url('admin/departemen') }}" method="POST" enctype="multipart/form-data"
-                    autocomplete="off">
-                    @csrf
+            @endif
+            <form action="{{ url('admin/add_tipe') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+                @csrf
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Type</h3>
+                    </div>
                     <div class="card-body">
+                        {{-- <div class="row"> --}}
                         <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama"
-                                placeholder="Masukan nama" value="{{ old('nama') }}">
+                            <label class="form-label" for="nama_tipe">Nama Type *</label>
+                            <input class="form-control @error('nama_tipe') is-invalid @enderror" id="nama_tipe"
+                                name="nama_tipe" type="text" placeholder="masukan nama  tipe"
+                                value="{{ old('nama_tipe') }}" />
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -56,11 +65,10 @@
                             <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </section>
-
 
     <script>
         $(document).ready(function() {

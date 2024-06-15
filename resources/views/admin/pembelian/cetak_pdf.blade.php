@@ -197,7 +197,7 @@
             <td style="width:0%;">
             </td>
             <td style="width: 70%; text-align: right;">
-                <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
+                <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
                     alt="Logo Tigerload">
             </td>
         </tr> --}}

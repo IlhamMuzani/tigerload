@@ -16,6 +16,9 @@ class Typekaroseri extends Model
 
     protected $fillable = [
         'kode_type',
+        'merek_id',
+        'nama_merek',
+        'tipe',
         'qrcode_karoseri',
         'nama_karoseri',
         'type_kendaraan',
@@ -39,6 +42,11 @@ class Typekaroseri extends Model
     public function spesifikasi()
     {
         return $this->hasMany(Spesifikasi::class);
+    }
+
+    public function merek()
+    {
+        return $this->belongsTo(Merek::class);
     }
 
     public static function getId()

@@ -55,6 +55,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_slipgaji', [\App\Http\Controllers\Admin\LaporanSlipgajiController::class, 'index']);
     Route::get('print_slipgaji', [\App\Http\Controllers\Admin\LaporanSlipgajiController::class, 'print_slipgaji']);
     Route::resource('laporan_slipgaji', \App\Http\Controllers\Admin\LaporanSlipgajiController::class);
+    Route::post('add_tipe', [\App\Http\Controllers\Admin\TipeController::class, 'add_tipe']);
 
 
     Route::get('inquery_pembelian/unpostpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpostpembelian']);

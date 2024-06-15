@@ -77,8 +77,11 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <button type="reset" class="btn btn-secondary">Reset</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
+                        <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+                        <div id="loading" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
+                        </div>
                     </div>
                 </div>
             </form>
@@ -102,9 +105,9 @@
                                         value="{{ old('nama_tipe') }}" />
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
-                                    <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
-                                    <div id="loading" style="display: none;">
+                                    <button type="reset" class="btn btn-secondary" id="btnResets">Reset</button>
+                                    <button type="submit" class="btn btn-primary" id="btnSimpans">Simpan</button>
+                                    <div id="loadings" style="display: none;">
                                         <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
                                     </div>
                                 </div>
@@ -124,6 +127,20 @@
                 $(this).hide();
                 $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
                 $('#loading').show();
+
+                // Lakukan pengiriman formulir
+                $('form').submit();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Tambahkan event listener pada tombol "Simpan"
+            $('#btnSimpans').click(function() {
+                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
+                $(this).hide();
+                $('#btnResets').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
+                $('#loadings').show();
 
                 // Lakukan pengiriman formulir
                 $('form').submit();

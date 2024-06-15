@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Merek;
 use App\Models\Spesifikasi;
+use App\Models\Tipe;
 use App\Models\Typekaroseri;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +18,8 @@ class TypekaroseriController extends Controller
     public function index()
     {
         $typekaroseris = Typekaroseri::get();
+        $mereks = Merek::all();
+        $tipes = Tipe::all();
         return view('admin/typekaroseri.index', compact('typekaroseris'));
     }
 
@@ -23,7 +27,9 @@ class TypekaroseriController extends Controller
     {
 
         $barangs = Barang::all();
-        return view('admin/typekaroseri.create', compact('barangs'));
+        $mereks = Merek::all();
+        $tipes = Tipe::all();
+        return view('admin/typekaroseri.create', compact('barangs', 'tipes', 'mereks'));
     }
 
     public function store(Request $request)
@@ -36,6 +42,7 @@ class TypekaroseriController extends Controller
                 'panjang' => 'required',
                 'lebar' => 'required',
                 'tinggi' => 'required',
+                'merek_id' => 'required',
             ],
             [
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
@@ -43,6 +50,7 @@ class TypekaroseriController extends Controller
                 'panjang.required' => 'Masukkan panjang',
                 'lebar.required' => 'Masukkan lebar',
                 'tinggi.required' => 'Masukkan tinggi',
+                'merek_id.required' => 'Pilih merek',
             ]
         );
 
@@ -94,6 +102,9 @@ class TypekaroseriController extends Controller
             $request->all(),
             [
                 'kode_type' => $this->kode(),
+                'merek_id' => $request->merek_id,
+                'nama_merek' => $request->nama_merek,
+                'tipe' => $request->tipe,
                 'qrcode_karoseri' => 'https://tigerload.id/typekaroseri/' . $kode,
                 'tanggal_awal' => $tanggal,
 
@@ -141,9 +152,11 @@ class TypekaroseriController extends Controller
     {
 
         $typekaroseri = Typekaroseri::where('id', $id)->first();
+        $mereks = Merek::all();
+        $tipes = Tipe::all();
         $details = Spesifikasi::where('typekaroseri_id', $id)->get();
 
-        return view('admin/typekaroseri.update', compact('typekaroseri', 'details'));
+        return view('admin/typekaroseri.update', compact('typekaroseri', 'details', 'mereks', 'tipes'));
     }
 
     public function update(Request $request, $id)
@@ -155,12 +168,16 @@ class TypekaroseriController extends Controller
                 'panjang' => 'required',
                 'lebar' => 'required',
                 'tinggi' => 'required',
+                'merek_id' => 'required',
+
             ],
             [
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
                 'panjang.required' => 'Masukkan panjang',
                 'lebar.required' => 'Masukkan lebar',
                 'tinggi.required' => 'Masukkan tinggi',
+                'merek_id.required' => 'Pilih merek',
+
             ]
         );
 
@@ -211,6 +228,9 @@ class TypekaroseriController extends Controller
         // Update the main transaction
         $transaksi->update([
             'nama_karoseri' => $request->nama_karoseri,
+            'merek_id' => $request->merek_id,
+            'nama_merek' => $request->nama_merek,
+            'tipe' => $request->tipe,
             'panjang' => $request->panjang,
             'lebar' => $request->lebar,
             'tinggi' => $request->tinggi,

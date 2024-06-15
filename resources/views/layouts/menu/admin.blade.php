@@ -33,6 +33,7 @@
     request()->is('admin/merek*') ||
     request()->is('admin/typekaroseri*') ||
     request()->is('admin/barang*') ||
+    request()->is('admin/tipe*') ||
     request()->is('admin/kendaraan*')
         ? 'menu-open'
         : '' }}">
@@ -48,6 +49,7 @@
         request()->is('admin/merek*') ||
         request()->is('admin/typekaroseri*') ||
         request()->is('admin/barang*') ||
+        request()->is('admin/tipe*') ||
         request()->is('admin/kendaraan*')
             ? 'active'
             : '' }}">
@@ -127,6 +129,14 @@
                     class="nav-link {{ request()->is('admin/merek*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Merek Kendaraan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['merek'])
+            <li class="nav-item">
+                <a href="{{ url('admin/tipe') }}" class="nav-link {{ request()->is('admin/tipe*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Type</p>
                 </a>
             </li>
         @endif
