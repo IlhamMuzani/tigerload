@@ -86,7 +86,11 @@
                                         {{ $pengambilans->kode_pengambilan }}
                                     </td>
                                     <td>
-                                        {{ $pengambilans->spk->kode_spk }}
+                                        @if ($pengambilans->spk)
+                                            {{ $pengambilans->spk->kode_spk }}
+                                        @else
+                                            tidak ada
+                                        @endif
                                     </td>
                                     <td>
                                         {{ $pengambilans->tanggal_awal }}
