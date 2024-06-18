@@ -9,17 +9,17 @@ use App\Models\Barang;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class BarangController extends Controller
+class BarangnonbesiController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::where('kategori', 'besi')->get();
-        return view('admin/barang.index', compact('barangs'));
+        $barangs = Barang::where('kategori', 'non besi')->get();
+        return view('admin/barangnonbesi.index', compact('barangs'));
     }
 
     public function create()
     {
-        return view('admin/barang.create');
+        return view('admin/barangnonbesi.create');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class BarangController extends Controller
                 'harga' => 'required',
             ],
             [
-                'nama_barang.required' => 'Masukkan nama barang',
+                'nama_barang.required' => 'Masukkan nama barangnonbesi',
                 'jumlah.required' => 'Masukkan ukuran',
                 'spesifikasi.required' => 'Masukkan spesifikasi',
                 'keterangan.required' => 'Masukkan keterangan',
@@ -54,20 +54,20 @@ class BarangController extends Controller
             $request->all(),
             [
                 'kode_barang' => $this->kode(),
-                'kategori' => 'besi',
-                'qrcode_barang' => 'https://tigerload.id/barang/' . $kode,
+                'kategori' => 'non besi',
+                'qrcode_barang' => 'https://tigerload.id/barangnonbesi/' . $kode,
                 'tanggal_awal' => $tanggal,
 
             ]
         ));
 
-        return redirect('admin/barang')->with('success', 'Berhasil menambahkan barang');
+        return redirect('admin/barangnonbesi')->with('success', 'Berhasil menambahkan barang');
     }
 
     public function kode()
     {
-        $barang = Barang::all();
-        if ($barang->isEmpty()) {
+        $barangnonbesi = Barang::all();
+        if ($barangnonbesi->isEmpty()) {
             $num = "000001";
         } else {
             $id = Barang::getId();
@@ -85,8 +85,8 @@ class BarangController extends Controller
     public function edit($id)
     {
 
-        $barang = Barang::where('id', $id)->first();
-        return view('admin/barang.update', compact('barang'));
+        $barangnonbesi = Barang::where('id', $id)->first();
+        return view('admin/barangnonbesi.update', compact('barangnonbesi'));
     }
 
     public function update(Request $request, $id)
@@ -114,7 +114,7 @@ class BarangController extends Controller
             return back()->withInput()->with('error', $error);
         }
 
-        $barang = Barang::findOrFail($id);
+        $barangnonbesi = Barang::findOrFail($id);
 
         Barang::where('id', $id)->update([
             'nama_barang' => $request->nama_barang,
@@ -124,7 +124,7 @@ class BarangController extends Controller
             'harga' => $request->harga,
         ]);
 
-        return redirect('admin/barang')->with('success', 'Berhasil memperbarui barang');
+        return redirect('admin/barangnonbesi')->with('success', 'Berhasil memperbarui barang');
     }
 
 
@@ -132,7 +132,7 @@ class BarangController extends Controller
     {
         $barangs = Barang::find($id);
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.barang.cetak_pdf', compact('barangs'));
+        $pdf->loadView('admin.barangnonbesi.cetak_pdf', compact('barangs'));
         $pdf->setPaper('letter', 'portrait');
         return $pdf->stream('QrCodeBarang.pdf');
     }
@@ -141,8 +141,8 @@ class BarangController extends Controller
     {
 
 
-        $barang = Barang::where('id', $id)->first();
-        return view('admin/barang.show', compact('barang'));
+        $barangnonbesi = Barang::where('id', $id)->first();
+        return view('admin/barangnonbesi.show', compact('barangnonbesi'));
     }
 
 
@@ -151,6 +151,6 @@ class BarangController extends Controller
         $tipe = Barang::find($id);
         $tipe->delete();
 
-        return redirect('admin/barang')->with('success', 'Berhasil menghapus barang');
+        return redirect('admin/barangnonbesi')->with('success', 'Berhasil menghapus barang');
     }
 }

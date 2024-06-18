@@ -33,6 +33,7 @@
     request()->is('admin/merek*') ||
     request()->is('admin/typekaroseri*') ||
     request()->is('admin/barang*') ||
+    request()->is('admin/barangnonbesi*') ||
     request()->is('admin/tipe*') ||
     request()->is('admin/kendaraan*')
         ? 'menu-open'
@@ -49,6 +50,7 @@
         request()->is('admin/merek*') ||
         request()->is('admin/typekaroseri*') ||
         request()->is('admin/barang*') ||
+        request()->is('admin/barangnonbesi*') ||
         request()->is('admin/tipe*') ||
         request()->is('admin/kendaraan*')
             ? 'active'
@@ -152,7 +154,7 @@
         @if (auth()->check() && auth()->user()->menu['barang'])
             <li class="nav-item">
                 <a href="{{ url('admin/barang') }}"
-                    class="nav-link {{ request()->is('admin/barang*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/barang*') || request()->is('admin/barangnonbesi*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Barang</p>
                 </a>

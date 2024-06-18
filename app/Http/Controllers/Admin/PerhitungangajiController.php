@@ -163,7 +163,7 @@ class PerhitungangajiController extends Controller
             'grand_total' => str_replace(',', '.', str_replace('.', '', $request->grand_total)),
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,
-            'qr_code_perhitungan' => 'https://javaline.id/perhitungan_gaji/' . $kode,
+            'qr_code_perhitungan' => 'https://tigerload.id/perhitungan_gaji/' . $kode,
             'status' => 'unpost',
             'status_notif' => false,
         ]);
@@ -244,7 +244,7 @@ class PerhitungangajiController extends Controller
             'jam' => $tanggal1->format('H:i:s'),
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,
-            'qrcode_return' => 'https://javaline.id/pengeluaran_kaskecil/' . $kodepengeluaran,
+            'qrcode_return' => 'https://tigerload.id/pengeluaran_kaskecil/' . $kodepengeluaran,
             'status' => 'unpost',
         ]);
 
@@ -264,7 +264,6 @@ class PerhitungangajiController extends Controller
 
         return view('admin.perhitungan_gaji.show', compact('details', 'cetakpdf'));
     }
-
 
     public function kodeakuns()
     {

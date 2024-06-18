@@ -40,17 +40,25 @@
                 <div class="card-body">
                     <form method="GET" id="form-action">
                         <div class="row">
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-3 mb-3">
+                                <label for="created_at">Kategori</label>
+                                <select class="custom-select form-control" id="kategori" name="kategori">
+                                    <option value="">- Pilih Laporan -</option>
+                                    <option value="laporanglobal" selected>Laporan Global</option>
+                                    <option value="laporandetail">Laporan Detail SPK</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
                                 <label for="tanggal_awal">Tanggal Awal</label>
                                 <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
                                     value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
                             </div>
-                            <div class="col-md-5 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="tanggal_akhir">Tanggal Akhir</label>
                                 <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
                                     value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
                             </div>
-                            <div class="col-md-2 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <button type="button" class="btn btn-outline-primary btn-block" onclick="cari()">
                                     <i class="fas fa-search"></i> Cari
                                 </button>
@@ -140,5 +148,27 @@
                 alert("Silakan isi kedua tanggal sebelum mencetak.");
             }
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Detect the change event on the 'status' dropdown
+            $('#kategori').on('change', function() {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Check the selected value and redirect accordingly
+                switch (selectedValue) {
+                    case 'laporanglobal':
+                        window.location.href = "{{ url('admin/laporan_pengambilanbahan') }}";
+                        break;
+                    case 'laporandetail':
+                        window.location.href = "{{ url('admin/laporan_pengambilanbahanspk') }}";
+                        break;
+                    default:
+                        break;
+                }
+            });
+        });
     </script>
 @endsection

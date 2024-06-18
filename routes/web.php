@@ -129,6 +129,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_pengambilanbahan', [\App\Http\Controllers\Admin\LaporanPengambilanbahanController::class, 'index']);
     Route::get('laporan_pembelianreturn', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'index']);
 
+    Route::get('laporan_pengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'index']);
+    Route::get('print_laporanpengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'print_laporanpengambilanbahanspk']);
+
     Route::get('print_laporanpopembelian', [\App\Http\Controllers\Admin\LaporanPopembelianController::class, 'print_laporanpopembelian']);
     Route::get('print_laporanpembelian', [\App\Http\Controllers\Admin\LaporanPembelianController::class, 'print_laporanpembelian']);
     Route::get('print_laporanpembelianreturn', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'print_laporanpembelianreturn']);
@@ -213,6 +216,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_spk', \App\Http\Controllers\Admin\InquerySpkController::class);
     Route::resource('inquery_penawaran', \App\Http\Controllers\Admin\InquerySuratpenawaranController::class);
     Route::resource('barang', \App\Http\Controllers\Admin\BarangController::class);
+    Route::resource('barangnonbesi', \App\Http\Controllers\Admin\BarangnonbesiController::class);
     Route::resource('typekaroseri', \App\Http\Controllers\Admin\TypekaroseriController::class);
     Route::resource('deposit_pemesanan', \App\Http\Controllers\Admin\DepositpemesananController::class);
     Route::resource('pembelian', \App\Http\Controllers\Admin\PembelianController::class);

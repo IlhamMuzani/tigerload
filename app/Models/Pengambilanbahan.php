@@ -47,7 +47,7 @@ class Pengambilanbahan extends Model
         return $this->belongsTo(Spk::class);
     }
     
-    public function detail_pengambilan()
+    public function detailpengambilan()
     {
         return $this->hasMany(Detailpengambilan::class);
     }

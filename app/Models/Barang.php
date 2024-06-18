@@ -15,6 +15,7 @@ class Barang extends Model
     use LogsActivity;
 
     protected $fillable = [
+        'kategori',
         'kode_barang',
         'nama_barang',
         'qrcode_barang',
