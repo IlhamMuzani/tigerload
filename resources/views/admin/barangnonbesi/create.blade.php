@@ -43,6 +43,16 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
+                            <label class="form-label" for="kategori">Pilih Kategori</label>
+                            <select class="form-control" id="kategori" name="kategori">
+                                <option value="">- Pilih -</option>
+                                <option value="besi" {{ old('kategori') == 'besi' ? 'selected' : null }}>
+                                    Besi</option>
+                                <option value="non besi" {{ old('kategori') == 'non besi' ? 'selected' : null }}>
+                                    Non Besi</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="nama">Nama Barang</label>
                             <input type="text" class="form-control" id="nama_barang" name="nama_barang"
                                 placeholder="Masukan nama barang" value="{{ old('nama_barang') }}">

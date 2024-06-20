@@ -54,7 +54,6 @@ class BarangController extends Controller
             $request->all(),
             [
                 'kode_barang' => $this->kode(),
-                'kategori' => 'besi',
                 'qrcode_barang' => 'https://tigerload.id/barang/' . $kode,
                 'tanggal_awal' => $tanggal,
 
@@ -117,6 +116,7 @@ class BarangController extends Controller
         $barang = Barang::findOrFail($id);
 
         Barang::where('id', $id)->update([
+            'kategori' => $request->kategori,
             'nama_barang' => $request->nama_barang,
             'jumlah' => $request->jumlah,
             'spesifikasi' => $request->spesifikasi,

@@ -54,7 +54,6 @@ class BarangnonbesiController extends Controller
             $request->all(),
             [
                 'kode_barang' => $this->kode(),
-                'kategori' => 'non besi',
                 'qrcode_barang' => 'https://tigerload.id/barangnonbesi/' . $kode,
                 'tanggal_awal' => $tanggal,
 
@@ -117,6 +116,7 @@ class BarangnonbesiController extends Controller
         $barangnonbesi = Barang::findOrFail($id);
 
         Barang::where('id', $id)->update([
+            'kategori' => $request->kategori,
             'nama_barang' => $request->nama_barang,
             'jumlah' => $request->jumlah,
             'spesifikasi' => $request->spesifikasi,
@@ -124,7 +124,7 @@ class BarangnonbesiController extends Controller
             'harga' => $request->harga,
         ]);
 
-        return redirect('admin/barangnonbesi')->with('success', 'Berhasil memperbarui barang');
+        return back('admin/barangnonbesi')->with('success', 'Berhasil memperbarui barang');
     }
 
 
