@@ -4,7 +4,22 @@
 
 @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("loadingSpinner").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                document.getElementById("mainContentSection").style.display = "block";
+            }, 100); // Adjust the delay time as needed
+        });
+    </script>
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header" style="display: none;" id="mainContent">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -21,7 +36,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content" style="display: none;" id="mainContentSection">
         <div class="container-fluid">
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible">
@@ -127,10 +142,11 @@
                                     <td class="text-right">{{ number_format($slips->gajinol_pelunasan, 2, ',', '.') }}</td>
                                     <td>
                                         {{-- <button class="waButton"  style="background-color: #25D366;">WhatsApp</button> --}}
-                                        <span></span><button class="waButton" type="submit" style="background-color: #25D366;" class="btn btn-success btn-sm">
-                                                    <img src="{{ asset('storage/uploads/gambar_logo/whatsapp.png') }}"
-                                                        height="19" width="19" alt="whatsapp">
-                                                </button>
+                                        <span></span><button class="waButton" type="submit"
+                                            style="background-color: #25D366;" class="btn btn-success btn-sm">
+                                            <img src="{{ asset('storage/uploads/gambar_logo/whatsapp.png') }}"
+                                                height="19" width="19" alt="whatsapp">
+                                        </button>
                                     </td>
                                     <td class="text-center">
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

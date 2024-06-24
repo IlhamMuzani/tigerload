@@ -4,7 +4,22 @@
 
 @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("loadingSpinner").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                document.getElementById("mainContentSection").style.display = "block";
+            }, 100); // Adjust the delay time as needed
+        });
+    </script>
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header" style="display: none;" id="mainContent">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -22,7 +37,7 @@
     </div>
 
 
-    <section class="content">
+    <section class="content" style="display: none;" id="mainContentSection">
         <div class="container-fluid">
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
@@ -374,8 +389,9 @@
                                     </td>
                                     <td style="width: 150px;">
                                         <div class="form-group">
-                                            <input style="font-size:14px" type="text" class="form-control tambahan_lainya"
-                                                id="tambahan_lainya-0" name="tambahan_lainya[]" oninput="formatRupiahform(this)"
+                                            <input style="font-size:14px" type="text"
+                                                class="form-control tambahan_lainya" id="tambahan_lainya-0"
+                                                name="tambahan_lainya[]" oninput="formatRupiahform(this)"
                                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                         </div>
                                     </td>
@@ -931,7 +947,7 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-             // tambahan_lainya 
+            // tambahan_lainya 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">';
             item_pembelian +=
@@ -1094,7 +1110,8 @@
                     var pelunasan_kasbon = parseFloat(currentRow.find(".pelunasan_kasbon").val().replace(/[.]/g, '')) ||
                         0;
                     var lainya = parseFloat(currentRow.find(".lainya").val().replace(/[.]/g, '')) || 0;
-                    var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) || 0;
+                    var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) ||
+                    0;
                     var absen = parseFloat(currentRow.find(".absen").val()) || 0;
                     var potongan_bpjs = parseFloat(currentRow.find(".potongan_bpjs").val().replace(/[.]/g, '')) || 0;
 
