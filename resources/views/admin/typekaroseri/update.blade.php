@@ -74,12 +74,14 @@
                         <div class="mb-3" hidden>
                             <label class="form-label" for="merek_id">Merek_id *</label>
                             <input class="form-control @error('merek_id') is-invalid @enderror" id="merek_id"
-                                name="merek_id" readonly type="text" placeholder="" value="{{ old('merek_id', $typekaroseri->merek_id) }}" />
+                                name="merek_id" readonly type="text" placeholder=""
+                                value="{{ old('merek_id', $typekaroseri->merek_id) }}" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="nama_merek">Merek *</label>
                             <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek"
-                                name="nama_merek" readonly type="text" placeholder="" value="{{ old('nama_merek', $typekaroseri->nama_merek) }}" />
+                                name="nama_merek" readonly type="text" placeholder=""
+                                value="{{ old('nama_merek', $typekaroseri->nama_merek) }}" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="tipe">Type *</label>
@@ -139,23 +141,36 @@
                                         <td style="width: 70px" class="text-center" id="urutan">
                                             {{ $loop->index + 1 }}
                                         </td>
-                                        <td>
+                                        <td hidden>
                                             <div class="form-group" hidden>
-                                                <input type="text" class="form-control" id="nomor_seri-0"
-                                                    name="detail_ids[]" value="{{ $detail['id'] }}">
+                                                <input type="text" class="form-control"
+                                                    id="nomor_seri-{{ $loop->index }}" name="detail_ids[]"
+                                                    value="{{ $detail['id'] }}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="barang_id-0"
-                                                    name="barang_id[]" value="{{ $detail['barang_id'] }}">
+                                                <input type="text" class="form-control"
+                                                    id="barang_id-{{ $loop->index }}" name="barang_id[]"
+                                                    value="{{ $detail['barang_id'] }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="nama-0" name="nama[]"
-                                                    value="{{ $detail['nama'] }}">
+                                                <input type="text" class="form-control" readonly id="nama-{{ $loop->index }}"
+                                                    name="nama[]" value="{{ $detail['nama'] }}">
                                             </div>
                                         </td>
-                                        <td style="width: 70px">
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                    id="jumlah-{{ $loop->index }}" name="jumlah[]"
+                                                    value="{{ $detail['jumlah'] }}">
+                                            </div>
+                                        </td>
+                                        <td style="width: 120px">
+                                            <button type="button" class="btn btn-primary"
+                                                onclick="barang({{ $loop->index }})">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
                                             <button type="button" class="btn btn-danger"
                                                 onclick="removeBan({{ $loop->index }}, {{ $detail['id'] }})">
                                                 <i class="fas fa-trash"></i>
@@ -183,6 +198,87 @@
                 </div>
 
             </form>
+        </div>
+
+        <div class="modal fade" id="tableBarang" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Data Barang</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-2">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                        </div>
+                        <table id="tables" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama barang</th>
+                                    <th>Spesifikasi</th>
+                                    <th>Keterangan</th>
+                                    <th>Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($barangs as $barang)
+                                    <tr data-barang_id="{{ $barang->id }}"
+                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>{{ $barang->kode_barang }}</td>
+                                        <td>{{ $barang->nama_barang }}</td>
+                                        <td>{{ $barang->spesifikasi }}</td>
+                                        <td>{{ $barang->keterangan }}</td>
+                                        <td class="text-center">
+                                            <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
+                                                onclick="getBarang({{ $loop->index }})">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-tipe">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tambah Type</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ url('admin/tipe') }}" method="POST" enctype="multipart/form-data"
+                        autocomplete="off">
+                        @csrf
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="nama_tipe">Nama Type *</label>
+                                <input class="form-control @error('nama_tipe') is-invalid @enderror" id="nama_tipe"
+                                    name="nama_tipe" type="text" placeholder="masukan nama type"
+                                    value="{{ old('nama_tipe') }}" />
+                            </div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-secondary me-1" type="reset">
+                                    <i class="fas fa-undo"></i> Reset
+                                </button>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-save"></i> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <div class="modal fade" id="tableKategori" data-backdrop="static">
@@ -280,43 +376,111 @@
                     </form>
                 </div>
             </div>
+            {{-- <div class="modal fade" id="tableBarang">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Data Barang</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="m-2">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                            </div>
+                            <table id="tables" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama barang</th>
+                                        <th>Spesifikasi</th>
+                                        <th>Keterangan</th>
+                                        <th>Opsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($barangs as $barang)
+                                        <tr data-barang_id="{{ $barang->id }}"
+                                            data-nama_barang="{{ $barang->nama_barang }}"
+                                            data-param="{{ $loop->index }}">
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $barang->kode_barang }}</td>
+                                            <td>{{ $barang->nama_barang }}</td>
+                                            <td>{{ $barang->spesifikasi }}</td>
+                                            <td>{{ $barang->keterangan }}</td>
+                                            <td class="text-center">
+                                                <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
+                                                    onclick="getBarang({{ $loop->index }})">
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
         </div>
 
-        <div class="modal fade" id="modal-tipe">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tambah Type</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="{{ url('admin/tipe') }}" method="POST" enctype="multipart/form-data"
-                        autocomplete="off">
-                        @csrf
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label" for="nama_tipe">Nama Type *</label>
-                                <input class="form-control @error('nama_tipe') is-invalid @enderror" id="nama_tipe"
-                                    name="nama_tipe" type="text" placeholder="masukan nama type"
-                                    value="{{ old('nama_tipe') }}" />
-                            </div>
-                            <div class="card-footer text-end">
-                                <button class="btn btn-secondary me-1" type="reset">
-                                    <i class="fas fa-undo"></i> Reset
-                                </button>
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-save"></i> Simpan
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
+
 
     </section>
 
+    <script>
+        var activeSpecificationIndex = 0;
+
+        function barang(param) {
+            activeSpecificationIndex = param;
+            // Show the modal and filter rows if necessary
+            $('#tableBarang').modal('show');
+        }
+
+        function getBarang(rowIndex) {
+            var selectedRow = $('#tables tbody tr:eq(' + rowIndex + ')');
+            var barang_id = selectedRow.data('barang_id');
+            var nama_barang = selectedRow.data('nama_barang');
+
+            // Update the form fields for the active specification
+            $('#barang_id-' + activeSpecificationIndex).val(barang_id);
+            $('#nama-' + activeSpecificationIndex).val(nama_barang);
+
+            $('#tableBarang').modal('hide');
+        }
+
+        // filter rute 
+        function filterMemo() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tables");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                var displayRow = false;
+
+                // Loop through columns (td 1, 2, and 3)
+                for (j = 1; j <= 3; j++) {
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            displayRow = true;
+                            break; // Break the loop if a match is found in any column
+                        }
+                    }
+                }
+
+                // Set the display style based on whether a match is found in any column
+                tr[i].style.display = displayRow ? "" : "none";
+            }
+        }
+        document.getElementById("searchInput").addEventListener("input", filterMemo);
+    </script>
     <script>
         function showCategoryModal(selectedCategory) {
             $('#tableKategori').modal('show');
@@ -365,13 +529,17 @@
 
             if (jumlah_ban === 1) {
                 $('#tabel-pembelian').empty();
+            } else {
+                // Find the last row and get its index to continue the numbering
+                var lastRow = $('#tabel-pembelian tr:last');
+                var lastRowIndex = lastRow.find('#urutan').text();
+                jumlah_ban = parseInt(lastRowIndex) + 1;
             }
 
+            console.log('Current jumlah_ban:', jumlah_ban);
             itemPembelian(jumlah_ban, jumlah_ban - 1);
-
             updateUrutan();
         }
-
 
         function removeBan(identifier, detailId) {
             var row = document.getElementById('pembelian-' + identifier);
@@ -411,12 +579,13 @@
             console.log(nama);
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan">' + urutan + '</td>';
+            item_pembelian += '<td style="width: 70px; font-size:14px" class="text-center" id="urutan">' + urutan +
+                '</td>';
 
             // barang_id 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="nama-' + key +
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + key +
                 '" name="nama[]" value="' +
                 nama +
                 '" ';
@@ -434,7 +603,11 @@
             item_pembelian += '</td>';
 
             // delete
-            item_pembelian += '<td style="width: 70px">';
+            item_pembelian += '<td style="width: 120px">';
+            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + key +
+                ')">';
+            item_pembelian += '<i class="fas fa-plus"></i>';
+            item_pembelian += '</button>';
             item_pembelian += '<button type="button" class="btn btn-danger" onclick="removeBan(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';

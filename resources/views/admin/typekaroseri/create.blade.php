@@ -140,7 +140,8 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" readonly id="nama-0" name="nama[]">
+                                            <input type="text" class="form-control" readonly id="nama-0"
+                                                name="nama[]">
                                         </div>
                                     </td>
                                     <td>
@@ -182,7 +183,10 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <div class="m-2">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                        </div>
+                        <table id="tables" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
@@ -377,7 +381,7 @@
         }
 
         function getBarang(rowIndex) {
-            var selectedRow = $('#example1 tbody tr:eq(' + rowIndex + ')');
+            var selectedRow = $('#tables tbody tr:eq(' + rowIndex + ')');
             var barang_id = selectedRow.data('barang_id');
             var nama_barang = selectedRow.data('nama_barang');
 
@@ -387,6 +391,35 @@
 
             $('#tableBarang').modal('hide');
         }
+
+        // filter rute 
+        function filterMemo() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tables");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                var displayRow = false;
+
+                // Loop through columns (td 1, 2, and 3)
+                for (j = 1; j <= 3; j++) {
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            displayRow = true;
+                            break; // Break the loop if a match is found in any column
+                        }
+                    }
+                }
+
+                // Set the display style based on whether a match is found in any column
+                tr[i].style.display = displayRow ? "" : "none";
+            }
+        }
+        document.getElementById("searchInput").addEventListener("input", filterMemo);
 
 
         var data_pembelian = @json(session('data_pembelians'));

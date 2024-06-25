@@ -151,12 +151,13 @@ class TypekaroseriController extends Controller
     public function edit($id)
     {
 
+        $barangs = Barang::all();
         $typekaroseri = Typekaroseri::where('id', $id)->first();
         $mereks = Merek::all();
         $tipes = Tipe::all();
         $details = Spesifikasi::where('typekaroseri_id', $id)->get();
 
-        return view('admin/typekaroseri.update', compact('typekaroseri', 'details', 'mereks', 'tipes'));
+        return view('admin/typekaroseri.update', compact('barangs', 'typekaroseri', 'details', 'mereks', 'tipes'));
     }
 
     public function update(Request $request, $id)
@@ -194,22 +195,24 @@ class TypekaroseriController extends Controller
             for ($i = 0; $i < count($request->nama); $i++) {
                 $validasi_produk = Validator::make($request->all(), [
                     'nama.' . $i => 'required',
+                    'barang_id.' . $i => 'required',
+                    'jumlah.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Spesifikasi nomor " . ($i + 1) . " belum dilengkapi!");
+                    array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
                 }
 
 
                 $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
+                $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
+                $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
 
-                $data_pembelians->push([
-                    'detail_id' => $request->detail_ids[$i] ?? null,
-                    'nama' => $nama,
-                ]);
+                $data_pembelians->push(['detail_id' => $request->detail_ids[$i] ?? null, 'nama' => $nama, 'barang_id' => $barang_id, 'jumlah' => $jumlah]);
             }
         } else {
         }
+
         if ($validasi_pelanggan->fails() || $error_pesanans) {
             return back()
                 ->withInput()
@@ -248,17 +251,23 @@ class TypekaroseriController extends Controller
                 Spesifikasi::where('id', $detailId)->update([
                     'typekaroseri_id' => $transaksi->id,
                     'nama' => $data_pesanan['nama'],
+                    'barang_id' => $data_pesanan['barang_id'],
+                    'jumlah' => $data_pesanan['jumlah'],
                 ]);
             } else {
                 $existingDetail = Spesifikasi::where([
                     'typekaroseri_id' => $transaksi->id,
                     'nama' => $data_pesanan['nama'],
+                    'barang_id' => $data_pesanan['barang_id'],
+                    'jumlah' => $data_pesanan['jumlah'],
                 ])->first();
 
                 if (!$existingDetail) {
                     Spesifikasi::create([
                         'typekaroseri_id' => $transaksi->id,
                         'nama' => $data_pesanan['nama'],
+                        'barang_id' => $data_pesanan['barang_id'],
+                        'jumlah' => $data_pesanan['jumlah'],
                     ]);
                 }
             }
