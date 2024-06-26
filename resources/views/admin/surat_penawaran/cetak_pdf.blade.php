@@ -306,8 +306,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold; font-size:13px">Rp.
-                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
-                            <span>( {{ terbilang($pembelians->harga) }} ) per unit</span>
+                            {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }},-
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -323,7 +322,20 @@
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
                             = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
+                            {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+
+                        </td>
+                        <td></td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold">
+                            ( {{ terbilang($pembelians->harga + 11396396 * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            Rupiah )
                         </td>
                     </tr>
                 @else
@@ -352,8 +364,9 @@
                 @endif
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
                     <td>
@@ -389,7 +402,7 @@
                             :
                         </div>
                     </td>
-                    <td>BCA 3629888889 Atas Nama : Djohan Wahyudi</td>
+                    <td>BCA 3621889999 Atas Nama : CV Tiger Load Engineering</td>
                 </tr>
             </table>
         </div>
