@@ -263,7 +263,7 @@
                         @if ($key === 0)
                             <td>
                                 <img style="margin-top: 5px"
-                                    src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                     height="8" alt="Logo Tigerload">
                             </td>
                             <td>Spesifikasi</td>

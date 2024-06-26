@@ -105,7 +105,7 @@ class SuratPenawaranController extends Controller
         ));
 
         // Now update the record with the QR code URL that includes the ID
-        $pembelian->qrcode_penawaran = 'https:///tigerload.id/surat_penawaran/' . $pembelian->id;
+        $pembelian->qrcode_penawaran = 'https://tigerload.id/surat_penawaran/' . $pembelian->id;
         $pembelian->save();
 
         // $kode = $this->kodekendaraan();
@@ -116,7 +116,7 @@ class SuratPenawaranController extends Controller
             $request->all(),
             [
                 'surat_penawaran_id' => $pembelian_id,
-                'qrcode_kendaraan' => 'https:///tigerload.id/kendaraan/' . $kode,
+                'qrcode_kendaraan' => 'https://tigerload.id/kendaraan/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'status' => 'stok',
             ]

@@ -100,7 +100,7 @@
             {{-- <td> --}}
             {{-- <div class="info-container"> --}}
             {{-- <div id="logo-container"> --}}
-            <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="270" height="60"
+            <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="270" height="60"
                 alt="Logo Tigerload">
             {{-- </div> --}}
 
@@ -217,7 +217,7 @@
             <table>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Model</td>
@@ -230,7 +230,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Merek / Type</td>
@@ -245,7 +245,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Dimensi</td>
@@ -263,7 +263,7 @@
                         @if ($key === 0)
                             <td>
                                 <img style="margin-top: 5px"
-                                    src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                     height="8" alt="Logo Tigerload">
                             </td>
                             <td>Spesifikasi</td>
@@ -286,7 +286,7 @@
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Aksesoris</td>
@@ -331,7 +331,7 @@
                 ?>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Harga</td>
@@ -350,7 +350,7 @@
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
@@ -363,7 +363,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Harga Satuan</td>
@@ -377,7 +377,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -415,7 +415,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -432,7 +432,7 @@
                 <tr>
                     <td>
                         <img style="margin-top: 5px"
-                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                             height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
@@ -446,7 +446,7 @@
                 <tr>
                     <td>
                         <img style="margin-top: 5px"
-                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                             height="8" alt="Logo Tigerload">
                     </td>
                     <td>Tempo Pembayaran</td>
@@ -460,7 +460,7 @@
                 <tr>
                     <td>
                         <img style="margin-top: 5px"
-                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                             height="8" alt="Logo Tigerload">
                     </td>
                     <td>Rekening Bank</td>
