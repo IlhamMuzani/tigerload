@@ -147,7 +147,7 @@
                 <a href="{{ url('admin/typekaroseri') }}"
                     class="nav-link {{ request()->is('admin/typekaroseri*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Data Type Karoseri</p>
+                    <p style="font-size: 14px;">Data Produk</p>
                 </a>
             </li>
         @endif

@@ -213,8 +213,8 @@ class TypekaroseriController extends Controller
         if ($request->has('nama')) {
             for ($i = 0; $i < count($request->nama); $i++) {
                 $validasi_produk = Validator::make($request->all(), [
-                    'nama.' . $i => 'required',
-                    'keterangan.' . $i => 'required',
+                    // 'nama.' . $i => 'required',
+                    // 'keterangan.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {

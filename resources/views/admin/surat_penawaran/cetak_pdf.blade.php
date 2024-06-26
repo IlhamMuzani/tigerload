@@ -237,6 +237,7 @@
                 @php
                     $totalPrice = $pembelians->harga + 11396396; // Calculate the total price
                     $totalPrice2 = $pembelians->harga; // Calculate the total price
+                    $totalPrice3 = $pembelians->harga * $pembelians->jumlah_unit; // Calculate the total price
 
                     function numberToWords($number)
                     {
@@ -362,9 +363,11 @@
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td style="font-weight: bold">{{ $pembelians->jumlah_unit }} Unit (
-                            {{ number_format($pembelians->harga, 0, ',', '.') }} x {{ $pembelians->jumlah_unit }} =
-                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }})
+                        <td style="font-weight: bold">
+                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
+                            =
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            ({{ numberToWords($totalPrice3) }})
                         </td>
                     </tr>
                 @else
@@ -384,9 +387,11 @@
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td style="font-weight: bold">{{ $pembelians->jumlah_unit }} Unit (
-                            {{ number_format($pembelians->harga, 0, ',', '.') }} x {{ $pembelians->jumlah_unit }} =
-                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }})
+                        <td style="font-weight: bold">
+                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
+                            =
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            ({{ numberToWords($totalPrice3) }})
                         </td>
                     </tr>
                 @endif
