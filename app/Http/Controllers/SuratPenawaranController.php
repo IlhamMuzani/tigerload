@@ -15,7 +15,7 @@ class SuratPenawaranController extends Controller
     public function detail($kode)
     {
         // return "hellow word";
-        $pembelians = Surat_penawaran::where('kode_spk', $kode)->first();
+        $pembelians = Surat_penawaran::where('id', $kode)->first();
         $kendaraans = Detail_suratpenawaran::where('surat_penawaran_id', $pembelians->id)->first();
         $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
