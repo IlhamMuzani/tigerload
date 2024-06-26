@@ -220,8 +220,9 @@
                 @else
                     <tr>
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>Aksesoris</td>
                         <td>
@@ -239,7 +240,18 @@
 
                     function numberToWords($number)
                     {
-                        $words = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
+                        $words = [
+                            'nol',
+                            'satu',
+                            'dua',
+                            'tiga',
+                            'empat',
+                            'lima',
+                            'enam',
+                            'tujuh',
+                            'delapan',
+                            'sembilan',
+                        ];
                         $unit = ['', 'ribu', 'juta', 'miliar', 'triliun']; // Extend as needed
 
                         $result = '';
@@ -315,8 +327,9 @@
                 @if ($pembelians->kategori == 'PPN')
                     <tr>
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
                         <td>
@@ -327,15 +340,31 @@
 
                     <tr style="font-weight: bold">
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
-                        <td>Total Harga</td>
+                        <td>Harga Satuan</td>
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">Rp. {{ number_format($totalPrice, 0, ',', '.') }},-
                             <span>( {{ numberToWords($totalPrice) }} ) per unit</span>
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
+                        </td>
+                        <td>Total Harga</td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold">{{ $pembelians->jumlah_unit }} Unit (
+                            {{ number_format($pembelians->harga, 0, ',', '.') }} x {{ $pembelians->jumlah_unit }} =
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }})
                         </td>
                     </tr>
                 @else
@@ -344,6 +373,23 @@
                     @endphp
                 @endif
 
+                @if ($pembelians->kategori == 'NON PPN')
+                    <tr style="font-weight: bold">
+                        <td>
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
+                        </td>
+                        <td>Total Harga</td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold">{{ $pembelians->jumlah_unit }} Unit (
+                            {{ number_format($pembelians->harga, 0, ',', '.') }} x {{ $pembelians->jumlah_unit }} =
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }})
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td>
                         <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
@@ -359,8 +405,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Tempo Pembayaran</td>
                     <td>
@@ -372,8 +419,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Rekening Bank</td>
                     <td>

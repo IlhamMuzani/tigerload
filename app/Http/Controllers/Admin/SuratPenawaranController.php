@@ -155,22 +155,61 @@ class SuratPenawaranController extends Controller
         return view('admin.surat_penawaran.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
     }
 
+    // public function kode()
+    // {
+    //     $kendaraan = Surat_penawaran::all();
+    //     if ($kendaraan->isEmpty()) {
+    //         $num = "000001";
+    //     } else {
+    //         $id = Surat_penawaran::getId();
+    //         foreach ($id as $value);
+    //         $idlm = $value->id;
+    //         $idbr = $idlm + 1;
+    //         $num = sprintf("%06s", $idbr);
+    //     }
+
+    //     $data = 'PK';
+    //     $kode_kendaraan = $data . $num;
+    //     return $kode_kendaraan;
+    // }
+
+
+
     public function kode()
     {
-        $kendaraan = Surat_penawaran::all();
-        if ($kendaraan->isEmpty()) {
-            $num = "000001";
+        // Mengambil kode terbaru dari database dengan awalan 'MP'
+        $lastBarang = Surat_penawaran::where('kode_spk', 'like', 'PK%')->latest()->first();
+
+        // Mendapatkan bulan dari tanggal kode terakhir
+        $lastMonth = $lastBarang ? date('m', strtotime($lastBarang->created_at)) : null;
+        $currentMonth = date('m');
+
+        // Jika tidak ada kode sebelumnya atau bulan saat ini berbeda dari bulan kode terakhir
+        if (!$lastBarang || $currentMonth != $lastMonth) {
+            $num = 1; // Mulai dari 1 jika bulan berbeda
         } else {
-            $id = Surat_penawaran::getId();
-            foreach ($id as $value);
-            $idlm = $value->id;
-            $idbr = $idlm + 1;
-            $num = sprintf("%06s", $idbr);
+            // Jika ada kode sebelumnya, ambil nomor terakhir
+            $lastCode = $lastBarang->kode_spk;
+
+            // Pisahkan kode menjadi bagian-bagian terpisah
+            $parts = explode('/', $lastCode);
+            $lastNum = end($parts); // Ambil bagian terakhir sebagai nomor terakhir
+            $num = (int) $lastNum + 1; // Tambahkan 1 ke nomor terakhir
         }
 
-        $data = 'PK';
-        $kode_kendaraan = $data . $num;
-        return $kode_kendaraan;
+        // Format nomor dengan leading zeros sebanyak 6 digit
+        $formattedNum = sprintf("%03s", $num);
+
+        // Awalan untuk kode baru
+        $prefix = 'PK';
+        $tahun = date('y');
+        $tanggal = date('dm');
+
+        // Buat kode baru dengan menggabungkan awalan, tanggal, tahun, dan nomor yang diformat
+        $newCode = $prefix . "/" . $tanggal . $tahun . "/" . $formattedNum;
+
+        // Kembalikan kode
+        return $newCode;
     }
 
     // public function kodekendaraan()
