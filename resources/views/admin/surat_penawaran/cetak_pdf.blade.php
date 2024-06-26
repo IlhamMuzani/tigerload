@@ -234,80 +234,36 @@
                     </tr>
                 @endif
 
-                @php
-                    $totalPrice = $pembelians->harga + 11396396; // Calculate the total price
-                    $totalPrice2 = $pembelians->harga; // Calculate the total price
-                    $totalPrice3 = $pembelians->harga * $pembelians->jumlah_unit; // Calculate the total price
-
-                    function numberToWords($number)
-                    {
-                        $words = [
-                            'nol',
-                            'satu',
-                            'dua',
-                            'tiga',
-                            'empat',
-                            'lima',
-                            'enam',
-                            'tujuh',
-                            'delapan',
-                            'sembilan',
-                        ];
-                        $unit = ['', 'ribu', 'juta', 'miliar', 'triliun']; // Extend as needed
-
-                        $result = '';
-
-                        $number = strval($number);
-
-                        $chunks = str_split(strrev($number), 3);
-                        $chunkCount = count($chunks);
-
-                        for ($i = 0; $i < $chunkCount; $i++) {
-                            $chunk = intval(strrev($chunks[$i]));
-                            if ($chunk > 0) {
-                                $wordsChunk = '';
-
-                                $hundred = floor($chunk / 100);
-                                $remainder = $chunk % 100;
-
-                                if ($hundred > 0) {
-                                    $wordsChunk .= $words[$hundred] . ' ratus';
-                                }
-
-                                if ($remainder > 0) {
-                                    if ($hundred > 0) {
-                                        $wordsChunk .= ' ';
-                                    }
-
-                                    if ($remainder < 10) {
-                                        $wordsChunk .= $words[$remainder];
-                                    } elseif ($remainder < 20) {
-                                        $wordsChunk .= $words[$remainder - 10] . ' belas';
-                                    } else {
-                                        $tens = floor($remainder / 10);
-                                        $ones = $remainder % 10;
-
-                                        $wordsChunk .= $words[$tens] . ' puluh';
-                                        if ($ones > 0) {
-                                            $wordsChunk .= ' ' . $words[$ones];
-                                        }
-                                    }
-                                }
-
-                                $wordsChunk .= ' ' . $unit[$i];
-
-                                if ($i == $chunkCount - 1) {
-                                    $wordsChunk .= ' rupiah';
-                                }
-
-                                $result = $wordsChunk . ' ' . $result;
-                            }
-                        }
-
-                        return $result;
+                <?php
+                function terbilang($angka)
+                {
+                    $angka = abs($angka); // Pastikan angka selalu positif
+                    $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+                    $hasil = '';
+                    if ($angka < 12) {
+                        $hasil = $bilangan[$angka];
+                    } elseif ($angka < 20) {
+                        $hasil = terbilang($angka - 10) . ' Belas';
+                    } elseif ($angka < 100) {
+                        $hasil = terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
+                    } elseif ($angka < 200) {
+                        $hasil = 'Seratus ' . terbilang($angka - 100);
+                    } elseif ($angka < 1000) {
+                        $hasil = terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
+                    } elseif ($angka < 2000) {
+                        $hasil = 'Seribu ' . terbilang($angka - 1000);
+                    } elseif ($angka < 1000000) {
+                        $hasil = terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
+                    } elseif ($angka < 1000000000) {
+                        $hasil = terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
+                    } elseif ($angka < 1000000000000) {
+                        $hasil = terbilang($angka / 1000000000) . ' Miliar ' . terbilang($angka % 1000000000);
+                    } elseif ($angka < 1000000000000000) {
+                        $hasil = terbilang($angka / 1000000000000) . ' Triliun ' . terbilang($angka % 1000000000000);
                     }
-
-                @endphp
+                    return $hasil;
+                }
+                ?>
                 <tr>
                     <td>
                         <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
@@ -320,7 +276,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ numberToWords($totalPrice2) }} ) per unit</span>
+                                {{ terbilang($pembelians->harga) }} ) per unit</span>
                         @endif
                     </td>
                 </tr>
@@ -349,8 +305,9 @@
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td style="font-weight: bold">Rp. {{ number_format($totalPrice, 0, ',', '.') }},-
-                            <span>( {{ numberToWords($totalPrice) }} ) per unit</span>
+                        <td style="font-weight: bold; font-size:13px">Rp.
+                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
+                            <span>( {{ terbilang($pembelians->harga) }} ) per unit</span>
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -365,9 +322,8 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
-                            =
-                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ({{ numberToWords($totalPrice3) }})
+                            = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
                         </td>
                     </tr>
                 @else
@@ -389,9 +345,8 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
-                            =
-                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ({{ numberToWords($totalPrice3) }})
+                            = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
                         </td>
                     </tr>
                 @endif
