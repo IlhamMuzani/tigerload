@@ -320,8 +320,8 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
-                            = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }}
+                            = {{ number_format(($pembelians->harga + 11396396) * $pembelians->jumlah_unit, 0, ',', '.') }}
                             {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
                         </td>
                     </tr>
