@@ -110,7 +110,14 @@
                                         @endif
                                     </td>
 
-                                    <td>Rp {{ number_format($pembelian->harga, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($pembelian->kategori == 'PPN')
+                                            Rp
+                                            {{ number_format($pembelian->harga + $pembelian->harga * 0.11, 0, ',', '.') }}
+                                        @else
+                                            Rp {{ number_format($pembelian->harga, 0, ',', '.') }}
+                                        @endif
+                                    </td>
 
                                     <td class="text-center">
                                         @if ($pembelian->status == 'posting')

@@ -560,6 +560,8 @@
                                     <th class="text-center">No</th>
                                     <th>Kode Type Karoseri</th>
                                     <th>Nama Karoseri</th>
+                                    <th>Merek</th>
+                                    <th>Type</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -569,6 +571,20 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $typekaroseri->kode_type }}</td>
                                         <td>{{ $typekaroseri->nama_karoseri }}</td>
+                                        <td>
+                                            @if ($typekaroseri->merek)
+                                                {{ $typekaroseri->merek->nama_merek }}
+                                            @else
+                                                tidak ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($typekaroseri->merek)
+                                                {{ $typekaroseri->merek->tipe->nama_tipe }}
+                                            @else
+                                                tidak ada
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}')">
