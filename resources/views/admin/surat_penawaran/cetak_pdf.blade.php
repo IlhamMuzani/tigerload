@@ -128,25 +128,76 @@
                             <br>
                         </td>
                     </tr>
+                    {{-- <tr>
+                        <td style="width: 5%;" style="max-width: 230px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr> --}}
                 </table>
             </div>
 
-            <table style="text-align: letf;">
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Kepada Yth,</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">
-                        {{ $pembelians->pelanggan->nama_pelanggan }}</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Di {{ $pembelians->pelanggan->alamat }}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
-                </tr>
-            </table>
+            <div>
+
+
+                <table width="100%">
+                    <tr>
+                        <td style="font-size: 13px;">
+                            <table style="text-align: letf;">
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Kepada Yth,</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">
+                                        {{ $pembelians->pelanggan->nama_pelanggan }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Di
+                                        {{ $pembelians->pelanggan->alamat }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 5%;" style="max-width: 20px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    {{-- <tr>
+                        <td style="width: 5%;" style="max-width: 230px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr> --}}
+                </table>
+            </div>
         </div>
         <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
             <table style="text-align: letf;">
@@ -175,7 +226,21 @@
                             :
                         </div>
                     </td>
-                    <td>{{ $pembelians->typekaroseri->nama_karoseri }} - {{ $kendaraans->merek->nama_merek }}
+                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
+                    </td>
+                    <td>Merek / Type</td>
+                    <td>
+                        <div style="margin-left: 70px">
+                            :
+                        </div>
+                    </td>
+                    <td>
+                        {{ $kendaraans->merek->nama_merek }}
                         {{ $kendaraans->merek->tipe->nama_tipe }}</td>
                 </tr>
                 <tr>
@@ -320,8 +385,10 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }}
-                            = {{ number_format(($pembelians->harga + 11396396) * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ $pembelians->jumlah_unit }} Unit x
+                            {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }}
+                            =
+                            {{ number_format(($pembelians->harga + 11396396) * $pembelians->jumlah_unit, 0, ',', '.') }}
                             {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
                         </td>
                     </tr>
@@ -402,7 +469,14 @@
                             :
                         </div>
                     </td>
-                    <td>BCA 3621889999 Atas Nama : CV Tiger Load Engineering</td>
+                    <td>
+                        @if ($pembelians->kategori == 'PPN')
+                            BCA 3621889999 Atas Nama : CV Tiger Load Engineering
+                        @else
+                            BCA 3629888889 Atas Nama : Djohan Wahyudi
+                        @endif
+                    </td>
+
                 </tr>
             </table>
         </div>
