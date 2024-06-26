@@ -13,7 +13,7 @@ class SuratPenawaranController extends Controller
     public function detail($kode)
     {
         // Retrieve the main record
-        $pembelians = Surat_penawaran::where('id', $kode)->first();
+        $pembelians = Surat_penawaran::where('kode_spk', $kode)->first();
 
         // Check if the main record exists
         if (!$pembelians) {

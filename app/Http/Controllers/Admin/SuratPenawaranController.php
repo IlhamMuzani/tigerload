@@ -97,13 +97,16 @@ class SuratPenawaranController extends Controller
                 'jumlah_unit' => $request->jumlah_unit,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
-                'qrcode_penawaran' => 'https:///tigerload.id/surat_penawaran/' . $kode,
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
             ]
         ));
+
+        // Now update the record with the QR code URL that includes the ID
+        $pembelian->qrcode_penawaran = 'https:///tigerload.id/surat_penawaran/' . $pembelian->id;
+        $pembelian->save();
 
         // $kode = $this->kodekendaraan();
         $pembelian_id = $pembelian->id;
