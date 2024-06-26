@@ -84,13 +84,16 @@ class SpkController extends Controller
                 'aksesoris' => $request->aksesoris,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
-                'qrcode_spk' => 'https:///tigerload.id/spk/' . $kode,
+                // 'qrcode_spk' => 'https:///tigerload.id/spk/' . $kode,
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
             ]
         ));
+
+        $pembelian->qrcode_penawaran = 'https://tigerload.id/spk/' . $pembelian->id;
+        $pembelian->save();
 
         $kode = $this->kodekendaraan();
         $pembelian_id = $pembelian->id;

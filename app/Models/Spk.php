@@ -71,6 +71,11 @@ class Spk extends Model
         return $this->belongsTo(Typekaroseri::class);
     }
 
+    public function surat_penawaran()
+    {
+        return $this->belongsTo(Surat_penawaran::class);
+    }
+    
     public function detail_deposit()
     {
         return $this->hasMany(Depositpemesanan::class);

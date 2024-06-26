@@ -125,6 +125,7 @@ class TypekaroseriController extends Controller
                 'merek_id' => $request->merek_id,
                 'nama_merek' => $request->nama_merek,
                 'tipe' => $request->tipe,
+                'aksesoris' => $request->aksesoris,
                 'qrcode_karoseri' => 'https://tigerload.id/typekaroseri/' . $kode,
                 'tanggal_awal' => $tanggal,
 

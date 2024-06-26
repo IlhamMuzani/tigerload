@@ -74,6 +74,11 @@ class Surat_penawaran extends Model
         return $this->hasMany(Depositpemesanan::class);
     }
 
+    public function spk()
+    {
+        return $this->hasMany(Spk::class);
+    }
+
     public static function getId()
     {
         return $getId = DB::table('surat_penawarans')->orderBy('id', 'DESC')->take(1)->get();

@@ -156,6 +156,18 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" id="spesifikasi" readonly name="spesifikasi" placeholder="">{{ old('typekaroseri_id') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="aksesoris">Aksesoris</label>
+                            <input type="text" class="form-control" name="aksesoris" value="{{ old('aksesoris') }}"
+                                id="aksesoris" placeholder="">
+                        </div>
+                    </div>
+
                     <div class="card-footer text-right">
                         <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
                         <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>

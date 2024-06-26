@@ -271,7 +271,7 @@
     </section>
 
     <div class="modal fade" id="tablepenawaran" data-backdrop="static">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl"> <!-- Changed modal-lg to modal-xl -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Data Surat Penawaran</h4>
@@ -290,6 +290,8 @@
                                     <th>Nama Pelanggan</th>
                                     <th>Kode Karoseri</th>
                                     <th>Bentuk Karoseri</th>
+                                    <th>Merek</th>
+                                    <th>Type</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -322,6 +324,20 @@
                                         <td>
                                             @if ($suratpenawaran->typekaroseri)
                                                 {{ $suratpenawaran->typekaroseri->nama_karoseri }}
+                                            @else
+                                                tidak ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($suratpenawaran->typekaroseri->merek)
+                                                {{ $suratpenawaran->typekaroseri->merek->nama_merek }}
+                                            @else
+                                                tidak ada
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($suratpenawaran->typekaroseri->merek)
+                                                {{ $suratpenawaran->typekaroseri->merek->tipe->nama_tipe }}
                                             @else
                                                 tidak ada
                                             @endif

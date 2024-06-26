@@ -216,32 +216,32 @@
             })
         });
 
-        $(function() {
-            $("#example2").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            bsCustomFileInput.init();
-            // $('.select2').select2()
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-        });
+        // $(function() {
+        //     $("#example2").DataTable({
+        //         "responsive": true,
+        //         "lengthChange": false,
+        //         "autoWidth": false
+        //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        //     bsCustomFileInput.init();
+        //     // $('.select2').select2()
+        //     $('.select2bs4').select2({
+        //         theme: 'bootstrap4'
+        //     })
+        // });
 
 
-        $(function() {
-            $("#example3").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            bsCustomFileInput.init();
-            // $('.select2').select2()
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-        });
+        // $(function() {
+        //     $("#example3").DataTable({
+        //         "responsive": true,
+        //         "lengthChange": false,
+        //         "autoWidth": false
+        //     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        //     bsCustomFileInput.init();
+        //     // $('.select2').select2()
+        //     $('.select2bs4').select2({
+        //         theme: 'bootstrap4'
+        //     })
+        // });
     </script>
 
     <script>
@@ -254,12 +254,12 @@
             });
         });
 
-        $(document).ready(function() {
-            $('#datatables').DataTable();
-        });
-        $(document).ready(function() {
-            $('#datatables1').DataTable();
-        });
+        // $(document).ready(function() {
+        //     $('#datatables').DataTable();
+        // });
+        // $(document).ready(function() {
+        //     $('#datatables1').DataTable();
+        // });
     </script>
 </body>
 

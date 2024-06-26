@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SPK</title>
+    <title>Surat Penawaran Karoseri</title>
     <style>
         /* * {
             border: 1px solid black;
@@ -128,25 +128,76 @@
                             <br>
                         </td>
                     </tr>
+                    {{-- <tr>
+                        <td style="width: 5%;" style="max-width: 230px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr> --}}
                 </table>
             </div>
 
-            <table style="text-align: letf;">
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Kepada Yth,</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">
-                        {{ $pembelians->pelanggan->nama_pelanggan }}</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Di {{ $pembelians->pelanggan->alamat }}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
-                </tr>
-            </table>
+            <div>
+
+
+                <table width="100%">
+                    <tr>
+                        <td style="font-size: 13px;">
+                            <table style="text-align: letf;">
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Kepada Yth,</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">
+                                        {{ $pembelians->pelanggan->nama_pelanggan }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Di
+                                        {{ $pembelians->pelanggan->alamat }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Pesanan</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width: 5%;" style="max-width: 20px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_spk", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    {{-- <tr>
+                        <td style="width: 5%;" style="max-width: 230px;">
+                            <div class="">
+                                <table>
+                                    <tr>
+                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                            style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr> --}}
+                </table>
+            </div>
         </div>
         <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
             <table style="text-align: letf;">
@@ -175,7 +226,21 @@
                             :
                         </div>
                     </td>
-                    <td>{{ $pembelians->typekaroseri->nama_karoseri }} - {{ $kendaraans->merek->nama_merek }}
+                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
+                    </td>
+                    <td>Merek / Type</td>
+                    <td>
+                        <div style="margin-left: 70px">
+                            :
+                        </div>
+                    </td>
+                    <td>
+                        {{ $kendaraans->merek->nama_merek }}
                         {{ $kendaraans->merek->tipe->nama_tipe }}</td>
                 </tr>
                 <tr>
@@ -198,7 +263,7 @@
                         @if ($key === 0)
                             <td>
                                 <img style="margin-top: 5px"
-                                    src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                     height="8" alt="Logo Tigerload">
                             </td>
                             <td>Spesifikasi</td>
@@ -216,12 +281,13 @@
                 @endforeach
 
 
-                @if ($pembelians->typekaroseri->aksesoris == null)
+                @if ($pembelians->aksesoris == null)
                 @else
                     <tr>
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>Aksesoris</td>
                         <td>
@@ -229,72 +295,40 @@
                                 :
                             </div>
                         </td>
-                        <td>{{ $pembelians->typekaroseri->aksesoris }}</td>
+                        <td>{{ $pembelians->aksesoris }}</td>
                     </tr>
                 @endif
 
-                @php
-                    $totalPrice = $pembelians->harga + 11396396; // Calculate the total price
-                    $totalPrice2 = $pembelians->harga; // Calculate the total price
-
-                    function numberToWords($number)
-                    {
-                        $words = ['nol', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan'];
-                        $unit = ['', 'ribu', 'juta', 'miliar', 'triliun']; // Extend as needed
-
-                        $result = '';
-
-                        $number = strval($number);
-
-                        $chunks = str_split(strrev($number), 3);
-                        $chunkCount = count($chunks);
-
-                        for ($i = 0; $i < $chunkCount; $i++) {
-                            $chunk = intval(strrev($chunks[$i]));
-                            if ($chunk > 0) {
-                                $wordsChunk = '';
-
-                                $hundred = floor($chunk / 100);
-                                $remainder = $chunk % 100;
-
-                                if ($hundred > 0) {
-                                    $wordsChunk .= $words[$hundred] . ' ratus';
-                                }
-
-                                if ($remainder > 0) {
-                                    if ($hundred > 0) {
-                                        $wordsChunk .= ' ';
-                                    }
-
-                                    if ($remainder < 10) {
-                                        $wordsChunk .= $words[$remainder];
-                                    } elseif ($remainder < 20) {
-                                        $wordsChunk .= $words[$remainder - 10] . ' belas';
-                                    } else {
-                                        $tens = floor($remainder / 10);
-                                        $ones = $remainder % 10;
-
-                                        $wordsChunk .= $words[$tens] . ' puluh';
-                                        if ($ones > 0) {
-                                            $wordsChunk .= ' ' . $words[$ones];
-                                        }
-                                    }
-                                }
-
-                                $wordsChunk .= ' ' . $unit[$i];
-
-                                if ($i == $chunkCount - 1) {
-                                    $wordsChunk .= ' rupiah';
-                                }
-
-                                $result = $wordsChunk . ' ' . $result;
-                            }
-                        }
-
-                        return $result;
+                <?php
+                function terbilang($angka)
+                {
+                    $angka = abs($angka); // Pastikan angka selalu positif
+                    $bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+                    $hasil = '';
+                    if ($angka < 12) {
+                        $hasil = $bilangan[$angka];
+                    } elseif ($angka < 20) {
+                        $hasil = terbilang($angka - 10) . ' Belas';
+                    } elseif ($angka < 100) {
+                        $hasil = terbilang($angka / 10) . ' Puluh ' . terbilang($angka % 10);
+                    } elseif ($angka < 200) {
+                        $hasil = 'Seratus ' . terbilang($angka - 100);
+                    } elseif ($angka < 1000) {
+                        $hasil = terbilang($angka / 100) . ' Ratus ' . terbilang($angka % 100);
+                    } elseif ($angka < 2000) {
+                        $hasil = 'Seribu ' . terbilang($angka - 1000);
+                    } elseif ($angka < 1000000) {
+                        $hasil = terbilang($angka / 1000) . ' Ribu ' . terbilang($angka % 1000);
+                    } elseif ($angka < 1000000000) {
+                        $hasil = terbilang($angka / 1000000) . ' Juta ' . terbilang($angka % 1000000);
+                    } elseif ($angka < 1000000000000) {
+                        $hasil = terbilang($angka / 1000000000) . ' Miliar ' . terbilang($angka % 1000000000);
+                    } elseif ($angka < 1000000000000000) {
+                        $hasil = terbilang($angka / 1000000000000) . ' Triliun ' . terbilang($angka % 1000000000000);
                     }
-
-                @endphp
+                    return $hasil;
+                }
+                ?>
                 <tr>
                     <td>
                         <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
@@ -307,7 +341,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ numberToWords($totalPrice2) }} ) per unit</span>
+                                {{ terbilang($pembelians->harga) }} ) per unit</span>
                         @endif
                     </td>
                 </tr>
@@ -315,27 +349,62 @@
                 @if ($pembelians->kategori == 'PPN')
                     <tr>
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td><span style="text-decoration: underline">Rp. 11.396.396,-</span> +</td>
+                        <td><span style="text-decoration: underline">Rp.
+                                {{ number_format($pembelians->harga * 0.11, 0, ',', '.') }},-</span> +</td>
                     </tr>
 
                     <tr style="font-weight: bold">
                         <td>
-                            <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
+                        </td>
+                        <td>Harga Satuan</td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold; font-size:13px">Rp.
+                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td style="font-weight: bold">Rp. {{ number_format($totalPrice, 0, ',', '.') }},-
-                            <span>( {{ numberToWords($totalPrice) }} ) per unit</span>
+                        <td style="font-weight: bold">
+                            {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
+                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                            =
+                            {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
+                        </td>
+                    </tr>
+                    <tr style="font-weight: bold">
+                        <td>
+
+                        </td>
+                        <td></td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold">
+                            (
+                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            Rupiah )
                         </td>
                     </tr>
                 @else
@@ -344,10 +413,33 @@
                     @endphp
                 @endif
 
+                @if ($pembelians->kategori == 'NON PPN')
+                    <tr style="font-weight: bold">
+                        <td>
+                            <img style="margin-top: 5px"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
+                        </td>
+                        <td>Total Harga</td>
+                        <td>
+                            <div style="margin-left: 70px">:</div>
+                        </td>
+                        <td style="font-weight: bold">
+                            {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
+                            {{ number_format($pembelians->harga, 0, ',', '.') }}
+                            =
+                            {{ number_format($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            (
+                            {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            )
+                        </td>
+                    </tr>
+                @endif
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
                     <td>
@@ -359,8 +451,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Tempo Pembayaran</td>
                     <td>
@@ -372,8 +465,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Rekening Bank</td>
                     <td>
@@ -381,7 +475,14 @@
                             :
                         </div>
                     </td>
-                    <td>BCA 3629888889 Atas Nama : Djohan Wahyudi</td>
+                    <td>
+                        @if ($pembelians->kategori == 'PPN')
+                            BCA 3621889999 Atas Nama : CV Tiger Load Engineering
+                        @else
+                            BCA 3629888889 Atas Nama : Djohan Wahyudi
+                        @endif
+                    </td>
+
                 </tr>
             </table>
         </div>

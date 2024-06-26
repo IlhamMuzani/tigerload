@@ -261,7 +261,7 @@
                         </div>
                         <div class="form-group">
                             <label for="aksesoris">Aksesoris</label>
-                            <input type="text" class="form-control" name="aksesoris" value="{{ old('aksesoris') }}"
+                            <input type="text" class="form-control" readonly name="aksesoris" value="{{ old('aksesoris') }}"
                                 id="aksesoris" placeholder="">
                         </div>
                     </div>

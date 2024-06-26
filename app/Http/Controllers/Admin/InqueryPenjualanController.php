@@ -160,7 +160,7 @@ class InqueryPenjualanController extends Controller
                 $jumlah = $request->jumlah[$i] ?? '';
                 $harga = $request->harga[$i] ?? '';
                 $data_pembelians->push([
-                    'detail_idd' => $request->detail_idss[$i] ?? null,
+                    'detail_id' => $request->detail_ids[$i] ?? null,
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama' => $nama,
