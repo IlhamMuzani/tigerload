@@ -162,7 +162,7 @@ class TypekaroseriController extends Controller
             $num = sprintf("%06s", $idbr);
         }
 
-        $data = 'AG';
+        $data = 'TG';
         $kode_type = $data . $num;
         return $kode_type;
     }

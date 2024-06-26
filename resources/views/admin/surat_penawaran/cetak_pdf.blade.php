@@ -281,7 +281,7 @@
                 @endforeach
 
 
-                @if ($pembelians->typekaroseri->aksesoris == null)
+                @if ($pembelians->aksesoris == null)
                 @else
                     <tr>
                         <td>
@@ -295,7 +295,7 @@
                                 :
                             </div>
                         </td>
-                        <td>{{ $pembelians->typekaroseri->aksesoris }}</td>
+                        <td>{{ $pembelians->aksesoris }}</td>
                     </tr>
                 @endif
 
@@ -357,7 +357,8 @@
                         <td>
                             <div style="margin-left: 70px">:</div>
                         </td>
-                        <td><span style="text-decoration: underline">Rp. 11.396.396,-</span> +</td>
+                        <td><span style="text-decoration: underline">Rp.
+                                {{ number_format($pembelians->harga * 0.11, 0, ',', '.') }},-</span> +</td>
                     </tr>
 
                     <tr style="font-weight: bold">
@@ -371,7 +372,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold; font-size:13px">Rp.
-                            {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }},-
+                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -386,9 +387,9 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x
-                            {{ number_format($pembelians->harga + 11396396, 0, ',', '.') }}
+                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
                             =
-                            {{ number_format(($pembelians->harga + 11396396) * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
                             {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
                         </td>
                     </tr>
@@ -401,7 +402,8 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            ( {{ terbilang($pembelians->harga + 11396396 * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            (
+                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
                             Rupiah )
                         </td>
                     </tr>

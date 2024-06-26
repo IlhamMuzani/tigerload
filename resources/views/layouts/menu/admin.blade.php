@@ -282,7 +282,7 @@
                 <a href="{{ url('admin/surat_penawaran') }}"
                     class="nav-link {{ request()->is('admin/surat_penawaran*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Surat Penawaran Karoseri</p>
+                    <p style="font-size: 14px;">Surat Penawaran</p>
                 </a>
             </li>
         @endif
@@ -290,7 +290,7 @@
             <li class="nav-item">
                 <a href="{{ url('admin/spk') }}" class="nav-link {{ request()->is('admin/spk*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">SPK</p>
+                    <p style="font-size: 14px;">Surat Pesanan</p>
                 </a>
             </li>
         @endif
@@ -471,9 +471,7 @@
                 <a href="{{ url('admin/inquery_penawaran') }}"
                     class="nav-link {{ request()->is('admin/inquery_penawaran*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Inquery Surat Penawaran -<br>
-                        <span style="margin-left: 32px">Karoseri</span>
-                    </p>
+                    <p style="font-size: 14px;">Inquery Surat Penawaran</p>
                 </a>
             </li>
         @endif
@@ -482,7 +480,7 @@
                 <a href="{{ url('admin/inquery_spk') }}"
                     class="nav-link {{ request()->is('admin/inquery_spk*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Inquery SPK</p>
+                    <p style="font-size: 14px;">Inquery Surat Pesanan</p>
                 </a>
             </li>
         @endif
