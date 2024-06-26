@@ -22,6 +22,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'registeruser']);
 Route::get('logout', [AuthController::class, 'logout']);
 Route::get('check-user', [HomeController::class, 'check_user']);
+Route::get('surat_penawaran/{kode}', [\App\Http\Controllers\SuratPenawaranController::class, 'detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
