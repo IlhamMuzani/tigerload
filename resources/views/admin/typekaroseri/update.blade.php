@@ -131,7 +131,7 @@
                                 <tr>
                                     <th class="text-center">No</th>
                                     <th>Spesifikasi</th>
-                                    <th>Jumlah</th>
+                                    <th>Keterangan</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -147,31 +147,26 @@
                                                     id="nomor_seri-{{ $loop->index }}" name="detail_ids[]"
                                                     value="{{ $detail['id'] }}">
                                             </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control"
-                                                    id="barang_id-{{ $loop->index }}" name="barang_id[]"
-                                                    value="{{ $detail['barang_id'] }}">
-                                            </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" readonly id="nama-{{ $loop->index }}"
+                                                <input type="text" class="form-control" id="nama-{{ $loop->index }}"
                                                     name="nama[]" value="{{ $detail['nama'] }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
                                                 <input type="text" class="form-control"
-                                                    id="jumlah-{{ $loop->index }}" name="jumlah[]"
-                                                    value="{{ $detail['jumlah'] }}">
+                                                    id="keterangan-{{ $loop->index }}" name="keterangan[]"
+                                                    value="{{ $detail['keterangan'] }}">
                                             </div>
                                         </td>
-                                        <td style="width: 120px">
-                                            <button type="button" class="btn btn-primary"
+                                        <td style="width: 50px">
+                                            {{-- <button type="button" class="btn btn-primary btn-sm"
                                                 onclick="barang({{ $loop->index }})">
                                                 <i class="fas fa-plus"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-danger"
+                                            </button> --}}
+                                            <button type="button" class="btn btn-danger btn-sm"
                                                 onclick="removeBan({{ $loop->index }}, {{ $detail['id'] }})">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -376,54 +371,6 @@
                     </form>
                 </div>
             </div>
-            {{-- <div class="modal fade" id="tableBarang">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Data Barang</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="m-2">
-                                <input type="text" id="searchInput" class="form-control" placeholder="Search...">
-                            </div>
-                            <table id="tables" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama barang</th>
-                                        <th>Spesifikasi</th>
-                                        <th>Keterangan</th>
-                                        <th>Opsi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($barangs as $barang)
-                                        <tr data-barang_id="{{ $barang->id }}"
-                                            data-nama_barang="{{ $barang->nama_barang }}"
-                                            data-param="{{ $loop->index }}">
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $barang->kode_barang }}</td>
-                                            <td>{{ $barang->nama_barang }}</td>
-                                            <td>{{ $barang->spesifikasi }}</td>
-                                            <td>{{ $barang->keterangan }}</td>
-                                            <td class="text-center">
-                                                <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
-                                                    onclick="getBarang({{ $loop->index }})">
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
 
 
@@ -565,14 +512,12 @@
 
         function itemPembelian(identifier, key, value = null) {
             var nama = '';
-            var barang_id = '';
-            var jumlah = '';
+            var keterangan = '';
 
 
             if (value !== null) {
                 nama = value.nama;
-                barang_id = value.barang_id;
-                jumlah = value.jumlah;
+                keterangan = value.keterangan ;
 
             }
 
@@ -581,16 +526,6 @@
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
             item_pembelian += '<td style="width: 70px; font-size:14px" class="text-center" id="urutan">' + urutan +
                 '</td>';
-
-            // barang_id 
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + key +
-                '" name="nama[]" value="' +
-                nama +
-                '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
 
             // nama 
             item_pembelian += '<td>';
@@ -602,13 +537,23 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // keterangan 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control" id="keterangan-' + key +
+                '" name="keterangan[]" value="' +
+                keterangan +
+                '" ';
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
             // delete
-            item_pembelian += '<td style="width: 120px">';
-            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + key +
-                ')">';
-            item_pembelian += '<i class="fas fa-plus"></i>';
-            item_pembelian += '</button>';
-            item_pembelian += '<button type="button" class="btn btn-danger" onclick="removeBan(' + urutan + ')">';
+            item_pembelian += '<td style="width: 50px">';
+            // item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + key +
+            //     ')">';
+            // item_pembelian += '<i class="fas fa-plus"></i>';
+            // item_pembelian += '</button>';
+            item_pembelian += '<button type="button" class="btn btn-danger btn-sm" onclick="removeBan(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';
             item_pembelian += '</td>';
@@ -619,6 +564,7 @@
 
             if (value !== null) {
                 $('#nama-' + key).val(value.nama);
+                $('#keterangan-' + key).val(value.keterangan);
             }
         }
     </script>

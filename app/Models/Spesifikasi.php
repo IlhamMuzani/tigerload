@@ -22,6 +22,7 @@ class Spesifikasi extends Model
         'nama',
         'jumlah',
         'harga',
+        'keterangan',
     ];
 
     use SoftDeletes;

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('nama')->nullable();
             $table->string('jumlah')->nullable();
             $table->string('harga')->nullable();
+            $table->string('keterangan')->nullable();
             $table->timestamp('deleted_at')->nullable();
 
             $table->timestamps();

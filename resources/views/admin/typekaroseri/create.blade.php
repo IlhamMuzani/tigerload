@@ -126,35 +126,29 @@
                                 <tr>
                                     <th class="text-center">No</th>
                                     <th>Spesifikasi</th>
-                                    <th>Jumlah</th>
+                                    <th>Keterangan</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody id="tabel-pembelian">
                                 <tr id="pembelian-0">
                                     <td style="width: 70px" class="text-center" id="urutan">1</td>
-                                    <td hidden>
+                                    <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="barang_id-0"
-                                                name="barang_id[]">
+                                            <input type="text" class="form-control" id="nama-0" name="nama[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" readonly id="nama-0"
-                                                name="nama[]">
+                                            <input type="text" class="form-control" id="keterangan-0"
+                                                name="keterangan[]">
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="jumlah-0" name="jumlah[]">
-                                        </div>
-                                    </td>
-                                    <td style="width: 120px">
-                                        <button type="button" class="btn btn-primary" onclick="barang(0)">
+                                    <td style="width: 50px">
+                                        {{-- <button type="button" class="btn btn-primary btn-sm" onclick="barang(0)">
                                             <i class="fas fa-plus"></i>
-                                        </button>
-                                        <button style="margin-left:5px" type="button" class="btn btn-danger"
-                                            onclick="removeBan(0)">
+                                        </button> --}}
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removeBan(0)">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -420,8 +414,9 @@
             }
         }
         document.getElementById("searchInput").addEventListener("input", filterMemo);
+    </script>
 
-
+    <script>
         var data_pembelian = @json(session('data_pembelians'));
         var jumlah_ban = 1;
 
@@ -448,8 +443,6 @@
         function removeBan(params) {
             jumlah_ban = jumlah_ban - 1;
 
-            console.log(jumlah_ban);
-
             var tabel_pesanan = document.getElementById('tabel-pembelian');
             var pembelian = document.getElementById('pembelian-' + params);
 
@@ -457,7 +450,7 @@
 
             if (jumlah_ban === 0) {
                 var item_pembelian = '<tr>';
-                item_pembelian += '<td class="text-center" colspan="5">- Spesifikasi belum ditambahkan -</td>';
+                item_pembelian += '<td class="text-center" colspan="11">- Memo belum ditambahkan -</td>';
                 item_pembelian += '</tr>';
                 $('#tabel-pembelian').html(item_pembelian);
             } else {
@@ -470,51 +463,39 @@
 
         function itemPembelian(urutan, key, value = null) {
             var nama = '';
-            var barang_id = '';
-            var jumlah = '';
+            var keterangan = '';
 
             if (value !== null) {
                 nama = value.nama;
-                barang_id = value.barang_id;
-                jumlah = value.jumlah;
+                keterangan = value.keterangan;
             }
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
-
-            // barang_id 
-            item_pembelian += '<td hidden>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + urutan +
-                '" name="barang_id[]" value="' + barang_id + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+            item_pembelian += '<td style="width: 70px; font-size:14px" class="text-center" id="urutan-' + urutan + '">' +
+                urutan + '</td>';
 
             // nama 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" id="nama-' + urutan +
                 '" name="nama[]" value="' + nama + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
-            // jumlah 
-            item_pembelian += '<td>';
+
+            // keterangan 
+            item_pembelian += '<td onclick="MemoEkspedisi(' + urutan +
+                ')">';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="jumlah-' + urutan +
-                '" name="jumlah[]" value="' + jumlah + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="keterangan-' +
+                urutan +
+                '" name="keterangan[]" value="' + keterangan + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            item_pembelian += '<td style="width: 120px">';
-            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
-            item_pembelian += '<i class="fas fa-plus"></i>';
-            item_pembelian += '</button>';
-            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
+            item_pembelian += '<td style="width: 50px">';
+            item_pembelian +=
+                '<button type="button" class="btn btn-danger btn-sm" onclick="removeBan(' +
                 urutan + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';
@@ -522,12 +503,6 @@
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
-
-            if (value !== null) {
-                $('#nama-' + key).val(value.nama);
-                $('#barang_id-' + key).val(value.barang_id);
-                $('#jumlah-' + key).val(value.jumlah);
-            }
         }
     </script>
 
