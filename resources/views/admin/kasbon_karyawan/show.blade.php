@@ -364,7 +364,7 @@
 
 
 <div class="container">
-    <a href="{{ url('admin/kasbon_karyawan') }}" class="blue-button">Kembali</a>
+    <a href="{{ url('admin/tablekasbon') }}" class="blue-button">Kembali</a>
     <a href="{{ url('admin/kasbon_karyawan/cetak-pdf/' . $cetakpdf->id) }}" class="blue-button">Cetak</a>
 </div>
 

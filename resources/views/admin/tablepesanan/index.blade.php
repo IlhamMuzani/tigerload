@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Surat Penawaran Karoseri')
+@section('title', 'Surat Pesanan')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Surat Penawaran Kendaraan</h1>
+                    <h1 class="m-0">Surat Pesanan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Surat Penawaran Karoseri</li>
+                        <li class="breadcrumb-item active">Surat Pesanan</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -49,45 +49,20 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Surat Penawaran Karoseri</h3>
+                    <h3 class="card-title">Data Surat Pesanan</h3>
+                    <div class="float-right">
+                        <a href="{{ url('admin/spk') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form method="GET" id="form-action">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <select class="custom-select form-control" id="status" name="status">
-                                    <option value="">- Semua Status -</option>
-                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
-                                        Posting
-                                    </option>
-                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
-                                        Unpost</option>
-                                </select>
-                                <label for="status">(Pilih Status)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
-                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Awal)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
-                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Akhir)</label>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead class="bg-200 text-900">
+                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                        <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Kode Penawaran</th>
+                                <th>Surat Pesanan Karoseri</th>
                                 <th>Kategori</th>
                                 <th>Tanggal</th>
                                 <th class="text-center">Supplier</th>
@@ -125,19 +100,23 @@
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
+                                        @if ($pembelian->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
+                                                width="40" alt="Roda Mobil">
+                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($pembelian->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
                                                     data-memo-id="{{ $pembelian->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_spk/' . $pembelian->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenawaran', ['id' => $pembelian->id]) }}">
+                                                    action="{{ route('hapusspk', ['id' => $pembelian->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
@@ -149,15 +128,118 @@
                                                     data-memo-id="{{ $pembelian->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
                                             @endif
                                             @if ($pembelian->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_spk/' . $pembelian->id) }}">Show</a>
                                             @endif
                                         </div>
                                     </td>
                                 </tr>
+                                {{-- <div class="modal fade" id="modal-unpost-{{ $pembelian->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Unpost SPK</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Unpost SPK
+                                                    <strong>{{ $pembelian->kode_spk }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Batal</button>
+                                                <a class="btn btn-primary"
+                                                    href="{{ route('unpost', ['id' => $pembelian->id]) }}">Ya</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-posting-{{ $pembelian->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Posting SPK</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Posting SPK
+                                                    <strong>{{ $pembelian->kode_pembelian }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Batal</button>
+                                                <a class="btn btn-primary"
+                                                    href="{{ route('posting', ['id' => $pembelian->id]) }}">Ya</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-hapus-{{ $pembelian->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Hapus SPK</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Yakin hapus SPK <strong>{{ $pembelian->kode_pembelian }}</strong>?
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Batal</button>
+                                                <form action="{{ url('admin/inquery_spk/' . $pembelian->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-qrcode-{{ $pembelian->id }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Gambar QR Code</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div style="text-align: center;">
+                                                    <div style="display: inline-block;">
+                                                        {!! DNS2D::getBarcodeHTML("$pembelian->qrcode_spk", 'QRCODE', 15, 15) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-bs-dismiss="modal">Batal</button>
+                                                    <a href="{{ url('admin/spk/cetak-pdf/' . $pembelian->id) }}"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class=""></i> Cetak
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
                             @endforeach
                         </tbody>
                     </table>
@@ -202,7 +284,7 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_penawaran') }}";
+            form.action = "{{ url('admin/inquery_spk') }}";
             form.submit();
         }
     </script>
@@ -218,7 +300,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/unpostpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_spk/unpost/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -258,7 +340,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/postingpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_spk/posting/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId

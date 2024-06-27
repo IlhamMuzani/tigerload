@@ -58,6 +58,18 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('laporan_slipgaji', \App\Http\Controllers\Admin\LaporanSlipgajiController::class);
     Route::post('add_tipe', [\App\Http\Controllers\Admin\TipeController::class, 'add_tipe']);
 
+    Route::resource('tablesurat', \App\Http\Controllers\Admin\TablesuratpenawaranController::class);
+    Route::resource('tablepesanan', \App\Http\Controllers\Admin\TablepesananController::class);
+    Route::resource('tabledeposit', \App\Http\Controllers\Admin\TabledepositController::class);
+    Route::resource('tablepengambilanbahan', \App\Http\Controllers\Admin\TablepengambilanbahanController::class);
+    Route::resource('tablepenjualan', \App\Http\Controllers\Admin\TablepenjualanController::class);
+    Route::resource('tablepelunasan', \App\Http\Controllers\Admin\TablepelunasanController::class);
+    Route::resource('tablepembelian', \App\Http\Controllers\Admin\TablepembelianController::class);
+    Route::resource('tablepelunasanpembelian', \App\Http\Controllers\Admin\TablepelunasanpembelianController::class);
+    Route::resource('tablereturn', \App\Http\Controllers\Admin\TablereturnController::class);
+    Route::resource('tablepopembelian', \App\Http\Controllers\Admin\TablepoController::class);
+    Route::resource('tablekasbon', \App\Http\Controllers\Admin\TablekasbonController::class);
+
 
     Route::get('inquery_pembelian/unpostpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'unpostpembelian']);
     Route::get('inquery_pembelian/postingpembelian/{id}', [\App\Http\Controllers\Admin\InqueryPembelianController::class, 'postingpembelian']);

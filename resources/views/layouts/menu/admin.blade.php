@@ -194,6 +194,18 @@
     request()->is('admin/deposit_pemesanan*') ||
     request()->is('admin/pengeluaran_kaskecil*') ||
     request()->is('admin/tablepengeluaran*') ||
+    request()->is('admin/return_pembelian*') ||
+    request()->is('admin/tablesurat*') ||
+    request()->is('admin/tablepesanan*') ||
+    request()->is('admin/tabledeposit*') ||
+    request()->is('admin/tablepengambilanbahan*') ||
+    request()->is('admin/tablepenjualan*') ||
+    request()->is('admin/tablepelunasan*') ||
+    request()->is('admin/tablepembelian*') ||
+    request()->is('admin/tablepelunasanpembelian*') ||
+    request()->is('admin/tablereturn*') ||
+    request()->is('admin/tablepopembelian*') ||
+    request()->is('admin/tablekasbon*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -211,6 +223,18 @@
         request()->is('admin/deposit_pemesanan*') ||
         request()->is('admin/pengeluaran_kaskecil*') ||
         request()->is('admin/tablepengeluaran*') ||
+        request()->is('admin/return_pembelian*') ||
+        request()->is('admin/tablesurat*') ||
+        request()->is('admin/tablepesanan*') ||
+        request()->is('admin/tabledeposit*') ||
+        request()->is('admin/tablepengambilanbahan*') ||
+        request()->is('admin/tablepenjualan*') ||
+        request()->is('admin/tablepelunasan*') ||
+        request()->is('admin/tablepembelian*') ||
+        request()->is('admin/tablepelunasanpembelian*') ||
+        request()->is('admin/tablereturn*') ||
+        request()->is('admin/tablepopembelian*') ||
+        request()->is('admin/tablekasbon*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -234,8 +258,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['memo hutang karyawan'])
             <li class="nav-item">
-                <a href="{{ url('admin/kasbon_karyawan') }}"
-                    class="nav-link {{ request()->is('admin/kasbon_karyawan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablekasbon') }}"
+                    class="nav-link {{ request()->is('admin/kasbon_karyawan*') || request()->is('admin/tablekasbon*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Memo Hutang Karyawan</p>
                 </a>
@@ -243,8 +267,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['po pembelian'])
             <li class="nav-item">
-                <a href="{{ url('admin/popembelian') }}"
-                    class="nav-link {{ request()->is('admin/popembelian*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepopembelian') }}"
+                    class="nav-link {{ request()->is('admin/popembelian*') ||  request()->is('admin/tablepopembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Purchase Order Pembelian</p>
                 </a>
@@ -252,8 +276,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pembelian'])
             <li class="nav-item">
-                <a href="{{ url('admin/pembelian') }}"
-                    class="nav-link {{ request()->is('admin/pembelian*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepembelian') }}"
+                    class="nav-link {{ request()->is('admin/pembelian*') ||  request()->is('admin/tablepembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pembelian</p>
                 </a>
@@ -261,8 +285,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pelunasan pembelian'])
             <li class="nav-item">
-                <a href="{{ url('admin/pelunasan_pembelian') }}"
-                    class="nav-link {{ request()->is('admin/pelunasan_pembelian*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepelunasanpembelian') }}"
+                    class="nav-link {{ request()->is('admin/pelunasan_pembelian*') || request()->is('admin/tablepelunasanpembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pelunasan Pembelian</p>
                 </a>
@@ -270,8 +294,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pembelian'])
             <li class="nav-item">
-                <a href="{{ url('admin/return_pembelian') }}"
-                    class="nav-link {{ request()->is('admin/return_pembelian*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablereturn') }}"
+                    class="nav-link {{ request()->is('admin/return_pembelian*') || request()->is('admin/tablereturn*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Return Pembelian</p>
                 </a>
@@ -279,8 +303,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['surat penawaran karoseri'])
             <li class="nav-item">
-                <a href="{{ url('admin/surat_penawaran') }}"
-                    class="nav-link {{ request()->is('admin/surat_penawaran*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablesurat') }}"
+                    class="nav-link {{ request()->is('admin/surat_penawaran*') || request()->is('admin/tablesurat*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Surat Penawaran</p>
                 </a>
@@ -288,7 +312,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['spk'])
             <li class="nav-item">
-                <a href="{{ url('admin/spk') }}" class="nav-link {{ request()->is('admin/spk*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepesanan') }}"
+                    class="nav-link {{ request()->is('admin/spk*') || request()->is('admin/tablepesanan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Surat Pesanan</p>
                 </a>
@@ -296,8 +321,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['deposit pemesanan'])
             <li class="nav-item">
-                <a href="{{ url('admin/deposit_pemesanan') }}"
-                    class="nav-link {{ request()->is('admin/deposit_pemesanan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tabledeposit') }}"
+                    class="nav-link {{ request()->is('admin/deposit_pemesanan*') || request()->is('admin/tabledeposit*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Deposit Pemesanan</p>
                 </a>
@@ -305,8 +330,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pengambilan bahan baku'])
             <li class="nav-item">
-                <a href="{{ url('admin/pengambilanbahan') }}"
-                    class="nav-link {{ request()->is('admin/pengambilanbahan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepengambilanbahan') }}"
+                    class="nav-link {{ request()->is('admin/pengambilanbahan*') || request()->is('admin/tablepengambilanbahan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pengambilan Bahan Baku</p>
                 </a>
@@ -314,8 +339,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['penjualan'])
             <li class="nav-item">
-                <a href="{{ url('admin/penjualan') }}"
-                    class="nav-link {{ request()->is('admin/penjualan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepenjualan') }}"
+                    class="nav-link {{ request()->is('admin/penjualan*') || request()->is('admin/tablepenjualan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Penjualan</p>
                 </a>
@@ -323,8 +348,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
-                <a href="{{ url('admin/pelunasan_penjualan') }}"
-                    class="nav-link {{ request()->is('admin/pelunasan_penjualan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepelunasan') }}"
+                    class="nav-link {{ request()->is('admin/pelunasan_penjualan*') || request()->is('admin/tablepelunasan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pelunasan Penjualan</p>
                 </a>

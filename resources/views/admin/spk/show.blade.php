@@ -529,7 +529,7 @@
     </table>
 
     <div class="container">
-        <a href="{{ url('admin/spk') }}" class="blue-button">Kembali</a>
+        <a href="{{ url('admin/tablepesanan') }}" class="blue-button">Kembali</a>
         <a href="{{ url('admin/spk/cetak-pdf/' . $pembelians->id) }}" class="blue-button">Cetak</a>
     </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Surat Penawaran Karoseri')
+@section('title', 'Surat Penawaran Karoseri')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Surat Penawaran Kendaraan</h1>
+                    <h1 class="m-0">Surat Penawaran Kendaraan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Surat Penawaran Karoseri</li>
+                        <li class="breadcrumb-item active">Surat Penawaran Karoseri</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -49,42 +49,17 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Surat Penawaran Karoseri</h3>
+                    <h3 class="card-title">Data Surat Penawaran Karoseri</h3>
+                    <div class="float-right">
+                        <a href="{{ url('admin/surat_penawaran') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form method="GET" id="form-action">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <select class="custom-select form-control" id="status" name="status">
-                                    <option value="">- Semua Status -</option>
-                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
-                                        Posting
-                                    </option>
-                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
-                                        Unpost</option>
-                                </select>
-                                <label for="status">(Pilih Status)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
-                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Awal)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
-                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Akhir)</label>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead class="bg-200 text-900">
+                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                        <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Kode Penawaran</th>

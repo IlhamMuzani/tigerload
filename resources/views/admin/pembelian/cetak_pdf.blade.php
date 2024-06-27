@@ -320,7 +320,7 @@
                     {{ $item->satuan }}
                 </td>
                 <td class="td" style="text-align: center;  font-size: 15px;">Rp.
-                    {{ number_format($item->harga, 0, ',', '.') }}
+                    {{ number_format($item->harga, 2, ',', '.') }}
                 </td>
             </tr>
             @php
@@ -335,7 +335,7 @@
             <td colspan="5" style="text-align: right; font-weight: bold; padding: 5px; font-size: 15px;">Sub Total
             </td>
             <td class="td" style="text-align: center; font-weight: bold; padding: 5px; font-size: 15px;">Rp.
-                {{ number_format($totalHarga, 0, ',', '.') }}
+                {{ number_format($totalHarga, 2, ',', '.') }}
             </td>
         </tr>
     </table>

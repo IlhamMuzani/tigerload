@@ -3,15 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use Dompdf\Dompdf;
-use App\Models\Divisi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Faktur_ekspedisi;
-use App\Models\Memo_ekspedisi;
-use App\Models\Memotambahan;
 use App\Models\Pengeluaran_kaskecil;
-use Illuminate\Support\Facades\Validator;
 
 class TablepengeluaranController extends Controller
 {

@@ -128,10 +128,10 @@
                                     <th class="text-center">No</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    <th>Harga</th>
+                                    {{-- <th>Harga</th> --}}
                                     <th>Qty</th>
-                                    <th>Satuan</th>
-                                    <th>Total</th>
+                                    {{-- <th>Satuan</th> --}}
+                                    {{-- <th>Total</th> --}}
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
@@ -155,19 +155,19 @@
                                                 name="nama_barang[]">
                                         </div>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="form-group">
                                             <input type="number" class="form-control harga" id="harga-0"
                                                 name="harga[]" data-row-id="0">
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <div class="form-group">
                                             <input type="number" class="form-control jumlah" id="jumlah-0"
                                                 name="jumlah[]" data-row-id="0">
                                         </div>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <div class="form-group">
                                             <select class="form-control" id="satuan-0" name="satuan[]">
                                                 <option value="">- Pilih -</option>
@@ -183,7 +183,7 @@
                                             <input type="text" class="form-control total" id="total-0"
                                                 name="total[]" readonly>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                     <td style="width: 120px">
                                         <button type="button" class="btn btn-primary" onclick="barang(0)">
                                             <i class="fas fa-plus"></i>
@@ -595,12 +595,12 @@
             item_pembelian += '</td>';
 
             // harga
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
-                '" name="harga[]" value="' + harga + '" ';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+            // item_pembelian += '<td>';
+            // item_pembelian += '<div class="form-group">'
+            // item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
+            //     '" name="harga[]" value="' + harga + '" ';
+            // item_pembelian += '</div>';
+            // item_pembelian += '</td>';
 
             // jumlah
             item_pembelian += '<td>';
@@ -611,24 +611,24 @@
             item_pembelian += '</td>';
 
             // satuan 
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select class="form-control" id="satuan-' + urutan + '" name="satuan[]">';
-            item_pembelian += '<option value="">- Pilih -</option>';
-            item_pembelian += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
-            item_pembelian += '<option value="liter"' + (satuan === 'liter' ? ' selected' : '') +
-                '>liter</option>';
-            item_pembelian += '</select>';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+            // item_pembelian += '<td>';
+            // item_pembelian += '<div class="form-group">';
+            // item_pembelian += '<select class="form-control" id="satuan-' + urutan + '" name="satuan[]">';
+            // item_pembelian += '<option value="">- Pilih -</option>';
+            // item_pembelian += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
+            // item_pembelian += '<option value="liter"' + (satuan === 'liter' ? ' selected' : '') +
+            //     '>liter</option>';
+            // item_pembelian += '</select>';
+            // item_pembelian += '</div>';
+            // item_pembelian += '</td>';
 
-            // total
-            item_pembelian += '<td>';
-            item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control total" readonly id="total-' + urutan +
-                '" name="total[]" value="' + total + '" readonly';
-            item_pembelian += '</div>';
-            item_pembelian += '</td>';
+            // // total
+            // item_pembelian += '<td>';
+            // item_pembelian += '<div class="form-group">'
+            // item_pembelian += '<input type="number" class="form-control total" readonly id="total-' + urutan +
+            //     '" name="total[]" value="' + total + '" readonly';
+            // item_pembelian += '</div>';
+            // item_pembelian += '</td>';
 
             item_pembelian += '<td style="width: 120px">';
             item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';

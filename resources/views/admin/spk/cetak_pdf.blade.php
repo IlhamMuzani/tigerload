@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Surat Penawaran Karoseri</title>
+    <title>Surat Pesanan Karoseri</title>
     <style>
         /* * {
             border: 1px solid black;
@@ -571,7 +571,7 @@
                     <td>3.</td>
                     <td>
                         <div style="margin-left: 10px">
-                            Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya
+                            Adanya penambahan ukuran atau model diluar surat pesanan dikenakan biaya
                             tambahan.
                         </div>
                     </td>

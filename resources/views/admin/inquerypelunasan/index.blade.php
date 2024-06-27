@@ -87,7 +87,7 @@
                         <thead class="bg-200 text-900">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Faktur Pelunasan</th>
+                                <th>F. Pelunasan</th>
                                 <th>Kode SPK</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Kode Karoseri</th>

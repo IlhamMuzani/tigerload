@@ -685,7 +685,7 @@
 </body>
 
 <div class="container">
-    <a href="{{ url('admin/pelunasan_penjualan') }}" class="blue-button">Kembali</a>
+    <a href="{{ url('admin/tablepelunasan') }}" class="blue-button">Kembali</a>
     <a href="{{ url('admin/pelunasan_penjualan/cetak-pdf/' . $pelunasans->id) }}" class="blue-button">Cetak</a>
 </div>
 

@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Surat Penawaran Karoseri')
+@section('title', 'Inquery Kasbon Karyawan')
 
 @section('content')
-    <!-- Content Header (Page header) -->
     <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
         <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
     </div>
@@ -23,11 +22,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Surat Penawaran Kendaraan</h1>
+                    <h1 class="m-0">Inquery Kasbon Karyawan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Surat Penawaran Karoseri</li>
+                        <li class="breadcrumb-item active">Inquery Kasbon Karyawan</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -49,111 +48,86 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Surat Penawaran Karoseri</h3>
+                    <h3 class="card-title">Data Inquery Kasbon Karyawan</h3>
+                    <div class="float-right">
+                        <a href="{{ url('admin/kasbon_karyawan') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form method="GET" id="form-action">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <select class="custom-select form-control" id="status" name="status">
-                                    <option value="">- Semua Status -</option>
-                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
-                                        Posting
-                                    </option>
-                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
-                                        Unpost</option>
-                                </select>
-                                <label for="status">(Pilih Status)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
-                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Awal)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
-                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Akhir)</label>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead class="bg-200 text-900">
+                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                        <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Kode Penawaran</th>
-                                <th>Kategori</th>
+                                <th>Faktur Kasbon</th>
                                 <th>Tanggal</th>
-                                <th class="text-center">Supplier</th>
-                                <th class="text-center">Harga</th>
-                                <th class="text-center" width="30">Opsi</th>
+                                <th>Nama Karyawan</th>
+                                <th>Nominal</th>
+                                <th>Total</th>
+                                <th class="text-center" width="20">Opsi</th>
                             </tr>
                         </thead>
-                        <tbody class="list">
-                            @foreach ($inquery as $pembelian)
-                                <tr class="dropdown"{{ $pembelian->id }}>
+                        <tbody>
+                            @foreach ($inquery as $kasbon)
+                                <tr class="dropdown"{{ $kasbon->id }}>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $pembelian->kode_spk }}</td>
-                                    <td>{{ $pembelian->kategori }}</td>
-                                    <td>{{ $pembelian->tanggal_awal }}</td>
                                     <td>
-                                        @if ($pembelian->pelanggan)
-                                            {{ $pembelian->pelanggan->nama_pelanggan }}
+                                        @if ($kasbon->karyawan)
+                                            {{ $kasbon->kode_kasbon }}
                                         @else
-                                            data tidak ada
+                                            tidak ada
                                         @endif
                                     </td>
-
                                     <td>
-                                        @if ($pembelian->kategori == 'PPN')
-                                            Rp
-                                            {{ number_format($pembelian->harga + $pembelian->harga * 0.11, 0, ',', '.') }}
+                                        {{ $kasbon->tanggal_awal }}
+                                    </td>
+                                    <td>
+                                        @if ($kasbon->karyawan)
+                                            {{ $kasbon->karyawan->nama_lengkap }}
                                         @else
-                                            Rp {{ number_format($pembelian->harga, 0, ',', '.') }}
+                                            tidak ada
                                         @endif
                                     </td>
-
+                                    <td>
+                                        Rp. {{ number_format($kasbon->nominal, 0, ',', '.') }}</td>
+                                    <td> Rp. {{ number_format($kasbon->sub_total, 0, ',', '.') }}</td>
                                     <td class="text-center">
-                                        @if ($pembelian->status == 'posting')
+                                        @if ($kasbon->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($pembelian->status == 'unpost')
-                                                <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $pembelian->id }}">Posting</a>
-
+                                            @if ($kasbon->status == 'unpost')
+                                                @if ($saldoTerakhir->sisa_saldo < $kasbon->nominal)
+                                                    <a class="dropdown-item">Saldo tidak cukup</a>
+                                                @else
+                                                    <a class="dropdown-item posting-btn"
+                                                        data-memo-id="{{ $kasbon->id }}">Posting</a>
+                                                @endif
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id . '/edit') }}">Update</a>
-
+                                                    href="{{ url('admin/inquery_kasbonkaryawan/' . $kasbon->id . '/edit') }}">Update</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
-
+                                                    href="{{ url('admin/inquery_kasbonkaryawan/' . $kasbon->id) }}">Show</a>
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenawaran', ['id' => $pembelian->id]) }}">
+                                                    action="{{ route('hapuskasbon', ['id' => $kasbon->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($pembelian->status == 'posting')
+                                            @if ($kasbon->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $pembelian->id }}">Unpost</a>
-
+                                                    data-memo-id="{{ $kasbon->id }}">Unpost</a>
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_kasbonkaryawan/' . $kasbon->id) }}">Show</a>
                                             @endif
-                                            @if ($pembelian->status == 'selesai')
+                                            @if ($kasbon->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_kasbonkaryawan/' . $kasbon->id) }}">Show</a>
                                             @endif
                                         </div>
                                     </td>
@@ -202,7 +176,7 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_penawaran') }}";
+            form.action = "{{ url('admin/inquery_kasbonkaryawan') }}";
             form.submit();
         }
     </script>
@@ -212,13 +186,15 @@
         $(document).ready(function() {
             $('.unpost-btn').click(function() {
                 var memoId = $(this).data('memo-id');
+                $(this).addClass('disabled');
 
                 // Tampilkan modal loading saat permintaan AJAX diproses
                 $('#modal-loading').modal('show');
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/unpostpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_kasbonkaryawan/unpostkasbon/') }}/" +
+                        memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -252,13 +228,15 @@
         $(document).ready(function() {
             $('.posting-btn').click(function() {
                 var memoId = $(this).data('memo-id');
+                $(this).addClass('disabled');
 
                 // Tampilkan modal loading saat permintaan AJAX diproses
                 $('#modal-loading').modal('show');
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/postingpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_kasbonkaryawan/postingkasbon/') }}/" +
+                        memoId,
                     type: 'GET',
                     data: {
                         id: memoId

@@ -123,7 +123,7 @@
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr style="font-size: 14px">
                                     <th class="text-center">No</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
@@ -146,19 +146,19 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="kode_barang-0" readonly
+                                            <input type="text" style="font-size:14px" class="form-control" id="kode_barang-0" readonly
                                                 name="kode_barang[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="nama_barang-0" readonly
+                                            <input type="text" style="font-size:14px" class="form-control" id="nama_barang-0" readonly
                                                 name="nama_barang[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <select class="form-control" id="satuan-0" name="satuan[]">
+                                            <select class="form-control" id="satuan-0" style="font-size:14px" name="satuan[]">
                                                 <option value="">- Pilih -</option>
                                                 <option value="M3" {{ old('satuan') == 'M3' ? 'selected' : null }}>
                                                     M&sup3;</option>
@@ -185,39 +185,39 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control jumlah" id="jumlah-0"
+                                            <input type="number" class="form-control jumlah" style="font-size:14px" id="jumlah-0"
                                                 name="jumlah[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga" id="harga-0"
+                                            <input type="number" class="form-control harga" style="font-size:14px" id="harga-0"
                                                 name="harga[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga_jual" id="harga_jual-0"
+                                            <input type="number" class="form-control harga_jual" style="font-size:14px" id="harga_jual-0"
                                                 name="harga_jual[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control diskon" id="diskon-0"
+                                            <input type="number" class="form-control diskon" style="font-size:14px" id="diskon-0"
                                                 name="diskon[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control total" id="total-0"
+                                            <input type="text" class="form-control total" style="font-size:14px" id="total-0"
                                                 name="total[]">
                                         </div>
                                     </td>
-                                    <td style="width: 120px">
-                                        <button type="button" class="btn btn-primary" onclick="barang(0)">
+                                    <td style="width: 100px">
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="barang(0)">
                                             <i class="fas fa-plus"></i>
                                         </button>
-                                        <button style="margin-left:5px" type="button" class="btn btn-danger"
+                                        <button style="margin-left:5px" type="button" class="btn btn-danger btn-sm"
                                             onclick="removeBan(0)">
                                             <i class="fas fa-trash"></i>
                                         </button>
@@ -613,12 +613,12 @@
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
+            item_pembelian += '<td style="width: 70px" class="text-center" style="font-size:14px" id="urutan-' + urutan + '">' + urutan + '</td>';
 
             // barang_id 
             item_pembelian += '<td hidden>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" style="font-size:14px" id="barang_id-' + urutan +
                 '" name="barang_id[]" value="' + barang_id + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -626,7 +626,7 @@
             // kode_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' + urutan +
                 '" name="kode_barang[]" value="' + kode_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -634,7 +634,7 @@
             // nama_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="nama_barang-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' + urutan +
                 '" name="nama_barang[]" value="' + nama_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -642,7 +642,7 @@
             // satuan 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + urutan +
+            item_pembelian += '<select style="font-size:14px" class="form-control" style="font-size:14px" id="satuan-' + urutan +
                 '" name="satuan[]">';
             item_pembelian += '<option value="">- Pilih -</option>';
             item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
@@ -671,7 +671,7 @@
             // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control jumlah" id="jumlah-' + urutan +
+            item_pembelian += '<input type="text" class="form-control jumlah" style="font-size:14px" id="jumlah-' + urutan +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -679,7 +679,7 @@
             // harga
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga" id="harga-' + urutan +
+            item_pembelian += '<input type="number" class="form-control harga" style="font-size:14px" id="harga-' + urutan +
                 '" name="harga[]" value="' + harga + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -687,7 +687,7 @@
             // harga_jual
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga_jual" id="harga_jual-' + urutan +
+            item_pembelian += '<input type="number" class="form-control harga_jual" style="font-size:14px" id="harga_jual-' + urutan +
                 '" name="harga_jual[]" value="' + harga_jual + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -695,7 +695,7 @@
             // diskon
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control diskon" id="diskon-' + urutan +
+            item_pembelian += '<input type="text" class="form-control diskon" style="font-size:14px" id="diskon-' + urutan +
                 '" name="diskon[]" value="' + diskon + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -703,16 +703,16 @@
             // total
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control total" id="total-' + urutan +
+            item_pembelian += '<input type="number" class="form-control total" style="font-size:14px" id="total-' + urutan +
                 '" name="total[]" value="' + total + '" readonly';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            item_pembelian += '<td style="width: 120px">';
-            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
+            item_pembelian += '<td style="width: 100px">';
+            item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
-            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
+            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger btn-sm" onclick="removeBan(' +
                 urutan + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';

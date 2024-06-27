@@ -57,10 +57,10 @@ class PopembelianController extends Controller
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
                     'nama_barang.' . $i => 'required',
-                    'harga.' . $i => 'required',
+                    // 'harga.' . $i => 'required',
                     'jumlah.' . $i => 'required',
-                    'satuan.' . $i => 'required',
-                    'total.' . $i => 'required',
+                    // 'satuan.' . $i => 'required',
+                    // 'total.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
@@ -71,19 +71,19 @@ class PopembelianController extends Controller
                 $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
                 $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
                 $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
-                $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
+                // $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
-                $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
-                $total = is_null($request->total[$i]) ? '' : $request->total[$i];
+                // $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
+                // $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
                 $data_pembelians->push([
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama_barang' => $nama_barang,
-                    'harga' => $harga,
+                    // 'harga' => $harga,
                     'jumlah' => $jumlah,
-                    'satuan' => $satuan,
-                    'total' => $total
+                    // 'satuan' => $satuan,
+                    // 'total' => $total
                 ]);
             }
         } else {
@@ -122,10 +122,10 @@ class PopembelianController extends Controller
                     'barang_id' => $data_pembelian['barang_id'],
                     'kode_barang' => $data_pembelian['kode_barang'],
                     'nama_barang' => $data_pembelian['nama_barang'],
-                    'harga' => $data_pembelian['harga'],
+                    // 'harga' => $data_pembelian['harga'],
                     'jumlah' => $data_pembelian['jumlah'],
-                    'total' => $data_pembelian['total'],
-                    'satuan' => $data_pembelian['satuan'],
+                    // 'total' => $data_pembelian['total'],
+                    // 'satuan' => $data_pembelian['satuan'],
                 ]);
             }
         }

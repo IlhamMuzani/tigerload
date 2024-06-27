@@ -347,7 +347,7 @@
 </body>
 
 <div class="container">
-    <a href="{{ url('admin/deposit_pemesanan') }}" class="blue-button">Kembali</a>
+    <a href="{{ url('admin/tabledeposit') }}" class="blue-button">Kembali</a>
     <a href="{{ url('admin/deposit_pemesanan/cetak-pdf/' . $deposits->id) }}" class="blue-button">Cetak</a>
 </div>
 
