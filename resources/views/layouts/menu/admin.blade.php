@@ -348,8 +348,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
-                <a href="{{ url('admin/tablepelunasan') }}"
-                    class="nav-link {{ request()->is('admin/pelunasan_penjualan*') || request()->is('admin/tablepelunasan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/tablepelunasanpenjualan') }}"
+                    class="nav-link {{ request()->is('admin/pelunasan_penjualan*') || request()->is('admin/tablepelunasanpenjualan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pelunasan Penjualan</p>
                 </a>
@@ -571,6 +571,8 @@
     request()->is('admin/laporan_spk*') ||
     request()->is('admin/laporan_deposit*') ||
     request()->is('admin/laporan_pelunasan*') ||
+    request()->is('admin/laporan_returnpembelian*') ||
+    request()->is('admin/laporan_fakturpelunasanpembelian*') ||
     request()->is('admin/laporan_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -583,6 +585,8 @@
         request()->is('admin/laporan_spk*') ||
         request()->is('admin/laporan_deposit*') ||
         request()->is('admin/laporan_pelunasan*') ||
+        request()->is('admin/laporan_returnpembelian*') ||
+        request()->is('admin/laporan_fakturpelunasanpembelian*') ||
         request()->is('admin/laporan_penjualan*')
             ? 'active'
             : '' }}">
@@ -617,8 +621,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['laporan pembelian'])
             <li class="nav-item">
-                <a href="{{ url('admin/laporan_pembelianreturn') }}"
-                    class="nav-link {{ request()->is('admin/laporan_pembelianreturn*') ? 'active' : '' }}">
+                <a href="{{ url('admin/laporan_returnpembelian') }}"
+                    class="nav-link {{ request()->is('admin/laporan_returnpembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Laporan Return Pembelian</p>
                 </a>

@@ -14,7 +14,7 @@ class TipeController extends Controller
     public function index()
     {
 
-        $tipes = Tipe::paginate(4);
+        $tipes = Tipe::get();
         return view('admin/tipe.index', compact('tipes'));
     }
 

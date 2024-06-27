@@ -63,7 +63,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('tabledeposit', \App\Http\Controllers\Admin\TabledepositController::class);
     Route::resource('tablepengambilanbahan', \App\Http\Controllers\Admin\TablepengambilanbahanController::class);
     Route::resource('tablepenjualan', \App\Http\Controllers\Admin\TablepenjualanController::class);
-    Route::resource('tablepelunasan', \App\Http\Controllers\Admin\TablepelunasanController::class);
+    Route::resource('tablepelunasanpenjualan', \App\Http\Controllers\Admin\TablepelunasanController::class);
     Route::resource('tablepembelian', \App\Http\Controllers\Admin\TablepembelianController::class);
     Route::resource('tablepelunasanpembelian', \App\Http\Controllers\Admin\TablepelunasanpembelianController::class);
     Route::resource('tablereturn', \App\Http\Controllers\Admin\TablereturnController::class);
@@ -140,7 +140,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_pembelian', [\App\Http\Controllers\Admin\LaporanPembelianController::class, 'index']);
     Route::get('laporan_popembelian', [\App\Http\Controllers\Admin\LaporanPopembelianController::class, 'index']);
     Route::get('laporan_pengambilanbahan', [\App\Http\Controllers\Admin\LaporanPengambilanbahanController::class, 'index']);
-    Route::get('laporan_pembelianreturn', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'index']);
+    Route::get('laporan_returnpembelian', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'index']);
 
     Route::get('laporan_pengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'index']);
     Route::get('print_laporanpengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'print_laporanpengambilanbahanspk']);
