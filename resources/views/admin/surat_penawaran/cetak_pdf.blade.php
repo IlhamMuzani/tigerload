@@ -122,6 +122,10 @@
                             <span class="info-item">No. Faktur: {{ $pembelians->kode_spk }}</span>
                             <br>
                         </td>
+                        <td style="font-size: 18px; padding-left:40px">
+                            <span class="info-item" style="font-weight: bold">SURAT PENAWARAN</span>
+                            <br>
+                        </td>
                         <td style="text-align: right; font-size: 13px;">
                             <span class="info-item">Tegal,
                                 {{ $pembelians->tanggal }}</span>
@@ -164,9 +168,9 @@
                                         {{ $pembelians->pelanggan->alamat }}
                                     </td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
-                                </tr>
+                                </tr> --}}
                             </table>
                         </td>
                         <td style="width: 5%;" style="max-width: 20px;">

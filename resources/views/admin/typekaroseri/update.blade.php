@@ -184,6 +184,14 @@
                                     placeholder="masukkan aksesoris"
                                     value="{{ old('aksesoris', $typekaroseri->aksesoris) }}">
                             </div>
+                            <div class="form-group">
+                                <label for="harga">Harga</label>
+                                <input type="text" class="form-control" id="harga" name="harga"
+                                    placeholder="masukkan harga"
+                                    value="{{ old('harga', number_format($typekaroseri->harga, 0, ',', '.')) }}"
+                                    oninput="formatRupiahform(this)"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -517,7 +525,7 @@
 
             if (value !== null) {
                 nama = value.nama;
-                keterangan = value.keterangan ;
+                keterangan = value.keterangan;
 
             }
 
@@ -568,4 +576,19 @@
             }
         }
     </script>
+
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
+        }
+    </script>
+
 @endsection

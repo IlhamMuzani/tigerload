@@ -261,13 +261,24 @@
                         </div>
                         <div class="form-group">
                             <label for="aksesoris">Aksesoris</label>
-                            <input type="text" class="form-control" readonly name="aksesoris" value="{{ old('aksesoris') }}"
-                                id="aksesoris" placeholder="">
+                            <input type="text" class="form-control" readonly name="aksesoris"
+                                value="{{ old('aksesoris') }}" id="aksesoris" placeholder="">
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <!-- /.card-header -->
+
+                    <div class="card-header">
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <label for="aksesoris">Harga</label>
+                        <input type="text" class="form-control" id="harga" name="harga" placeholder=""
+                            value="{{ old('harga') }}" oninput="formatRupiahform(this)"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                    </div>
+
                     <div class="card-body">
                         <div class="form-group">
                             <label class="form-label" for="jumlah_unit">
@@ -296,15 +307,6 @@
                                     10 Unit</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="card-header">
-                        <label for="nama_karoseri">Harga</label>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <input type="text" class="form-control" id="harga" name="harga" placeholder=""
-                            value="{{ old('harga') }}" oninput="formatRupiahform(this)"
-                            onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                     </div>
                     <div class="card-footer text-right mt-3">
                         <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
@@ -632,7 +634,7 @@
                                         </td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
-                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}', '{{ $typekaroseri->aksesoris }}')">
+                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}', '{{ $typekaroseri->aksesoris }}', '{{ $typekaroseri->harga }}')">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </td>
@@ -896,7 +898,7 @@
 
         function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, MerekId, NamaMerek, Tipe, Panjang, Lebar,
             Tinggi, Spesifikasi,
-            Aksesoris) {
+            Aksesoris, Harga) {
             document.getElementById('karoseri_id').value = karoseri_id;
             document.getElementById('kode_type').value = kodeKaroseri;
             document.getElementById('nama_karoseri').value = namaKaroseri;
@@ -908,7 +910,8 @@
             document.getElementById('tinggi').value = Tinggi;
             document.getElementById('spesifikasi').value = Spesifikasi;
             document.getElementById('aksesoris').value = Aksesoris;
-
+            var formattedNominals = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga').value = formattedNominals;
             $('#tableKaroseri').modal('hide');
         }
 
@@ -1064,5 +1067,18 @@
                 $('form').submit();
             });
         });
+    </script>
+
+    <script>
+        function formatRupiahform(input) {
+            // Hapus karakter selain angka
+            var value = input.value.replace(/\D/g, "");
+
+            // Format angka dengan menambahkan titik sebagai pemisah ribuan
+            value = new Intl.NumberFormat('id-ID').format(value);
+
+            // Tampilkan nilai yang sudah diformat ke dalam input
+            input.value = value;
+        }
     </script>
 @endsection

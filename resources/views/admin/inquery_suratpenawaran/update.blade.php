@@ -587,7 +587,7 @@
                                         </td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
-                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}')">
+                                                onclick="getSelectedDatakaroseri('{{ $typekaroseri->id }}', '{{ $typekaroseri->kode_type }}', '{{ $typekaroseri->nama_karoseri }}', '{{ $typekaroseri->merek_id }}', '{{ $typekaroseri->nama_merek }}', '{{ $typekaroseri->tipe }}', '{{ $typekaroseri->panjang }}', '{{ $typekaroseri->lebar }}', '{{ $typekaroseri->tinggi }}', '{{ implode(', ', $typekaroseri->spesifikasi->pluck('nama')->toArray()) }}', '{{ $typekaroseri->aksesoris }}', '{{ $typekaroseri->harga }}')">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </td>
@@ -759,7 +759,7 @@
         }
 
         function getSelectedDatakaroseri(karoseri_id, kodeKaroseri, namaKaroseri, MerekId, NamaMerek, Tipe, Panjang, Lebar,
-            Tinggi, Spesifikasi, ) {
+            Tinggi, Spesifikasi,  Aksesoris, Harga) {
             document.getElementById('karoseri_id').value = karoseri_id;
             document.getElementById('kode_type').value = kodeKaroseri;
             document.getElementById('nama_karoseri').value = namaKaroseri;
@@ -770,7 +770,9 @@
             document.getElementById('lebar').value = Lebar;
             document.getElementById('tinggi').value = Tinggi;
             document.getElementById('spesifikasi').value = Spesifikasi;
-
+            document.getElementById('aksesoris').value = Aksesoris;
+            var formattedNominals = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga').value = formattedNominals;
             $('#tableKaroseri').modal('hide');
         }
 

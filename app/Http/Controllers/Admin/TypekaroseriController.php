@@ -43,6 +43,7 @@ class TypekaroseriController extends Controller
                 'lebar' => 'required',
                 'tinggi' => 'required',
                 'merek_id' => 'required',
+                'harga' => 'required',
             ],
             [
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
@@ -51,6 +52,7 @@ class TypekaroseriController extends Controller
                 'lebar.required' => 'Masukkan lebar',
                 'tinggi.required' => 'Masukkan tinggi',
                 'merek_id.required' => 'Pilih merek',
+                'harga.required' => 'Masukkan harga',
             ]
         );
 
@@ -124,6 +126,7 @@ class TypekaroseriController extends Controller
                 'kode_type' => $this->kode(),
                 'merek_id' => $request->merek_id,
                 'nama_merek' => $request->nama_merek,
+                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'tipe' => $request->tipe,
                 'aksesoris' => $request->aksesoris,
                 'qrcode_karoseri' => 'https://tigerload.id/typekaroseri/' . $kode,
@@ -256,6 +259,7 @@ class TypekaroseriController extends Controller
             'lebar' => $request->lebar,
             'tinggi' => $request->tinggi,
             'aksesoris' => $request->aksesoris,
+            'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
         ]);
 
         $transaksi_id = $transaksi->id;

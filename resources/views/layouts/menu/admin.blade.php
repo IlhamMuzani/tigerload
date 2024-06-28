@@ -206,6 +206,7 @@
     request()->is('admin/tablereturn*') ||
     request()->is('admin/tablepopembelian*') ||
     request()->is('admin/tablekasbon*') ||
+    request()->is('admin/penerimaan_pembayaran*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -235,6 +236,7 @@
         request()->is('admin/tablereturn*') ||
         request()->is('admin/tablepopembelian*') ||
         request()->is('admin/tablekasbon*') ||
+        request()->is('admin/penerimaan_pembayaran*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -268,7 +270,7 @@
         @if (auth()->check() && auth()->user()->menu['po pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepopembelian') }}"
-                    class="nav-link {{ request()->is('admin/popembelian*') ||  request()->is('admin/tablepopembelian*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/popembelian*') || request()->is('admin/tablepopembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Purchase Order Pembelian</p>
                 </a>
@@ -277,7 +279,7 @@
         @if (auth()->check() && auth()->user()->menu['pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepembelian') }}"
-                    class="nav-link {{ request()->is('admin/pembelian*') ||  request()->is('admin/tablepembelian*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/pembelian*') || request()->is('admin/tablepembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pembelian</p>
                 </a>
@@ -307,6 +309,15 @@
                     class="nav-link {{ request()->is('admin/surat_penawaran*') || request()->is('admin/tablesurat*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Surat Penawaran</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['spk'])
+            <li class="nav-item">
+                <a href="{{ url('admin/penerimaan_pembayaran') }}"
+                    class="nav-link {{ request()->is('admin/penerimaan_pembayaran*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 13px;">Surat Penerimaan Pembayaran</p>
                 </a>
             </li>
         @endif
@@ -382,6 +393,7 @@
     request()->is('admin/inquery_penawaran*') ||
     request()->is('admin/inquery_penerimaankaskecil*') ||
     request()->is('admin/inquery_pengeluarankaskecil*') ||
+    request()->is('admin/inquery_penerimaanpembayaran*') ||
     request()->is('admin/inquery_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -400,6 +412,7 @@
         request()->is('admin/inquery_penawaran*') ||
         request()->is('admin/inquery_penerimaankaskecil*') ||
         request()->is('admin/inquery_pengeluarankaskecil*') ||
+        request()->is('admin/inquery_penerimaanpembayaran*') ||
         request()->is('admin/inquery_penjualan*')
             ? 'active'
             : '' }}">
@@ -497,6 +510,17 @@
                     class="nav-link {{ request()->is('admin/inquery_penawaran*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Surat Penawaran</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery surat penawaran'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_penerimaanpembayaran') }}"
+                    class="nav-link {{ request()->is('admin/inquery_penerimaanpembayaran*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Surat -<br>
+                        <span style="margin-left: 32px">Penerimaan Pembayaran</span>
+                    </p>
                 </a>
             </li>
         @endif

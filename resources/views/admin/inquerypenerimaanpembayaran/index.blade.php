@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Surat Penawaran Karoseri')
+@section('title', 'Inquery Surat Penerimaan Pembayaran')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Surat Penawaran Kendaraan</h1>
+                    <h1 class="m-0">Inquery Surat Penerimaan Pembayaran</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Surat Penawaran Karoseri</li>
+                        <li class="breadcrumb-item active">Inquery Surat Penerimaan Pembayaran</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -47,9 +47,18 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5>
+                        <i class="icon fas fa-ban"></i> Error!
+                    </h5>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Surat Penawaran Karoseri</h3>
+                    <h3 class="card-title">Inquery Surat Penerimaan Pembayaran</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -86,74 +95,82 @@
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
+                                <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th>Kode Penawaran</th>
-                                <th>Kategori</th>
+                                <th>No Surat</th>
                                 <th>Tanggal</th>
-                                <th class="text-center">Supplier</th>
-                                <th class="text-center">Harga</th>
-                                <th class="text-center" width="30">Opsi</th>
+                                <th>Bag.Input</th>
+                                <th>Pelanggan</th>
+                                <th>Nominal</th>
+                                <th style="width:20px">Opsi</th>
                             </tr>
                         </thead>
-                        <tbody class="list">
-                            @foreach ($inquery as $pembelian)
-                                <tr class="dropdown"{{ $pembelian->id }}>
+                        <tbody>
+                            @foreach ($inquery as $surat)
+                                <tr class="dropdown"{{ $surat->id }}>
+                                    <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
+                                            value="{{ $surat->id }}">
+                                    </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $pembelian->kode_spk }}</td>
-                                    <td>{{ $pembelian->kategori }}</td>
-                                    <td>{{ $pembelian->tanggal_awal }}</td>
+                                    <td>{{ $surat->kode_penerimaan }}</td>
+                                    <td>{{ $surat->tanggal_awal }}</td>
                                     <td>
-                                        @if ($pembelian->pelanggan)
-                                            {{ $pembelian->pelanggan->nama_pelanggan }}
+                                        @if ($surat->user)
+                                            {{ $surat->user->karyawan->nama_lengkap }}
                                         @else
-                                            data tidak ada
+                                            tidak ada
                                         @endif
                                     </td>
-
                                     <td>
-                                        @if ($pembelian->kategori == 'PPN')
-                                            Rp
-                                            {{ number_format($pembelian->harga + $pembelian->harga * 0.11, 0, ',', '.') }}
+                                        @if ($surat->pelanggan)
+                                            {{ $surat->pelanggan->nama_pelanggan }}
                                         @else
-                                            Rp {{ number_format($pembelian->harga, 0, ',', '.') }}
+                                            tidak ada
                                         @endif
                                     </td>
+                                    <td class="text-right">
+                                        {{ number_format($surat->nominal, 0, ',', '.') }}
 
+                                    </td>
                                     <td class="text-center">
-                                        @if ($pembelian->status == 'posting')
+                                        @if ($surat->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
+                                        @if ($surat->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/surat.png') }}" height="40"
+                                                width="40" alt="Roda Mobil">
+                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($pembelian->status == 'unpost')
+                                            @if ($surat->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $pembelian->id }}">Posting</a>
+                                                    data-memo-id="{{ $surat->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenawaran', ['id' => $pembelian->id]) }}">
+                                                    action="{{ route('hapuspenerimaanpembayaran', ['id' => $surat->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($pembelian->status == 'posting')
+                                            @if ($surat->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $pembelian->id }}">Unpost</a>
+                                                    data-memo-id="{{ $surat->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
                                             @endif
-                                            @if ($pembelian->status == 'selesai')
+                                            @if ($surat->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penawaran/' . $pembelian->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
                                             @endif
                                         </div>
                                     </td>
@@ -161,6 +178,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Modal Loading -->
                     <div class="modal fade" id="modal-loading" tabindex="-1" role="dialog"
                         aria-labelledby="modal-loading-label" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,7 +195,7 @@
             </div>
         </div>
     </section>
-    <!-- /.card -->
+
     <script>
         var tanggalAwal = document.getElementById('tanggal_awal');
         var tanggalAkhir = document.getElementById('tanggal_akhir');
@@ -202,11 +220,10 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_penawaran') }}";
+            form.action = "{{ url('admin/inquery_penerimaanpembayaran') }}";
             form.submit();
         }
     </script>
-
     {{-- unpost memo  --}}
     <script>
         $(document).ready(function() {
@@ -218,7 +235,8 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/unpostpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_penerimaanpembayaran/unpostpenerimaan/') }}/" +
+                        memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -258,7 +276,8 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_penawaran/postingpenawaran/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_penerimaanpembayaran/postingpenerimaan/') }}/" +
+                        memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -343,4 +362,5 @@
             });
         });
     </script>
+
 @endsection

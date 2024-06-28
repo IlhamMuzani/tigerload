@@ -375,7 +375,7 @@
                             {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
                         </td>
                     </tr>
-                    <tr style="font-weight: bold">
+                    {{-- <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
                                 src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
@@ -390,9 +390,8 @@
                             {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
                             =
                             {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
-                            {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr style="font-weight: bold">
                         <td>
 
@@ -414,7 +413,7 @@
                 @endif
 
                 @if ($pembelians->kategori == 'NON PPN')
-                    <tr style="font-weight: bold">
+                    {{-- <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
                                 src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
@@ -433,7 +432,7 @@
                             {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
                             )
                         </td>
-                    </tr>
+                    </tr> --}}
                 @endif
                 <tr>
                     <td>

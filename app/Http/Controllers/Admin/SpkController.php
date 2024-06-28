@@ -92,7 +92,7 @@ class SpkController extends Controller
             ]
         ));
 
-        $pembelian->qrcode_penawaran = 'https://tigerload.id/spk/' . $pembelian->id;
+        $pembelian->qrcode_spk = 'https://tigerload.id/spk/' . $pembelian->id;
         $pembelian->save();
 
         $kode = $this->kodekendaraan();

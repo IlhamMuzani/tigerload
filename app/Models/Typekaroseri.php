@@ -26,6 +26,7 @@ class Typekaroseri extends Model
         'lebar',
         'tinggi',
         'aksesoris',
+        'harga',
         'tanggal_awal',
         'tanggal_akhir',
     ];
@@ -48,6 +49,12 @@ class Typekaroseri extends Model
     {
         return $this->belongsTo(Merek::class);
     }
+
+    public function penerimaan_pembayaran()
+    {
+        return $this->hasMany(Penerimaan_pembayaran::class);
+    }
+
 
     public static function getId()
     {
