@@ -407,10 +407,7 @@
         </tr>
     </table>
     <br>
-    <div class="keep-together">
-        <br>
-        <div style="font-size: 15px; font-weight:bold">GAMBAR SKRB</div>
-        <br>
+    <div>
         <table width="100%">
             <tr>
                 <td style="width: 100%; text-align: center;">

@@ -14,6 +14,7 @@ use App\Models\Typekaroseri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
 
 class PerintahkerjaController extends Controller
 {
@@ -115,8 +116,8 @@ class PerintahkerjaController extends Controller
             ]
         ));
 
-        // Now update the record with the QR code URL that includes the ID
-        $pembelian->qrcode_perintah = 'https://tigerload.id/perintah_kerja/' . $pembelian->id;
+        $encryptedId = Crypt::encryptString($pembelian->id);
+        $pembelian->qrcode_perintah = 'https://tigerload.id/perintah_kerja/' . $encryptedId;
         $pembelian->save();
 
         $transaksi_id = $pembelian->id;
@@ -194,21 +195,6 @@ class PerintahkerjaController extends Controller
         return $newCode;
     }
 
-    // public function cetakpdf($id)
-    // {
-    //     $cetakpdf = Perintah_kerja::find($id);
-    //     $karoseries = Typekaroseri::where('id', $cetakpdf->typekaroseri_id)->first();
-    //     $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
-
-    //     $parts = Detailperintah::where('perintah_kerja_id', $cetakpdf->id)->get();
-    //     $pdf = app('dompdf.wrapper');
-    //     $pdf->loadView('admin.perintah_kerja.cetak_pdf', compact('cetakpdf', 'karoseries', 'spesifikasis', 'parts'));
-    //     $pdf->setPaper('letter', 'portrait');
-
-    //     // Return the PDF as a response
-    //     return $pdf->stream('Surat_Penerimaan_pembayaran.pdf');
-    // }
-
     public function cetakpdf($id)
     {
         $cetakpdf = Perintah_kerja::find($id);
@@ -216,8 +202,23 @@ class PerintahkerjaController extends Controller
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
 
         $parts = Detailperintah::where('perintah_kerja_id', $cetakpdf->id)->get();
-        $pdf = PDF::loadView('admin.perintah_kerja.cetak_pdf', compact('cetakpdf', 'karoseries', 'spesifikasis', 'parts'))->setPaper('a4', 'landscape');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.perintah_kerja.cetak_pdf', compact('cetakpdf', 'karoseries', 'spesifikasis', 'parts'));
+        $pdf->setPaper('letter', 'portrait');
+
         // Return the PDF as a response
         return $pdf->stream('Surat_Penerimaan_pembayaran.pdf');
     }
+
+    // public function cetakpdf($id)
+    // {
+    //     $cetakpdf = Perintah_kerja::find($id);
+    //     $karoseries = Typekaroseri::where('id', $cetakpdf->typekaroseri_id)->first();
+    //     $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
+
+    //     $parts = Detailperintah::where('perintah_kerja_id', $cetakpdf->id)->get();
+    //     $pdf = PDF::loadView('admin.perintah_kerja.cetak_pdf', compact('cetakpdf', 'karoseries', 'spesifikasis', 'parts'))->setPaper('a4', 'landscape');
+    //     // Return the PDF as a response
+    //     return $pdf->stream('Surat_Penerimaan_pembayaran.pdf');
+    // }
 }

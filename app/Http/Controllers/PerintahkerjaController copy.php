@@ -8,23 +8,13 @@ use App\Models\Detail_suratpenawaran;
 use App\Models\Detailperintah;
 use App\Models\Typekaroseri;
 use App\Models\Spesifikasi;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Contracts\Encryption\DecryptException;
 
 class PerintahkerjaController extends Controller
 {
-    public function detail($encryptedId)
+    public function detail($kode)
     {
-        try {
-            // Dekripsi ID
-            $id = Crypt::decryptString($encryptedId);
-        } catch (DecryptException $e) {
-            // Tangani kesalahan jika ID tidak dapat didekripsi
-            return abort(404, 'Invalid encrypted ID');
-        }
-
         // Retrieve the main record
-        $cetakpdf = Perintah_kerja::where('id', $id)->first();
+        $cetakpdf = Perintah_kerja::where('id', $kode)->first();
 
         // Check if the main record exists
         if (!$cetakpdf) {
@@ -34,6 +24,7 @@ class PerintahkerjaController extends Controller
         // Retrieve the related records
         $karoseries = Typekaroseri::where('id', $cetakpdf->typekaroseri_id)->first();
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
+
         $parts = Detailperintah::where('perintah_kerja_id', $cetakpdf->id)->get();
 
         return view('admin.perintah_kerja.qrcode_detail', compact('cetakpdf', 'karoseries', 'spesifikasis', 'parts'));
