@@ -341,7 +341,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ terbilang($pembelians->harga) }} ) per unit</span>
+                                {{ terbilang($pembelians->harga) }} Rupiah )  per unit</span>
                         @endif
                     </td>
                 </tr>

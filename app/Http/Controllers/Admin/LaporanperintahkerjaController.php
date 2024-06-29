@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use App\Models\Penerimaan_pembayaran;
+use App\Models\Perintah_kerja;
 
-class LaporanpenerimaanpembayaranController extends Controller
+class LaporanperintahkerjaController extends Controller
 {
     public function index(Request $request)
     {
@@ -16,7 +16,7 @@ class LaporanpenerimaanpembayaranController extends Controller
         $tanggal_awal = $request->tanggal_awal;
         $tanggal_akhir = $request->tanggal_akhir;
 
-        $inquery = Penerimaan_pembayaran::orderBy('id', 'DESC');
+        $inquery = Perintah_kerja::orderBy('id', 'DESC');
 
         if ($status == "posting") {
             $inquery->where('status', $status);
@@ -31,17 +31,17 @@ class LaporanpenerimaanpembayaranController extends Controller
         $hasSearch = $status || ($tanggal_awal && $tanggal_akhir);
         $inquery = $hasSearch ? $inquery->get() : collect();
 
-        return view('admin.laporanpenerimaanpembayaran.index', compact('inquery'));
+        return view('admin.laporan_perintahkerja.index', compact('inquery'));
     }
 
-    public function print_laporanpenerimaanpembayaran(Request $request)
+    public function print_laporanperintahkerja(Request $request)
     {
 
         $status = $request->status;
         $tanggal_awal = $request->tanggal_awal;
         $tanggal_akhir = $request->tanggal_akhir;
 
-        $query = Penerimaan_pembayaran::orderBy('id', 'DESC');
+        $query = Perintah_kerja::orderBy('id', 'DESC');
 
         if ($status == "posting") {
             $query->where('status', $status);
@@ -56,7 +56,7 @@ class LaporanpenerimaanpembayaranController extends Controller
 
         $inquery = $query->orderBy('id', 'DESC')->get();
 
-        $pdf = PDF::loadView('admin.laporanpenerimaanpembayaran.print', compact('inquery'));
+        $pdf = PDF::loadView('admin.laporan_perintahkerja.print', compact('inquery'));
         return $pdf->stream('Laporan_Spk.pdf');
     }
 }

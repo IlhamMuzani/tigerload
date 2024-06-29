@@ -55,7 +55,7 @@ class InqueryperintahkerjaController extends Controller
         $pengambil = Perintah_kerja::find($id);
         $karoseries = Typekaroseri::where('id', $pengambil->typekaroseri_id)->first();
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
-        
+
         $parts = Detailperintah::where('perintah_kerja_id', $inquery->id)->get();
 
         return view('admin.inquery_perintahkerja.show', compact('spesifikasis', 'parts', 'inquery', 'karoseries'));
@@ -167,11 +167,14 @@ class InqueryperintahkerjaController extends Controller
             }
         }
 
-        $pembelians = Perintah_kerja::find($transaksi_id);
+        $inquery = Perintah_kerja::find($transaksi_id);
 
-        $detail = Detailperintah::where('perintah_kerja_id', $pembelians->id)->get();
+        $karoseries = Typekaroseri::where('id', $inquery->typekaroseri_id)->first();
+        $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
 
-        return view('admin.inquery_perintahkerja.show', compact('detail', 'pembelians'));
+        $parts = Detailperintah::where('perintah_kerja_id', $inquery->id)->get();
+
+        return view('admin.perintah_kerja.show', compact('parts', 'inquery', 'karoseries', 'spesifikasis'));
     }
 
 

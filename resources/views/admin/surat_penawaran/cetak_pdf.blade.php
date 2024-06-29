@@ -345,7 +345,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ terbilang($pembelians->harga) }} ) per unit</span>
+                                {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
                         @endif
                     </td>
                 </tr>
@@ -431,7 +431,7 @@
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
                             = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
+                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah)
                         </td>
                     </tr>
                 @endif

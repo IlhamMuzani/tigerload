@@ -224,6 +224,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('laporan_penerimaanpembayaran', \App\Http\Controllers\Admin\LaporanpenerimaanpembayaranController::class);
     Route::get('print_laporanpenerimaanpembayaran', [\App\Http\Controllers\Admin\LaporanpenerimaanpembayaranController::class, 'print_laporanpenerimaanpembayaran']);
 
+    Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
+    Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
+
     Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
     Route::get('penerimaan_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaankaskecilController::class, 'cetakpdf']);
     Route::resource('tablepengeluaran', \App\Http\Controllers\Admin\TablepengeluaranController::class);
