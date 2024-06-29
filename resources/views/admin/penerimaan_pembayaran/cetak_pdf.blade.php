@@ -32,6 +32,30 @@
         .signature-table table {
             margin: 0 20px;
         }
+
+        .label {
+            font-size: 13px;
+            text-align: center;
+            /* Teks menjadi berada di tengah */
+
+        }
+
+        .separator {
+            padding-top: 13px;
+            /* Atur sesuai kebutuhan Anda */
+            text-align: center;
+            /* Teks menjadi berada di tengah */
+
+        }
+
+        .separator span {
+            display: inline-block;
+            border-top: 1px solid black;
+            width: 100%;
+            position: relative;
+            top: -8px;
+            /* Sesuaikan posisi vertikal garis tengah */
+        }
     </style>
 </head>
 
@@ -39,8 +63,8 @@
     <div class="">
         <table>
             <tr>
-                <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" style="margin-top:10px" width="150" height="35"
-                    alt="Logo Tigerload">
+                <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" style="margin-top:10px"
+                    width="150" height="35" alt="Logo Tigerload">
                 <td>
                     <div class="center-table" style="margin-left:20px">
                         <table>
@@ -64,28 +88,56 @@
         </table>
     </div>
     <hr>
-    <div style="display: flex; justify-content: left; align-items: left; margin-left:20px">
-    </div>
     <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
     </div>
+    <div style="margin-bottom:0px">
+        <table width="100%">
+            <tr>
+                <td style="font-size: 13px;">
+                    <span class="info-item">No.{{ $cetakpdf->kode_penerimaan }}</span>
+                    <br>
+                </td>
+                <td style="font-size: 18px; padding-left:40px">
+                    <span class="info-item" style="font-weight: bold">TANDA TERIMA PEMBAYARAN</span>
+                    <br>
+                </td>
+                <td style="text-align: right; font-size: 13px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: 13px;">
+                </td>
+                <td style="font-size: 18px; padding-left:40px">
 
-    <div class="center-table">
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <table style="text-align: center;">
-                <tr>
-                    <td style="font-weight: bold; font-size:15px">TANDA TERIMA PEMBAYARAN</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold; font-size:15px">No. {{ $cetakpdf->kode_penerimaan }}</td>
-                </tr>
-            </table>
-        </div>
+                </td>
+                <td style="text-align: right; font-size: 13px;">
+                    <div class="">
+                        <table>
+                            <tr>
+                                <td data-toggle="modal" data-target="#modal-qrcode-{{ $cetakpdf->id }}"
+                                    style="display: inline-block;">
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 2, 2) !!}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
-    <br>
-    <div style="margin-left: 50px; font-size: 13px;">
+    <div style="margin-left: 20px; font-size: 13px;">
         <table>
             <tr>
-                <td>Telah diterima dari</td>
+                <td>Kode Pelanggan</td>
+                <td>
+                    <div style="margin-left: 70px">
+                        :
+                    </div>
+                </td>
+                <td>{{ $cetakpdf->pelanggan->kode_pelanggan }}</td>
+            </tr>
+            <tr>
+                <td>Nama Pelanggan</td>
                 <td>
                     <div style="margin-left: 70px">
                         :
@@ -162,152 +214,13 @@
             }
             ?>
         </table>
-
-        {{-- <table>
-            <tr>
-                <td>
-                    <table cellspacing="0" style="margin: 0 auto;">
-                        <tr>
-                            <td style="text-align: left;">
-                                <table style="margin: 0 auto;">
-                                    <tr style="text-align: left;">
-                                        <td class="label">
-                                            <span class="info-item" style="font-size: 12px; padding-right:0px">
-                                                Tegal,
-                                                {{ \Carbon\Carbon::parse($cetakpdf->tanggal_awal)->locale('id')->isoFormat('D MMMM YYYY') }}
-                                            </span>
-                                            <br>
-                                            <span class="info-item"
-                                                style="font-size: 12px; padding-right:0px; margin-top:5px">
-                                                Pengirim,
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="separator" colspan="2"><span></span></td>
-                                    </tr>
-                                    <tr style="text-align: center;">
-                                        <td class="label">
-                                            <span class="info-item"
-                                                style="font-size: 12px; padding-right:0px;  font-weight:bold">
-                                                CV. TIGER LOAD ENGINEERING
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td>
-                    <table cellspacing="0" style="margin: 0 auto;">
-                        <tr>
-                            <td style="text-align: left;">
-                                <table style="margin: 0 auto;">
-                                    <tr style="text-align: left;">
-                                        <td class="label">
-                                            <span class="info-item" style="font-size: 12px; padding-right:0px">
-                                            </span>
-                                            <br>
-                                            <span class="info-item"
-                                                style="font-size: 12px; padding-right:0px; margin-top:5px">
-                                                Penerima,
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="color:white" class="">.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="separator" colspan="2"><span></span></td>
-                                    </tr>
-                                    <tr style="text-align: center;">
-                                        <td class="label">
-                                            <span class="info-item"
-                                                style="font-size: 12px; padding-right:0px;  font-weight:bold">
-                                                {{ $cetakpdf->pelanggan->nama_pelanggan }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table> --}}
     </div>
 
     <br>
     <br>
     <table width="100%">
         <tr style="font-size: 12px">
-            <td style="width: 30%; text-align: left;">
-                <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
-                    <tr>
-                        <td style="text-align: center;">
-                            <table style="margin: 0 auto;">
-                                <tr style="text-align: center;">
-                                    <td class="label">
-                                        <span class="info-item" style="font-size: 13px; padding-right:0px">
-                                            Tegal,
-                                            {{ \Carbon\Carbon::parse($cetakpdf->tanggal_awal)->locale('id')->isoFormat('D MMMM YYYY') }}
-                                        </span>
-                                        <br>
-                                        <span class="info-item"
-                                            style="font-size: 13px; padding-right:0px; margin-top:5px">
-                                            Pengirim,
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color:white" class="">.</td>
-                                </tr>
-                                <tr>
-                                    <td style="color:white" class="">.</td>
-                                </tr>
-                                <tr>
-                                    <td style="color:white" class="">.</td>
-                                </tr>
-                                <tr>
-                                    <td style="color:white" class="">.</td>
-                                </tr>
-                                <tr>
-                                    <td style="color:white" class="">.</td>
-                                </tr>
-                                <tr>
-                                <tr>
-                                    <td class="separator" colspan="2"><span></span></td>
-                                </tr>
-                                <tr style="text-align: center;">
-                                    <td class="label">
-                                        <span class="info-item"
-                                            style="font-size: 14px; padding-right:0px; font-weight:bold; text-transform: uppercase;">
-                                            CV. TIGER LOAD ENGINEERING
-                                        </span>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td style="width: 30%; text-align: left;">
+            <td style="width: 10%; text-align: left;">
                 <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
                     <tr>
                         <td style="text-align: center;">
@@ -325,6 +238,51 @@
                                 </tr>
                                 <tr>
                                     <td style="color:white" class="">.</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:white" class="">.</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:white" class="">.</td>
+                                </tr>
+                                <tr style="text-align: center;">
+                                    <table style="margin: 0 auto;">
+                                        <tr style="text-align: center;">
+                                            <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="separator" colspan="2"><span></span></td>
+                                        </tr>
+                                        <tr style="text-align: center;">
+                                            <td class="label"><span class="info-item"
+                                                    style="font-size: 14px; padding-right:0px; font-weight:bold; text-transform: uppercase;">
+                                                    CV. TIGER LOAD ENGINEERING
+                                                </span></td>
+                                        </tr>
+                                    </table>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td style="width: 10%; text-align: left;">
+                <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
+                    <tr>
+                        <td style="text-align: center;">
+                            <table style="margin: 0 auto;">
+                                <tr style="text-align: center;">
+                                    <td class="label">
+                                        <span class="info-item" style="font-size: 13px; padding-right:0px">
+                                            Tegal,
+                                            {{ \Carbon\Carbon::parse($cetakpdf->tanggal_awal)->locale('id')->isoFormat('D MMMM YYYY') }}
+                                        </span>
+                                        <br>
+                                        <span class="info-item"
+                                            style="font-size: 13px; padding-right:0px; margin-top:5px">
+                                            Pengirim,
+                                        </span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td style="color:white" class="">.</td>

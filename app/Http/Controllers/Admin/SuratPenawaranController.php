@@ -240,7 +240,7 @@ class SuratPenawaranController extends Controller
         $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
 
-        return view('admin.pembelian.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
+        return view('admin.surat_penawaran.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
     }
 
     public function cetakpdf($id)

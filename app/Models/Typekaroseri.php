@@ -26,6 +26,8 @@ class Typekaroseri extends Model
         'lebar',
         'tinggi',
         'aksesoris',
+        'varian',
+        'gambar_skrb',
         'harga',
         'tanggal_awal',
         'tanggal_akhir',
@@ -53,6 +55,11 @@ class Typekaroseri extends Model
     public function penerimaan_pembayaran()
     {
         return $this->hasMany(Penerimaan_pembayaran::class);
+    }
+
+    public function perintah_kerja()
+    {
+        return $this->hasMany(Perintah_kerja::class);
     }
 
 

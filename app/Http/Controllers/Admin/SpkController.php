@@ -33,13 +33,13 @@ class SpkController extends Controller
             $request->all(),
             [
                 'surat_penawaran_id' => 'required',
-
                 'harga' => 'required',
+                'warna' => 'required',
             ],
             [
                 'surat_penawaran_id.required' => 'Pilih Surat Penawaran',
-
                 'harga.required' => 'Masukkan harga',
+                'warna.required' => 'Masukkan warna',
             ]
         );
 
@@ -80,6 +80,10 @@ class SpkController extends Controller
                 'panjang' => $request->panjang,
                 'lebar' => $request->lebar,
                 'tinggi' => $request->tinggi,
+                'panjangs' => $request->panjangs,
+                'lebars' => $request->lebars,
+                'tinggis' => $request->tinggis,
+                'warna' => $request->warna,
                 'spesifikasi' => $request->spesifikasi,
                 'aksesoris' => $request->aksesoris,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),

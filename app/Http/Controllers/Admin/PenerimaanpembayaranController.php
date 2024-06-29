@@ -93,7 +93,7 @@ class PenerimaanpembayaranController extends Controller
     public function kode()
     {
         // Mengambil kode terbaru dari database dengan awalan 'MP'
-        $lastBarang = Penerimaan_pembayaran::where('kode_penerimaan', 'like', 'PK%')->latest()->first();
+        $lastBarang = Penerimaan_pembayaran::where('kode_penerimaan', 'like', 'PP%')->latest()->first();
 
         // Mendapatkan bulan dari tanggal kode terakhir
         $lastMonth = $lastBarang ? date('m', strtotime($lastBarang->created_at)) : null;

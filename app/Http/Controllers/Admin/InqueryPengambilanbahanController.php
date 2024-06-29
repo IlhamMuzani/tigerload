@@ -66,7 +66,7 @@ class InqueryPengambilanbahanController extends Controller
         $inquery = Pengambilanbahan::where('id', $id)->first();
         $spks = Spk::all();
         $barangs = Barang::all();
-        $details = Detailpengambilan::where('pengambilanbahan_ID', $id)->get();
+        $details = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
 
         return view('admin.inquerypengambilan.update', compact('inquery', 'spks', 'barangs', 'details'));
     }

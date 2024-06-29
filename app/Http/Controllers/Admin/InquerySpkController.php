@@ -83,13 +83,13 @@ class InquerySpkController extends Controller
             $request->all(),
             [
                 'kategori' => 'required',
-
                 'harga' => 'required',
+                'warna' => 'required',
             ],
             [
                 'kategori.required' => 'Pilih kategori',
-
                 'harga.required' => 'Masukkan harga',
+                'warna.required' => 'Masukkan warna',
             ]
         );
 
@@ -129,6 +129,10 @@ class InquerySpkController extends Controller
                 'panjang' => $request->panjang,
                 'lebar' => $request->lebar,
                 'tinggi' => $request->tinggi,
+                'panjangs' => $request->panjangs,
+                'lebars' => $request->lebars,
+                'tinggis' => $request->tinggis,
+                'warna' => $request->warna,
                 'spesifikasi' => $request->spesifikasi,
                 'aksesoris' => $request->aksesoris,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),

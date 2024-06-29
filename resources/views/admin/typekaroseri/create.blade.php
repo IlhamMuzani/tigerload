@@ -107,6 +107,20 @@
                             <input type="text" class="form-control" id="tinggi" name="tinggi"
                                 placeholder="masukkan tinggi" value="{{ old('tinggi') }}">
                         </div>
+
+                        <div class="form-group">
+                            <label for="varian">Varian</label>
+                            <input type="text" class="form-control" id="varian" name="varian"
+                                placeholder="Masukkan varian" value="{{ old('varian') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="gambar_skrb">Gambar SKRB</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="gambar_skrb" name="gambar_skrb"
+                                    accept="image/*">
+                                <label class="custom-file-label" for="gambar_skrb">Masukkan gambar skrb</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

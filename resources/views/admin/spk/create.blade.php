@@ -214,19 +214,35 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="panjang">Panjang</label>
+                            <label for="panjang">Panjang Sementara</label>
                             <input type="text" class="form-control" id="panjang" name="panjang" readonly
                                 placeholder="" value="{{ old('panjang') }}">
                         </div>
                         <div class="form-group">
-                            <label for="lebar">Lebar</label>
+                            <label for="lebar">Lebar Sementara</label>
                             <input type="text" class="form-control" id="lebar" name="lebar" readonly
                                 placeholder="" value="{{ old('lebar') }}">
                         </div>
                         <div class="form-group">
-                            <label for="tinggi">Tinggi</label>
+                            <label for="tinggi">Tinggi Sementara</label>
                             <input type="text" class="form-control" id="tinggi" name="tinggi" readonly
                                 placeholder="" value="{{ old('tinggi') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="panjangs">Panjang</label>
+                            <input type="text" class="form-control" id="panjangs" name="panjangs" placeholder=""
+                                value="{{ old('panjangs') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lebars">Lebar</label>
+                            <input type="text" class="form-control" id="lebars" name="lebars" placeholder=""
+                                value="{{ old('lebars') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tinggis">Tinggi</label>
+                            <input type="text" class="form-control" id="tinggis" name="tinggis" placeholder=""
+                                value="{{ old('tinggis') }}">
                         </div>
                     </div>
                 </div>
@@ -244,6 +260,38 @@
                             <label for="aksesoris">Aksesoris</label>
                             <input type="text" class="form-control" readonly name="aksesoris"
                                 value="{{ old('aksesoris') }}" id="aksesoris" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="warna">Warna</label>
+                            <select class="form-control" id="warna" name="warna">
+                                <option value="">- Pilih -</option>
+                                <option value="Hitam" {{ old('warna') == 'Hitam' ? 'selected' : null }}>
+                                    Hitam</option>
+                                <option value="Putih" {{ old('warna') == 'Putih' ? 'selected' : null }}>
+                                    Putih</option>
+                                <option value="Cokelat" {{ old('warna') == 'Cokelat' ? 'selected' : null }}>
+                                    Cokelat</option>
+                                <option value="Hijau" {{ old('warna') == 'Hijau' ? 'selected' : null }}>
+                                    Hijau</option>
+                                <option value="Orange" {{ old('warna') == 'Orange' ? 'selected' : null }}>
+                                    Orange</option>
+                                <option value="Merah" {{ old('warna') == 'Merah' ? 'selected' : null }}>
+                                    Merah</option>
+                                <option value="Ungu" {{ old('warna') == 'Ungu' ? 'selected' : null }}>
+                                    Ungu</option>
+                                <option value="Kuning" {{ old('warna') == 'Kuning' ? 'selected' : null }}>
+                                    Kuning</option>
+                                <option value="Biru" {{ old('warna') == 'Biru' ? 'selected' : null }}>
+                                    Biru</option>
+                                <option value="Silver" {{ old('warna') == 'Silver' ? 'selected' : null }}>
+                                    Silver</option>
+                                <option value="Hitam" {{ old('warna') == 'Hitam' ? 'selected' : null }}>
+                                    Hitam</option>
+                                <option value="Putih" {{ old('warna') == 'Putih' ? 'selected' : null }}>
+                                    Putih</option>
+                                <option value="Abu-abu" {{ old('warna') == 'Abu-abu' ? 'selected' : null }}>
+                                    Abu-abu</option>
+                            </select>
                         </div>
                     </div>
                 </div>

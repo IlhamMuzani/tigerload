@@ -62,6 +62,14 @@ class TypekaroseriController extends Controller
             array_push($error_pelanggans, $validasi_pelanggan->errors()->all()[0]);
         }
 
+        if ($request->gambar_skrb) {
+            $gambar = str_replace(' ', '', $request->gambar_skrb->getClientOriginalName());
+            $namaGambar = 'gambar_skrb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_skrb->storeAs('public/uploads/', $namaGambar);
+        } else {
+            $namaGambar = null;
+        }
+
         $error_pesanans = array();
         $data_pembelians = collect();
 
@@ -87,26 +95,6 @@ class TypekaroseriController extends Controller
             }
         }
 
-        // if ($request->has('nama')) {
-        //     for ($i = 0; $i < count($request->nama); $i++) {
-        //         $validasi_produk = Validator::make($request->all(), [
-        //             'nama.' . $i => 'required',
-        //             'keterangan.' . $i => 'required',
-        //         ]);
-
-        //         if ($validasi_produk->fails()) {
-        //             array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
-        //         }
-
-
-        //         $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
-        //         $keterangan = is_null($request->keterangan[$i]) ? '' : $request->keterangan[$i];
-
-        //         $data_pembelians->push(['nama' => $nama, 'keterangan' => $keterangan]);
-        //     }
-        // } else {
-        // }
-
         if ($error_pelanggans || $error_pesanans) {
             return back()
                 ->withInput()
@@ -124,7 +112,9 @@ class TypekaroseriController extends Controller
             $request->all(),
             [
                 'kode_type' => $this->kode(),
+                'gambar_skrb' => $namaGambar,
                 'merek_id' => $request->merek_id,
+                'varian' => $request->varian,
                 'nama_merek' => $request->nama_merek,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'tipe' => $request->tipe,
@@ -242,6 +232,17 @@ class TypekaroseriController extends Controller
                 ->with('data_pembelians', $data_pembelians);
         }
 
+        $spk = Typekaroseri::findOrFail($id);
+
+        if ($request->gambar_skrb) {
+            Storage::disk('local')->delete('public/uploads/' . $spk->gambar_skrb);
+            $gambar = str_replace(' ', '', $request->gambar_skrb->getClientOriginalName());
+            $namaGambar = 'gambar_skrb/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $request->gambar_skrb->storeAs('public/uploads/', $namaGambar);
+        } else {
+            $namaGambar = $spk->gambar_skrb;
+        }
+
         // format tanggal indo
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
@@ -251,6 +252,8 @@ class TypekaroseriController extends Controller
 
         // Update the main transaction
         $transaksi->update([
+            'gambar_skrb' => $namaGambar,
+            'varian' => $request->varian,
             'nama_karoseri' => $request->nama_karoseri,
             'merek_id' => $request->merek_id,
             'nama_merek' => $request->nama_merek,

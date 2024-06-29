@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('nama_merek')->nullable();
             $table->string('tipe')->nullable();
             $table->string('aksesoris')->nullable();
+            $table->string('varian')->nullable();
+            $table->string('gambar_skrb')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->timestamp('deleted_at')->nullable();

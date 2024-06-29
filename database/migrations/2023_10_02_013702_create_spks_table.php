@@ -43,6 +43,10 @@ return new class extends Migration
             $table->string('tinggi')->nullable();
             $table->string('spesifikasi')->nullable();
             $table->string('aksesoris')->nullable();
+            $table->string('warna')->nullable();
+            $table->string('panjangs')->nullable();
+            $table->string('lebars')->nullable();
+            $table->string('tinggis')->nullable();
             $table->string('jumlah_unit')->nullable();
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();

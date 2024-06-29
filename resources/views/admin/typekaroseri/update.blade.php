@@ -112,6 +112,28 @@
                             <input type="text" class="form-control" id="tinggi" name="tinggi"
                                 placeholder="masukkan tinggi" value="{{ old('tinggi', $typekaroseri->tinggi) }}">
                         </div>
+                        <div class="form-group">
+                            <label for="varian">Varian</label>
+                            <input type="text" class="form-control" id="varian" name="varian"
+                                placeholder="Masukkan varian" value="{{ old('varian', $typekaroseri->varian) }}">
+                        </div>
+                        <div class="mt-4">
+                            @if ($typekaroseri->gambar_skrb)
+                                <img src="{{ asset('storage/uploads/' . $typekaroseri->gambar_skrb) }}"
+                                    alt="{{ $typekaroseri->gambar_skrb }}" height="100" width="100">
+                            @else
+                                <img class="mt-3" src="{{ asset('storage/uploads/gambar_logo/imagenoimage.jpg') }}"
+                                    alt="Tiger Load" height="100" width="100">
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <label for="gambar_skrb">Gambar SKRB</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="gambar_skrb" name="gambar_skrb"
+                                    accept="image/*">
+                                <label class="custom-file-label" for="gambar_skrb">Masukkan Gambar Skrb</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
