@@ -24,6 +24,7 @@ Route::get('logout', [AuthController::class, 'logout']);
 Route::get('check-user', [HomeController::class, 'check_user']);
 Route::get('surat_penawaran/{kode}', [\App\Http\Controllers\SuratPenawaranController::class, 'detail']);
 Route::get('perintah_kerja/{kode}', [\App\Http\Controllers\PerintahkerjaController::class, 'detail']);
+Route::get('penerimaan_pembayaran/{kode}', [\App\Http\Controllers\PenerimaanpembayaranController::class, 'detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
@@ -226,6 +227,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
     Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
+
+
+    Route::get('cetak_pengambilanfilter', [\App\Http\Controllers\Admin\PengambilanbahanController::class, 'cetak_pengambilanfilter']);
 
     Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
     Route::get('penerimaan_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaankaskecilController::class, 'cetakpdf']);

@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\Spk;
 use App\Models\Tipe;
 use App\Models\Merek;
+use App\Models\Gambar;
 use App\Models\Modelken;
 use App\Models\Kendaraan;
-use App\Models\Pelanggan;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Gambar;
 use App\Models\Marketing;
+use App\Models\Pelanggan;
 use App\Models\Spesifikasi;
-use App\Models\Spk;
-use App\Models\Surat_penawaran;
 use App\Models\Typekaroseri;
+use Illuminate\Http\Request;
+use App\Models\Surat_penawaran;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -96,7 +97,8 @@ class SpkController extends Controller
             ]
         ));
 
-        $pembelian->qrcode_spk = 'https://tigerload.id/spk/' . $pembelian->id;
+        $encryptedId = Crypt::encryptString($pembelian->id);
+        $pembelian->qrcode_spk = 'https://tigerload.id/spk/' . $encryptedId;
         $pembelian->save();
 
         $kode = $this->kodekendaraan();

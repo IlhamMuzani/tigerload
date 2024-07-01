@@ -17,9 +17,10 @@ class Pengambilanbahan extends Model
 
     protected $fillable =
     [
+        'user_id',
         'kode_pengambilan',
         'qrcode_pengambilan',
-        'spk_id',
+        'perintah_kerja_id',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',
@@ -42,9 +43,9 @@ class Pengambilanbahan extends Model
         return $getId = DB::table('pengambilanbahans')->orderBy('id', 'DESC')->take(1)->get();
     }
 
-    public function spk()
+    public function perintah_kerja()
     {
-        return $this->belongsTo(Spk::class);
+        return $this->belongsTo(Perintah_kerja::class);
     }
     
     public function detailpengambilan()

@@ -347,20 +347,6 @@
         </tr>
     </table>
     <br>
-    <div style="font-size: 25px; font-weight:bold">GAMBAR SKRB</div>
-    <br>
-    <table width="100%">
-        <tr>
-            <td style="width: 100%; text-align: center;">
-                <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->typekaroseri->gambar_skrb) }}"
-                        alt="{{ $inquery->typekaroseri->nama_karoseri }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
-                </div>
-            </td>
-        </tr>
-    </table>
-    <br>
     <br>
     <div style="font-size: 25px; font-weight:bold">Komponen Bahan Baku</div>
     <br>
@@ -391,55 +377,21 @@
             <td colspan="6" style="padding: 0px;"></td>
         </tr>
     </table>
-    {{-- <table class="tdd" cellpadding="10" cellspacing="0">
+    <br>
+    <div style="font-size: 25px; font-weight:bold">GAMBAR SKRB</div>
+    <br>
+    <table width="100%">
         <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">
-                            @if ($inquery->user)
-                                {{ $inquery->user->karyawan->nama_lengkap }}
-                            @else
-                                user tidak ada
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Operasional</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">.</td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">SPV Ban</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">.</td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Accounting</td>
-                    </tr>
-                </table>
+            <td style="width: 100%; text-align: center;">
+                <div style="width: 100%;">
+                    <img src="{{ asset('storage/uploads/' . $inquery->typekaroseri->gambar_skrb) }}"
+                        alt="{{ $inquery->typekaroseri->nama_karoseri }}"
+                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                </div>
             </td>
         </tr>
-    </table> --}}
+    </table>
+    <br>
 </body>
 
 <div class="container">

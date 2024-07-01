@@ -10,8 +10,7 @@ use App\Models\Detailpembelian;
 use App\Models\Detailpengambilan;
 use App\Models\Pembelian;
 use App\Models\Pengambilanbahan;
-use App\Models\Spk;
-use App\Models\Supplier;
+use App\Models\Perintah_kerja;
 use Illuminate\Support\Facades\Validator;
 
 class InqueryPengambilanbahanController extends Controller
@@ -64,7 +63,7 @@ class InqueryPengambilanbahanController extends Controller
     public function edit($id)
     {
         $inquery = Pengambilanbahan::where('id', $id)->first();
-        $spks = Spk::all();
+        $spks = Perintah_kerja::all();
         $barangs = Barang::all();
         $details = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
 
@@ -74,9 +73,9 @@ class InqueryPengambilanbahanController extends Controller
     public function update(Request $request, $id)
     {
         $validasi_pelanggan = Validator::make($request->all(), [
-            'spk_id' => 'required',
+            'perintah_kerja_id' => 'required',
         ], [
-            'spk_id.required' => 'Pilih nomor spk!',
+            'perintah_kerja_id.required' => 'Pilih nomor spk!',
         ]);
 
         $error_pelanggans = array();
@@ -128,7 +127,8 @@ class InqueryPengambilanbahanController extends Controller
         $transaksi = Pengambilanbahan::findOrFail($id);
 
         $transaksi->update([
-            'supplier_id' => $request->supplier_id,
+            'perintah_kerja_id' => $request->perintah_kerja_id,
+            // 'supplier_id' => $request->supplier_id,
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,
             'status' => 'posting',

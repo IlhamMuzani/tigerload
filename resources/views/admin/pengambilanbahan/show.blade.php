@@ -255,28 +255,28 @@
                             <td class="info-catatan2" style="font-size: 13px;">Nomor SPK</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->spk->kode_spk }}
+                                {{ $pengambilans->perintah_kerja->kode_perintah }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Nama Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->spk->pelanggan->nama_pelanggan }}
+                                {{ $pengambilans->perintah_kerja->pelanggan->nama_pelanggan }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Type Karoseri</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->spk->typekaroseri->nama_karoseri }}
+                                {{ $pengambilans->perintah_kerja->typekaroseri->nama_karoseri }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px; color:white">Type Karoseri</td>
                             <td class="info-item" style="font-size: 13px; color:white">:</td>
                             <td class="info-text info-left" style="font-size: 13px; color:white">
-                                {{ $pengambilans->spk->typekaroseri->kode_type }}
+                                {{ $pengambilans->perintah_kerja->typekaroseri->kode_type }}
                             </td>
                         </tr>
                     </table>
@@ -386,6 +386,5 @@
     <a href="{{ url('admin/tablepengambilanbahan') }}" class="blue-button">Kembali</a>
     <a href="{{ url('admin/pengambilanbahan/cetak-pdf/' . $pengambilans->id) }}" class="blue-button">Cetak</a>
 </div>
-
 
 </html>

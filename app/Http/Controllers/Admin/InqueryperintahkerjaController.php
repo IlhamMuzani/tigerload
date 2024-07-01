@@ -174,7 +174,7 @@ class InqueryperintahkerjaController extends Controller
 
         $parts = Detailperintah::where('perintah_kerja_id', $inquery->id)->get();
 
-        return view('admin.perintah_kerja.show', compact('parts', 'inquery', 'karoseries', 'spesifikasis'));
+        return view('admin.inquery_perintahkerja.show', compact('parts', 'inquery', 'karoseries', 'spesifikasis'));
     }
 
 

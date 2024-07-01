@@ -58,69 +58,87 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
-                        <thead class="thead-dark">
+                    <form method="GET" id="form-action">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+
+                            </div>
+                            <div class="col-md-3 mb-3">
+
+                            </div>
+                            <div class="col-md-3 mb-3">
+
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <input type="hidden" name="ids" id="selectedIds" value="">
+                                <button type="button" class="btn btn-primary btn-block mt-1" id="checkfilter"
+                                    onclick="printSelectedData()" target="_blank">
+                                    <i class="fas fa-print"></i> Cetak Filter
+                                </button>
+                                <button id="toggle-all" type="button" class="btn btn-info btn-block">
+                                    All Toggle Detail
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                        <thead>
                             <tr>
+                                <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th>Kode Pengambilan BB</th>
-                                <th>Kode SPK</th>
-                                <th>Tanggal</th>
-                                <th class="text-center" width="30">Opsi</th>
+                                <th class="text-left">Kode Pengambilan BB</th>
+                                <th class="text-left">Tanggal</th>
+                                <th class="text-left">Pelanggan</th>
+                                <th class="text-left">Bentuk Karoseri</th>
+                                <th class="text-left">Opsi</th>
                             </tr>
                         </thead>
-                        <tbody class="list">
-                            @foreach ($inquery as $pengambilans)
-                                <tr class="dropdown"{{ $pengambilans->id }}>
+                        <tbody>
+                            @foreach ($inquery as $index => $pengambilan)
+                                <!-- Gunakan index untuk ID unik -->
+                                <!-- Baris Faktur Utama -->
+                                <tr data-toggle="collapse" data-target="#barang-{{ $index }}"
+                                    class="accordion-toggle" style="background: rgb(156, 156, 156)">
+                                    <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
+                                            value="{{ $pengambilan->id }}">
+                                    </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>
-                                        {{ $pengambilans->kode_pengambilan }}
+                                    <td>{{ $pengambilan->kode_pengambilan }}</td>
+                                    <td>{{ $pengambilan->tanggal_awal }}</td>
+                                    <td> {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
                                     </td>
+                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
                                     <td>
-                                        @if ($pengambilans->spk)
-                                            {{ $pengambilans->spk->kode_spk }}
-                                        @else
-                                            tidak ada
-                                        @endif
+                                        <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
+                                        <button class="btn btn-info" data-toggle="collapse"
+                                            data-target="#barang-{{ $index }}">Toggle Detail</button>
                                     </td>
-                                    <td>
-                                        {{ $pengambilans->tanggal_awal }}
-                                    </td>
-                                    <td class="text-center">
-                                        @if ($pengambilans->status == 'posting')
-                                            <button type="button" class="btn btn-success btn-sm">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                        @endif
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($pengambilans->status == 'unpost')
-                                                <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $pengambilans->id }}">Posting</a>
+                                </tr>
 
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilans->id . '/edit') }}">Update</a>
-
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilans->id) }}">Show</a>
-
-                                                <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspengambilan', ['id' => $pengambilans->id]) }}">
-                                                    <button type="submit"
-                                                        class="dropdown-item btn btn-outline-danger btn-block mt-2">
-                                                        </i> Delete
-                                                    </button>
-                                                </form>
-                                            @endif
-                                            @if ($pengambilans->status == 'posting')
-                                                <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $pengambilans->id }}">Unpost</a>
-
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilans->id) }}">Show</a>
-                                            @endif
-                                            @if ($pengambilans->status == 'selesai')
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilans->id) }}">Show</a>
-                                            @endif
+                                <!-- Baris Detail Faktur -->
+                                <tr>
+                                    <td colspan="7"> <!-- Gabungkan kolom untuk detail -->
+                                        <div id="barang-{{ $index }}" class="collapse">
+                                            <table class="table table-sm" style="margin: 0;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Kode Barang</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Nama Barang</th>
+                                                        <th>Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($pengambilan->detailpengambilan as $item)
+                                                        <tr>
+                                                            <td>{{ $item->kode_barang }}</td>
+                                                            <td>{{ $pengambilan->tanggal_awal }}</td>
+                                                            <td>{{ $item->nama_barang }}</td>
+                                                            <td>{{ $item->jumlah }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </td>
                                 </tr>
@@ -143,6 +161,8 @@
             </div>
         </div>
     </section>
+    <!-- /.card -->
+
     <!-- /.card -->
     <script>
         var tanggalAwal = document.getElementById('tanggal_awal');
@@ -168,10 +188,36 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_pengambilan') }}";
+            form.action = "{{ url('admin/inquery_pengambilanbahan') }}";
             form.submit();
         }
     </script>
+
+    <script>
+        $(function(e) {
+            $("#select_all_ids").click(function() {
+                $('.checkbox_ids').prop('checked', $(this).prop('checked'))
+            })
+        });
+
+        function printSelectedData() {
+            var selectedIds = document.querySelectorAll(".checkbox_ids:checked");
+            if (selectedIds.length === 0) {
+                alert("Harap centang setidaknya satu item sebelum mencetak.");
+            } else {
+                var selectedCheckboxes = document.querySelectorAll('.checkbox_ids:checked');
+                var selectedIds = [];
+                selectedCheckboxes.forEach(function(checkbox) {
+                    selectedIds.push(checkbox.value);
+                });
+                document.getElementById('selectedIds').value = selectedIds.join(',');
+                var selectedIdsString = selectedIds.join(',');
+                window.location.href = "{{ url('admin/cetak_pengambilanfilter') }}?ids=" + selectedIdsString;
+                // var url = "{{ url('admin/ban/cetak_pdffilter') }}?ids=" + selectedIdsString;
+            }
+        }
+    </script>
+
 
     {{-- unpost memo  --}}
     <script>
@@ -308,6 +354,35 @@
                 $('.dropdown-menu').hide();
                 $('tr.dropdown').removeClass('selected').css('background-color',
                     ''); // Menghapus warna latar belakang dari semua baris saat menutup dropdown
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var toggleAll = $("#toggle-all");
+            var isExpanded = false; // Status untuk melacak apakah semua detail telah dibuka
+
+            toggleAll.click(function() {
+                if (isExpanded) {
+                    $(".collapse").collapse("hide");
+                    toggleAll.text("All Toggle Detail");
+                    isExpanded = false;
+                } else {
+                    $(".collapse").collapse("show");
+                    toggleAll.text("All Close Detail");
+                    isExpanded = true;
+                }
+            });
+
+            // Event listener untuk mengubah status jika ada interaksi manual
+            $(".accordion-toggle").click(function() {
+                var target = $(this).data("target");
+                if ($("#" + target).hasClass("show")) {
+                    $("#" + target).collapse("hide");
+                } else {
+                    $("#" + target).collapse("show");
+                }
             });
         });
     </script>

@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 use App\Models\Pengambilanbahan;
+use App\Models\Perintah_kerja;
 use App\Models\Spk;
 
 class LaporanPengambilanbahanspkController extends Controller
 {
     public function index(Request $request)
     {
-        $spks = Spk::get();
+        $spks = Perintah_kerja::get();
         $status = $request->status;
         $tanggal_awal = $request->tanggal_awal;
         $tanggal_akhir = $request->tanggal_akhir;

@@ -213,7 +213,7 @@
                         <table>
                             <tr>
                                 <td style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_perintah", 'QRCODE', 2.5, 2.5) !!}
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_perintah", 'QRCODE', 1.5, 1.5) !!}
                                 </td>
                             </tr>
                         </table>

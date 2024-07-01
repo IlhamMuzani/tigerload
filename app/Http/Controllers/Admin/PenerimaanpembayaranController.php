@@ -9,6 +9,7 @@ use App\Models\Penerimaan_pembayaran;
 use App\Models\Surat_penawaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class PenerimaanpembayaranController extends Controller
 {
@@ -77,8 +78,8 @@ class PenerimaanpembayaranController extends Controller
             ]
         ));
 
-        // Now update the record with the QR code URL that includes the ID
-        $pembelian->qrcode_penerimaan = 'https://tigerload.id/penerimaan_pembayaran/' . $pembelian->id;
+        $encryptedId = Crypt::encryptString($pembelian->id);
+        $pembelian->qrcode_penerimaan = 'https://tigerload.id/penerimaan_pembayaran/' . $encryptedId;
         $pembelian->save();
 
         return view('admin.penerimaan_pembayaran.show', compact('pembelian'));

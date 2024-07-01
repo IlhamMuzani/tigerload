@@ -7,13 +7,22 @@ use App\Models\Surat_penawaran;
 use App\Models\Detail_suratpenawaran;
 use App\Models\Typekaroseri;
 use App\Models\Spesifikasi;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class SuratPenawaranController extends Controller
 {
-    public function detail($kode)
+    public function detail($encryptedId)
     {
-        // Retrieve the main record
-        $pembelians = Surat_penawaran::where('id', $kode)->first();
+        try {
+            // Dekripsi ID
+            $id = Crypt::decryptString($encryptedId);
+        } catch (DecryptException $e) {
+            // Tangani kesalahan jika ID tidak dapat didekripsi
+            return abort(404, 'Invalid encrypted ID');
+        }
+                
+        $pembelians = Surat_penawaran::where('id', $id)->first();
 
         // Check if the main record exists
         if (!$pembelians) {

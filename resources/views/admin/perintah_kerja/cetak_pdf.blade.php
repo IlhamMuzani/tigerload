@@ -7,9 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Surat Perintah Kerja</title>
     <style>
-        /* * {
-            border: 1px solid black;
-        } */
         .b {
             border: 1px solid black;
         }
@@ -26,7 +23,7 @@
 
         html,
         body {
-            margin: 40px;
+            margin: 20px;
             padding: 10px;
         }
 
@@ -65,7 +62,6 @@
             top: 50%;
             border-radius: 5px;
             transform: translateY(-50%);
-
         }
 
         .info-container {
@@ -89,7 +85,6 @@
 
         .info-left {
             text-align: left;
-            /* Apply left-align specifically for the info-text class */
         }
 
         .info-item {
@@ -118,26 +113,21 @@
         .info-catatan {
             display: flex;
             flex-direction: row;
-            /* Mengatur arah menjadi baris */
             align-items: center;
-            /* Posisi elemen secara vertikal di tengah */
             margin-bottom: 2px;
-            /* Menambah jarak antara setiap baris */
         }
 
         .info-catatan2 {
             font-weight: bold;
             margin-right: 5px;
             min-width: 120px;
-            /* Menetapkan lebar minimum untuk kolom pertama */
         }
 
         .tdd1 td {
             text-align: center;
-            font-size: 15px;
+            font-size: 12px;
             position: relative;
             padding-top: 10px;
-            /* Sesuaikan dengan kebutuhan Anda */
         }
 
         .tdd1 td::before {
@@ -152,18 +142,13 @@
         .info-1 {}
 
         .label {
-            font-size: 15px;
+            font-size: 12px;
             text-align: center;
-            /* Teks menjadi berada di tengah */
-
         }
 
         .separator {
-            padding-top: 15px;
-            /* Atur sesuai kebutuhan Anda */
+            padding-top: 12px;
             text-align: center;
-            /* Teks menjadi berada di tengah */
-
         }
 
         .separator span {
@@ -172,11 +157,29 @@
             width: 100%;
             position: relative;
             top: -8px;
-            /* Sesuaikan posisi vertikal garis tengah */
         }
 
         .keep-together {
             page-break-inside: avoid;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .full-page-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .full-page-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -206,14 +209,14 @@
             <tr>
                 <td style="font-size: 13px;">
                 </td>
-                <td style="font-size: 18px; padding-left:40px">
+                <td style="font-size: 18px; padding-left:300px">
                 </td>
                 <td style="text-align: right; font-size: 13px;">
                     <div class="">
                         <table>
                             <tr>
                                 <td style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_perintah", 'QRCODE', 2.5, 2.5) !!}
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_perintah", 'QRCODE', 1.5, 1.5) !!}
                                 </td>
                             </tr>
                         </table>
@@ -227,41 +230,52 @@
         <tr>
             <td style="width:100%;">
                 <table>
-                    <div style="font-size: 15px; font-weight:bold">Pelanggan</div>
+                    <div style="font-size: 12px; font-weight:bold">Pelanggan</div>
                     <br>
                     <tr>
                         <td class="info-column">
-                            <span class="info-item" style="font-size: 15px;">Nomor Pesanan</span>
+                            <span class="info-item" style="font-size: 12px;">Nomor Pesanan</span>
                         </td>
                         <td class="info-column">
-                            <span class="info-titik" style="font-size: 15px;">:</span>
+                            <span class="info-titik" style="font-size: 12px;">:</span>
                         </td>
                         <td class="info-column">
-                            <span class="info-item" style="font-size: 15px;">{{ $cetakpdf->spk->kode_spk }}</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="info-column">
-                            <span class="info-item" style="font-size: 15px;">Kode Pelanggan</span>
-                        </td>
-                        <td class="info-column">
-                            <span class="info-titik" style="font-size: 15px;">:</span>
-                        </td>
-                        <td class="info-column">
-                            <span class="info-item"
-                                style="font-size: 15px;">{{ $cetakpdf->pelanggan->kode_pelanggan }}</span>
+                            <span class="info-item" style="font-size: 12px;">{{ $cetakpdf->spk->kode_spk }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td class="info-column">
-                            <span class="info-item" style="font-size: 15px;">Nama Pelanggan</span>
+                            <span class="info-item" style="font-size: 12px;">Kode Pelanggan</span>
                         </td>
                         <td class="info-column">
-                            <span class="info-titik" style="font-size: 15px;">:</span>
+                            <span class="info-titik" style="font-size: 12px;">:</span>
                         </td>
                         <td class="info-column">
                             <span class="info-item"
-                                style="font-size: 15px;">{{ $cetakpdf->pelanggan->nama_pelanggan }}</span>
+                                style="font-size: 12px;">{{ $cetakpdf->pelanggan->kode_pelanggan }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-column">
+                            <span class="info-item" style="font-size: 12px;">Nama Pelanggan</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-titik" style="font-size: 12px;">:</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-item"
+                                style="font-size: 12px;">{{ $cetakpdf->pelanggan->nama_pelanggan }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="info-column">
+                            <span class="info-item" style="font-size: 12px; color:white">.</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-titik" style="font-size: 12px; color:white">.</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-item" style="font-size: 12px; color:white">.</span>
                         </td>
                     </tr>
                 </table>
@@ -269,40 +283,103 @@
 
             <td style="width: 100%; text-align: left;">
                 <table style="width: 100%; margin-top:4px">
-                    <div style="font-size: 15px; font-weight:bold">Type Karoseri</div>
+                    <div style="font-size: 12px; font-weight:bold">Type Karoseri</div>
                     <br>
                     <tr>
                         <td style="width: 40%;">
                             <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Kode Type
+                                style="font-size: 12px; text-align: left; display: inline-block;">Kode Type
                                 Karoseri</span>
                         </td>
                         <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $cetakpdf->typekaroseri->kode_type }}
-                            </span>
+                            <span class="info-item" style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->typekaroseri->kode_type }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td style="width: 40%;">
                             <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Bentuk Karoseri</span>
+                                style="font-size: 12px; text-align: left; display: inline-block;">Bentuk Karoseri</span>
                         </td>
                         <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $cetakpdf->typekaroseri->nama_karoseri }}
-                            </span>
+                            <span class="info-item" style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->typekaroseri->nama_karoseri }}</span>
                         </td>
                     </tr>
                     <tr>
                         <td style="width: 40%;">
                             <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Merek / Type</span>
+                                style="font-size: 12px; text-align: left; display: inline-block;">Merek / Type</span>
                         </td>
                         <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
+                            <span class="info-item" style="font-size: 12px; text-align: left; display: inline-block;">:
                                 {{ $cetakpdf->typekaroseri->merek->nama_merek }} /
-                                {{ $cetakpdf->typekaroseri->merek->tipe->nama_tipe }}
+                                {{ $cetakpdf->typekaroseri->merek->tipe->nama_tipe }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">Warna</span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item" style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->spk->warna }}</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="width: 100%; text-align: left;">
+                <table style="width: 100%; margin-top:4px">
+                    <div style="font-size: 12px; font-weight:bold">Dimensi</div>
+                    <br>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">Panjang</span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item" style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->typekaroseri->panjang }}</span> / <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">
+                                ............... mm</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">Lebar</span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->typekaroseri->lebar }}</span> / <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">
+                                ............... mm</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">Tinggi</span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">:
+                                {{ $cetakpdf->typekaroseri->tinggi }}</span> / <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">
+                                ............... mm</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;"></span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item"
+                                style="font-size: 12px; text-align: left; display: inline-block;">:
                             </span>
                         </td>
                     </tr>
@@ -314,92 +391,27 @@
                 <br>
             </td>
         </tr>
-        <tr>
-            <td style="width:100%;">
-                <table>
-                    <div style="font-size: 15px; font-weight:bold">Spesifikasi</div>
-                    <br>
-                    <div>
-                        @foreach ($spesifikasis as $key => $item)
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                - {{ $item->nama }} {{ $item->jumlah }}
-                            </span>
-                            <br>
-                        @endforeach
-                        <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                            - Warna {{ $cetakpdf->spk->warna }}
-                        </span>
-                    </div>
-                </table>
-            </td>
-
-            <td style="width: 100%; text-align: left;">
-                <table style="width: 100%; margin-top:4px">
-                    <div style="font-size: 15px; font-weight:bold">Dimensi</div>
-                    <br>
-                    <tr>
-                        <td style="width: 40%;">
-                            <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Panjang
-                            </span>
-                        </td>
-                        <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $cetakpdf->typekaroseri->panjang }}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 40%;">
-                            <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Lebar</span>
-                        </td>
-                        <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $cetakpdf->typekaroseri->lebar }}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 40%;">
-                            <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Tinggi</span>
-                        </td>
-                        <td style="width: 60%;">
-                            <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $cetakpdf->typekaroseri->tinggi }}
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
     </table>
     <br>
-    <div style="font-size: 15px; font-weight:bold">Komponen Bahan Baku</div>
+    <div style="font-size: 12px; font-weight:bold">Komponen Bahan Baku</div>
     <br>
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Kode Barang</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 15px;">Nama Barang</td>
-            <td class="td" style="text-align: right; padding: 5px; font-size: 15px;">Qty</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 12px;">No.</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Kode Barang</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Nama Barang</td>
+            <td class="td" style="text-align: right; padding: 5px; font-size: 12px;">Qty</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="6" style="padding: 0px;"></td>
         </tr>
         @foreach ($parts as $item)
             <tr>
-                <td class="td" style="text-align: center;  font-size: 15px;">{{ $loop->iteration }}
+                <td class="td" style="text-align: center; font-size: 12px;">{{ $loop->iteration }}</td>
+                <td class="td" style="text-align: left; font-size: 12px;">{{ $item->kode_barang }}</td>
+                <td class="info-text info-left" style="font-size: 12px; text-align: left;">{{ $item->nama_barang }}
                 </td>
-                <td class="td" style="text-align: left;  font-size: 15px;">{{ $item->kode_barang }}</td>
-                <td class="info-text info-left" style="font-size: 15px; text-align: left;">
-                    {{ $item->nama_barang }}
-                </td>
-                <td class="td" style="text-align: right; font-size: 15px;">
-                    {{ $item->jumlah }}
-                </td>
+                <td class="td" style="text-align: right; font-size: 12px;">{{ $item->jumlah }}</td>
             </tr>
         @endforeach
         <tr style="border-bottom: 1px solid black;">
@@ -407,18 +419,19 @@
         </tr>
     </table>
     <br>
-    <div>
+    <div class="page-break">
         <table width="100%">
             <tr>
                 <td style="width: 100%; text-align: center;">
-                    <div style="width: 100%;">
+                    <div style="width: 100%; transform: rotate(90deg);">
                         <img src="{{ asset('storage/uploads/' . $cetakpdf->typekaroseri->gambar_skrb) }}"
                             alt="{{ $cetakpdf->typekaroseri->nama_karoseri }}"
-                            style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                            style="width: auto; height: 50vh; max-height: 70%; object-fit: contain; margin-top 20px; margin-left:300px">
                     </div>
                 </td>
             </tr>
         </table>
+
     </div>
 </body>
 

@@ -65,14 +65,14 @@
                             </div>
                             <div class="col-md-2 mb-3">
                                 <label for="created_at">SPK</label>
-                                <select class="select2bs4 select2-hidden-accessible" name="spk_id"
+                                <select class="select2bs4 select2-hidden-accessible" name="perintah_kerja_id"
                                     data-placeholder="Cari Spk.." style="width: 100%;" data-select2-id="23" tabindex="-1"
-                                    aria-hidden="true" id="spk_id">
+                                    aria-hidden="true" id="perintah_kerja_id">
                                     <option value="">- Pilih -</option>
                                     @foreach ($spks as $spk)
                                         <option value="{{ $spk->id }}"
-                                            {{ Request::get('spk_id') == $spk->id ? 'selected' : '' }}>
-                                            {{ $spk->kode_spk }}
+                                            {{ Request::get('perintah_kerja_id') == $spk->id ? 'selected' : '' }}>
+                                            {{ $spk->kode_perintah }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -105,8 +105,11 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                <th class="text-center">Kode Pengambilan BB</th>
-                                <th class="text-center">Tanggal</th>
+                                <th class="text-left">Kode Pengambilan BB</th>
+                                <th class="text-left">Tanggal</th>
+                                <th class="text-left">Pelanggan</th>
+                                <th class="text-left">Bentuk Karoseri</th>
+                                <th class="text-left">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,6 +121,9 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pengambilan->kode_pengambilan }}</td>
                                     <td>{{ $pengambilan->tanggal_awal }}</td>
+                                    <td> {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
+                                    </td>
+                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
                                     <td>
                                         <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
                                         <button class="btn btn-info" data-toggle="collapse"

@@ -36,7 +36,7 @@ class Perintah_kerja extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);
@@ -52,9 +52,19 @@ class Perintah_kerja extends Model
         return $this->belongsTo(Spk::class);
     }
 
+    public function surat_pesanan()
+    {
+        return $this->belongsTo(Spk::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function pengambilanbahan()
+    {
+        return $this->hasMany(Pengambilanbahan::class);
     }
 
     public static function getId()

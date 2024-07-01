@@ -19,6 +19,7 @@ use App\Models\Typekaroseri;
 use App\Models\Voucher;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class SuratPenawaranController extends Controller
 {
@@ -104,8 +105,8 @@ class SuratPenawaranController extends Controller
             ]
         ));
 
-        // Now update the record with the QR code URL that includes the ID
-        $pembelian->qrcode_penawaran = 'https://tigerload.id/surat_penawaran/' . $pembelian->id;
+        $encryptedId = Crypt::encryptString($pembelian->id);
+        $pembelian->qrcode_penawaran = 'https://tigerload.id/surat_penawaran/' . $encryptedId;
         $pembelian->save();
 
         // $kode = $this->kodekendaraan();

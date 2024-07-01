@@ -8,18 +8,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\Detailpengambilan;
 use App\Models\Pengambilanbahan;
+use App\Models\Perintah_kerja;
 use App\Models\Spesifikasi;
 use App\Models\Spk;
 use App\Models\Typekaroseri;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Crypt;
 
 class PengambilanbahanController extends Controller
 {
     public function index()
     {
-        $spks = Spk::get();
+        $spks = Perintah_kerja::get();
         $barangs = Barang::get();
         return view('admin/pengambilanbahan.index', compact('spks', 'barangs'));
     }
@@ -29,10 +31,10 @@ class PengambilanbahanController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
-                'spk_id' => 'required',
+                'perintah_kerja_id' => 'required',
             ],
             [
-                'spk_id.required' => 'Pilih nomor SPK',
+                'perintah_kerja_id.required' => 'Pilih nomor SPK',
             ]
         );
 
@@ -88,14 +90,19 @@ class PengambilanbahanController extends Controller
         $transaksi = Pengambilanbahan::create(array_merge(
             $request->all(),
             [
+                'user_id' => auth()->user()->id,
+                'perintah_kerja_id' > $request->perintah_kerja_id,
                 'kode_pengambilan' => $this->kode(),
-                'qrcode_pengambilan' => 'https://tigerload.id/pengambilanbahan/' . $kode,
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
-
             ]
         ));
+
+        $encryptedId = Crypt::encryptString($transaksi->id);
+        $transaksi->qrcode_pengambilan = 'https://tigerload.id/pengambilanbahan/' . $encryptedId;
+        $transaksi->save();
+
 
         $transaksi_id = $transaksi->id;
 
@@ -128,6 +135,30 @@ class PengambilanbahanController extends Controller
         return view('admin.pengambilanbahan.show', compact('parts', 'pengambilans'));
 
         // return redirect('admin/pengambilanbahan')->with('success', 'Berhasil menambahkan pengambilan bahan baku');
+    }
+
+    public function show($id)
+    {
+
+        $pengambilans = Pengambilanbahan::where('id', $id)->first();
+        $pengambil = Pengambilanbahan::find($id);
+
+        $parts = Detailpengambilan::where('pengambilanbahan_id', $pengambil->id)->get();
+
+        return view('admin.pengambilanbahan.show', compact('parts', 'pengambilans'));
+    }
+
+    public function cetak_pengambilanfilter(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('ids'));
+
+        $cetakpdfs = Pengambilanbahan::whereIn('id', $selectedIds)->orderBy('id', 'DESC')->get();
+        $pdf = app('dompdf.wrapper');
+        $pdf->setPaper('letter', 'portrait'); // Set the paper size to portrait letter
+
+        $pdf->loadView('admin.pengambilanbahan.cetak_pdffilter', compact('cetakpdfs'));
+
+        return $pdf->stream('SelectedFaktur.pdf');
     }
 
     public function cetakpdf($id)

@@ -5,7 +5,7 @@
     <meta charset="UTF-11px">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laporan Pengambilan Bahan Baku</title>
+    <title>Pengambilan Bahan Baku</title>
     <style>
         html,
         body {
@@ -79,28 +79,13 @@
 
 <body style="margin: 0; padding: 0;">
     <div id="logo-container">
-        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="170" height="50"
+        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
             alt="Logo Tigerload">
     </div>
     <div style="font-weight: bold; text-align: center">
-        <span style="font-weight: bold; font-size: 20px;">PENGAMBILAN BAHAN BAKU - RANGKUMAN</span>
-        <br>
-        <div class="text">
-            @php
-                $startDate = request()->query('tanggal_awal');
-                $endDate = request()->query('tanggal_akhir');
-                $kendaraan = request()->query('kendaraan_id');
-
-            @endphp
-            @if ($startDate && $endDate)
-                <p>Periode:{{ $startDate }} s/d {{ $endDate }} / Kode SPK :
-                    {{ $inquery->first()->perintah_kerja->kode_perintah }}
-                </p>
-            @else
-                <p>Periode: Tidak ada tanggal awal dan akhir yang diteruskan.</p>
-            @endif
-        </div>
+        <span style="font-weight: bold; font-size: 22px;">PENGAMBILAN BAHAN BAKU</span>
     </div>
+    <br>
     {{-- <hr style="border-top: 0.1px solid black; margin: 1px 0;"> --}}
 
     </div>
@@ -108,49 +93,53 @@
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <!-- Header row -->
         <tr>
-            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:20%">
+            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:25%">
                 Kode Pengambilan</td>
-            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:15%">
+            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:30%">
                 Tanggal
             </td>
-            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:15%">
-                Pelanggan</td>
-            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:15%">
-                Bentuk Karoseri</td>
+            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:30%">
+                Kode SPK</td>
+            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:39%">
+                Pelanggan
+            </td>
+            <td class="td" style="text-align: left; padding: 5px; font-weight:bold; font-size: 11px; width:39%">
+                Bentuk Karoseri
+            </td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="3" style="padding: 0px;"></td>
+            <td colspan="5" style="padding: 0px;"></td>
         </tr>
-        @php
-            $created_at = isset($created_at) ? $created_at : null;
-            $tanggal_akhir = isset($tanggal_akhir) ? $tanggal_akhir : null;
-        @endphp
-        @foreach ($inquery as $pengambilan)
+        @foreach ($cetakpdfs as $cetakpdf)
             <tr style="background:rgb(181, 181, 181)">
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $pengambilan->kode_pengambilan }}
+                    {{ $cetakpdf->kode_pengambilan }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $pengambilan->tanggal_awal }}
+                    {{ $cetakpdf->tanggal_awal }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
+                    {{ $cetakpdf->perintah_kerja->kode_perintah }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $cetakpdf->perintah_kerja->spk->nama_pelanggan }}
+                </td>
+                <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
+                    {{ $cetakpdf->perintah_kerja->spk->typekaroseri->nama_karoseri }}
                 </td>
             </tr>
             <tr>
-                <td class="td" style="text-align: left; padding: 5px; font-size: 11px; font-weight:bold;">
+                <td class="td" style="text-align: left; padding: 5px; font-size: 11px; font-weight:bold">
                     Kode Barang
                 </td>
-                <td class="td" style="text-align: left; padding: 5px; font-size: 11px; font-weight:bold;">
-                    Nama Barang </td>
-                <td class="td" style="text-align: left; padding: 5px; font-size: 11px; font-weight:bold;">
-                    Jumlah
+                <td class="td" style="text-align: left; padding: 5px; font-size: 11px; font-weight:bold">
+                    Nama Barang
+                </td>
+                <td class="td" style="text-align: right; padding: 5px; font-size: 11px; font-weight:bold">
+                    Qty
                 </td>
             </tr>
-            @foreach ($pengambilan->detailpengambilan as $item)
+            @foreach ($cetakpdf->detailpengambilan as $item)
                 <tr>
                     <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
                         {{ $item->kode_barang }}
@@ -158,7 +147,7 @@
                     <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
                         {{ $item->nama_barang }}
                     </td>
-                    <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
+                    <td class="td" style="text-align: right; padding: 5px; font-size: 11px;">
                         {{ $item->jumlah }}
                     </td>
                 </tr>
@@ -166,13 +155,22 @@
         @endforeach
 
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;"></td>
+            <td colspan="" style="padding: 0px;"></td>
         </tr>
-
+        <tr>
+            <td colspan="4" style="text-align: right; font-weight: bold; padding: 5px; font-size: 11px;">
+                {{-- Sub Total --}}
+            </td>
+            <td style="text-align: right; font-weight: bold; padding: 5px; font-size: 11px;">
+                {{-- {{ number_format($total, 0, ',', '.') }} --}}
+            </td>
+        </tr>
     </table>
-    <br>
-    <br>
 
+    <div style="text-align: right; font-size:11px">
+        <span style="font-style: italic;">Printed Date
+            {{ \Carbon\Carbon::now()->format('Y-m-d H:i:s') }}</span>
+    </div>
 </body>
 
 </html>

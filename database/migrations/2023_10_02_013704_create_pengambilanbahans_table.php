@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('pengambilanbahans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('spk_id')->nullable();
-            $table->foreign('spk_id')->references('id')->on('spks')->onDelete('set null');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->unsignedBigInteger('perintah_kerja_id')->nullable();
+            $table->foreign('perintah_kerja_id')->references('id')->on('perintah_kerjas')->onDelete('set null');
             $table->timestamps();
             $table->string('kode_pengambilan')->nullable();
             $table->string('qrcode_pengambilan')->nullable();

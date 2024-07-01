@@ -22,22 +22,8 @@
         .container {
             display: flex;
             justify-content: space-between;
-            margin-top: 7rem;
+            margin-top: 2rem;
         }
-
-        .blue-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            top: 50%;
-            border-radius: 5px;
-            transform: translateY(-50%);
-
-        }
-
         .table,
         .tdd {
             border: 1px solid white;
@@ -71,7 +57,6 @@
 </head>
 
 <body style="margin: 0; padding: 0;">
-    <br>
     <table width="100%">
         <tr>
             {{-- </div> --}}
@@ -148,10 +133,7 @@
                     </tr> --}}
                 </table>
             </div>
-
             <div>
-
-
                 <table width="100%">
                     <tr>
                         <td style="font-size: 13px;">
