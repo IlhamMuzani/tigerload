@@ -24,6 +24,7 @@
             justify-content: space-between;
             margin-top: 2rem;
         }
+
         .table,
         .tdd {
             border: 1px solid white;
@@ -31,8 +32,7 @@
 
         html,
         body {
-            /* margin: 30px;
-            padding: 10px; */
+            margin: 15px;
             font-family: 'Times New Roman', Times, serif;
         }
 
@@ -59,9 +59,6 @@
 <body style="margin: 0; padding: 0;">
     <table width="100%">
         <tr>
-            {{-- </div> --}}
-            {{-- <hr> --}}
-            {{-- </td> --}}
             <td>
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <table style="text-align: center;">
@@ -78,29 +75,17 @@
                         <tr>
                             <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 551.25/ 8502</td>
                         </tr>
-
                     </table>
                 </div>
             </td>
-            {{-- <td> --}}
-            {{-- <div class="info-container"> --}}
-            {{-- <div id="logo-container"> --}}
             <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="270" height="60"
                 alt="Logo Tigerload">
-            {{-- </div> --}}
-
         </tr>
     </table>
     <hr>
     <table width="100%">
-        {{-- <div>
-            <p style="font-size: 13px; text-align: right; margin-right: 50px;">Tegal,
-                {{ $pembelians->tanggal }} </p>
-        </div> --}}
         <div style="display: flex; justify-content: left; align-items: left; margin-left:20px">
-            {{-- <p style="font-size: 13px; text-align: right; margin-right: 50px;">Tegal,
-                {{ $pembelians->tanggal }} </p> --}}
-            <div style="margin-bottom:25px">
+            <div style="margin-bottom:10px">
                 <table width="100%">
                     <tr>
                         <td style="font-size: 13px;">
@@ -117,20 +102,6 @@
                             <br>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <td style="width: 5%;" style="max-width: 230px;">
-                            <div class="">
-                                <table>
-                                    <tr>
-                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
-                                            style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr> --}}
                 </table>
             </div>
             <div>
@@ -150,9 +121,6 @@
                                         {{ $pembelians->pelanggan->alamat }}
                                     </td>
                                 </tr>
-                                {{-- <tr>
-                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
-                                </tr> --}}
                             </table>
                         </td>
                         <td style="width: 5%;" style="max-width: 20px;">

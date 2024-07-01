@@ -45,8 +45,7 @@
 
         html,
         body {
-            /* margin: 30px;
-            padding: 10px; */
+            margin: 15px;
             font-family: 'Times New Roman', Times, serif;
         }
 
@@ -71,7 +70,6 @@
 </head>
 
 <body style="margin: 0; padding: 0;">
-    <br>
     <table width="100%">
         <tr>
             {{-- </div> --}}
@@ -341,7 +339,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ terbilang($pembelians->harga) }} Rupiah )  per unit</span>
+                                {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
                         @endif
                     </td>
                 </tr>
@@ -436,9 +434,8 @@
                 @endif
                 <tr>
                     <td>
-                        <img style="margin-top: 5px"
-                            src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                            height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
                     <td>

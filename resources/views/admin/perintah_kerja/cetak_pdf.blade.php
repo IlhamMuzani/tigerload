@@ -185,16 +185,24 @@
 </head>
 
 <body style="margin: 0; padding: 0;">
-    <div id="logo-container">
-        <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
-            alt="Logo Tigerload">
-    </div>
-    <br>
-    <div style="font-weight: bold; text-align: center">
-        <span style="font-weight: bold; font-size: 20px;">SURAT PERINTAH KERJA</span>
-        <br>
-        <br>
-    </div>
+    <table>
+        <tr>
+            <td>
+                <div id="logo-container">
+                    <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
+                        alt="Logo Tigerload">
+                </div>
+            </td>
+            <td>
+                <div style="font-weight: bold; text-align: center; padding-left:100px">
+                    <span style="font-weight: bold; font-size: 20px;">SURAT PERINTAH KERJA</span>
+                </div>
+            </td>
+            <td style="display: inline-block; padding-left:100px">
+                {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_perintah", 'QRCODE', 1.5, 1.5) !!}
+            </td>
+        </tr>
+    </table>
     <hr style="border-top: 0.5px solid black; margin: 3px 0;">
 
     <div style="margin-bottom:0px">
@@ -206,7 +214,7 @@
                     </div>
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td style="font-size: 13px;">
                 </td>
                 <td style="font-size: 18px; padding-left:300px">
@@ -222,8 +230,10 @@
                         </table>
                     </div>
                 </td>
-            </tr>
+            </tr> --}}
         </table>
+        <br>
+        <br>
     </div>
 
     <table width="100%">
