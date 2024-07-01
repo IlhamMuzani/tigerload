@@ -189,7 +189,7 @@
         <tr>
             <td>
                 <div id="logo-container">
-                    <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
+                    <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
                         alt="Logo Tigerload">
                 </div>
             </td>
@@ -434,7 +434,7 @@
             <tr>
                 <td style="width: 100%; text-align: center;">
                     <div style="width: 100%; transform: rotate(90deg);">
-                        <img src="{{ asset('storage/uploads/' . $cetakpdf->typekaroseri->gambar_skrb) }}"
+                        <img src="{{ public_path('storage/uploads/' . $cetakpdf->typekaroseri->gambar_skrb) }}"
                             alt="{{ $cetakpdf->typekaroseri->nama_karoseri }}"
                             style="width: auto; height: 50vh; max-height: 70%; object-fit: contain; margin-top 20px; margin-left:300px">
                     </div>
