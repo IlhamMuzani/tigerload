@@ -68,6 +68,11 @@ class Perintah_kerja extends Model
         return $this->hasMany(Pengambilanbahan::class);
     }
 
+    public function depositpemesanan()
+    {
+        return $this->hasMany(Depositpemesanan::class);
+    }
+
     public static function getId()
     {
         return $getId = DB::table('perintah_kerjas')->orderBy('id', 'DESC')->take(1)->get();

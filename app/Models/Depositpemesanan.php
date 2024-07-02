@@ -18,7 +18,7 @@ class Depositpemesanan extends Model
     [
         'kode_deposit',
         'qrcode_deposit',
-        'spk_id',
+        'perintah_kerja_id',
         'harga',
         'tanggal',
         'tanggal_awal',
@@ -38,6 +38,11 @@ class Depositpemesanan extends Model
     public function spk()
     {
         return $this->belongsTo(Spk::class);
+    }
+
+    public function perintah_kerja()
+    {
+        return $this->belongsTo(Perintah_kerja::class);
     }
 
     public function detail_penjualan()

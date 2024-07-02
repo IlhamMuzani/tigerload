@@ -17,8 +17,7 @@ use App\Models\Merek;
 use App\Models\Modelken;
 use App\Models\Pelanggan;
 use App\Models\Spesifikasi;
-use App\Models\Spk;
-use App\Models\Tipe;
+use App\Models\Perintah_kerja;
 use App\Models\Typekaroseri;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -61,7 +60,7 @@ class InqueryDepositController extends Controller
     public function show($id)
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
-        $spk = Spk::where('id', $deposits->spk_id)->first();
+        $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->first();
 
         return view('admin.inquerydeposit.show', compact('deposits', 'spk'));
     }
@@ -69,7 +68,7 @@ class InqueryDepositController extends Controller
 
     public function edit($id)
     {
-        $spks = Spk::where(['status' => 'posting', 'status_deposit' => null])->get();
+        $spks = Perintah_kerja::where(['status' => 'posting', 'status_deposit' => null])->get();
 
         $deposits = Depositpemesanan::where('id', $id)->first();
 
@@ -81,11 +80,11 @@ class InqueryDepositController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'spk_id' => 'required',
+                'perintah_kerja_id' => 'required',
                 'harga' => 'required',
             ],
             [
-                'spk_id.required' => 'Pilih Spk',
+                'perintah_kerja_id.required' => 'Pilih Perintah kerja',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -97,17 +96,25 @@ class InqueryDepositController extends Controller
 
         $deposit = Depositpemesanan::findOrFail($id);
 
-        $deposits = Depositpemesanan::where('id', $id)->update(
-            [
-                'spk_id' => $request->spk_id,
-                'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
-                'status' => 'posting',
-            ]
-        );
-        $spk = Spk::where('id', $deposits->spk_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
-        $deposits = Depositpemesanan::where('id', $id)->first();
-        $spk = Spk::where('id', $deposits->spk_id)->first();
+        Depositpemesanan::where('id', $id)->update([
+            'perintah_kerja_id' => $request->perintah_kerja_id,
+            'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
+            'status' => 'posting',
+        ]);
 
+        // Retrieve the updated Depositpemesanan record to get the perintah_kerja_id
+        $deposits = Depositpemesanan::where('id', $id)->first();
+
+        // Update the Perintah_kerja record based on the perintah_kerja_id from deposits
+        Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update([
+            'status' => 'selesai',
+            'status_deposit' => 'deposit',
+        ]);
+
+        // Retrieve the updated Perintah_kerja record
+        $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->first();
+
+        // Return the view with the deposits and spk
         return view('admin.inquerydeposit.show', compact('deposits', 'spk'));
     }
 
@@ -116,7 +123,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => null, 'status' => 'posting',]);
+        $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => null, 'status' => 'posting',]);
 
         $deposits->update([
             'status' => 'unpost'
@@ -129,7 +136,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Spk::where('id', $deposits->spk_id)->update(['status_deposit' => 'deposit', 'status' => 'selesai',]);
+        $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => 'deposit', 'status' => 'selesai',]);
 
         $deposits->update([
             'status' => 'posting'

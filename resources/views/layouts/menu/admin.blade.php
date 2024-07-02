@@ -341,7 +341,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['deposit pemesanan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['deposit pemesanan'])
             <li class="nav-item">
                 <a href="{{ url('admin/tabledeposit') }}"
                     class="nav-link {{ request()->is('admin/deposit_pemesanan*') || request()->is('admin/tabledeposit*') ? 'active' : '' }}">
@@ -349,7 +349,7 @@
                     <p style="font-size: 14px;">Deposit Pemesanan</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['pengambilan bahan baku'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepengambilanbahan') }}"
@@ -566,7 +566,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery deposit'])
+        {{-- @if (auth()->check() && auth()->user()->menu['inquery deposit'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_deposit') }}"
                     class="nav-link {{ request()->is('admin/inquery_deposit*') ? 'active' : '' }}">
@@ -574,7 +574,7 @@
                     <p style="font-size: 14px;">Inquery Deposit</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_penjualan') }}"
@@ -729,7 +729,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['laporan deposit'])
+        {{-- @if (auth()->check() && auth()->user()->menu['laporan deposit'])
             <li class="nav-item">
                 <a href="{{ url('admin/laporan_deposit') }}"
                     class="nav-link {{ request()->is('admin/laporan_deposit*') ? 'active' : '' }}">
@@ -737,7 +737,7 @@
                     <p style="font-size: 14px;">Laporan Deposit</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['laporan penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/laporan_penjualan') }}"

@@ -47,6 +47,7 @@ class DepositpemesananController extends Controller
         $deposits = Depositpemesanan::create(array_merge(
             $request->all(),
             [
+                'perintah_kerja_id' => $request->perintah_kerja_id,
                 'kode_deposit' => $this->kode(),
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
