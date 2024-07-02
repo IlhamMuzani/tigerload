@@ -369,7 +369,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            {{ $pembelians->jumlah_unit }} Unit x
+                            {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
                             {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
                             =
                             {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
