@@ -22,20 +22,7 @@
         .container {
             display: flex;
             justify-content: space-between;
-            margin-top: 7rem;
-        }
-
-        .blue-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            top: 50%;
-            border-radius: 5px;
-            transform: translateY(-50%);
-
+            margin-top: 2rem;
         }
 
         .table,
@@ -45,8 +32,7 @@
 
         html,
         body {
-            /* margin: 30px;
-            padding: 10px; */
+            margin: 15px;
             font-family: 'Times New Roman', Times, serif;
         }
 
@@ -67,59 +53,87 @@
         }
 
         .info-1 {}
+
+        @media print {
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                /* Pastikan z-index lebih tinggi dari elemen lain yang mungkin ada */
+            }
+
+            /* Atur properti CSS untuk elemen header di sini */
+            /* Misalnya, properti seperti ukuran font, warna teks, latar belakang, dll. */
+        }
+
+        .welcome-text {
+            position: fixed;
+            top: 2px;
+            /* Atur jarak dari atas halaman */
+            left: 9;
+            /* Letakkan teks di kiri halaman */
+            right: 9;
+            /* Letakkan teks di kanan halaman */
+            text-align: center;
+            /* Pusatkan teks horizontal */
+            font-size: 18px;
+            font-weight: 700;
+            /* Ganti dengan nilai yang lebih tinggi untuk bold */
+            color: #000;
+            /* Ganti dengan nilai hex yang lebih gelap */
+            /* Warna teks */
+            z-index: 999;
+            /* Pastikan z-index lebih tinggi dari elemen lain */
+        }
     </style>
 </head>
 
-<body style="margin: 0; padding: 0;">
-    <br>
-    <table width="100%">
-        <tr>
-            {{-- </div> --}}
-            {{-- <hr> --}}
-            {{-- </td> --}}
-            <td>
-                <div style="display: flex; justify-content: center; align-items: center;">
-                    <table style="text-align: center;">
-                        <tr>
-                            <td style="font-weight: bold; font-size:20px">CV. TIGER LOAD ENGINEERING</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 13px; font-weight: lighter;">Jl. Ahmad Yani No. 42 Procot Slawi,
-                                Tegal 52411</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 13px; font-weight: lighter;">Telp, (0283) 4563746</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 551.25/ 8502</td>
-                        </tr>
-
-                    </table>
-                </div>
-            </td>
-            {{-- <td> --}}
-            {{-- <div class="info-container"> --}}
-            {{-- <div id="logo-container"> --}}
-            <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="270" height="60"
-                alt="Logo Tigerload">
-            {{-- </div> --}}
-
-        </tr>
-    </table>
-    <hr>
-    <table width="100%">
-        {{-- <div>
-            <p style="font-size: 13px; text-align: right; margin-right: 50px;">Tegal,
-                {{ $pembelians->tanggal }} </p>
-        </div> --}}
+<body style="margin-top: 90; padding: 0;">
+    <div class="welcome-text">
+        <div class="header">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <table style="text-align: center;">
+                                <tr>
+                                    <td style="font-weight: bold; font-size:20px">CV. TIGER LOAD ENGINEERING</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Jl. Ahmad Yani No. 42 Procot
+                                        Slawi,
+                                        Tegal 52411</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">Telp, (0283) 4563746</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 551.25/
+                                        8502</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="270" height="60"
+                        alt="Logo Tigerload">
+                </tr>
+            </table>
+            <hr>
+        </div>
+    </div>
+    <div style="text-align: left; margin-top:7px">
         <div style="display: flex; justify-content: left; align-items: left; margin-left:20px">
-            {{-- <p style="font-size: 13px; text-align: right; margin-right: 50px;">Tegal,
-                {{ $pembelians->tanggal }} </p> --}}
-            <div style="margin-bottom:25px">
+            <div style="margin-bottom:10px">
                 <table width="100%">
                     <tr>
                         <td style="font-size: 13px;">
                             <span class="info-item">No. Faktur: {{ $pembelians->kode_spk }}</span>
+                            <br>
+                        </td>
+                        <td style="font-size: 18px; padding-left:40px">
+                            <span class="info-item" style="font-weight: bold">SURAT PENAWARAN</span>
                             <br>
                         </td>
                         <td style="text-align: right; font-size: 13px;">
@@ -128,26 +142,9 @@
                             <br>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <td style="width: 5%;" style="max-width: 230px;">
-                            <div class="">
-                                <table>
-                                    <tr>
-                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
-                                            style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr> --}}
                 </table>
             </div>
-
             <div>
-
-
                 <table width="100%">
                     <tr>
                         <td style="font-size: 13px;">
@@ -164,9 +161,6 @@
                                         {{ $pembelians->pelanggan->alamat }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
-                                </tr>
                             </table>
                         </td>
                         <td style="width: 5%;" style="max-width: 20px;">
@@ -182,20 +176,6 @@
                             </div>
                         </td>
                     </tr>
-                    {{-- <tr>
-                        <td style="width: 5%;" style="max-width: 230px;">
-                            <div class="">
-                                <table>
-                                    <tr>
-                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
-                                            style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 2.5, 2.5) !!}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr> --}}
                 </table>
             </div>
         </div>
@@ -226,7 +206,8 @@
                             :
                         </div>
                     </td>
-                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -276,7 +257,9 @@
                                 :
                             </div>
                         </td>
-                        <td>- {{ $item->nama }} {{ $item->jumlah }}</td>
+                        <td>- {{ $item->nama }} @if ($item->keterangan != null)
+                                :
+                            @endif {{ $item->keterangan }} {{ $item->jumlah }}</td>
                     </tr>
                 @endforeach
 
@@ -341,7 +324,7 @@
                     <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
-                                {{ terbilang($pembelians->harga) }} ) per unit</span>
+                                {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
                         @endif
                     </td>
                 </tr>
@@ -425,9 +408,10 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
+                            {{ $pembelians->jumlah_unit }} Unit x
+                            {{ number_format($pembelians->harga, 0, ',', '.') }}
                             = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
+                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah)
                         </td>
                     </tr>
                 @endif
@@ -482,179 +466,182 @@
                 </tr>
             </table>
         </div>
-        <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
-            <table style="text-align: letf;">
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;"> <span style="margin-left:30px">Demikian surat
-                            penawaran ini kami
-                            sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami</span></td>
-                </tr>
-                <tr>
-                    <td style="font-size: 13px; font-weight: lighter;">
-                        kami sampaikan terimakasih
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div style="margin-top:10px">
-            <p style="font-size: 13px; text-align: left; margin: 0; margin-left: 70px;">Hormat Kami,
-            </p>
-        </div>
         <table width="100%">
-            <tr>
-                {{-- <td> --}}
-                <div class="info-container">
-                    <div id="logo-container">
-                        <p style="font-size: 13px; text-align: left; margin: 0; margin-left: 30px;">KAROSERI TIGER LOAD
-                        </p>
-                        <p
-                            style="font-size: 13px; text-align: left; margin: 0; margin-left: 40px; text-decoration: underline; margin-top: 30px">
-                            DJOHAN WAHYUDI</p>
-                    </div>
+            <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
+                <table style="text-align: letf;">
+                    <tr>
+                        <td style="font-size: 13px; font-weight: lighter;"> <span style="margin-left:30px">Demikian
+                                surat
+                                penawaran ini kami
+                                sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami</span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 13px; font-weight: lighter;">
+                            kami sampaikan terimakasih
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-top:10px">
+                <p style="font-size: 13px; text-align: left; margin: 0; margin-left: 70px;">Hormat Kami,
+                </p>
+            </div>
+            <table width="100%">
+                <tr>
+                    {{-- <td> --}}
+                    <div class="info-container">
+                        <div id="logo-container">
+                            <p style="font-size: 13px; text-align: left; margin: 0; margin-left: 30px;">KAROSERI TIGER
+                                LOAD
+                            </p>
+                            <p
+                                style="font-size: 13px; text-align: left; margin: 0; margin-left: 40px; text-decoration: underline; margin-top: 30px">
+                                DJOHAN WAHYUDI</p>
+                        </div>
 
-                </div>
-                {{-- <hr> --}}
-                {{-- </td> --}}
-                <td>
-                    <div style="display: flex; justify-content: center; align-items: center;">
-                        <table style="text-align: center;">
-                            <tr>
-                                <td style="font-size: 13px; font-weight: lighter; ">PEMESAN</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 13px; font-weight: lighter; color:white">.</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 2px; font-weight: lighter; color:white">.</td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 13px; font-weight: lighter; text-decoration: underline;">
-                                    {{ strtoupper($pembelians->pelanggan->nama_pelanggan) }}
-                                </td>
-                            </tr>
-                        </table>
                     </div>
+                    {{-- <hr> --}}
+                    {{-- </td> --}}
+                    <td>
+                        <div style="display: flex; justify-content: center; align-items: center;">
+                            <table style="text-align: center;">
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter; ">PEMESAN</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter; color:white">.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 2px; font-weight: lighter; color:white">.</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 13px; font-weight: lighter; text-decoration: underline;">
+                                        {{ strtoupper($pembelians->pelanggan->nama_pelanggan) }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
 
-                </td>
-            </tr>
-        </table>
-        <div
-            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; border: 2px solid #000; margin-left: 20px; font-size: 10px;">
-            <table>
-                <tr>
-                    <td>1.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Harga sudah termasuk SRUT
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2.</td>
-                    <td>
-                        @if ($pembelians->kategori == 'PPN')
-                            <div style="margin-left: 10px">
-                                Harga sudah termasuk PPN
-                            </div>
-                        @else
-                            <div style="margin-left: 10px">
-                                Harga belum termasuk PPN
-                            </div>
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya
-                            tambahan.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Segala resiko yang timbul dikarenakan ukuran bak yang tidak sesuai standar dari
-                            Dinas Perhubungan sepenuhnya menjadi
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            tanggung jawab pemesan.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Kerusakan yang diakibatkan oleh kelalain / kesalahan operator <span
-                                style="text-decoration: underline;">bukan menjadi
-                                tanggung jawab Karoseri Tiger Load.</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>6.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Apabila terjadi pembatalan pemesanan oleh pihak pemesan, maka Uang Muka yang
-                            sudah
-                            masuk tidak dapat diambil
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            kembali ataupun diakumulasikan ke unit yang lain(jika pesanan lebih dari satu
-                            unit)
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>7.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Perhitungan pengerjaan dimulai setelah uang muka efektif diterima Karoseri.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Pesanan yang tidak segera diambil setelah konfirmasi barang jadi, maka pihak
-                            Karoseri tidak bertanggung jawab terhadap
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            segala kerusakan fisik yang timbul setelahnya.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>9.</td>
-                    <td>
-                        <div style="margin-left: 10px">
-                            Harga belum termasuk biaya KIR pertama.
-                        </div>
                     </td>
                 </tr>
             </table>
-        </div>
-    </table>
+            <div
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; border: 2px solid #000; margin-left: 20px; font-size: 10px;">
+                <table>
+                    <tr>
+                        <td>1.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Harga sudah termasuk SRUT
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2.</td>
+                        <td>
+                            @if ($pembelians->kategori == 'PPN')
+                                <div style="margin-left: 10px">
+                                    Harga sudah termasuk PPN
+                                </div>
+                            @else
+                                <div style="margin-left: 10px">
+                                    Harga belum termasuk PPN
+                                </div>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya
+                                tambahan.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Segala resiko yang timbul dikarenakan ukuran bak yang tidak sesuai standar dari
+                                Dinas Perhubungan sepenuhnya menjadi
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                tanggung jawab pemesan.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Kerusakan yang diakibatkan oleh kelalain / kesalahan operator <span
+                                    style="text-decoration: underline;">bukan menjadi
+                                    tanggung jawab Karoseri Tiger Load.</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Apabila terjadi pembatalan pemesanan oleh pihak pemesan, maka Uang Muka yang
+                                sudah
+                                masuk tidak dapat diambil
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                kembali ataupun diakumulasikan ke unit yang lain(jika pesanan lebih dari satu
+                                unit)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Perhitungan pengerjaan dimulai setelah uang muka efektif diterima Karoseri.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Pesanan yang tidak segera diambil setelah konfirmasi barang jadi, maka pihak
+                                Karoseri tidak bertanggung jawab terhadap
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                segala kerusakan fisik yang timbul setelahnya.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9.</td>
+                        <td>
+                            <div style="margin-left: 10px">
+                                Harga belum termasuk biaya KIR pertama.
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </table>
+    </div>
 </body>
-
 
 </html>
