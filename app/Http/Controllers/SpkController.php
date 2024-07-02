@@ -41,6 +41,6 @@ class SpkController extends Controller
 
         $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
 
-        return view('admin.surat_penawaran.qrcode_detail', compact('kendaraans', 'pembelians', 'spesifikasis'));
+        return view('admin.spk.qrcode_detail', compact('kendaraans', 'pembelians', 'spesifikasis'));
     }
 }

@@ -175,7 +175,7 @@
                                     <tr>
                                         <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
                                             style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 1.5, 1.5) !!}
+                                            {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_spk", 'QRCODE', 1.5, 1.5) !!}
                                         </td>
                                     </tr>
                                 </table>
@@ -207,7 +207,7 @@
                 <tr>
                     <td style="font-size: 13px; font-weight: lighter;"><span style="margin-left:30px">
                             Bersama ini kami
-                            sampaikan penawaran Karoseri Tiger Load dengan spesifikasi sebagai berikut :
+                            sampaikan pesanan Karoseri Tiger Load dengan spesifikasi sebagai berikut :
                         </span>
                     </td>
                 </tr>
@@ -486,7 +486,7 @@
             <table style="text-align: letf;">
                 <tr>
                     <td style="font-size: 13px; font-weight: lighter;"> <span style="margin-left:30px">Demikian surat
-                            penawaran ini kami
+                            pesanan ini kami
                             sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami</span></td>
                 </tr>
                 <tr>
@@ -567,7 +567,7 @@
                     <td>3.</td>
                     <td>
                         <div style="margin-left: 10px">
-                            Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya
+                            Adanya penambahan ukuran atau model diluar surat pesanan dikenakan biaya
                             tambahan.
                         </div>
                     </td>
