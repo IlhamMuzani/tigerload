@@ -221,7 +221,9 @@
                                     :
                                 </div>
                             </td>
-                            <td>- {{ $item->nama }} : {{ $item->keterangan }} {{ $item->jumlah }}</td>
+                            <td>- {{ $item->nama }} @if ($item->keterangan != null)
+                                    :
+                                @endif {{ $item->keterangan }} {{ $item->jumlah }}</td>
                         </tr>
                     @endforeach
 
