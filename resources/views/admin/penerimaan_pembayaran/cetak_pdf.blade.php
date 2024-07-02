@@ -116,7 +116,7 @@
                             <tr>
                                 <td data-toggle="modal" data-target="#modal-qrcode-{{ $cetakpdf->id }}"
                                     style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 2, 2) !!}
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 1.5, 1.5) !!}
                                 </td>
                             </tr>
                         </table>
@@ -247,7 +247,7 @@
                                 </tr>
                                 <tr style="text-align: center;">
                                     <table style="margin: 0 auto;">
-                                        <tr style="text-align: center;">
+                                        <tr style="text-align: center; color:white">
                                             <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
                                         </tr>
                                         <tr>
