@@ -385,7 +385,7 @@
                         </td>
                         <td style="font-weight: bold">
                             (
-                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
                             Rupiah )
                         </td>
                     </tr>
