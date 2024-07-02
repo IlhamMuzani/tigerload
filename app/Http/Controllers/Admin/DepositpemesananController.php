@@ -7,15 +7,16 @@ use App\Models\Pelanggan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Depositpemesanan;
-use App\Models\Spk;
+use App\Models\Perintah_kerja;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class DepositpemesananController extends Controller
 {
     public function index()
     {
-        $spks = Spk::where(['status' => 'posting', 'status_deposit' => null])->get();
+        $spks = Perintah_kerja::where(['status' => 'posting', 'status_deposit' => null])->get();
         return view('admin/depositpemesanan.create', compact('spks'));
     }
 
@@ -24,11 +25,11 @@ class DepositpemesananController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'spk_id' => 'required',
+                'perintah_kerja_id' => 'required',
                 'harga' => 'required',
             ],
             [
-                'spk_id.required' => 'Pilih Spk',
+                'perintah_kerja_id.required' => 'Pilih Perintah kerja',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -47,17 +48,20 @@ class DepositpemesananController extends Controller
             $request->all(),
             [
                 'kode_deposit' => $this->kode(),
-                'qrcode_deposit' => 'https://tigerload.id/deposit_pemesanan/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'status' => 'posting',
-
             ]
         ));
 
-        $spk = Spk::where('id', $deposits->spk_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
-        
+        $encryptedId = Crypt::encryptString($deposits->id);
+        $deposits->qrcode_deposit = 'https://tigerload.id/deposit_pemesanan/' . $encryptedId;
+        $deposits->save();
+
+
+        $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
+
         return view('admin.depositpemesanan.show', compact('deposits'));
     }
 

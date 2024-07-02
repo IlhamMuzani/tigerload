@@ -330,6 +330,16 @@
                 </tr>
 
                 @if ($pembelians->kategori == 'PPN')
+                    <?php
+                    // Calculate the increase and round it
+                    $harga_increase = round($pembelians->harga * 0.11);
+                    
+                    // Calculate the unit price with the rounded increase
+                    $harga_satuan = $pembelians->harga + $harga_increase;
+                    
+                    // Format the unit price for display
+                    $formatted_harga_satuan = number_format($harga_satuan, 0, ',', '.');
+                    ?>
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
@@ -355,7 +365,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold; font-size:13px">Rp.
-                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                            {{ number_format($harga_satuan, 0, ',', '.') }},-
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -370,14 +380,13 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
-                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                            {{ number_format($harga_satuan, 0, ',', '.') }},-
                             =
-                            {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            {{ number_format($harga_satuan * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td>
-
                         </td>
                         <td></td>
                         <td>
@@ -385,7 +394,7 @@
                         </td>
                         <td style="font-weight: bold">
                             (
-                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            {{ terbilang($harga_satuan * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
                             Rupiah )
                         </td>
                     </tr>
@@ -409,8 +418,11 @@
                         <td style="font-weight: bold">
                             {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
                             {{ number_format($pembelians->harga, 0, ',', '.') }}
-                            = {{ number_format($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
-                            ( {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }} Rupiah)
+                            =
+                            {{ number_format($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            (
+                            {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                            Rupiah)
                         </td>
                     </tr>
                 @endif
@@ -471,7 +483,7 @@
                     <tr>
                         <td style="font-size: 13px; font-weight: lighter;"> <span style="margin-left:30px">Demikian
                                 surat
-                                penawaran ini kami
+                                pesanan ini kami
                                 sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami</span></td>
                     </tr>
                     <tr>
@@ -553,7 +565,7 @@
                         <td>3.</td>
                         <td>
                             <div style="margin-left: 10px">
-                                Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya
+                                Adanya penambahan ukuran atau model diluar surat pesanan dikenakan biaya
                                 tambahan.
                             </div>
                         </td>
