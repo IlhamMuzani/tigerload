@@ -23,6 +23,7 @@ Route::post('register', [AuthController::class, 'registeruser']);
 Route::get('logout', [AuthController::class, 'logout']);
 Route::get('check-user', [HomeController::class, 'check_user']);
 Route::get('surat_penawaran/{kode}', [\App\Http\Controllers\SuratPenawaranController::class, 'detail']);
+Route::get('spk/{kode}', [\App\Http\Controllers\SpkController::class, 'detail']);
 Route::get('perintah_kerja/{kode}', [\App\Http\Controllers\PerintahkerjaController::class, 'detail']);
 Route::get('penerimaan_pembayaran/{kode}', [\App\Http\Controllers\PenerimaanpembayaranController::class, 'detail']);
 
