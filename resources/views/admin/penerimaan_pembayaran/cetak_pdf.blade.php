@@ -84,6 +84,18 @@
                         </table>
                     </div>
                 </td>
+                <td style="text-align: right; font-size: 13px;">
+                    <div style="margin-left:100px">
+                        <table>
+                            <tr>
+                                <td data-toggle="modal" data-target="#modal-qrcode-{{ $cetakpdf->id }}"
+                                    style="display: inline-block;">
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 1.5, 1.5) !!}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
             </tr>
         </table>
     </div>
@@ -110,7 +122,7 @@
                 <td style="font-size: 18px; padding-left:40px">
 
                 </td>
-                <td style="text-align: right; font-size: 13px;">
+                {{-- <td style="text-align: right; font-size: 13px;">
                     <div class="">
                         <table>
                             <tr>
@@ -121,11 +133,11 @@
                             </tr>
                         </table>
                     </div>
-                </td>
+                </td> --}}
             </tr>
         </table>
     </div>
-    <div style="margin-left: 20px; font-size: 13px;">
+    <div style="margin-left: 20px; margin-top:30px; font-size: 13px;">
         <table>
             <tr>
                 <td>Kode Pelanggan</td>
