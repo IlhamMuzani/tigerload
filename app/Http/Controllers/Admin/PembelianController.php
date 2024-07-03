@@ -11,6 +11,7 @@ use App\Models\Pembelian_ban;
 use App\Models\Pembelian_part;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Detail_barang;
 use App\Models\Detail_pembelian;
 use App\Models\Detail_pembelianpart;
 use App\Models\Detailpembelian;
@@ -198,7 +199,7 @@ class PembelianController extends Controller
         if ($transaksi) {
             foreach ($data_pembelians as $data_pesanan) {
                 // Create a new Detailpembelian
-                Detailpembelian::create([
+                $detailPembelian = Detailpembelian::create([
                     'pembelian_id' => $transaksi->id,
                     'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
@@ -211,10 +212,32 @@ class PembelianController extends Controller
                     'total' => $data_pesanan['total'],
                 ]);
 
-                // Increment the quantity of the barang
-                Barang::where('id', $data_pesanan['barang_id'])->increment('jumlah', $data_pesanan['jumlah']);
+                // Check if the Detail_barang already exists
+                $existingDetailBarang = Detail_barang::where('supplier_id', $request->supplier_id)
+                    ->where('barang_id', $data_pesanan['barang_id'])
+                    ->where('harga', $data_pesanan['harga'])
+                    ->first();
+
+                if ($existingDetailBarang) {
+                    // If exists, update the jumlah
+                    $existingDetailBarang->jumlah += $data_pesanan['jumlah'];
+                    $existingDetailBarang->save();
+                } else {
+                    // If not exists, create a new Detail_barang
+                    Detail_barang::create([
+                        'pembelian_id' => $transaksi->id,
+                        'detailpembelian_id' => $detailPembelian->id,
+                        'supplier_id' => $request->supplier_id,
+                        'barang_id' => $data_pesanan['barang_id'],
+                        'jumlah' => $data_pesanan['jumlah'],
+                        'harga' => $data_pesanan['harga'],
+                        'tanggal_awal' => $tanggal,
+                        'status' => 'posting',
+                    ]);
+                }
             }
         }
+
 
         $pembelians = Pembelian::find($transaksi_id);
 

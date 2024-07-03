@@ -52,5 +52,8 @@ class Supplier extends Model
         return $this->hasMany(pembelian::class);
     }
 
-
+    public function detail_barang()
+    {
+        return $this->hasMany(Detail_barang::class);
+    }
 }

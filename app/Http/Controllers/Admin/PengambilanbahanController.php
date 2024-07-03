@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Detail_barang;
 use App\Models\Detailpengambilan;
 use App\Models\Pengambilanbahan;
 use App\Models\Perintah_kerja;
@@ -53,22 +54,38 @@ class PengambilanbahanController extends Controller
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
                     'nama_barang.' . $i => 'required',
-                    'jumlah.' . $i => 'required',
+                    'jumlah.' . $i => 'required|numeric|min:1',
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Barang nomor " . $i + 1 . " belum dilengkapi!");
+                    array_push($error_pesanans, "Barang nomor " . ($i + 1) . " belum dilengkapi!");
+                    continue;
                 }
 
+                $barang_id = $request->barang_id[$i];
+                $kode_barang = $request->kode_barang[$i];
+                $nama_barang = $request->nama_barang[$i];
+                $jumlah = $request->jumlah[$i];
 
-                $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-                $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
-                $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
-                $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
+                // Validasi stok tersedia
+                $totalStokTersedia = Detail_barang::where('barang_id', $barang_id)
+                    ->sum('jumlah');
+                // return  $totalStokTersedia;
 
-                $data_pembelians->push(['nama_barang' => $nama_barang, 'kode_barang' => $kode_barang, 'barang_id' => $barang_id, 'jumlah' => $jumlah]);
+                if ($jumlah > $totalStokTersedia) {
+                    array_push($error_pesanans, "Stok tidak mencukupi untuk barang " . $nama_barang . " dengan kode barang " . $kode_barang . ". Hanya tersedia " . $totalStokTersedia . " unit.");
+                    continue;
+                }
+
+                $data_pembelians->push([
+                    'nama_barang' => $nama_barang,
+                    'kode_barang' => $kode_barang,
+                    'barang_id' => $barang_id,
+                    'jumlah' => $jumlah
+                ]);
             }
         } else {
+            // Tambahkan logika untuk menangani jika tidak ada barang_id
         }
 
         if ($error_pelanggans || $error_pesanans) {
@@ -78,7 +95,6 @@ class PengambilanbahanController extends Controller
                 ->with('error_pesanans', $error_pesanans)
                 ->with('data_pembelians', $data_pembelians);
         }
-
         // format tanggal indo
 
         $kode = $this->kode();
@@ -108,25 +124,241 @@ class PengambilanbahanController extends Controller
 
         if ($transaksi) {
             foreach ($data_pembelians as $data_pesanan) {
-                $sparepart = Barang::find($data_pesanan['barang_id']);
-                if ($sparepart) {
-                    // Mengurangkan jumlah sparepart yang dipilih dengan jumlah yang dikirim dalam request
-                    $jumlah_sparepart = $sparepart->jumlah - $data_pesanan['jumlah'];
+                $jumlahPengambilan = $data_pesanan['jumlah'];
+                $barangId = $data_pesanan['barang_id'];
+                $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
+                $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
 
-                    // Memperbarui jumlah sparepart
-                    $sparepart->update(['jumlah' => $jumlah_sparepart]);
+                // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
+                $detailBarangs = Detail_barang::where('barang_id', $barangId)
+                    ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
+                    ->orderBy('created_at') // Urutkan sesuai kebutuhan
+                    ->get();
 
-                    Detailpengambilan::create([
-                        'pengambilanbahan_id' => $transaksi->id,
-                        'barang_id' => $data_pesanan['barang_id'],
-                        'kode_barang' => $data_pesanan['kode_barang'],
-                        'nama_barang' => $data_pesanan['nama_barang'],
-                        'tanggal_awal' => Carbon::now('Asia/Jakarta'),
-                        'jumlah' => $data_pesanan['jumlah'],
-                    ]);
+                $jumlahTersediaPertama = $detailBarangs->first()->jumlah;
+
+                foreach ($detailBarangs as $detailBarang) {
+                    // Ambil jumlah yang tersedia pada Detail_barang saat ini
+                    $jumlahTersedia = $detailBarang->jumlah;
+                    // Tentukan jumlah yang akan diambil dari Detail_barang ini
+                    $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
+                    // Kurangi jumlah pada Detail_barang
+                    $detailBarang->jumlah -= $jumlahAmbilDariDetail;
+                    $detailBarang->save();
+                    // Hitung total harga dari detail barang ini
+                    $harga = $detailBarang->harga * $jumlahAmbilDariDetail;
+                    $totalHarga += $harga;
+                    // Akumulasikan jumlah yang diambil
+                    $jumlahTotalAmbil += $jumlahAmbilDariDetail;
+                    // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
+                    $jumlahPengambilan -= $jumlahAmbilDariDetail;
+                    // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
+                    if ($jumlahPengambilan <= 0) {
+                        break;
+                    }
                 }
+
+                if ($jumlahTersediaPertama >= $data_pesanan['jumlah']) {
+                    // Jika stok di detail_barang pertama sudah cukup
+                    $detailBarang = $detailBarangs->first();
+                    $hargaRataRata = $detailBarang->harga * $jumlahTotalAmbil;
+                } else {
+                    // Jika membutuhkan lebih dari satu detail_barang
+                    $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
+                    // Bulatkan harga rata-rata ke kelipatan 1000
+                    $kelipatan = 1000;
+                    $hargaRataRataBulat = round($hargaRataRata / $kelipatan) * $kelipatan;
+                    if ($hargaRataRata - ($hargaRataRataBulat - $kelipatan) < $kelipatan / 2) {
+                        $hargaRataRataBulat = floor($hargaRataRata / $kelipatan) * $kelipatan;
+                    } else {
+                        $hargaRataRataBulat = ceil($hargaRataRata / $kelipatan) * $kelipatan;
+                    }
+                    $hargaRataRata = $hargaRataRataBulat;
+                }
+                // Buat Detailpengambilan
+                Detailpengambilan::create([
+                    'pengambilanbahan_id' => $transaksi->id,
+                    'barang_id' => $barangId,
+                    'kode_barang' => $data_pesanan['kode_barang'],
+                    'nama_barang' => $data_pesanan['nama_barang'],
+                    'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+                    'jumlah' => $data_pesanan['jumlah'],
+                    'harga' => $hargaRataRata,
+                ]);
             }
         }
+
+
+        // belum bener jika hanya satu detail barang
+        // if ($transaksi) {
+        //     foreach ($data_pembelians as $data_pesanan) {
+        //         $jumlahPengambilan = $data_pesanan['jumlah'];
+        //         $barangId = $data_pesanan['barang_id'];
+        //         $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
+        //         $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
+
+        //         // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
+        //         $detailBarangs = Detail_barang::where('barang_id', $barangId)
+        //             ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
+        //             ->orderBy('created_at') // Urutkan sesuai kebutuhan
+        //             ->get();
+
+        //         foreach ($detailBarangs as $detailBarang) {
+        //             // Ambil jumlah yang tersedia pada Detail_barang saat ini
+        //             $jumlahTersedia = $detailBarang->jumlah;
+
+        //             // Tentukan jumlah yang akan diambil dari Detail_barang ini
+        //             $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
+
+        //             // Kurangi jumlah pada Detail_barang
+        //             $detailBarang->jumlah -= $jumlahAmbilDariDetail;
+        //             $detailBarang->save();
+
+        //             // Hitung total harga dari detail barang ini
+        //             $totalHarga += $detailBarang->harga * $jumlahAmbilDariDetail;
+
+        //             // Akumulasikan jumlah yang diambil
+        //             $jumlahTotalAmbil += $jumlahAmbilDariDetail;
+
+        //             // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
+        //             $jumlahPengambilan -= $jumlahAmbilDariDetail;
+
+        //             // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
+        //             if ($jumlahPengambilan <= 0) {
+        //                 break;
+        //             }
+        //         }
+
+        //         // Hitung harga rata-rata berdasarkan total harga dan jumlah total yang diambil
+        //         if ($jumlahTotalAmbil > 0) {
+        //             $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
+        //         } else {
+        //             $hargaRataRata = 0; // Jika tidak ada yang diambil, harga rata-rata dianggap 0
+        //         }
+
+        //         // Buat Detailpengambilan
+        //         Detailpengambilan::create([
+        //             'pengambilanbahan_id' => $transaksi->id,
+        //             'barang_id' => $barangId,
+        //             'kode_barang' => $data_pesanan['kode_barang'],
+        //             'nama_barang' => $data_pesanan['nama_barang'],
+        //             'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+        //             'jumlah' => $data_pesanan['jumlah'],
+        //             'harga' => $hargaRataRata, // Masukkan harga rata-rata yang sudah dihitung
+        //         ]);
+        //     }
+        // }
+
+
+        // if ($transaksi) {
+        //     foreach ($data_pembelians as $data_pesanan) {
+        //         $jumlahPengambilan = $data_pesanan['jumlah'];
+        //         $barangId = $data_pesanan['barang_id'];
+
+        //         // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
+        //         $detailBarangs = Detail_barang::where('barang_id', $barangId)
+        //             ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
+        //             ->orderBy('created_at') // Urutkan sesuai kebutuhan
+        //             ->get();
+
+        //         $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
+        //         $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
+
+        //         foreach ($detailBarangs as $detailBarang) {
+        //             // Ambil jumlah yang tersedia pada Detail_barang saat ini
+        //             $jumlahTersedia = $detailBarang->jumlah;
+
+        //             // Tentukan jumlah yang akan diambil dari Detail_barang ini
+        //             $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
+
+        //             // Kurangi jumlah pada Detail_barang
+        //             $detailBarang->jumlah -= $jumlahAmbilDariDetail;
+        //             $detailBarang->save();
+
+        //             // Hitung total harga dari detail barang ini
+        //             $totalHarga += $detailBarang->harga * $jumlahAmbilDariDetail;
+
+        //             // Akumulasikan jumlah yang diambil
+        //             $jumlahTotalAmbil += $jumlahAmbilDariDetail;
+
+        //             // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
+        //             $jumlahPengambilan -= $jumlahAmbilDariDetail;
+
+        //             // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
+        //             if ($jumlahPengambilan <= 0) {
+        //                 break;
+        //             }
+        //         }
+
+        //         // Hitung harga rata-rata berdasarkan total harga dan jumlah total yang diambil
+        //         $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
+
+        //         // Bulatkan harga rata-rata ke bilangan bulat atau presisi tertentu
+        //         $hargaRataRataBulat = round($hargaRataRata, 2); // Contoh untuk membulatkan ke 2 desimal
+
+        //         // Buat Detailpengambilan
+        //         Detailpengambilan::create([
+        //             'pengambilanbahan_id' => $transaksi->id,
+        //             'barang_id' => $barangId,
+        //             'kode_barang' => $data_pesanan['kode_barang'],
+        //             'nama_barang' => $data_pesanan['nama_barang'],
+        //             'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+        //             'jumlah' => $data_pesanan['jumlah'],
+        //             'harga' => $hargaRataRataBulat, // Masukkan harga rata-rata yang sudah dihitung dan dibulatkan
+        //         ]);
+        //     }
+        // }
+
+
+
+        // sudah benar hanya kurang nilai harga rata2 
+        // if ($transaksi) {
+        //     foreach ($data_pembelians as $data_pesanan) {
+        //         $jumlahPengambilan = $data_pesanan['jumlah'];
+        //         $barangId = $data_pesanan['barang_id'];
+
+        //         // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
+        //         $detailBarangs = Detail_barang::where('barang_id', $barangId)
+        //             ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
+        //             ->orderBy('created_at') // Urutkan sesuai kebutuhan
+        //             ->get();
+
+        //         foreach ($detailBarangs as $detailBarang) {
+        //             // Ambil jumlah yang tersedia pada Detail_barang saat ini
+        //             $jumlahTersedia = $detailBarang->jumlah;
+
+        //             // Tentukan jumlah yang akan diambil dari Detail_barang ini
+        //             $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
+
+        //             // Kurangi jumlah pada Detail_barang
+        //             $detailBarang->jumlah -= $jumlahAmbilDariDetail;
+        //             $detailBarang->save();
+
+        //             $harga = $detailBarang->harga * $jumlahAmbilDariDetail;
+
+        //             // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
+        //             $jumlahPengambilan -= $jumlahAmbilDariDetail;
+
+        //             // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
+        //             if ($jumlahPengambilan <= 0) {
+        //                 break;
+        //             }
+        //         }
+
+        //         // Buat Detailpengambilan
+        //         Detailpengambilan::create([
+        //             'pengambilanbahan_id' => $transaksi->id,
+        //             'barang_id' => $barangId,
+        //             'kode_barang' => $data_pesanan['kode_barang'],
+        //             'nama_barang' => $data_pesanan['nama_barang'],
+        //             'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+        //             'jumlah' => $data_pesanan['jumlah'] - $jumlahPengambilan,
+        //             'harga' => $harga, // Masukkan harga yang sudah dihitung
+        //         ]);
+        //     }
+        // }
+
+
 
         $pengambilans = Pengambilanbahan::find($transaksi_id);
 

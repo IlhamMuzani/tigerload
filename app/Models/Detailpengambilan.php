@@ -17,9 +17,11 @@ class Detailpengambilan extends Model
     protected $fillable = [
         'barang_id',
         'pengambilanbahan_id',
+        'detail',
         'kode_barang',
         'nama_barang',
         'jumlah',
+        'harga',
         'tanggal_awal',
         'tanggal_akhir',
     ];

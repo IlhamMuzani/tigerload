@@ -133,7 +133,7 @@
                             <br>
                         </td>
                         <td style="font-size: 18px; padding-left:40px">
-                            <span class="info-item" style="font-weight: bold">SURAT PESANAN</span>
+                            <span class="info-item" style="font-weight: bold">SURAT PENAWARAN</span>
                             <br>
                         </td>
                         <td style="text-align: right; font-size: 13px;">

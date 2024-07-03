@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Detail_barang;
 use App\Models\Detailpembelian;
 use App\Models\Detailpengambilan;
 use App\Models\Pembelian;
@@ -106,6 +107,17 @@ class InqueryPengambilanbahanController extends Controller
                 $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
                 $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
+
+
+                // Validasi stok tersedia
+                $totalStokTersedia = Detail_barang::where('barang_id', $barang_id)
+                    ->sum('jumlah');
+                // return  $totalStokTersedia;
+
+                if ($jumlah > $totalStokTersedia) {
+                    array_push($error_pesanans, "Stok tidak mencukupi untuk barang " . $nama_barang . " dengan kode barang " . $kode_barang . ". Hanya tersedia " . $totalStokTersedia . " unit.");
+                    continue;
+                }
 
                 $data_pembelians->push(['detail_id' => $request->detail_ids[$i] ?? null, 'barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama_barang' => $nama_barang, 'jumlah' => $jumlah]);
             }
@@ -227,16 +239,34 @@ class InqueryPengambilanbahanController extends Controller
         $ban = Pengambilanbahan::where('id', $id)->first();
         $detailpenggantianoli = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
 
-
         foreach ($detailpenggantianoli as $detail) {
             $sparepartId = $detail->barang_id;
-            $sparepart = Barang::find($sparepartId);
+            $jumlahDiambil = $detail->jumlah;
 
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $sparepart->jumlah + $detail->jumlah;
-            $sparepart->update(['jumlah' => $newQuantity]);
+            // Ambil semua detail barang berdasarkan barang_id
+            $detailBarangs = Detail_barang::where('barang_id', $sparepartId)
+                ->orderBy('created_at') // Urutkan jika diperlukan
+                ->get();
+
+            $jumlahSudahDikembalikan = 0;
+
+            foreach ($detailBarangs as $detailBarang) {
+                if ($jumlahSudahDikembalikan >= $jumlahDiambil) {
+                    break; // Keluar dari loop jika jumlah yang dikembalikan sudah mencukupi
+                }
+
+                // Tentukan jumlah yang akan dikembalikan ke Detail_barang ini
+                $jumlahKembali = min($jumlahDiambil - $jumlahSudahDikembalikan, $detailBarang->jumlah);
+
+                // Tambahkan jumlah yang dikembalikan ke stok
+                $detailBarang->jumlah += $jumlahKembali;
+                $detailBarang->save();
+
+                $jumlahSudahDikembalikan += $jumlahKembali;
+            }
         }
 
+        // Update status pengambilan bahan menjadi 'unpost'
         $ban->update([
             'status' => 'unpost'
         ]);
@@ -244,22 +274,27 @@ class InqueryPengambilanbahanController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
+
     public function postingpengambilan($id)
     {
         $ban = Pengambilanbahan::where('id', $id)->first();
-
         $detailpenggantianoli = Detailpengambilan::where('pengambilanbahan_id', $id)->get();
-
 
         foreach ($detailpenggantianoli as $detail) {
             $sparepartId = $detail->barang_id;
-            $sparepart = Barang::find($sparepartId);
+            $jumlahDiambil = $detail->jumlah;
 
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $sparepart->jumlah - $detail->jumlah;
-            $sparepart->update(['jumlah' => $newQuantity]);
+            // Ambil detail barang berdasarkan barang_id
+            $detailBarang = Detail_barang::where('barang_id', $sparepartId)->first();
+
+            if ($detailBarang) {
+                // Tambahkan jumlah yang diambil kembali ke stok
+                $detailBarang->jumlah -= $jumlahDiambil;
+                $detailBarang->save();
+            }
         }
 
+        // Update status pengambilan bahan menjadi 'unpost'
         $ban->update([
             'status' => 'posting'
         ]);

@@ -236,8 +236,8 @@
                             <div class="form-group">
                                 <label for="nama_karoseri">Harga</label>
                                 <!-- /.card-header -->
-                                <input type="text" class="form-control" id="harga" readonly name="harga"
-                                    placeholder="" value="{{ old('harga') }}">
+                                <input type="text" class="form-control" id="harga_spk" readonly name="harga_spk"
+                                    placeholder="" value="{{ old('harga_spk') }}">
                             </div>
 
                             <div class="form-group">
@@ -693,7 +693,7 @@
             document.getElementById('aksesoris').value = Aksesoris;
 
             var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
-            document.getElementById('harga').value = formattedNominal;
+            document.getElementById('harga_spk').value = formattedNominal;
 
             // Close the modal (if needed)
             $('#tablepenawaran').modal('hide');

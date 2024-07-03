@@ -67,25 +67,34 @@
                                     <option value="barangnon">Barang Non Besi</option>
                                 </select>
                             </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="created_at">Show All</label>
+                                <button id="toggle-all" type="button" class="btn btn-info btn-block">
+                                    All Toggle Detail
+                                </button>
+                            </div>
                         </div>
                     </form>
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
+                                <th>Kode Barang</th>
                                 <th>Nama Barang</th>
                                 <th>Ukuran</th>
                                 {{-- <th>Harga</th> --}}
                                 <th class="text-center">Qr Code</th>
-                                <th class="text-center" width="50">Opsi</th>
+                                <th class="text-center" width="120">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($barangs as $barang)
-                                <tr>
+                            @foreach ($barangs as $index => $barang)
+                                <tr data-toggle="collapse" data-target="#barang-{{ $index }}"
+                                    class="accordion-toggle" style="background: rgb(240, 242, 246)">
                                     <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td>{{ $barang->kode_barang }}</td>
                                     <td>{{ $barang->nama_barang }}</td>
-                                    <td>{{ $barang->jumlah }}</td>
+                                    <td>{{ $barang->detail_barang->where('status', 'posting')->sum('jumlah') }}</td>
                                     {{-- <td>{{ $barang->harga }}</td> --}}
                                     <td data-toggle="modal" data-target="#modal-qrcode-{{ $barang->id }}"
                                         style="text-align: center;">
@@ -102,6 +111,34 @@
                                             data-target="#modal-hapus-{{ $barang->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        <button class="btn btn-info btn-sm" data-toggle="collapse"
+                                            data-target="#barang-{{ $index }}"><i class="fas fa-eye"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7"> <!-- Gabungkan kolom untuk detail -->
+                                        <div id="barang-{{ $index }}" class="collapse">
+                                            <table class="table table-sm" style="margin: 0;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nama Supplier</th>
+                                                        <th>Tanggal Pembelian</th>
+                                                        <th>Harga</th>
+                                                        <th>Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($barang->detail_barang as $item)
+                                                        <tr>
+                                                            <td>{{ $item->supplier->nama_supp }}</td>
+                                                            <td>{{ $item->tanggal_awal }}</td>
+                                                            <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
+                                                            <td>{{ $item->jumlah }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="modal-hapus-{{ $barang->id }}">
@@ -185,6 +222,35 @@
                     default:
                         // Handle other cases or do nothing
                         break;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var toggleAll = $("#toggle-all");
+            var isExpanded = false; // Status untuk melacak apakah semua detail telah dibuka
+
+            toggleAll.click(function() {
+                if (isExpanded) {
+                    $(".collapse").collapse("hide");
+                    toggleAll.text("All Toggle Detail");
+                    isExpanded = false;
+                } else {
+                    $(".collapse").collapse("show");
+                    toggleAll.text("All Close Detail");
+                    isExpanded = true;
+                }
+            });
+
+            // Event listener untuk mengubah status jika ada interaksi manual
+            $(".accordion-toggle").click(function() {
+                var target = $(this).data("target");
+                if ($("#" + target).hasClass("show")) {
+                    $("#" + target).collapse("hide");
+                } else {
+                    $("#" + target).collapse("show");
                 }
             });
         });

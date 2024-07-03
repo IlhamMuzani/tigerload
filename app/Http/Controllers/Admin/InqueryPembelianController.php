@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Detail_barang;
 use App\Models\Detailpembelian;
 use App\Models\Marketing;
 use App\Models\Merek;
@@ -180,7 +181,7 @@ class InqueryPembelianController extends Controller
                 // Update Detailpembelian
                 Detailpembelian::where('id', $detailId)->update([
                     'pembelian_id' => $transaksi->id,
-                    'barang_id' =>  $data_pesanan['barang_id'],
+                    'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
                     'satuan' => $data_pesanan['satuan'],
@@ -190,6 +191,32 @@ class InqueryPembelianController extends Controller
                     'diskon' => $data_pesanan['diskon'],
                     'total' => $data_pesanan['total'],
                 ]);
+
+                // Check if the Detail_barang already exists with the updated values
+                $existingDetailBarang = Detail_barang::where('supplier_id', $request->supplier_id)
+                    ->where('barang_id', $data_pesanan['barang_id'])
+                    ->where('harga', $data_pesanan['harga'])
+                    ->first();
+
+                if ($existingDetailBarang) {
+                    // Update the jumlah
+                    $existingDetailBarang->jumlah += $data_pesanan['jumlah'];
+                    $existingDetailBarang->save();
+
+                    // Update status menjadi 'posting'
+                    $existingDetailBarang->update(['status' => 'posting']);
+                } else {
+                    Detail_barang::create([
+                        'pembelian_id' => $transaksi->id,
+                        'detailpembelian_id' => $detailId,
+                        'supplier_id' => $request->supplier_id,
+                        'barang_id' => $data_pesanan['barang_id'],
+                        'jumlah' => $data_pesanan['jumlah'],
+                        'harga' => $data_pesanan['harga'],
+                        'tanggal_awal' => $tanggal,
+                        'status' => 'posting',
+                    ]);
+                }
             } else {
                 // Check if the detail already exists
                 $existingDetail = Detailpembelian::where([
@@ -207,7 +234,7 @@ class InqueryPembelianController extends Controller
 
                 // If the detail does not exist, create a new one
                 if (!$existingDetail) {
-                    Detailpembelian::create([
+                    $detailPembelian = Detailpembelian::create([
                         'pembelian_id' => $transaksi->id,
                         'barang_id' =>  $data_pesanan['barang_id'],
                         'kode_barang' => $data_pesanan['kode_barang'],
@@ -220,16 +247,130 @@ class InqueryPembelianController extends Controller
                         'total' => $data_pesanan['total'],
                     ]);
                 }
-            }
 
-            // Increment the quantity of the barang
-            Barang::where('id', $data_pesanan['barang_id'])->increment('jumlah', $data_pesanan['jumlah']);
+                // Check if the Detail_barang already exists
+                $existingDetailBarang = Detail_barang::where('supplier_id', $request->supplier_id)
+                    ->where('barang_id', $data_pesanan['barang_id'])
+                    ->where('harga', $data_pesanan['harga'])
+                    ->first();
+
+                if ($existingDetailBarang) {
+                    // If exists, update the jumlah
+                    $existingDetailBarang->jumlah += $data_pesanan['jumlah'];
+                    $existingDetailBarang->save();
+                } else {
+                    // If not exists, create a new Detail_barang
+                    Detail_barang::create([
+                        'pembelian_id' => $transaksi->id,
+                        'detailpembelian_id' => $detailPembelian->id,
+                        'supplier_id' => $request->supplier_id,
+                        'barang_id' => $data_pesanan['barang_id'],
+                        'jumlah' => $data_pesanan['jumlah'],
+                        'harga' => $data_pesanan['harga'],
+                        'tanggal_awal' => $tanggal,
+                        'status' => 'posting',
+                    ]);
+                }
+            }
         }
+
+        // sudah benar kurang hapus saat update 
+        // foreach ($data_pembelians as $data_pesanan) {
+        //     $detailId = $data_pesanan['detail_id'];
+
+        //     if ($detailId) {
+        //         // Update Detailpembelian
+        //         Detailpembelian::where('id', $detailId)->update([
+        //             'pembelian_id' => $transaksi->id,
+        //             'barang_id' => $data_pesanan['barang_id'],
+        //             'kode_barang' => $data_pesanan['kode_barang'],
+        //             'nama_barang' => $data_pesanan['nama_barang'],
+        //             'satuan' => $data_pesanan['satuan'],
+        //             'jumlah' => $data_pesanan['jumlah'],
+        //             'harga' => $data_pesanan['harga'],
+        //             'harga_jual' => $data_pesanan['harga_jual'],
+        //             'diskon' => $data_pesanan['diskon'],
+        //             'total' => $data_pesanan['total'],
+        //         ]);
+
+        //         // Update Detail_barang if exists
+        //         $existingDetailBarang = Detail_barang::where('supplier_id', $request->supplier_id)
+        //             ->where('barang_id', $data_pesanan['barang_id'])
+        //             ->where('harga', $data_pesanan['harga'])
+        //             ->first();
+
+        //         if ($existingDetailBarang) {
+        //             // Update the jumlah
+        //             $existingDetailBarang->jumlah += $data_pesanan['jumlah'];
+        //             $existingDetailBarang->save();
+
+        //             $existingDetailBarang->update(['status' => 'posting']);
+        //         }
+        //         // No need to create if not found, as per your requirement
+        //     } else {
+        //         // Check if the detail already exists
+        //         $existingDetail = Detailpembelian::where([
+        //             'pembelian_id' => $transaksi->id,
+        //             'barang_id' =>  $data_pesanan['barang_id'],
+        //             'kode_barang' => $data_pesanan['kode_barang'],
+        //             'nama_barang' => $data_pesanan['nama_barang'],
+        //             'satuan' => $data_pesanan['satuan'],
+        //             'jumlah' => $data_pesanan['jumlah'],
+        //             'harga' => $data_pesanan['harga'],
+        //             'harga_jual' => $data_pesanan['harga_jual'],
+        //             'diskon' => $data_pesanan['diskon'],
+        //             'total' => $data_pesanan['total'],
+        //         ])->first();
+
+        //         // If the detail does not exist, create a new one
+        //         if (!$existingDetail) {
+        //             $detailPembelian = Detailpembelian::create([
+        //                 'pembelian_id' => $transaksi->id,
+        //                 'barang_id' =>  $data_pesanan['barang_id'],
+        //                 'kode_barang' => $data_pesanan['kode_barang'],
+        //                 'nama_barang' => $data_pesanan['nama_barang'],
+        //                 'satuan' => $data_pesanan['satuan'],
+        //                 'jumlah' => $data_pesanan['jumlah'],
+        //                 'harga' => $data_pesanan['harga'],
+        //                 'harga_jual' => $data_pesanan['harga_jual'],
+        //                 'diskon' => $data_pesanan['diskon'],
+        //                 'total' => $data_pesanan['total'],
+        //             ]);
+        //         }
+
+        //         // Check if the Detail_barang already exists
+        //         $existingDetailBarang = Detail_barang::where('supplier_id', $request->supplier_id)
+        //             ->where('barang_id', $data_pesanan['barang_id'])
+        //             ->where('harga', $data_pesanan['harga'])
+        //             ->first();
+
+        //         if ($existingDetailBarang) {
+        //             // If exists, update the jumlah
+        //             $existingDetailBarang->jumlah += $data_pesanan['jumlah'];
+        //             $existingDetailBarang->save();
+        //         } else {
+        //             // If not exists, create a new Detail_barang
+        //             Detail_barang::create([
+        //                 'pembelian_id' => $transaksi->id,
+        //                 'detailpembelian_id' => $detailPembelian->id,
+        //                 'supplier_id' => $request->supplier_id,
+        //                 'barang_id' => $data_pesanan['barang_id'],
+        //                 'jumlah' => $data_pesanan['jumlah'],
+        //                 'harga' => $data_pesanan['harga'],
+        //                 'tanggal_awal' => $tanggal,
+        //                 'status' => 'posting',
+        //             ]);
+        //         }
+        //     }
+        // }
 
 
         $pembelians = Pembelian::find($transaksi_id);
 
         $parts = Detailpembelian::where('pembelian_id', $pembelians->id)->get();
+        Detail_barang::where('pembelian_id', $pembelians->id)
+            ->where('status', 'unpost')
+            ->delete();
 
         return view('admin.inquerypembelian.show', compact('parts', 'pembelians'));
     }
@@ -237,53 +378,83 @@ class InqueryPembelianController extends Controller
 
     public function unpostpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
+        $pembelian = Pembelian::findOrFail($id);
         $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
 
         foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
+            // Cari Detail_barang yang sesuai
+            $existingDetailBarang = Detail_barang::where('supplier_id', $pembelian->supplier_id)
+                ->where('barang_id', $detail->barang_id)
+                ->where('harga', $detail->harga)
+                ->first();
 
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah - $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
+            if ($existingDetailBarang) {
+                // Kurangi jumlahnya
+                $existingDetailBarang->jumlah -= $detail->jumlah;
+
+                // Simpan perubahan
+                $existingDetailBarang->save();
+            }
         }
-        $pembelian->update([
-            'status' => 'unpost'
-        ]);
 
-        return back()->with('success', 'Berhasil');
+        foreach ($detailpembelian as $detail) {
+            // Cari Detail_barang yang sesuai
+            $existingDetailBarang = Detail_barang::where('supplier_id', $pembelian->supplier_id)
+                ->where('barang_id', $detail->barang_id)
+                ->where('harga', $detail->harga)
+                ->where('detailpembelian_id', $detail->id)
+                ->first();
+
+            if ($existingDetailBarang) {
+                $existingDetailBarang->update(['status' => 'unpost']);
+            }
+        }
+
+        // Update status pembelian menjadi 'unpost'
+        $pembelian->update(['status' => 'unpost']);
+
+        return back()->with('success', 'Pembelian berhasil di-unpost.');
     }
+
 
     public function postingpembelian($id)
     {
-        $pembelian = Pembelian::where('id', $id)->first();
+        $pembelian = Pembelian::findOrFail($id);
         $detailpembelian = Detailpembelian::where('pembelian_id', $id)->get();
 
         foreach ($detailpembelian as $detail) {
-            $barangId = $detail->barang_id;
-            $barang = Barang::find($barangId);
-
-            // Add the quantity back to the stock in the Sparepart record
-            $newQuantity = $barang->jumlah + $detail->jumlah;
-            $barang->update(['jumlah' => $newQuantity]);
+            // Cari Detail_barang yang sesuai
+            $existingDetailBarang = Detail_barang::where('supplier_id', $pembelian->supplier_id)
+                ->where('barang_id', $detail->barang_id)
+                ->where('harga', $detail->harga)
+                ->first();
+            if ($existingDetailBarang) {
+                // Tambahkan jumlahnya
+                $existingDetailBarang->jumlah += $detail->jumlah;
+                // Simpan perubahan
+                $existingDetailBarang->save();
+            }
         }
-        $pembelian->update([
-            'status' => 'posting'
-        ]);
 
-        return back()->with('success', 'Berhasil');
+        foreach ($detailpembelian as $detail) {
+            // Cari Detail_barang yang sesuai
+            $existingDetailBarang = Detail_barang::where('supplier_id', $pembelian->supplier_id)
+                ->where('barang_id', $detail->barang_id)
+                ->where('harga', $detail->harga)
+                ->where('detailpembelian_id', $detail->id)
+                ->first();
+
+            if ($existingDetailBarang) {
+                $existingDetailBarang->update(['status' => 'posting']);
+            }
+        }
+
+        // Update status pembelian menjadi 'posting'
+        $pembelian->update(['status' => 'posting']);
+
+        return back()->with('success', 'Pembelian berhasil di-posting kembali.');
     }
 
-    public function destroy($id)
-    {
-        $pembelian = Pembelian::find($id);
-        $pembelian->detail_pembelian()->delete();
-        $pembelian->delete();
-
-
-        return redirect('admin/inquery_pembelian')->with('success', 'Berhasil menghapus pembelian');
-    }
 
     public function hapuspembelian($id)
     {
