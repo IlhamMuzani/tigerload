@@ -370,5 +370,9 @@
     </table>
     <br>
 </body>
+<div class="container">
+    <a href="{{ url('admin/inquery_pengambilanbahan') }}" class="blue-button">Kembali</a>
+    <a href="{{ url('admin/perhitungan_bahanbaku/cetak-pdf/' . $pengambilans->id) }}" class="blue-button">Cetak</a>
+</div>
 
 </html>

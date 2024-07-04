@@ -419,6 +419,7 @@
     request()->is('admin/inquery_pengeluarankaskecil*') ||
     request()->is('admin/inquery_penerimaanpembayaran*') ||
     request()->is('admin/inquery_perintahkerja*') ||
+    request()->is('admin/inquery_perhitunganbahanbaku*') ||
     request()->is('admin/inquery_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -439,6 +440,7 @@
         request()->is('admin/inquery_pengeluarankaskecil*') ||
         request()->is('admin/inquery_penerimaanpembayaran*') ||
         request()->is('admin/inquery_perintahkerja*') ||
+        request()->is('admin/inquery_perhitunganbahanbaku*') ||
         request()->is('admin/inquery_penjualan*')
             ? 'active'
             : '' }}">
@@ -575,6 +577,17 @@
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Pengambilan -<br>
                         <span style="margin-left: 32px">Bahan Baku</span>
+                    </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery pengambilan bahan baku'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_perhitunganbahanbaku') }}"
+                    class="nav-link {{ request()->is('admin/inquery_perhitunganbahanbaku*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Perhitungan-<br>
+                        <span style="margin-left: 32px">Pengambilan Bahan Baku</span>
                     </p>
                 </a>
             </li>

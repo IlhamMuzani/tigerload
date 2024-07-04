@@ -202,7 +202,9 @@ class InqueryPengambilanbahanController extends Controller
                     if ($jumlahTersediaPertama >= $data_pesanan['jumlah'] && $jumlahTotalAmbil > 0) {
                         // Jika stok di detail_barang pertama sudah cukup
                         $detailBarang = $detailBarangs->first();
-                        $hargaRataRata = $detailBarang->harga * $jumlahTotalAmbil;
+                        $hargaRataRata = $detailBarang->harga;
+                        $hargaRataRatatotal = $detailBarang->harga * $jumlahTotalAmbil;
+
                     } else {
                         // Jika membutuhkan lebih dari satu detail_barang
                         $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
@@ -215,6 +217,7 @@ class InqueryPengambilanbahanController extends Controller
                             $hargaRataRataBulat = ceil($hargaRataRata / $kelipatan) * $kelipatan;
                         }
                         $hargaRataRata = $hargaRataRataBulat;
+                        $hargaRataRatatotal = $hargaRataRataBulat * $jumlahTotalAmbil;
                     }
 
                     Detailpengambilan::where('id', $detailId)->update([
@@ -226,6 +229,7 @@ class InqueryPengambilanbahanController extends Controller
                         'nama_barang' => $data_pesanan['nama_barang'],
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => $hargaRataRata,
+                        'total' => $hargaRataRatatotal,
                     ]);
                 }
             } else {
@@ -280,7 +284,9 @@ class InqueryPengambilanbahanController extends Controller
                     if ($jumlahTersediaPertama >= $data_pesanan['jumlah'] && $jumlahTotalAmbil > 0) {
                         // Jika stok di detail_barang pertama sudah cukup
                         $detailBarang = $detailBarangs->first();
-                        $hargaRataRata = $detailBarang->harga * $jumlahTotalAmbil;
+                        $hargaRataRata = $detailBarang->harga;
+                        $hargaRataRatatotal = $detailBarang->harga * $jumlahTotalAmbil;
+                        
                     } else {
                         // Jika membutuhkan lebih dari satu detail_barang
                         $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
@@ -293,6 +299,7 @@ class InqueryPengambilanbahanController extends Controller
                             $hargaRataRataBulat = ceil($hargaRataRata / $kelipatan) * $kelipatan;
                         }
                         $hargaRataRata = $hargaRataRataBulat;
+                        $hargaRataRatatotal = $hargaRataRataBulat * $jumlahTotalAmbil;
                     }
                     // Membuat Detail_pemasanganpart baru
                     Detailpengambilan::create([
@@ -305,6 +312,7 @@ class InqueryPengambilanbahanController extends Controller
                         'tanggal_awal' => Carbon::now('Asia/Jakarta'),
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => $hargaRataRata,
+                        'total' => $hargaRataRatatotal,
                     ]);
                 }
             }

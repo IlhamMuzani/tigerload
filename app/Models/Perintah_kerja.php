@@ -73,6 +73,12 @@ class Perintah_kerja extends Model
         return $this->hasMany(Depositpemesanan::class);
     }
 
+    public function perhitunganbahanbaku()
+    {
+        return $this->hasMany(Perhitunganbahanbaku::class);
+    }
+
+
     public static function getId()
     {
         return $getId = DB::table('perintah_kerjas')->orderBy('id', 'DESC')->take(1)->get();

@@ -77,8 +77,9 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/perhitungan_bahanbaku') }}" method="post" autocomplete="off">
+            <form action="{{ url('admin/inquery_perhitunganbahanbaku', $inquery->id) }}" method="post" autocomplete="off">
                 @csrf
+                @method('put')
                 <div class="card">
                     <div></div>
                     {{-- <div class="card-header">
@@ -233,7 +234,7 @@
 
                             <div class="form-group">
                                 <label for="keterangan">Keterangan</label>
-                                <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
+                                <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan', $inquery->keterangan) }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -308,8 +309,9 @@
                         <br>
                         <div class="form-group">
                             <label for="grand_total">Total Harga</label>
-                            <input style="text-align: end" type="text" class="form-control" readonly name="grand_total"
-                                value="{{ number_format($totalHarga, 2, ',', '.') }}" id="grand_total" placeholder="">
+                            <input style="text-align: end" type="text" class="form-control" readonly
+                                name="grand_total" value="{{ number_format($totalHarga, 2, ',', '.') }}"
+                                id="grand_total" placeholder="">
                         </div>
                     </div>
                     <div class="card-footer text-right">

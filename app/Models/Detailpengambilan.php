@@ -23,6 +23,7 @@ class Detailpengambilan extends Model
         'nama_barang',
         'jumlah',
         'harga',
+        'total',
         'tanggal_awal',
         'tanggal_akhir',
     ];

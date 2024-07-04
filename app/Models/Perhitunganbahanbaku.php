@@ -21,7 +21,8 @@ class Perhitunganbahanbaku extends Model
         'kode_perhitungan',
         'qrcode_perhitungan',
         'perintah_kerja_id',
-        'total',
+        'keterangan',
+        'grand_total',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',
@@ -37,6 +38,11 @@ class Perhitunganbahanbaku extends Model
     {
         return LogOptions::defaults()
             ->logFillable('*');
+    }
+
+    public function perintah_kerja()
+    {
+        return $this->belongsTo(Perintah_kerja::class);
     }
 
     public static function getId()

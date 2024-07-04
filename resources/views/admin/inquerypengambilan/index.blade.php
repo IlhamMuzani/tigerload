@@ -116,7 +116,7 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pengambilan->kode_pengambilan }}</td>
                                     <td>{{ $pengambilan->tanggal_awal }}</td>
-                                    <td> {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
+                                    <td> {{ $pengambilan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                     </td>
                                     <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
                                     {{-- <td>
@@ -140,7 +140,7 @@
                                                     href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenawaran', ['id' => $pengambilan->id]) }}">
+                                                    action="{{ route('hapuspengambilan', ['id' => $pengambilan->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete

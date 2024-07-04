@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\Penerimaan_kaskecil;
+use App\Models\Pengambilanbahan;
 use App\Models\Perhitunganbahanbaku;
 use App\Models\Perintah_kerja;
 use App\Models\Surat_penawaran;
@@ -17,6 +18,7 @@ class PerhitunganbahanbakuController extends Controller
     public function index()
     {
         $today = Carbon::today();
+        $spks = Perintah_kerja::orderBy('created_at', 'desc')->get();
 
         $inquery = Perhitunganbahanbaku::whereDate('created_at', $today)
             ->orWhere(function ($query) use ($today) {
@@ -26,15 +28,30 @@ class PerhitunganbahanbakuController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.perhitungan_bahanbaku.index', compact('inquery'));
+        return view('admin.perhitungan_bahanbaku.index', compact('inquery', 'spks'));
     }
 
-    public function modal_tambah()
+    public function spk($id)
     {
-        $spks = Perintah_kerja::get();
-        return view('admin.perhitungan_bahanbaku.modal_tambah', compact('spks'));
+        $perintah_kerja = Perintah_kerja::where('id', $id)->with('pelanggan', 'typekaroseri')->first();
+
+        return json_decode($perintah_kerja);
     }
-    
+
+    // public function modal_tambah()
+    // {
+    //     $spks = Perintah_kerja::get();
+    //     return view('admin.perhitungan_bahanbaku.modal_tambah', compact('spks'));
+    // }
+
+    public function add_spks(Request $request)
+    {
+        $spks = Perintah_kerja::where('id', $request->id_perintahkerja)->first();
+        $details = Pengambilanbahan::where('perintah_kerja_id', $spks->id)->get();
+
+        return view('admin.perhitungan_bahanbaku.create', compact('spks', 'details'));
+    }
+
     public function create()
     {
         $spks = Perintah_kerja::get();
@@ -46,18 +63,10 @@ class PerhitunganbahanbakuController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'kategoris' => 'required',
-                'surat_penawaran_id' => 'required',
-                'pelanggan_id' => 'required',
-                'typekaroseri_id' => 'required',
-                'nominal' => 'required',
+                'perintah_kerja_id' => 'required',
             ],
             [
-                'kategoris.required' => 'Pilih kategoris',
-                'surat_penawaran_id.required' => 'Pilih Surat Penawaran',
-                'pelanggan_id.required' => 'Pilih pelanggan',
-                'typekaroseri_id.required' => 'Pilih karoseri',
-                'nominal.required' => 'Masukkan nominal',
+                'perintah_kerja_id.required' => 'Pilih nomor SPK',
             ]
         );
 
@@ -74,11 +83,10 @@ class PerhitunganbahanbakuController extends Controller
             $request->all(),
             [
                 'user_id' => auth()->user()->id,
-                'tanggal_pembayaran' => $request->tanggal_pembayaran,
+                'perintah_kerja_id' => $request->perintah_kerja_id,
                 'keterangan' => $request->keterangan,
-                'kategoris' => $request->kategoris,
-                'nominal' => str_replace(',', '.', str_replace('.', '', $request->nominal)),
-                'kode_penerimaan' => $this->kode(),
+                'grand_total' => str_replace(',', '.', str_replace('.', '', $request->grand_total)),
+                'kode_perhitungan' => $this->kode(),
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
@@ -89,19 +97,28 @@ class PerhitunganbahanbakuController extends Controller
         $pembelian->qrcode_perhitungan = 'https://tigerload.id/perhitungan_bahanbaku/' . $encryptedId;
         $pembelian->save();
 
-        return view('admin.perhitungan_bahanbaku.show', compact('pembelian'));
+        $pengambilans = Perhitunganbahanbaku::find($pembelian->id);
+        $pengambil = Perhitunganbahanbaku::find($pembelian->id);
+        $spks = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->first();
+
+        $cetakpdfs = Pengambilanbahan::where('perintah_kerja_id', $spks->id)->get();
+        return view('admin.perhitungan_bahanbaku.show', compact('pengambilans', 'pengambil', 'spks', 'cetakpdfs'));
     }
 
     public function show($id)
     {
-        $pembelian = Perhitunganbahanbaku::where('id', $id)->first();
-        return view('admin/perhitungan_bahanbaku.show', compact('pembelian'));
+        $pengambilans = Perhitunganbahanbaku::find($id);
+        $pengambil = Perhitunganbahanbaku::find($id);
+        $spks = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->first();
+
+        $cetakpdfs = Pengambilanbahan::where('perintah_kerja_id', $spks->id)->get();
+        return view('admin.perhitungan_bahanbaku.show', compact('pengambil', 'spks', 'cetakpdfs', 'pengambilans'));
     }
 
     public function kode()
     {
         // Mengambil kode terbaru dari database dengan awalan 'MP'
-        $lastBarang = Perhitunganbahanbaku::where('kode_penerimaan', 'like', 'PB%')->latest()->first();
+        $lastBarang = Perhitunganbahanbaku::where('kode_perhitungan', 'like', 'PB%')->latest()->first();
 
         // Mendapatkan bulan dari tanggal kode terakhir
         $lastMonth = $lastBarang ? date('m', strtotime($lastBarang->created_at)) : null;
@@ -137,9 +154,14 @@ class PerhitunganbahanbakuController extends Controller
 
     public function cetakpdf($id)
     {
-        $cetakpdf = Perhitunganbahanbaku::find($id);
+        $pengambilans = Perhitunganbahanbaku::find($id);
+        $pengambil = Perhitunganbahanbaku::find($id);
+        $spks = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->first();
+
+        $cetakpdfs = Pengambilanbahan::where('perintah_kerja_id', $spks->id)->get();
+
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.perhitungan_bahanbaku.cetak_pdf', compact('cetakpdf'));
+        $pdf->loadView('admin.perhitungan_bahanbaku.cetak_pdf', compact('cetakpdfs', 'pengambilans'));
         $pdf->setPaper('letter', 'portrait');
 
         // Return the PDF as a response

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreign('pengambilanbahan_id')->references('id')->on('pengambilanbahans');
             $table->string('jumlah')->nullable();
             $table->string('harga')->nullable();
+            $table->string('total')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->timestamp('deleted_at')->nullable();

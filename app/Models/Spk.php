@@ -79,6 +79,12 @@ class Spk extends Model
     {
         return $this->belongsTo(Surat_penawaran::class);
     }
+
+    public function merek()
+    {
+        return $this->belongsTo(Merek::class);
+    }
+    
     
     public function detail_deposit()
     {

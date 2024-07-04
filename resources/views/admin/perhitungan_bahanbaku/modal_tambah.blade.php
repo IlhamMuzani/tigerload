@@ -4,65 +4,24 @@
 
 @section('content')
     <!-- Content Header (Page header) -->
-    <div class="modal fade" id="modal-pilihkabin">v
+    <div class="modal fade" id="modal-tambah">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Pilih Kabin</h4>
+                    <h4 class="modal-title">Gambar QR Code</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div style="text-align: center;">
-                        <form action="{{ url('admin/pemasangan_ban') }}" enctype="multipart/form-data" autocomplete="off"
-                            method="post">
-                            @csrf
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Pemasangan Ban</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group" style="flex: 8;"> <!-- Adjusted flex value -->
-                                        <select class="select2bs4 select2-hidden-accessible" name="kendaraan_id"
-                                            data-placeholder="Cari Kabin.." style="width: 100%;" data-select2-id="23"
-                                            tabindex="-1" aria-hidden="true" id="kendaraan_id" onchange="getData(0)">
-                                            <option value="">- Pilih -</option>
-                                            @foreach ($spks as $kendaraan)
-                                                <option value="{{ $kendaraan->id }}"
-                                                    {{ old('kendaraan_id') == $kendaraan->id ? 'selected' : '' }}>
-                                                    {{ $kendaraan->no_kabin }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group" hidden>
-                                        <label for="nopol">id kendaraan</label>
-                                        <input type="text" class="form-control" id="id" name="id_kendaraan"
-                                            readonly placeholder="Masukan id" value="{{ old('id') }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nopol">No. Registrasi Kendaraan</label>
-                                        <input type="text" class="form-control" id="no_pol" name="no_pol" readonly
-                                            placeholder="Masukan no registrasi kendaraan" value="{{ old('no_pol') }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nama">Jumlah Ban</label>
-                                        <input type="text" class="form-control" id="jumlah_ban" name="jumlah_ban"
-                                            readonly placeholder="Masukan jumlah ban" value="{{ old('jumlah_ban') }}">
-                                    </div>
-                                    <div class="form-group" id="layoutjenis">
-                                        <label for="jenis_kendaraan">Jenis Kendaraan</label>
-                                        <input type="text" class="form-control" id="jenis_kendaraan"
-                                            name="jenis_kendaraan" readonly placeholder="Masukan jenis kendaraan"
-                                            value="{{ old('jenis_kendaraan') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary">Lanjutkan</button>
-                            </div>
-                        </form>
+                        <p style="font-size:20px; font-weight: bold;">
+                        </p>
+
+                        <p style="font-size:20px; font-weight: bold;">
+                    </div>
+                    <div class="modal-footer justify-content-between">
+
                     </div>
                 </div>
             </div>

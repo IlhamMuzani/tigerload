@@ -22,7 +22,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('kode_perhitungan')->nullable();
             $table->string('qrcode_perhitungan')->nullable();
-            $table->string('total')->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('grand_total')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();

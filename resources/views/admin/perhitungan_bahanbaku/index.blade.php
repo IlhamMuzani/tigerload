@@ -70,20 +70,64 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Gambar QR Code</h4>
+                                <h4 class="modal-title">Pilih SPK</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <div style="text-align: center;">
-                                    <p style="font-size:20px; font-weight: bold;">
-                                    </p>
-
-                                    <p style="font-size:20px; font-weight: bold;">
-                                </div>
-                                <div class="modal-footer justify-content-between">
-
+                                    <form action="{{ url('admin/add_spks') }}" enctype="multipart/form-data"
+                                        autocomplete="off" method="post">
+                                        @csrf
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Perhitungan Pemakain Bahan Baku</h3>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="form-group" style="flex: 8;"> <!-- Adjusted flex value -->
+                                                    <select class="select2bs4 select2-hidden-accessible"
+                                                        name="perintah_kerja_id" data-placeholder="Cari SPK.."
+                                                        style="width: 100%;" data-select2-id="23" tabindex="-1"
+                                                        aria-hidden="true" id="perintah_kerja_id" onchange="getData(0)">
+                                                        <option value="">- Pilih -</option>
+                                                        @foreach ($spks as $perintah_kerja)
+                                                            <option value="{{ $perintah_kerja->id }}"
+                                                                {{ old('perintah_kerja_id') == $perintah_kerja->id ? 'selected' : '' }}>
+                                                                {{ $perintah_kerja->kode_perintah }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nopol">id SPK</label>
+                                                    <input type="text" class="form-control" id="id_perintahkerja"
+                                                        name="id_perintahkerja" readonly placeholder=""
+                                                        value="{{ old('id_perintahkerja') }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nopol">Tanggal</label>
+                                                    <input type="text" class="form-control" id="tanggal" name="tanggal"
+                                                        readonly placeholder="" value="{{ old('tanggal') }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nama">Bentuk Karoseri</label>
+                                                    <input type="text" class="form-control" id="nama_karoseri"
+                                                        name="nama_karoseri" readonly placeholder=""
+                                                        value="{{ old('nama_karoseri') }}">
+                                                </div>
+                                                <div class="form-group" id="layoutjenis">
+                                                    <label for="nama_pelanggan">Pelanggan</label>
+                                                    <input type="text" class="form-control" id="nama_pelanggan"
+                                                        name="nama_pelanggan" readonly placeholder=""
+                                                        value="{{ old('nama_pelanggan') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-right">
+                                            <button type="submit" class="btn btn-primary">Lanjutkan</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -92,87 +136,74 @@
 
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                    <table class="table table-bordered table-striped table-hover"style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th>No Surat</th>
-                                <th>Tanggal</th>
-                                <th>Bag.Input</th>
-                                <th>Pelanggan</th>
-                                <th>Nominal</th>
-                                <th style="width:20px">Opsi</th>
+                                <th class="text-left">Kode Perhitungan</th>
+                                <th class="text-left">Tanggal</th>
+                                <th class="text-left">Pelanggan</th>
+                                <th class="text-left">Bentuk Karoseri</th>
+                                <th class="text-left">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($inquery as $surat)
-                                <tr class="dropdown"{{ $surat->id }}>
+                            @foreach ($inquery as $index => $pengambilan)
+                                <!-- Gunakan index untuk ID unik -->
+                                <!-- Baris Faktur Utama -->
+                                <tr class="dropdown" data-target="#barang-{{ $index }}" class="accordion-toggle">
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
-                                            value="{{ $surat->id }}">
+                                            value="{{ $pengambilan->id }}">
                                     </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $surat->kode_penerimaan }}</td>
-                                    <td>{{ $surat->tanggal_awal }}</td>
-                                    <td>
-                                        @if ($surat->user)
-                                            {{ $surat->user->karyawan->nama_lengkap }}
-                                        @else
-                                            tidak ada
-                                        @endif
+                                    <td>{{ $pengambilan->kode_perhitungan }}</td>
+                                    <td>{{ $pengambilan->tanggal_awal }}</td>
+                                    <td> {{ $pengambilan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                     </td>
-                                    <td>
-                                        @if ($surat->pelanggan)
-                                            {{ $surat->pelanggan->nama_pelanggan }}
-                                        @else
-                                            tidak ada
-                                        @endif
-                                    </td>
-                                    <td class="text-right">
-                                        {{ number_format($surat->nominal, 0, ',', '.') }}
-
-                                    </td>
+                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
+                                    {{-- <td>
+                                        <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
+                                    </td> --}}
                                     <td class="text-center">
-                                        @if ($surat->status == 'posting')
+                                        @if ($pengambilan->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
-                                        @if ($surat->status == 'selesai')
-                                            <img src="{{ asset('storage/uploads/indikator/surat.png') }}" height="40"
-                                                width="40" alt="Roda Mobil">
-                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($surat->status == 'unpost')
+                                            @if ($pengambilan->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $surat->id }}">Posting</a>
+                                                    data-memo-id="{{ $pengambilan->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_perhitunganbahanbaku/' . $pengambilan->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/perhitungan_bahanbaku/' . $surat->id) }}">Show</a>
+                                                    href="{{ url('admin/perhitungan_bahanbaku/' . $pengambilan->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenerimaanpembayaran', ['id' => $surat->id]) }}">
+                                                    action="{{ route('hapusperhitunganbahan', ['id' => $pengambilan->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($surat->status == 'posting')
+                                            @if ($pengambilan->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $surat->id }}">Unpost</a>
+                                                    data-memo-id="{{ $pengambilan->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
+                                                    href="{{ url('admin/perhitungan_bahanbaku/' . $pengambilan->id) }}">Show</a>
                                             @endif
-                                            @if ($surat->status == 'selesai')
+                                            @if ($pengambilan->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
+                                                    href="{{ url('admin/perhitungan_bahanbaku/' . $pengambilan->id) }}">Show</a>
                                             @endif
                                         </div>
+                                        {{-- <button class="btn btn-info" data-toggle="collapse"
+                                            data-target="#barang-{{ $index }}">Toggle</button> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -235,7 +266,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_penerimaanpembayaran/unpostpenerimaan/') }}/" +
+                    url: "{{ url('admin/inquery_perhitunganbahanbaku/unpostperhitungan/') }}/" +
                         memoId,
                     type: 'GET',
                     data: {
@@ -276,7 +307,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_penerimaanpembayaran/postingpenerimaan/') }}/" +
+                    url: "{{ url('admin/inquery_perhitunganbahanbaku/postingperhitungan/') }}/" +
                         memoId,
                     type: 'GET',
                     data: {
@@ -306,6 +337,7 @@
             });
         });
     </script>
+
 
     <script>
         $(document).ready(function() {
@@ -361,6 +393,37 @@
                     ''); // Menghapus warna latar belakang dari semua baris saat menutup dropdown
             });
         });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#modal-pilihkabin').modal('show');
+        });
+
+
+        function getData(id) {
+            var kendaraan_id = document.getElementById('perintah_kerja_id');
+            $.ajax({
+                url: "{{ url('admin/perhitungan_bahanbaku/spk') }}" + "/" + perintah_kerja_id.value,
+                type: "GET",
+                dataType: "json",
+                success: function(perintah_kerja_id) {
+
+                    var perintah = document.getElementById('id_perintahkerja');
+                    perintah.value = perintah_kerja_id.id;
+
+                    var tanggal = document.getElementById('tanggal');
+                    tanggal.value = perintah_kerja_id.tanggal_awal;
+
+                    var nama_karoseri = document.getElementById('nama_karoseri');
+                    nama_karoseri.value = perintah_kerja_id.typekaroseri.nama_karoseri;
+
+                    var nama_pelanggan = document.getElementById('nama_pelanggan');
+                    nama_pelanggan.value = perintah_kerja_id.pelanggan.nama_pelanggan;
+                },
+            });
+        }
     </script>
 
 @endsection
