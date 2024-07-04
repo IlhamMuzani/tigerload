@@ -331,25 +331,18 @@
                     <td>
                         <div style="margin-left: 70px">:</div>
                     </td>
-                    <td>Rp. {{ number_format($original_price , 0, ',', '.') }},-
-                        @if ($pembelians->kategori == 'NON PPN')
+                    @if ($pembelians->kategori == 'PPN')
+                        <td>Rp. {{ number_format($original_price, 0, ',', '.') }},-
+                    @endif
+                    @if ($pembelians->kategori == 'NON PPN')
+                        <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                             <span>(
                                 {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
-                        @endif
+                    @endif
                     </td>
                 </tr>
 
                 @if ($pembelians->kategori == 'PPN')
-                    <?php
-                    // Calculate the increase and round it
-                    $harga_increase = round($pembelians->harga * 0.11);
-                    
-                    // Calculate the unit price with the rounded increase
-                    $harga_satuan = $pembelians->harga + $harga_increase;
-                    
-                    // Format the unit price for display
-                    $formatted_harga_satuan = number_format($harga_satuan, 0, ',', '.');
-                    ?>
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
@@ -408,10 +401,6 @@
                             Rupiah )
                         </td>
                     </tr>
-                @else
-                    @php
-                        $totalPrice = $pembelians->harga; // Total price without PPN
-                    @endphp
                 @endif
 
                 @if ($pembelians->kategori == 'NON PPN')

@@ -285,9 +285,8 @@
                 @else
                     <tr>
                         <td>
-                            <img style="margin-top: 5px"
-                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                width="8" height="8" alt="Logo Tigerload">
                         </td>
                         <td>Aksesoris</td>
                         <td>
@@ -331,18 +330,31 @@
                 ?>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Harga</td>
+                    <?php
+                    // Calculate the increase and round it
+                    $total_price = $pembelians->harga;
+                    $tax_rate = 0.11;
+                    // Calculate original price
+                    $original_price = $total_price / (1 + $tax_rate);
+                    
+                    // Calculate tax amount
+                    $tax_amount = $original_price * $tax_rate;
+                    ?>
                     <td>
                         <div style="margin-left: 70px">:</div>
                     </td>
-                    <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
-                        @if ($pembelians->kategori == 'NON PPN')
+                    @if ($pembelians->kategori == 'PPN')
+                        <td>Rp. {{ number_format($original_price, 0, ',', '.') }},-
+                    @endif
+                    @if ($pembelians->kategori == 'NON PPN')
+                        <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                             <span>(
-                                {{ terbilang($pembelians->harga) }} ) per unit</span>
-                        @endif
+                                {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
+                    @endif
                     </td>
                 </tr>
 
@@ -350,7 +362,7 @@
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
@@ -358,13 +370,13 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td><span style="text-decoration: underline">Rp.
-                                {{ number_format($pembelians->harga * 0.11, 0, ',', '.') }},-</span> +</td>
+                                {{ number_format($tax_amount, 0, ',', '.') }},-</span> +</td>
                     </tr>
 
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Harga Satuan</td>
@@ -372,13 +384,13 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold; font-size:13px">Rp.
-                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -387,15 +399,13 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x
-                            {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
+                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
                             =
-                            {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
                         <td>
-
                         </td>
                         <td></td>
                         <td>
@@ -403,21 +413,17 @@
                         </td>
                         <td style="font-weight: bold">
                             (
-                            {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
                             Rupiah )
                         </td>
                     </tr>
-                @else
-                    @php
-                        $totalPrice = $pembelians->harga; // Total price without PPN
-                    @endphp
                 @endif
 
                 @if ($pembelians->kategori == 'NON PPN')
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -425,17 +431,20 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold">
-                            {{ $pembelians->jumlah_unit }} Unit x {{ number_format($pembelians->harga, 0, ',', '.') }}
-                            = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                            ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
+                            {{ $pembelians->jumlah_unit }} Unit x
+                            {{ number_format($pembelians->harga, 0, ',', '.') }}
+                            =
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            (
+                            {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            Rupiah)
                         </td>
                     </tr>
                 @endif
                 <tr>
                     <td>
-                        <img style="margin-top: 5px"
-                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                            height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
                     <td>
@@ -447,9 +456,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px"
-                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                            height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Tempo Pembayaran</td>
                     <td>
@@ -461,9 +469,8 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px"
-                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                            height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                            width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Rekening Bank</td>
                     <td>
