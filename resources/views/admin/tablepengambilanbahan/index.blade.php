@@ -87,6 +87,7 @@
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
                                 <th class="text-left">Kode Pengambilan BB</th>
+                                <th class="text-left">Kode SPK</th>
                                 <th class="text-left">Tanggal</th>
                                 <th class="text-left">Pelanggan</th>
                                 <th class="text-left">Bentuk Karoseri</th>
@@ -103,6 +104,7 @@
                                     </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pengambilan->kode_pengambilan }}</td>
+                                    <td>{{ $pengambilan->perintah_kerja->kode_perintah }}</td>
                                     <td>{{ $pengambilan->tanggal_awal }}</td>
                                     <td> {{ $pengambilan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                     </td>
