@@ -318,55 +318,6 @@
             </form>
         </div>
 
-        <div class="modal fade" id="tableBarang" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Data Barang</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="m-2">
-                            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
-                        </div>
-                        <table id="tables" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama barang</th>
-                                    <th>Spesifikasi</th>
-                                    <th>Keterangan</th>
-                                    <th>Opsi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $barang->kode_barang }}</td>
-                                        <td>{{ $barang->nama_barang }}</td>
-                                        <td>{{ $barang->spesifikasi }}</td>
-                                        <td>{{ $barang->keterangan }}</td>
-                                        <td class="text-center">
-                                            <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
-                                                onclick="getBarang({{ $loop->index }})">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="modal fade" id="tablepenawaran" data-backdrop="static">
             <div class="modal-dialog modal-xl"> <!-- Changed modal-lg to modal-xl -->
                 <div class="modal-content">
@@ -382,7 +333,7 @@
                                 <thead class="bg-200 text-900">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Kode SPK</th>
+                                        <th>Kode Penawaran</th>
                                         <th>Kode Pelanggan</th>
                                         <th>Nama Pelanggan</th>
                                         <th>Kode Karoseri</th>

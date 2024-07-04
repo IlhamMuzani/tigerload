@@ -318,10 +318,20 @@
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Harga</td>
+                    <?php
+                    // Calculate the increase and round it
+                    $total_price = $pembelians->harga;
+                    $tax_rate = 0.11;
+                    // Calculate original price
+                    $original_price = $total_price / (1 + $tax_rate);
+                    
+                    // Calculate tax amount
+                    $tax_amount = $original_price * $tax_rate;
+                    ?>
                     <td>
                         <div style="margin-left: 70px">:</div>
                     </td>
-                    <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
+                    <td>Rp. {{ number_format($original_price , 0, ',', '.') }},-
                         @if ($pembelians->kategori == 'NON PPN')
                             <span>(
                                 {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
@@ -351,7 +361,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td><span style="text-decoration: underline">Rp.
-                                {{ number_format($pembelians->harga * 0.11, 0, ',', '.') }},-</span> +</td>
+                                {{ number_format($tax_amount, 0, ',', '.') }},-</span> +</td>
                     </tr>
 
                     <tr style="font-weight: bold">
@@ -365,7 +375,7 @@
                             <div style="margin-left: 70px">:</div>
                         </td>
                         <td style="font-weight: bold; font-size:13px">Rp.
-                            {{ number_format($harga_satuan, 0, ',', '.') }},-
+                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -380,9 +390,9 @@
                         </td>
                         <td style="font-weight: bold">
                             {{ $pembelians->jumlah_unit }} Unit x
-                            {{ number_format($harga_satuan, 0, ',', '.') }},-
+                            {{ number_format($pembelians->harga, 0, ',', '.') }},-
                             =
-                            {{ number_format($harga_satuan * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr style="font-weight: bold">
@@ -394,7 +404,7 @@
                         </td>
                         <td style="font-weight: bold">
                             (
-                            {{ terbilang($harga_satuan * $pembelians->jumlah_unit, 0, ',', '.') }}
+                            {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
                             Rupiah )
                         </td>
                     </tr>

@@ -122,89 +122,11 @@ class PengambilanbahanController extends Controller
 
         $transaksi_id = $transaksi->id;
 
-        if ($transaksi) {
-            foreach ($data_pembelians as $data_pesanan) {
-                $jumlahPengambilan = $data_pesanan['jumlah'];
-                $barangId = $data_pesanan['barang_id'];
-                $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
-                $detailBarangIds = []; // Array untuk menyimpan ID detail_barang yang digunakan
-                $jumlahTiapbarangs = []; // Array untuk menyimpan ID detail_barang yang digunakan
-                $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
-
-                // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
-                $detailBarangs = Detail_barang::where('barang_id', $barangId)
-                    ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
-                    ->orderBy('created_at') // Urutkan sesuai kebutuhan
-                    ->get();
-
-                $jumlahTersediaPertama = $detailBarangs->first()->jumlah;
-
-                foreach ($detailBarangs as $detailBarang) {
-                    // Ambil jumlah yang tersedia pada Detail_barang saat ini
-                    $jumlahTersedia = $detailBarang->jumlah;
-                    // Tentukan jumlah yang akan diambil dari Detail_barang ini
-                    $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
-                    // Kurangi jumlah pada Detail_barang
-                    $detailBarang->jumlah -= $jumlahAmbilDariDetail;
-                    $detailBarang->save();
-                    // Hitung total harga dari detail barang ini
-                    $harga = $detailBarang->harga * $jumlahAmbilDariDetail;
-                    $totalHarga += $harga;
-                    // Akumulasikan jumlah yang diambil
-                    $jumlahTotalAmbil += $jumlahAmbilDariDetail;
-
-                    $detailBarangIds[] = $detailBarang->id;
-                    $jumlahTiapbarangs[] = $jumlahAmbilDariDetail; // Simpan jumlah tiap barang yang digunakan
-
-
-                    // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
-                    $jumlahPengambilan -= $jumlahAmbilDariDetail;
-                    // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
-                    if ($jumlahPengambilan <= 0) {
-                        break;
-                    }
-                }
-
-                if ($jumlahTersediaPertama >= $data_pesanan['jumlah'] && $jumlahTotalAmbil > 0) {
-                    // Jika stok di detail_barang pertama sudah cukup
-                    $detailBarang = $detailBarangs->first();
-                    $hargaRataRata = $detailBarang->harga * $jumlahTotalAmbil;
-                } else {
-                    // Jika membutuhkan lebih dari satu detail_barang
-                    $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
-                    // Bulatkan harga rata-rata ke kelipatan 1000
-                    $kelipatan = 1000;
-                    $hargaRataRataBulat = round($hargaRataRata / $kelipatan) * $kelipatan;
-                    if ($hargaRataRata - ($hargaRataRataBulat - $kelipatan) < $kelipatan / 2) {
-                        $hargaRataRataBulat = floor($hargaRataRata / $kelipatan) * $kelipatan;
-                    } else {
-                        $hargaRataRataBulat = ceil($hargaRataRata / $kelipatan) * $kelipatan;
-                    }
-                    $hargaRataRata = $hargaRataRataBulat;
-                }
-                // Buat Detailpengambilan
-                Detailpengambilan::create([
-                    'pengambilanbahan_id' => $transaksi->id,
-                    'barang_id' => $barangId,
-                    'detail_barang' => implode(',', $detailBarangIds), // ID detail_barang yang digunakan, dipisahkan dengan koma jika lebih dari satu
-                    'jumlah_tiapbarang' => implode(',', $jumlahTiapbarangs), // Jumlah tiap barang yang digunakan, dipisahkan dengan koma jika lebih dari satu
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama_barang' => $data_pesanan['nama_barang'],
-                    'tanggal_awal' => Carbon::now('Asia/Jakarta'),
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => $hargaRataRata,
-                ]);
-            }
-        }
-
-
-        // sudah benar dapat mengambil id nya 
         // if ($transaksi) {
         //     foreach ($data_pembelians as $data_pesanan) {
         //         $jumlahPengambilan = $data_pesanan['jumlah'];
         //         $barangId = $data_pesanan['barang_id'];
         //         $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
-        //         $detailBarangIds = []; // Array untuk menyimpan ID detail_barang yang digunakan
         //         $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
 
         //         // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
@@ -228,9 +150,6 @@ class PengambilanbahanController extends Controller
         //             $totalHarga += $harga;
         //             // Akumulasikan jumlah yang diambil
         //             $jumlahTotalAmbil += $jumlahAmbilDariDetail;
-
-        //             $detailBarangIds[] = $detailBarang->id;
-
         //             // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
         //             $jumlahPengambilan -= $jumlahAmbilDariDetail;
         //             // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
@@ -260,7 +179,6 @@ class PengambilanbahanController extends Controller
         //         Detailpengambilan::create([
         //             'pengambilanbahan_id' => $transaksi->id,
         //             'barang_id' => $barangId,
-        //             'detail_barang' => implode(',', $detailBarangIds), // ID detail_barang yang digunakan, dipisahkan dengan koma jika lebih dari satu
         //             'kode_barang' => $data_pesanan['kode_barang'],
         //             'nama_barang' => $data_pesanan['nama_barang'],
         //             'tanggal_awal' => Carbon::now('Asia/Jakarta'),
@@ -269,6 +187,75 @@ class PengambilanbahanController extends Controller
         //         ]);
         //     }
         // }
+
+
+        // sudah benar dapat mengambil id nya 
+        if ($transaksi) {
+            foreach ($data_pembelians as $data_pesanan) {
+                $jumlahPengambilan = $data_pesanan['jumlah'];
+                $barangId = $data_pesanan['barang_id'];
+                $totalHarga = 0; // Inisialisasi total harga dari semua detail barang
+                $detailBarangIds = []; // Array untuk menyimpan ID detail_barang yang digunakan
+                $jumlahTotalAmbil = 0; // Inisialisasi jumlah total yang akan diambil
+
+                // Ambil semua Detail_barang yang tersedia untuk barang_id yang sama
+                $detailBarangs = Detail_barang::where('barang_id', $barangId)
+                    ->where('jumlah', '>', 0) // Hanya yang masih memiliki stok
+                    ->orderBy('created_at') // Urutkan sesuai kebutuhan
+                    ->get();
+
+                $jumlahTersediaPertama = $detailBarangs->first()->jumlah;
+
+                foreach ($detailBarangs as $detailBarang) {
+                    // Ambil jumlah yang tersedia pada Detail_barang saat ini
+                    $jumlahTersedia = $detailBarang->jumlah;
+                    // Tentukan jumlah yang akan diambil dari Detail_barang ini
+                    $jumlahAmbilDariDetail = min($jumlahPengambilan, $jumlahTersedia);
+                    // Kurangi jumlah pada Detail_barang
+                    $detailBarang->jumlah -= $jumlahAmbilDariDetail;
+                    $detailBarang->save();
+                    // Akumulasikan jumlah yang diambil
+                    $jumlahTotalAmbil += $jumlahAmbilDariDetail;
+                    // Simpan ID detail_barang yang digunakan
+                    $detailBarangIds[] = $detailBarang->id;
+                    // Kurangi jumlahPengambilan dengan jumlah yang sudah diambil
+                    $jumlahPengambilan -= $jumlahAmbilDariDetail;
+                    // Jika jumlah yang diambil sudah mencukupi, keluar dari loop
+                    if ($jumlahPengambilan <= 0) {
+                        break;
+                    }
+                }
+
+                if ($jumlahTersediaPertama >= $data_pesanan['jumlah']) {
+                    // Jika stok di detail_barang pertama sudah cukup
+                    $detailBarang = $detailBarangs->first();
+                    $hargaRataRata = $detailBarang->harga * $jumlahTotalAmbil;
+                } else {
+                    // Jika membutuhkan lebih dari satu detail_barang
+                    $hargaRataRata = $totalHarga / $jumlahTotalAmbil;
+                    // Bulatkan harga rata-rata ke kelipatan 1000
+                    $kelipatan = 1000;
+                    $hargaRataRataBulat = round($hargaRataRata / $kelipatan) * $kelipatan;
+                    if ($hargaRataRata - ($hargaRataRataBulat - $kelipatan) < $kelipatan / 2) {
+                        $hargaRataRataBulat = floor($hargaRataRata / $kelipatan) * $kelipatan;
+                    } else {
+                        $hargaRataRataBulat = ceil($hargaRataRata / $kelipatan) * $kelipatan;
+                    }
+                    $hargaRataRata = $hargaRataRataBulat;
+                }
+                // Buat Detailpengambilan
+                Detailpengambilan::create([
+                    'pengambilanbahan_id' => $transaksi->id,
+                    'barang_id' => $barangId,
+                    'detail' => implode(',', $detailBarangIds), // ID detail_barang yang digunakan, dipisahkan dengan koma jika lebih dari satu
+                    'kode_barang' => $data_pesanan['kode_barang'],
+                    'nama_barang' => $data_pesanan['nama_barang'],
+                    'tanggal_awal' => Carbon::now('Asia/Jakarta'),
+                    'jumlah' => $data_pesanan['jumlah'],
+                    'harga' => $hargaRataRata,
+                ]);
+            }
+        }
 
 
 

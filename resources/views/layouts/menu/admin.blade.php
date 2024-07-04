@@ -208,6 +208,7 @@
     request()->is('admin/tablekasbon*') ||
     request()->is('admin/penerimaan_pembayaran*') ||
     request()->is('admin/perintah_kerja*') ||
+    request()->is('admin/perhitungan_bahanbaku*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -239,6 +240,7 @@
         request()->is('admin/tablekasbon*') ||
         request()->is('admin/penerimaan_pembayaran*') ||
         request()->is('admin/perintah_kerja*') ||
+        request()->is('admin/perhitungan_bahanbaku*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -356,6 +358,17 @@
                     class="nav-link {{ request()->is('admin/pengambilanbahan*') || request()->is('admin/tablepengambilanbahan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Pengambilan Bahan Baku</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['pengambilan bahan baku'])
+            <li class="nav-item">
+                <a href="{{ url('admin/perhitungan_bahanbaku') }}"
+                    class="nav-link {{ request()->is('admin/perhitungan_bahanbaku*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Perhitungan Pemakain-<br>
+                        <span style="margin-left: 32px">Bahan Baku</span>
+                    </p>
                 </a>
             </li>
         @endif

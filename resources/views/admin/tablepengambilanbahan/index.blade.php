@@ -81,8 +81,8 @@
                             </div>
                         </div>
                     </form>
-                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px">
-                        <thead>
+                    <table class="table table-bordered table-striped table-hover"style="font-size: 13px">
+                        <thead class="thead-dark">
                             <tr>
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
@@ -97,8 +97,7 @@
                             @foreach ($inquery as $index => $pengambilan)
                                 <!-- Gunakan index untuk ID unik -->
                                 <!-- Baris Faktur Utama -->
-                                <tr data-toggle="collapse" data-target="#barang-{{ $index }}"
-                                    class="accordion-toggle" style="background: rgb(156, 156, 156)">
+                                <tr class="dropdown" data-target="#barang-{{ $index }}" class="accordion-toggle">
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
                                             value="{{ $pengambilan->id }}">
                                     </td>
@@ -108,10 +107,48 @@
                                     <td> {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
                                     </td>
                                     <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
-                                        <button class="btn btn-info" data-toggle="collapse"
-                                            data-target="#barang-{{ $index }}">Toggle Detail</button>
+                                    </td> --}}
+                                    <td class="text-center">
+                                        @if ($pengambilan->status == 'posting')
+                                            <button type="button" class="btn btn-success btn-sm">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        @endif
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            @if ($pengambilan->status == 'unpost')
+                                                <a class="dropdown-item posting-btn"
+                                                    data-memo-id="{{ $pengambilan->id }}">Posting</a>
+
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id . '/edit') }}">Update</a>
+
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+
+                                                <form style="margin-top:5px" method="GET"
+                                                    action="{{ route('hapuspenawaran', ['id' => $pengambilan->id]) }}">
+                                                    <button type="submit"
+                                                        class="dropdown-item btn btn-outline-danger btn-block mt-2">
+                                                        </i> Delete
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            @if ($pengambilan->status == 'posting')
+                                                <a class="dropdown-item unpost-btn"
+                                                    data-memo-id="{{ $pengambilan->id }}">Unpost</a>
+
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+                                            @endif
+                                            @if ($pengambilan->status == 'selesai')
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+                                            @endif
+                                        </div>
+                                        {{-- <button class="btn btn-info" data-toggle="collapse"
+                                            data-target="#barang-{{ $index }}">Toggle</button> --}}
                                     </td>
                                 </tr>
 

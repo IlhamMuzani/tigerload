@@ -9,18 +9,17 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Detailpengambilan extends Model
+class Detail_perhitunganbahans extends Model
 {
     use HasFactory;
     use LogsActivity;
 
     protected $fillable = [
-        'barang_id',
+        'kode_pengambilan',
         'pengambilanbahan_id',
         'detail_barang',
-        'jumlah_tiapbarang',
-        'kode_barang',
-        'nama_barang',
+        'tanggal',
+        'harga',
         'jumlah',
         'harga',
         'tanggal_awal',

@@ -129,12 +129,14 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($barang->detail_barang as $item)
-                                                        <tr>
-                                                            <td>{{ $item->supplier->nama_supp }}</td>
-                                                            <td>{{ $item->tanggal_awal }}</td>
-                                                            <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
-                                                            <td>{{ $item->jumlah }}</td>
-                                                        </tr>
+                                                        @if ($item->jumlah != 0)
+                                                            <tr>
+                                                                <td>{{ $item->supplier->nama_supp }}</td>
+                                                                <td>{{ $item->tanggal_awal }}</td>
+                                                                <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
+                                                                <td>{{ $item->jumlah }}</td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                 </tbody>
                                             </table>

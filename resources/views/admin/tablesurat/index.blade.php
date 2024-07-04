@@ -87,8 +87,8 @@
 
                                     <td>
                                         @if ($pembelian->kategori == 'PPN')
-                                            Rp
-                                            {{ number_format($pembelian->harga + $pembelian->harga * 0.11, 0, ',', '.') }}
+                                            Rp {{ number_format($pembelian->harga, 0, ',', '.') }}
+                                            {{-- {{ number_format($pembelian->harga + $pembelian->harga * 0.11, 0, ',', '.') }} --}}
                                         @else
                                             Rp {{ number_format($pembelian->harga, 0, ',', '.') }}
                                         @endif

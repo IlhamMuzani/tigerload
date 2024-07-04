@@ -13,23 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('detailpengambilans', function (Blueprint $table) {
+        Schema::create('detail_perhitunganbahans', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_barang')->nullable();
-            $table->string('nama_barang')->nullable();
-            $table->string('detail_barang')->nullable();
-            $table->string('jumlah_tiapbarang')->nullable();
-            $table->unsignedBigInteger('barang_id')->nullable();
-            $table->foreign('barang_id')->references('id')->on('barangs');
+            $table->string('kode_pengambilan')->nullable();
             $table->unsignedBigInteger('pengambilanbahan_id')->nullable();
             $table->foreign('pengambilanbahan_id')->references('id')->on('pengambilanbahans');
-            $table->string('jumlah')->nullable();
+            $table->string('tanggal')->nullable();
             $table->string('harga')->nullable();
+            $table->string('jumlah')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->timestamp('deleted_at')->nullable();
-
-            $table->timestamps();
         });
     }
 
@@ -40,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detailpengambilans');
+        Schema::dropIfExists('detail_perhitunganbahans');
     }
 };

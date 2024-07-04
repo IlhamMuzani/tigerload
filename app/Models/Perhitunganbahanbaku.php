@@ -9,24 +9,26 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Detailpengambilan extends Model
+
+class Perhitunganbahanbaku extends Model
 {
     use HasFactory;
     use LogsActivity;
 
-    protected $fillable = [
-        'barang_id',
-        'pengambilanbahan_id',
-        'detail_barang',
-        'jumlah_tiapbarang',
-        'kode_barang',
-        'nama_barang',
-        'jumlah',
-        'harga',
+    protected $fillable =
+    [
+        'user_id',
+        'kode_perhitungan',
+        'qrcode_perhitungan',
+        'perintah_kerja_id',
+        'total',
+        'tanggal',
         'tanggal_awal',
         'tanggal_akhir',
-    ];
+        'status',
+        'status_notif',
 
+    ];
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
@@ -36,10 +38,9 @@ class Detailpengambilan extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
-    public function pengambilan_bahan()
-    {
-        return $this->belongsTo(Pengambilanbahan::class);
-    }
 
+    public static function getId()
+    {
+        return $getId = DB::table('perhitunganbahanbakus')->orderBy('id', 'DESC')->take(1)->get();
+    }
 }

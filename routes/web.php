@@ -155,6 +155,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_pengambilanbahan', [\App\Http\Controllers\Admin\LaporanPengambilanbahanController::class, 'index']);
     Route::get('laporan_returnpembelian', [\App\Http\Controllers\Admin\LaporanPembelianreturnController::class, 'index']);
 
+    Route::get('modal_tambah', [\App\Http\Controllers\Admin\PerhitunganbahanbakuController::class, 'modal_tambah']);
+
     Route::get('laporan_pengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'index']);
     Route::get('print_laporanpengambilanbahanspk', [\App\Http\Controllers\Admin\LaporanPengambilanbahanspkController::class, 'print_laporanpengambilanbahanspk']);
 
@@ -284,5 +286,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_penerimaanpembayaran', \App\Http\Controllers\Admin\InquerypenerimaanpembayaranController::class);
     Route::resource('perintah_kerja', \App\Http\Controllers\Admin\PerintahkerjaController::class);
     Route::resource('inquery_perintahkerja', \App\Http\Controllers\Admin\InqueryperintahkerjaController::class);
+    Route::resource('perhitungan_bahanbaku', \App\Http\Controllers\Admin\PerhitunganbahanbakuController::class);
 
 });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Pengambilan Bahan Baku')
+@section('title', 'Perhitungan Pengambilan Bahan Baku')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Pengambilan Bahan Baku</h1>
+                    <h1 class="m-0">Perhitungan Pengambilan Bahan Baku</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Pengambilan Bahan Baku</li>
+                        <li class="breadcrumb-item active">Perhitungan Pengambilan Bahan Baku</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -47,153 +47,138 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5>
+                        <i class="icon fas fa-ban"></i> Error!
+                    </h5>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Pengambilan bahan baku</h3>
+                    <h3 class="card-title">Perhitungan Pengambilan Bahan Baku</h3>
                     <div class="float-right">
+                        <a data-toggle="modal" data-target="#modal-tambah" style="text-align: center;"
+                            class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
                     </div>
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    <form method="GET" id="form-action">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <select class="custom-select form-control" id="status" name="status">
-                                    <option value="">- Semua Status -</option>
-                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
-                                        Posting
-                                    </option>
-                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
-                                        Unpost</option>
-                                </select>
-                                <label for="status">(Pilih Status)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
-                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Awal)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
-                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Akhir)</label>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-outline-primary btn-block" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
+                <div class="modal fade" id="modal-tambah">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Gambar QR Code</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
-                                <input type="hidden" name="ids" id="selectedIds" value="">
-                                <button type="button" class="btn btn-primary btn-block mt-1" id="checkfilter"
-                                    onclick="printSelectedData()" target="_blank">
-                                    <i class="fas fa-print"></i> Cetak Filter
-                                </button>
-                                <button id="toggle-all" type="button" class="btn btn-info btn-block">
-                                    All Toggle Detail
-                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="text-align: center;">
+                                    <p style="font-size:20px; font-weight: bold;">
+                                    </p>
+
+                                    <p style="font-size:20px; font-weight: bold;">
+                                </div>
+                                <div class="modal-footer justify-content-between">
+
+                                </div>
                             </div>
                         </div>
-                    </form>
-                    <table class="table table-bordered table-striped table-hover"style="font-size: 13px">
+                    </div>
+                </div>
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th class="text-left">Kode Pengambilan BB</th>
-                                <th class="text-left">Tanggal</th>
-                                <th class="text-left">Pelanggan</th>
-                                <th class="text-left">Bentuk Karoseri</th>
-                                <th class="text-left">Opsi</th>
+                                <th>No Surat</th>
+                                <th>Tanggal</th>
+                                <th>Bag.Input</th>
+                                <th>Pelanggan</th>
+                                <th>Nominal</th>
+                                <th style="width:20px">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($inquery as $index => $pengambilan)
-                                <!-- Gunakan index untuk ID unik -->
-                                <!-- Baris Faktur Utama -->
-                                <tr class="dropdown" data-target="#barang-{{ $index }}" class="accordion-toggle">
+                            @foreach ($inquery as $surat)
+                                <tr class="dropdown"{{ $surat->id }}>
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
-                                            value="{{ $pengambilan->id }}">
+                                            value="{{ $surat->id }}">
                                     </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $pengambilan->kode_pengambilan }}</td>
-                                    <td>{{ $pengambilan->tanggal_awal }}</td>
-                                    <td> {{ $pengambilan->perintah_kerja->spk->nama_pelanggan }}
+                                    <td>{{ $surat->kode_penerimaan }}</td>
+                                    <td>{{ $surat->tanggal_awal }}</td>
+                                    <td>
+                                        @if ($surat->user)
+                                            {{ $surat->user->karyawan->nama_lengkap }}
+                                        @else
+                                            tidak ada
+                                        @endif
                                     </td>
-                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
-                                    {{-- <td>
-                                        <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
-                                    </td> --}}
+                                    <td>
+                                        @if ($surat->pelanggan)
+                                            {{ $surat->pelanggan->nama_pelanggan }}
+                                        @else
+                                            tidak ada
+                                        @endif
+                                    </td>
+                                    <td class="text-right">
+                                        {{ number_format($surat->nominal, 0, ',', '.') }}
+
+                                    </td>
                                     <td class="text-center">
-                                        @if ($pengambilan->status == 'posting')
+                                        @if ($surat->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
+                                        @if ($surat->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/surat.png') }}" height="40"
+                                                width="40" alt="Roda Mobil">
+                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($pengambilan->status == 'unpost')
+                                            @if ($surat->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $pengambilan->id }}">Posting</a>
+                                                    data-memo-id="{{ $surat->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+                                                    href="{{ url('admin/perhitungan_bahanbaku/' . $surat->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenawaran', ['id' => $pengambilan->id]) }}">
+                                                    action="{{ route('hapuspenerimaanpembayaran', ['id' => $surat->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($pengambilan->status == 'posting')
+                                            @if ($surat->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $pengambilan->id }}">Unpost</a>
+                                                    data-memo-id="{{ $surat->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
                                             @endif
-                                            @if ($pengambilan->status == 'selesai')
+                                            @if ($surat->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_pengambilanbahan/' . $pengambilan->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_penerimaanpembayaran/' . $surat->id) }}">Show</a>
                                             @endif
-                                        </div>
-                                        {{-- <button class="btn btn-info" data-toggle="collapse"
-                                            data-target="#barang-{{ $index }}">Toggle</button> --}}
-                                    </td>
-                                </tr>
-
-                                <!-- Baris Detail Faktur -->
-                                <tr>
-                                    <td colspan="7"> <!-- Gabungkan kolom untuk detail -->
-                                        <div id="barang-{{ $index }}" class="collapse">
-                                            <table class="table table-sm" style="margin: 0;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Kode Barang</th>
-                                                        <th>Tanggal</th>
-                                                        <th>Nama Barang</th>
-                                                        <th>Qty</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($pengambilan->detailpengambilan as $item)
-                                                        <tr>
-                                                            <td>{{ $item->kode_barang }}</td>
-                                                            <td>{{ $pengambilan->tanggal_awal }}</td>
-                                                            <td>{{ $item->nama_barang }}</td>
-                                                            <td>{{ $item->jumlah }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Modal Loading -->
                     <div class="modal fade" id="modal-loading" tabindex="-1" role="dialog"
                         aria-labelledby="modal-loading-label" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -210,9 +195,7 @@
             </div>
         </div>
     </section>
-    <!-- /.card -->
 
-    <!-- /.card -->
     <script>
         var tanggalAwal = document.getElementById('tanggal_awal');
         var tanggalAkhir = document.getElementById('tanggal_akhir');
@@ -237,37 +220,10 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_pengambilanbahan') }}";
+            form.action = "{{ url('admin/inquery_penerimaanpembayaran') }}";
             form.submit();
         }
     </script>
-
-    <script>
-        $(function(e) {
-            $("#select_all_ids").click(function() {
-                $('.checkbox_ids').prop('checked', $(this).prop('checked'))
-            })
-        });
-
-        function printSelectedData() {
-            var selectedIds = document.querySelectorAll(".checkbox_ids:checked");
-            if (selectedIds.length === 0) {
-                alert("Harap centang setidaknya satu item sebelum mencetak.");
-            } else {
-                var selectedCheckboxes = document.querySelectorAll('.checkbox_ids:checked');
-                var selectedIds = [];
-                selectedCheckboxes.forEach(function(checkbox) {
-                    selectedIds.push(checkbox.value);
-                });
-                document.getElementById('selectedIds').value = selectedIds.join(',');
-                var selectedIdsString = selectedIds.join(',');
-                window.location.href = "{{ url('admin/cetak_pengambilanfilter') }}?ids=" + selectedIdsString;
-                // var url = "{{ url('admin/ban/cetak_pdffilter') }}?ids=" + selectedIdsString;
-            }
-        }
-    </script>
-
-
     {{-- unpost memo  --}}
     <script>
         $(document).ready(function() {
@@ -279,7 +235,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_pengambilanbahan/unpostpengambilan/') }}/" +
+                    url: "{{ url('admin/inquery_penerimaanpembayaran/unpostpenerimaan/') }}/" +
                         memoId,
                     type: 'GET',
                     data: {
@@ -320,7 +276,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_pengambilanbahan/postingpengambilan/') }}/" +
+                    url: "{{ url('admin/inquery_penerimaanpembayaran/postingpenerimaan/') }}/" +
                         memoId,
                     type: 'GET',
                     data: {
@@ -407,32 +363,4 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function() {
-            var toggleAll = $("#toggle-all");
-            var isExpanded = false; // Status untuk melacak apakah semua detail telah dibuka
-
-            toggleAll.click(function() {
-                if (isExpanded) {
-                    $(".collapse").collapse("hide");
-                    toggleAll.text("All Toggle Detail");
-                    isExpanded = false;
-                } else {
-                    $(".collapse").collapse("show");
-                    toggleAll.text("All Close Detail");
-                    isExpanded = true;
-                }
-            });
-
-            // Event listener untuk mengubah status jika ada interaksi manual
-            $(".accordion-toggle").click(function() {
-                var target = $(this).data("target");
-                if ($("#" + target).hasClass("show")) {
-                    $("#" + target).collapse("hide");
-                } else {
-                    $("#" + target).collapse("show");
-                }
-            });
-        });
-    </script>
 @endsection
