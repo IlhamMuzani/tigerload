@@ -226,7 +226,8 @@
                             :
                         </div>
                     </td>
-                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -276,7 +277,9 @@
                                 :
                             </div>
                         </td>
-                        <td>- {{ $item->nama }} {{ $item->jumlah }}</td>
+                        <td>- {{ $item->nama }} @if ($item->keterangan != null)
+                                :
+                            @endif {{ $item->keterangan }} {{ $item->jumlah }}</td>
                     </tr>
                 @endforeach
 
@@ -330,7 +333,7 @@
                 ?>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Harga</td>
@@ -361,9 +364,8 @@
                 @if ($pembelians->kategori == 'PPN')
                     <tr>
                         <td>
-                            <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                width="8" height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
                         <td>
@@ -375,9 +377,8 @@
 
                     <tr style="font-weight: bold">
                         <td>
-                            <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                width="8" height="8" alt="Logo Tigerload">
                         </td>
                         <td>Harga Satuan</td>
                         <td>
@@ -389,9 +390,8 @@
                     </tr>
                     <tr style="font-weight: bold">
                         <td>
-                            <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                width="8" height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
                         <td>
@@ -422,9 +422,8 @@
                 @if ($pembelians->kategori == 'NON PPN')
                     <tr style="font-weight: bold">
                         <td>
-                            <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                width="8" height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
                         <td>

@@ -226,7 +226,8 @@
                             :
                         </div>
                     </td>
-                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                    <td>{{ $pembelians->typekaroseri->kode_type }} - {{ $pembelians->typekaroseri->nama_karoseri }}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -276,7 +277,9 @@
                                 :
                             </div>
                         </td>
-                        <td>- {{ $item->nama }} {{ $item->jumlah }}</td>
+                        <td>- {{ $item->nama }} @if ($item->keterangan != null)
+                                :
+                            @endif {{ $item->keterangan }} {{ $item->jumlah }}</td>
                     </tr>
                 @endforeach
 
@@ -285,8 +288,9 @@
                 @else
                     <tr>
                         <td>
-                            <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
-                                width="8" height="8" alt="Logo Tigerload">
+                            <img style="margin-top: 5px"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                height="8" alt="Logo Tigerload">
                         </td>
                         <td>Aksesoris</td>
                         <td>
@@ -330,7 +334,7 @@
                 ?>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}"
+                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                             width="8" height="8" alt="Logo Tigerload">
                     </td>
                     <td>Harga</td>
@@ -362,7 +366,7 @@
                     <tr>
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>PPN 11%</td>
@@ -376,7 +380,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Harga Satuan</td>
@@ -390,7 +394,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -423,7 +427,7 @@
                     <tr style="font-weight: bold">
                         <td>
                             <img style="margin-top: 5px"
-                                src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
                                 height="8" alt="Logo Tigerload">
                         </td>
                         <td>Total Harga</td>
@@ -443,8 +447,9 @@
                 @endif
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Pembayaran</td>
                     <td>
@@ -456,8 +461,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Tempo Pembayaran</td>
                     <td>
@@ -469,8 +475,9 @@
                 </tr>
                 <tr>
                     <td>
-                        <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
-                            width="8" height="8" alt="Logo Tigerload">
+                        <img style="margin-top: 5px"
+                            src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                            height="8" alt="Logo Tigerload">
                     </td>
                     <td>Rekening Bank</td>
                     <td>
