@@ -196,9 +196,9 @@
     <br>
     <table width="100%">
         <tr>
-            <td style="width:70%;">
+            <td style="width:30%;">
                 <table>
-                    <div style="font-size: 25px; font-weight:bold">Pelanggan</div>
+                    <div style="font-size: 15px; font-weight:bold">Pelanggan</div>
                     <br>
                     <tr>
                         <td class="info-column">
@@ -235,12 +235,23 @@
                                 style="font-size: 15px;">{{ $inquery->pelanggan->nama_pelanggan }}</span>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="info-column">
+                            <span class="info-item" style="font-size: 15px; color:white">.</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-titik" style="font-size: 15px; color:white">.</span>
+                        </td>
+                        <td class="info-column">
+                            <span class="info-item" style="font-size: 15px; color:white">.</span>
+                        </td>
+                    </tr>
                 </table>
             </td>
 
-            <td style="width: 50%; text-align: left;">
+            <td style="width: 40%; text-align: left;">
                 <table style="width: 100%; margin-top:4px">
-                    <div style="font-size: 25px; font-weight:bold">Type Karoseri</div>
+                    <div style="font-size: 15px; font-weight:bold">Type Karoseri</div>
                     <br>
                     <tr>
                         <td style="width: 40%;">
@@ -250,8 +261,7 @@
                         </td>
                         <td style="width: 60%;">
                             <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $inquery->typekaroseri->kode_type }}
-                            </span>
+                                {{ $inquery->typekaroseri->kode_type }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -261,8 +271,7 @@
                         </td>
                         <td style="width: 60%;">
                             <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $inquery->typekaroseri->nama_karoseri }}
-                            </span>
+                                {{ $inquery->typekaroseri->nama_karoseri }}</span>
                         </td>
                     </tr>
                     <tr>
@@ -273,51 +282,36 @@
                         <td style="width: 60%;">
                             <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
                                 {{ $inquery->typekaroseri->merek->nama_merek }} /
-                                {{ $inquery->typekaroseri->merek->tipe->nama_tipe }}
-                            </span>
+                                {{ $inquery->typekaroseri->merek->tipe->nama_tipe }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">Warna</span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
+                                {{ $inquery->spk->warna }}</span>
                         </td>
                     </tr>
                 </table>
             </td>
-        </tr>
-        <tr>
-            <td>
-                <br>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:70%;">
-                <table>
-                    <div style="font-size: 25px; font-weight:bold">Spesifikasi</div>
-                    <br>
-                    <div>
-                        @foreach ($spesifikasis as $key => $item)
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                - {{ $item->nama }} {{ $item->jumlah }}
-                            </span>
-                            <br>
-                        @endforeach
-                        <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                            - Warna {{ $inquery->spk->warna }}
-                        </span>
-                    </div>
-                </table>
-            </td>
 
-            <td style="width: 50%; text-align: left;">
+            <td style="width: 100%; text-align: left;">
                 <table style="width: 100%; margin-top:4px">
-                    <div style="font-size: 25px; font-weight:bold">Dimensi</div>
+                    <div style="font-size: 15px; font-weight:bold">Dimensi</div>
                     <br>
                     <tr>
                         <td style="width: 40%;">
                             <span class="info-item"
-                                style="font-size: 15px; text-align: left; display: inline-block;">Panjang
-                            </span>
+                                style="font-size: 15px; text-align: left; display: inline-block;">Panjang</span>
                         </td>
                         <td style="width: 60%;">
                             <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $inquery->typekaroseri->panjang }}
-                            </span>
+                                {{ $inquery->typekaroseri->panjang }}</span> / <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">
+                                ............... mm</span>
                         </td>
                     </tr>
                     <tr>
@@ -327,8 +321,9 @@
                         </td>
                         <td style="width: 60%;">
                             <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $inquery->typekaroseri->lebar }}
-                            </span>
+                                {{ $inquery->typekaroseri->lebar }}</span> / <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">
+                                ............... mm</span>
                         </td>
                     </tr>
                     <tr>
@@ -337,26 +332,30 @@
                                 style="font-size: 15px; text-align: left; display: inline-block;">Tinggi</span>
                         </td>
                         <td style="width: 60%;">
-                            <span class="info-item" style="font-size: 15px; text-align: left; display: inline-block;">:
-                                {{ $inquery->typekaroseri->tinggi }}
+                            <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">:
+                                {{ $inquery->typekaroseri->tinggi }}</span> / <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">
+                                ............... mm</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 40%;">
+                            <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;"></span>
+                        </td>
+                        <td style="width: 60%;">
+                            <span class="info-item"
+                                style="font-size: 15px; text-align: left; display: inline-block;">:
                             </span>
                         </td>
                     </tr>
                 </table>
             </td>
         </tr>
-    </table>
-    <br>
-    <div style="font-size: 25px; font-weight:bold">GAMBAR SKRB</div>
-    <br>
-    <table width="100%">
         <tr>
-            <td style="width: 100%; text-align: center;">
-                <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->typekaroseri->gambar_skrb) }}"
-                        alt="{{ $inquery->typekaroseri->nama_karoseri }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
-                </div>
+            <td>
+                <br>
             </td>
         </tr>
     </table>
@@ -391,55 +390,21 @@
             <td colspan="6" style="padding: 0px;"></td>
         </tr>
     </table>
-    {{-- <table class="tdd" cellpadding="10" cellspacing="0">
+    <br>
+    <div style="font-size: 25px; font-weight:bold">GAMBAR SKRB</div>
+    <br>
+    <table width="100%">
         <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">
-                            @if ($inquery->user)
-                                {{ $inquery->user->karyawan->nama_lengkap }}
-                            @else
-                                user tidak ada
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Operasional</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">.</td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">SPV Ban</td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table>
-                    <tr>
-                        <td class="label">.</td>
-                    </tr>
-                    <tr>
-                        <td class="separator" colspan="2"><span></span></td>
-                    </tr>
-                    <tr>
-                        <td class="label">Accounting</td>
-                    </tr>
-                </table>
+            <td style="width: 100%; text-align: center;">
+                <div style="width: 100%;">
+                    <img src="{{ asset('storage/uploads/' . $inquery->typekaroseri->gambar_skrb) }}"
+                        alt="{{ $inquery->typekaroseri->nama_karoseri }}"
+                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                </div>
             </td>
         </tr>
-    </table> --}}
+    </table>
+    <br>
 </body>
 
 <div class="container">

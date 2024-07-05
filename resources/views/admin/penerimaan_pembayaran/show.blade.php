@@ -89,23 +89,40 @@
     <div style="display: flex; justify-content: left; align-items: left; margin-left:20px; margin-top:5px">
     </div>
 
-    <div class="center-table">
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <table style="text-align: center;">
-                <tr>
-                    <td style="font-weight: bold; font-size:15px">TANDA TERIMA PEMBAYARAN</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold; font-size:15px">No. {{ $pembelian->kode_penerimaan }}</td>
-                </tr>
-            </table>
-        </div>
+    <div style="margin-bottom:0px; margin-left:70px">
+        <table width="100%">
+            <tr>
+                <td style="font-size: 15px;">
+                    <span class="info-item">No.{{ $pembelian->kode_penerimaan }}</span>
+                    <br>
+                </td>
+                <td style="font-size: 18px; padding-left:40px">
+                    <span class="info-item" style="font-weight: bold; margin-left:220px">TANDA TERIMA PEMBAYARAN</span>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-size: 15px;">
+                </td>
+                <td style="font-size: 18px; padding-left:40px">
+
+                </td>
+            </tr>
+        </table>
     </div>
-    <br>
-    <div style="margin-left: 50px; font-size: 15px;">
+    <div style="margin-left: 70px; margin-top:30px; font-size: 15px;">
         <table>
             <tr>
-                <td>Telah diterima dari</td>
+                <td>Kode Pelanggan</td>
+                <td>
+                    <div style="margin-left: 70px">
+                        :
+                    </div>
+                </td>
+                <td>{{ $pembelian->pelanggan->kode_pelanggan }}</td>
+            </tr>
+            <tr>
+                <td>Nama Pelanggan</td>
                 <td>
                     <div style="margin-left: 70px">
                         :
@@ -120,7 +137,8 @@
                         :
                     </div>
                 </td>
-                <td>{{ \Carbon\Carbon::parse($pembelian->tanggal_pembayaran)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                <td>{{ \Carbon\Carbon::parse($pembelian->tanggal_pembayaran)->locale('id')->isoFormat('D MMMM YYYY') }}
+                </td>
             </tr>
 
             <tr>

@@ -160,7 +160,8 @@
                                 </div>
                             </td>
                             <td>{{ $pembelians->typekaroseri->kode_type }} -
-                                {{ $pembelians->typekaroseri->nama_karoseri }}</td>
+                                {{ $pembelians->typekaroseri->nama_karoseri }}
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -211,7 +212,9 @@
                                         :
                                     </div>
                                 </td>
-                                <td>- {{ $item->nama }} {{ $item->jumlah }}</td>
+                                <td>- {{ $item->nama }} @if ($item->keterangan != null)
+                                        :
+                                    @endif {{ $item->keterangan }} {{ $item->jumlah }}</td>
                             </tr>
                         @endforeach
 
@@ -271,318 +274,319 @@
                                     height="8" alt="Logo Tigerload">
                             </td>
                             <td>Harga</td>
+                            <?php
+                            // Calculate the increase and round it
+                            $total_price = $pembelians->harga;
+                            $tax_rate = 0.11;
+                            // Calculate original price
+                            $original_price = $total_price / (1 + $tax_rate);
+                            
+                            // Calculate tax amount
+                            $tax_amount = $original_price * $tax_rate;
+                            ?>
                             <td>
                                 <div style="margin-left: 70px">:</div>
                             </td>
-                            <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
-                                @if ($pembelians->kategori == 'NON PPN')
+                            @if ($pembelians->kategori == 'PPN')
+                                <td>Rp. {{ number_format($original_price, 0, ',', '.') }},-
+                            @endif
+                            @if ($pembelians->kategori == 'NON PPN')
+                                <td>Rp. {{ number_format($pembelians->harga, 0, ',', '.') }},-
                                     <span>(
-                                        {{ terbilang($pembelians->harga) }} ) per unit</span>
-                                @endif
-                            </td>
-                        </tr>
-
-                        @if ($pembelians->kategori == 'PPN')
-                            <tr>
-                                <td>
-                                    <img style="margin-top: 5px"
-                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                        height="8" alt="Logo Tigerload">
-                                </td>
-                                <td>PPN 11%</td>
-                                <td>
-                                    <div style="margin-left: 70px">:</div>
-                                </td>
-                                <td><span style="text-decoration: underline">Rp.
-                                        {{ number_format($pembelians->harga * 0.11, 0, ',', '.') }},-</span> +</td>
-                            </tr>
-
-                            <tr style="font-weight: bold">
-                                <td>
-                                    <img style="margin-top: 5px"
-                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                        height="8" alt="Logo Tigerload">
-                                </td>
-                                <td>Harga Satuan</td>
-                                <td>
-                                    <div style="margin-left: 70px">:</div>
-                                </td>
-                                <td style="font-weight: bold; font-size:25px">Rp.
-                                    {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td>
-                                    <img style="margin-top: 5px"
-                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                        height="8" alt="Logo Tigerload">
-                                </td>
-                                <td>Total Harga</td>
-                                <td>
-                                    <div style="margin-left: 70px">:</div>
-                                </td>
-                                <td style="font-weight: bold">
-                                    {{ $pembelians->jumlah_unit }} Unit x
-                                    {{ number_format($pembelians->harga + $pembelians->harga * 0.11, 0, ',', '.') }},-
-                                    =
-                                    {{ number_format(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
-                                    {{-- ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} Rupiah ) --}}
-                                </td>
-                            </tr>
-                            <tr style="font-weight: bold">
-                                <td>
-
-                                </td>
-                                <td></td>
-                                <td>
-                                    <div style="margin-left: 70px">:</div>
-                                </td>
-                                <td style="font-weight: bold">
-                                    (
-                                    {{ terbilang(($pembelians->harga + $pembelians->harga * 0.11) * $pembelians->jumlah_unit, 0, ',', '.') }}
-                                    Rupiah )
-                                </td>
-                            </tr>
-                        @else
-                            @php
-                                $totalPrice = $pembelians->harga; // Total price without PPN
-                            @endphp
-                        @endif
-
-                        @if ($pembelians->kategori == 'NON PPN')
-                            <tr style="font-weight: bold">
-                                <td>
-                                    <img style="margin-top: 5px"
-                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                        height="8" alt="Logo Tigerload">
-                                </td>
-                                <td>Total Harga</td>
-                                <td>
-                                    <div style="margin-left: 70px">:</div>
-                                </td>
-                                <td style="font-weight: bold">
-                                    {{ $pembelians->jumlah_unit }} Unit x
-                                    {{ number_format($pembelians->harga, 0, ',', '.') }}
-                                    = {{ number_format($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }}
-                                    ( {{ terbilang($pembelians->harga * $pembelians->jumlah_unit, 0, ',', '.') }} )
-                                </td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td>
-                                <img style="margin-top: 5px"
-                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                    height="8" alt="Logo Tigerload">
-                            </td>
-                            <td>Pembayaran</td>
-                            <td>
-                                <div style="margin-left: 70px">
-                                    :
-                                </div>
-                            </td>
-                            <td>Uang Muka 50% dibayar saat pemesanan</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img style="margin-top: 5px"
-                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                    height="8" alt="Logo Tigerload">
-                            </td>
-                            <td>Tempo Pembayaran</td>
-                            <td>
-                                <div style="margin-left: 70px">
-                                    :
-                                </div>
-                            </td>
-                            <td>+/- 30 Hari</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img style="margin-top: 5px"
-                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                    height="8" alt="Logo Tigerload">
-                            </td>
-                            <td>Rekening Bank</td>
-                            <td>
-                                <div style="margin-left: 70px">
-                                    :
-                                </div>
-                            </td>
-                            <td>
-                                @if ($pembelians->kategori == 'PPN')
-                                    BCA 3621889999 Atas Nama : CV Tiger Load Engineering
-                                @else
-                                    BCA 3629888889 Atas Nama : Djohan Wahyudi
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="margin-top:30px">
-                    <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 147px;">Demikian surat
-                        penawaran ini kami
-                        sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami </p>
-                    <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">sampaikan terimakasih.
-                    </p>
-                </div>
-
-                <div style="margin-top:30px">
-                    <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">Hormat Kami,
-                    </p>
-                </div>
-
-                <div class="info-container">
-                    <div id="logo-container">
-                        <div style="margin-top:30px; margin-bottom:100px">
-                            <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">KAROSERI TIGER
-                                LOAD
-                            </p>
-                        </div>
-
-                        <p
-                            style="font-size: 25px; text-align: left; margin: 0; margin-left: 90px; text-decoration: underline;">
-                            DJOHAN WAHYUDI</p>
-
-                    </div>
-                    <div style="display: flex; justify-content: center; align-items: center;">
-                        <div id="logo-container">
-                            <div style="margin-top:30px">
-                                <p style="font-size: 25px; text-align: center; margin: 0; margin-left: 70px;">PEMESAN
-                                </p>
-                            </div>
-                            <img style="margin-left: 60px;"
-                                src="{{ asset('storage/uploads/gambar_logo/kotak.png') }}" width="410"
-                                height="100" alt="Logo Tigerload">
-                            <p
-                                style="font-size: 25px; text-align: center; margin: 0; margin-left: 70px; text-decoration: underline;">
-                                {{ strtoupper($pembelians->pelanggan->nama_pelanggan) }}
-                            </p>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; border: 3px solid #000; padding: 10px; margin-left: 80px; font-size: 21px;">
-                    <table>
-                        <tr>
-                            <td>1.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Harga sudah termasuk SRUT
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2.</td>
-                            <td>
-                                @if ($pembelians->kategori == 'NON PPN')
-                                    <div style="margin-left: 10px">
-                                        Harga belum termasuk PPN
-                                    </div>
-                                @else
-                                    <div style="margin-left: 10px">
-                                        Harga sudah termasuk PPN
-                                    </div>
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya tambahan.
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Segala resiko yang timbul dikarenakan ukuran bak yang tidak sesuai standar dari
-                                    Dinas Perhubungan sepenuhnya menjadi
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    tanggung jawab pemesan.
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Kerusakan yang diakibatkan oleh kelalain / kesalahan operator <span
-                                        style="text-decoration: underline;">bukan menjadi
-                                        tanggung jawab Karoseri Tiger Load.</span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Apabila terjadi pembatalan pemesanan oleh pihak pemesan, maka Uang Muka yang sudah
-                                    masuk tidak dapat diambil
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    kembali ataupun diakumulasikan ke unit yang lain(jika pesanan lebih dari satu unit)
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>7.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Perhitungan pengerjaan dimulai setelah uang muka efektif diterima Karoseri.
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>8.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Pesanan yang tidak segera diambil setelah konfirmasi barang jadi, maka pihak
-                                    Karoseri tidak bertanggung jawab terhadap
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    segala kerusakan fisik yang timbul setelahnya.
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>9.</td>
-                            <td>
-                                <div style="margin-left: 10px">
-                                    Harga belum termasuk biaya KIR pertama.
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                                        {{ terbilang($pembelians->harga) }} Rupiah ) per unit</span>
+                            @endif
             </td>
         </tr>
+
+        @if ($pembelians->kategori == 'PPN')
+            <tr>
+                <td>
+                    <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                        width="8" height="8" alt="Logo Tigerload">
+                </td>
+                <td>PPN 11%</td>
+                <td>
+                    <div style="margin-left: 70px">:</div>
+                </td>
+                <td><span style="text-decoration: underline">Rp.
+                        {{ number_format($tax_amount, 0, ',', '.') }},-</span> +</td>
+            </tr>
+
+            <tr style="font-weight: bold">
+                <td>
+                    <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                        width="8" height="8" alt="Logo Tigerload">
+                </td>
+                <td>Harga Satuan</td>
+                <td>
+                    <div style="margin-left: 70px">:</div>
+                </td>
+                <td style="font-weight: bold; font-size:13px">Rp.
+                    {{ number_format($pembelians->harga, 0, ',', '.') }},-
+                </td>
+            </tr>
+            <tr style="font-weight: bold">
+                <td>
+                    <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                        width="8" height="8" alt="Logo Tigerload">
+                </td>
+                <td>Total Harga</td>
+                <td>
+                    <div style="margin-left: 70px">:</div>
+                </td>
+                <td style="font-weight: bold">
+                    {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
+                    {{ number_format($pembelians->harga, 0, ',', '.') }},-
+                    =
+                    {{ number_format($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                </td>
+            </tr>
+            <tr style="font-weight: bold">
+                <td>
+                </td>
+                <td></td>
+                <td>
+                    <div style="margin-left: 70px">:</div>
+                </td>
+                <td style="font-weight: bold">
+                    (
+                    {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                    Rupiah )
+                </td>
+            </tr>
+        @endif
+
+        @if ($pembelians->kategori == 'NON PPN')
+            <tr style="font-weight: bold">
+                <td>
+                    <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                        width="8" height="8" alt="Logo Tigerload">
+                </td>
+                <td>Total Harga</td>
+                <td>
+                    <div style="margin-left: 70px">:</div>
+                </td>
+                <td style="font-weight: bold">
+                    {{ $pembelians->surat_penawaran->jumlah_unit }} Unit x
+                    {{ number_format($pembelians->harga, 0, ',', '.') }}
+                    =
+                    {{ number_format($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                    (
+                    {{ terbilang($pembelians->harga * $pembelians->surat_penawaran->jumlah_unit, 0, ',', '.') }}
+                    Rupiah)
+                </td>
+            </tr>
+        @endif
+        <tr>
+            <td>
+                <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                    width="8" height="8" alt="Logo Tigerload">
+            </td>
+            <td>Pembayaran</td>
+            <td>
+                <div style="margin-left: 70px">
+                    :
+                </div>
+            </td>
+            <td>Uang Muka 50% dibayar saat pemesanan</td>
+        </tr>
+        <tr>
+            <td>
+                <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                    width="8" height="8" alt="Logo Tigerload">
+            </td>
+            <td>Tempo Pembayaran</td>
+            <td>
+                <div style="margin-left: 70px">
+                    :
+                </div>
+            </td>
+            <td>+/- 30 Hari</td>
+        </tr>
+        <tr>
+            <td>
+                <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                    width="8" height="8" alt="Logo Tigerload">
+            </td>
+            <td>Rekening Bank</td>
+            <td>
+                <div style="margin-left: 70px">
+                    :
+                </div>
+            </td>
+            <td>
+                @if ($pembelians->kategori == 'PPN')
+                    BCA 3621889999 Atas Nama : CV Tiger Load Engineering
+                @else
+                    BCA 3629888889 Atas Nama : Djohan Wahyudi
+                @endif
+            </td>
+
+        </tr>
+    </table>
+    </div>
+    <div style="margin-top:30px">
+        <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 147px;">Demikian surat
+            penawaran ini kami
+            sampaikan. Atas kerjasama dan kepercayaan yang diberikan kami </p>
+        <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">sampaikan terimakasih.
+        </p>
+    </div>
+
+    <div style="margin-top:30px">
+        <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">Hormat Kami,
+        </p>
+    </div>
+
+    <div class="info-container">
+        <div id="logo-container">
+            <div style="margin-top:30px; margin-bottom:100px">
+                <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 70px;">KAROSERI TIGER
+                    LOAD
+                </p>
+            </div>
+
+            <p style="font-size: 25px; text-align: left; margin: 0; margin-left: 90px; text-decoration: underline;">
+                DJOHAN WAHYUDI</p>
+
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div id="logo-container">
+                <div style="margin-top:30px">
+                    <p style="font-size: 25px; text-align: center; margin: 0; margin-left: 70px;">PEMESAN
+                    </p>
+                </div>
+                <img style="margin-left: 60px;" src="{{ asset('storage/uploads/gambar_logo/kotak.png') }}"
+                    width="410" height="100" alt="Logo Tigerload">
+                <p
+                    style="font-size: 25px; text-align: center; margin: 0; margin-left: 70px; text-decoration: underline;">
+                    {{ strtoupper($pembelians->pelanggan->nama_pelanggan) }}
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div
+        style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; border: 3px solid #000; padding: 10px; margin-left: 80px; font-size: 21px;">
+        <table>
+            <tr>
+                <td>1.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Harga sudah termasuk SRUT
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>2.</td>
+                <td>
+                    @if ($pembelians->kategori == 'NON PPN')
+                        <div style="margin-left: 10px">
+                            Harga belum termasuk PPN
+                        </div>
+                    @else
+                        <div style="margin-left: 10px">
+                            Harga sudah termasuk PPN
+                        </div>
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>3.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Adanya penambahan ukuran atau model diluar surat penawaran dikenakan biaya tambahan.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>4.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Segala resiko yang timbul dikarenakan ukuran bak yang tidak sesuai standar dari
+                        Dinas Perhubungan sepenuhnya menjadi
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="margin-left: 10px">
+                        tanggung jawab pemesan.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>5.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Kerusakan yang diakibatkan oleh kelalain / kesalahan operator <span
+                            style="text-decoration: underline;">bukan menjadi
+                            tanggung jawab Karoseri Tiger Load.</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>6.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Apabila terjadi pembatalan pemesanan oleh pihak pemesan, maka Uang Muka yang sudah
+                        masuk tidak dapat diambil
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="margin-left: 10px">
+                        kembali ataupun diakumulasikan ke unit yang lain(jika pesanan lebih dari satu unit)
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>7.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Perhitungan pengerjaan dimulai setelah uang muka efektif diterima Karoseri.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>8.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Pesanan yang tidak segera diambil setelah konfirmasi barang jadi, maka pihak
+                        Karoseri tidak bertanggung jawab terhadap
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="margin-left: 10px">
+                        segala kerusakan fisik yang timbul setelahnya.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>9.</td>
+                <td>
+                    <div style="margin-left: 10px">
+                        Harga belum termasuk biaya KIR pertama.
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </td>
+    </tr>
     </table>
 
     <div class="container">
         <a href="{{ url('admin/tablepesanan') }}" class="blue-button">Kembali</a>
         <a href="{{ url('admin/spk/cetak-pdf/' . $pembelians->id) }}" class="blue-button">Cetak</a>
     </div>
-
 
 </body>
 
