@@ -38,6 +38,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('mereks', [\App\Http\Controllers\Admin\KendaraanController::class, 'merek']);
     Route::post('marketings', [\App\Http\Controllers\Admin\KomisiController::class, 'tambah_marketing']);
     Route::get('penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenjualanController::class, 'cetakpdf']);
+    Route::get('dokumen_project/cetak-pdf/{id}', [\App\Http\Controllers\Admin\DokumenprojectController::class, 'cetakpdf']);
     Route::get('pelunasan_penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'cetakpdf']);
     Route::get('unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan'])->name('unpostpenjualan');
     Route::get('postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan'])->name('postingpenjualan');
@@ -85,6 +86,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_pembelianreturn/unpostpembelianreturn/{id}', [\App\Http\Controllers\Admin\InqueryReturnpembelianController::class, 'unpostpembelianreturn']);
     Route::get('inquery_pembelianreturn/postingpembelianreturn/{id}', [\App\Http\Controllers\Admin\InqueryReturnpembelianController::class, 'postingpembelianreturn']);
 
+    Route::get('inquery_dokumenproject/unpostdokumenproject/{id}', [\App\Http\Controllers\Admin\InqueryDokumenprojectController::class, 'unpostdokumenproject']);
+    Route::get('inquery_dokumenproject/postingdokumenproject/{id}', [\App\Http\Controllers\Admin\InqueryDokumenprojectController::class, 'postingdokumenproject']);
+
     Route::get('inquery_penjualan/unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan']);
     Route::get('inquery_penjualan/postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan']);
 
@@ -131,6 +135,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('hapuspenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'hapuspenjualan'])->name('hapuspenjualan');
     Route::get('hapuspenerimaanpembayaran/{id}', [\App\Http\Controllers\Admin\InquerypenerimaanpembayaranController::class, 'hapuspenerimaanpembayaran'])->name('hapuspenerimaanpembayaran');
     Route::get('hapusperhitunganbahan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitunganbahanbakuController::class, 'hapusperhitunganbahan'])->name('hapusperhitunganbahan');
+    Route::get('hapusdokumenproject/{id}', [\App\Http\Controllers\Admin\InqueryDokumenprojectController::class, 'hapusdokumenproject'])->name('hapusdokumenproject');
 
     Route::get('hapusperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'hapusperintahkerja'])->name('hapusperintahkerja');
     Route::get('inquery_perintahkerja/unpostperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'unpostperintahkerja']);
@@ -295,5 +300,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_perintahkerja', \App\Http\Controllers\Admin\InqueryperintahkerjaController::class);
     Route::resource('perhitungan_bahanbaku', \App\Http\Controllers\Admin\PerhitunganbahanbakuController::class);
     Route::resource('inquery_perhitunganbahanbaku', \App\Http\Controllers\Admin\InqueryPerhitunganbahanbakuController::class);
+    Route::resource('dokumen_project', \App\Http\Controllers\Admin\DokumenprojectController::class);
+    Route::resource('inquery_dokumenproject', \App\Http\Controllers\Admin\InqueryDokumenprojectController::class);
 
 });

@@ -165,7 +165,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Penawaran</td>
+                                    <td style="font-size: 13px; font-weight: lighter;">Perihal : Surat Pesanan</td>
                                 </tr>
                             </table>
                         </td>

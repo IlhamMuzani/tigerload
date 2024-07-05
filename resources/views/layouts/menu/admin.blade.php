@@ -160,7 +160,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['kendaraan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['kendaraan'])
             <li class="nav-item">
                 <a href="{{ url('admin/kendaraan') }}"
                     class="nav-link {{ request()->is('admin/kendaraan*') ? 'active' : '' }}">
@@ -168,7 +168,7 @@
                     <p style="font-size: 14px;">Data Kendaraan</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['barang'])
             <li class="nav-item">
                 <a href="{{ url('admin/akun') }}" class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}">
@@ -209,6 +209,7 @@
     request()->is('admin/penerimaan_pembayaran*') ||
     request()->is('admin/perintah_kerja*') ||
     request()->is('admin/perhitungan_bahanbaku*') ||
+    request()->is('admin/dokumen_project*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -241,6 +242,7 @@
         request()->is('admin/penerimaan_pembayaran*') ||
         request()->is('admin/perintah_kerja*') ||
         request()->is('admin/perhitungan_bahanbaku*') ||
+        request()->is('admin/dokumen_project*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -374,6 +376,15 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['penjualan'])
             <li class="nav-item">
+                <a href="{{ url('admin/dokumen_project') }}"
+                    class="nav-link {{ request()->is('admin/dokumen_project*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Dokumen Project</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['penjualan'])
+            <li class="nav-item">
                 <a href="{{ url('admin/tablepenjualan') }}"
                     class="nav-link {{ request()->is('admin/penjualan*') || request()->is('admin/tablepenjualan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -420,6 +431,7 @@
     request()->is('admin/inquery_penerimaanpembayaran*') ||
     request()->is('admin/inquery_perintahkerja*') ||
     request()->is('admin/inquery_perhitunganbahanbaku*') ||
+    request()->is('admin/inquery_dokumenproject*') ||
     request()->is('admin/inquery_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -441,6 +453,7 @@
         request()->is('admin/inquery_penerimaanpembayaran*') ||
         request()->is('admin/inquery_perintahkerja*') ||
         request()->is('admin/inquery_perhitunganbahanbaku*') ||
+        request()->is('admin/inquery_dokumenproject*') ||
         request()->is('admin/inquery_penjualan*')
             ? 'active'
             : '' }}">
@@ -589,6 +602,15 @@
                     <p style="font-size: 14px;">Inquery Perhitungan-<br>
                         <span style="margin-left: 32px">Pengambilan Bahan Baku</span>
                     </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_dokumenproject') }}"
+                    class="nav-link {{ request()->is('admin/inquery_dokumenproject*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Dokumen Project</p>
                 </a>
             </li>
         @endif

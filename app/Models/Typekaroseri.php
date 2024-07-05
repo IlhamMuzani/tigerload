@@ -47,6 +47,11 @@ class Typekaroseri extends Model
         return $this->hasMany(Spesifikasi::class);
     }
 
+    public function dokumen_project()
+    {
+        return $this->hasMany(Dokumen_project::class);
+    }
+
     public function merek()
     {
         return $this->belongsTo(Merek::class);
