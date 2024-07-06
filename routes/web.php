@@ -244,6 +244,15 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
 
 
+    Route::resource('laporan_perhitunganbahan', \App\Http\Controllers\Admin\LaporanPerhitunganbahanbakuController::class);
+    Route::get('print_laporanperhitunganbahan', [\App\Http\Controllers\Admin\LaporanPerhitunganbahanbakuController::class, 'print_laporanperhitunganbahan']);
+
+    Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
+    Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
+
+    Route::resource('laporan_dokumenproject', \App\Http\Controllers\Admin\LaporanDokumenprojectController::class);
+    Route::get('print_laporandokumenproject', [\App\Http\Controllers\Admin\LaporanDokumenprojectController::class, 'print_laporandokumenproject']);
+
     Route::get('cetak_pengambilanfilter', [\App\Http\Controllers\Admin\PengambilanbahanController::class, 'cetak_pengambilanfilter']);
 
     Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
