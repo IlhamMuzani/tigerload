@@ -225,12 +225,6 @@ class InqueryKasbonkaryawanController extends Controller
             return back()->with('error', 'Saldo tidak ditemukan');
         }
 
-        $uangjalan = $item->nominal;
-
-        if ($lastSaldo->sisa_saldo < $uangjalan) {
-            return back()->with('error', 'Saldo tidak mencukupi');
-        }
-
         $sisaSaldo = $item->nominal;
         // Update saldo terakhir
         $lastSaldo->update([

@@ -275,6 +275,14 @@ class InqueryPengeluarankaskecilController extends Controller
                 ->update([
                     'kasbon' => $kasbons,
                 ]);
+
+            $detail_cicilan = Detail_cicilan::where('kasbon_karyawan_id', $kasbon_karyawan_ids->id)->get();
+
+            foreach ($detail_cicilan as $detail) {
+                $detail->update([
+                    'status' => 'unpost'
+                ]);
+            }
         }
 
         $GajiKaryawanss = $item->perhitungan_gajikaryawan_id;
@@ -369,8 +377,15 @@ class InqueryPengeluarankaskecilController extends Controller
                 ->update([
                     'kasbon' => $kasbons,
                 ]);
-        }
 
+            $detail_cicilan = Detail_cicilan::where('kasbon_karyawan_id', $kasbon_karyawan_ids->id)->get();
+
+            foreach ($detail_cicilan as $detail) {
+                $detail->update([
+                    'status' => 'posting'
+                ]);
+            }
+        }
 
         $GajiKaryawanss = $item->perhitungan_gajikaryawan_id;
         if ($GajiKaryawanss) {
@@ -509,6 +524,14 @@ class InqueryPengeluarankaskecilController extends Controller
                             ->update([
                                 'kasbon' => $kasbons,
                             ]);
+
+                        $detail_cicilan = Detail_cicilan::where('kasbon_karyawan_id', $kasbon_karyawan_ids->id)->get();
+
+                        foreach ($detail_cicilan as $detail) {
+                            $detail->update([
+                                'status' => 'posting'
+                            ]);
+                        }
                     }
 
 
@@ -554,16 +577,6 @@ class InqueryPengeluarankaskecilController extends Controller
                         Detail_pengeluaran::where('perhitungan_gajikaryawan_id', $GajiKaryawan->id)->update([
                             'status' => 'posting'
                         ]);
-
-                        // $totalKasbon = Total_kasbon::latest()->first();
-                        // if (!$totalKasbon) {
-                        //     return back()->with('error', 'Saldo Kasbon tidak ditemukan');
-                        // }
-
-                        // $sisaKasbon = $totalKasbon->sisa_kasbon - $TotalPelunasan;
-                        // Total_kasbon::create([
-                        //     'sisa_kasbon' => $sisaKasbon,
-                        // ]);
                     }
                 }
             }
@@ -641,6 +654,14 @@ class InqueryPengeluarankaskecilController extends Controller
                             ->update([
                                 'kasbon' => $kasbons,
                             ]);
+
+                        $detail_cicilan = Detail_cicilan::where('kasbon_karyawan_id', $kasbon_karyawan_ids->id)->get();
+
+                        foreach ($detail_cicilan as $detail) {
+                            $detail->update([
+                                'status' => 'unpost'
+                            ]);
+                        }
                     }
 
                     $GajiKaryawanss = $item->perhitungan_gajikaryawan_id;

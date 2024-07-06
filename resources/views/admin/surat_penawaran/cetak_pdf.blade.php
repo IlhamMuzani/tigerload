@@ -167,7 +167,7 @@
                             <div class="">
                                 <table>
                                     <tr>
-                                        <td data-toggle="modal" data-target="#modal-qrcode-{{ $pembelians->id }}"
+                                        <td
                                             style="display: inline-block;">
                                             {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 1.5, 1.5) !!}
                                         </td>
