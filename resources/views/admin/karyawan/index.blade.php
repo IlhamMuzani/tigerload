@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="datatables1" class="table table-bordered table-striped table-hover">
+                    <table id="datatables66" class="table table-bordered table-striped table-hover">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
