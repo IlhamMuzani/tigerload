@@ -259,8 +259,8 @@
                             <td class="info-catatan2" style="font-size: 15px;">Nama Pelanggan</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                @if ($penjualans->perintah_kerja)
+                                    {{ $penjualans->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                 @else
                                     {{ $penjualans->spk->pelanggan->nama_pelanggan }}
                                 @endif
@@ -270,8 +270,8 @@
                             <td class="info-catatan2" style="font-size: 15px;">Alamat</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->alamat }} </span>
+                                @if ($penjualans->perintah_kerja)
+                                    {{ $penjualans->perintah_kerja->spk->pelanggan->alamat }} </span>
                                 @else
                                     {{ $penjualans->spk->pelanggan->alamat }} </span>
                                 @endif
@@ -281,8 +281,8 @@
                             <td class="info-catatan2" style="font-size: 15px;">Telp</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->telp }}
+                                @if ($penjualans->perintah_kerja)
+                                    {{ $penjualans->perintah_kerja->spk->pelanggan->telp }}
                                 @else
                                     {{ $penjualans->spk->pelanggan->telp }}
                                 @endif
@@ -292,8 +292,8 @@
                             <td class="info-catatan2" style="font-size: 15px;">ID Pelanggan</td>
                             <td class="info-item" style="font-size: 15px;">:</td>
                             <td class="info-text info-left" style="font-size: 15px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->kode_pelanggan }}
+                                @if ($penjualans->perintah_kerja)
+                                    {{ $penjualans->perintah_kerja->spk->pelanggan->kode_pelanggan }}
                                 @else
                                     {{ $penjualans->spk->pelanggan->kode_pelanggan }}
                                 @endif
@@ -347,8 +347,8 @@
             <td class="info-text info-left" style="font-size: 15px; text-align: center;">
             </td>
             <td class="info-text info-left" style="font-size: 15px; text-align: left;">
-                @if ($penjualans->depositpemesanan)
-                    {{ $penjualans->depositpemesanan->spk->typekaroseri->nama_karoseri }}
+                @if ($penjualans->perintah_kerja)
+                    {{ $penjualans->perintah_kerja->spk->typekaroseri->nama_karoseri }}
                 @else
                     {{ $penjualans->spk->typekaroseri->nama_karoseri }}
                 @endif
@@ -358,8 +358,8 @@
             <td class="td" style="font-size: 15px; text-align: right;">
                 <span style="float: center;">Rp.</span>
                 <span style="float: right">
-                    @if ($penjualans->depositpemesanan)
-                        {{ number_format($penjualans->depositpemesanan->spk->harga, 0, ',', '.') }}
+                    @if ($penjualans->perintah_kerja)
+                        {{ number_format($penjualans->perintah_kerja->spk->harga, 0, ',', '.') }}
                     @else
                         {{ number_format($penjualans->spk->harga, 0, ',', '.') }}
                     @endif
@@ -367,15 +367,15 @@
                 </span>
             </td>
         </tr>
-        @if ($penjualans->depositpemesanan)
+        @if ($penjualans->perintah_kerja)
             @php
                 $startFrom = 2;
-                $totalSubtotal = $penjualans->depositpemesanan->spk->harga; // Inisialisasi dengan harga awal
+                $totalSubtotal = $penjualans->perintah_kerja->spk->harga; // Inisialisasi dengan harga awal
             @endphp
         @else
             @php
                 $startFrom = 2;
-                $totalSubtotal = $penjualans->spk->harga; // Inisialisasi dengan harga awal
+                $totalSubtotal = $penjualans->perintah_kerja->spk->harga; // Inisialisasi dengan harga awal
             @endphp
         @endif
 

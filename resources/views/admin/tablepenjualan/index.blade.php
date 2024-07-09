@@ -78,29 +78,29 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $penjualan->kode_penjualan }}</td>
                                     <td>
-                                        @if ($penjualan->depositpemesanan)
-                                            {{ $penjualan->depositpemesanan->spk->kode_spk }}
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->kode_spk }}
                                         @else
                                             {{ $penjualan->spk->kode_spk }}
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($penjualan->depositpemesanan)
-                                            {{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                         @else
                                             {{ $penjualan->spk->pelanggan->nama_pelanggan }}
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($penjualan->depositpemesanan)
-                                            {{ $penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
                                         @else
                                             {{ $penjualan->spk->typekaroseri->kode_type }}
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($penjualan->depositpemesanan)
-                                            {{ $penjualan->depositpemesanan->kode_deposit }}
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->kode_deposit }}
                                         @else
                                             tidak DP
                                         @endif

@@ -59,54 +59,52 @@
                             <div class="form-group" hidden>
                                 <label for="nopol">Id Deposit</label>
                                 <input type="text" class="form-control" id="depositpemesanan_id"
-                                    name="depositpemesanan_id"
-                                    value="@if ($penjualans->depositpemesanan) {{ old('depositpemesanan_id', $penjualans->depositpemesanan->id) }}@else @endif"
+                                    name="depositpemesanan_id" value="{{ $penjualans->depositpemesanan_id }}"
                                     readonly placeholder="" value="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id SPK</label>
-                                <input type="text" class="form-control" id="spk_id" name="spk_id"
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->id) }}@else{{ old('spk_id', $penjualans->spk->id) }} @endif"
+                                <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
+                                    value="{{ $penjualans->perintah_kerja->id }}"
                                     readonly placeholder="" value="">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
-                                <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->kode_spk) }}@else{{ old('spk_id', $penjualans->spk->kode_spk) }} @endif">
+                                <input type="text" class="form-control" id="kode_perintah" readonly placeholder=""
+                                    value="{{ $penjualans->perintah_kerja->kode_perintah }}">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Nama Pelanggan</label>
                                 <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan) }}@else{{ old('spk_id', $penjualans->spk->pelanggan->nama_pelanggan) }} @endif">
+                                    value="{{ $penjualans->perintah_kerja->spk->pelanggan->nama_pelanggan }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Merek Kendaraan</label>
                                 <input type="text" class="form-control" id="merek" readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek) }}@else{{ old('spk_id', $penjualans->spk->detail_kendaraan->first()->merek->nama_merek) }} @endif">
+                                    value="{{ $penjualans->perintah_kerja->spk->typekaroseri->merek->nama_merek }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Type Kendaraan</label>
                                 <input type="text" class="form-control" id="tipe" readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe) }}@else{{ old('spk_id', $penjualans->spk->detail_kendaraan->first()->merek->tipe->nama_tipe) }} @endif">
+                                    value="{{ $penjualans->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Kode Karoseri</label>
                                 <input type="text" class="form-control" id="kode_type"readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->kode_type) }}@else{{ old('spk_id', $penjualans->spk->typekaroseri->kode_type) }} @endif">
+                                    value="{{ $penjualans->perintah_kerja->spk->typekaroseri->kode_type }}">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Bentuk Karoseri</label>
                                 <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ old('spk_id', $penjualans->depositpemesanan->spk->typekaroseri->nama_karoseri) }}@else{{ old('spk_id', $penjualans->spk->typekaroseri->nama_karoseri) }} @endif">
+                                    value="{{ $penjualans->perintah_kerja->spk->typekaroseri->nama_karoseri }}">
 
                             </div>
                             <div class="form-group">
                                 <label for="nama">Harga Pemesanan</label>
                                 <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
-                                    placeholder=""
-                                    value="@if ($penjualans->depositpemesanan) {{ number_format(old('harga_awal', $penjualans->depositpemesanan->spk->harga), 0, ',', '.') }}@else{{ number_format(old('harga_awal', $penjualans->spk->harga), 0, ',', '.') }} @endif">
+                                    placeholder="" value="{{ $penjualans->perintah_kerja->spk->harga }}">
                             </div>
                         </div>
                     </div>
@@ -267,6 +265,7 @@
                                         <th class="text-center">No</th>
                                         <th>Kode Spk</th>
                                         <th>Nama Pelanggan</th>
+                                        <th>Deposit</th>
                                         <th>Merek</th>
                                         <th>Type</th>
                                         <th>Kode Karoseri</th>
@@ -278,21 +277,28 @@
                                     @foreach ($spks as $spk)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $spk->kode_spk }}</td>
-                                            <td>{{ $spk->pelanggan->nama_pelanggan }}</td>
-                                            <td>{{ $spk->detail_kendaraan->first()->merek->nama_merek }}</td>
-                                            <td>{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
+                                            <td>{{ $spk->kode_perintah }}</td>
+                                            <td>{{ $spk->spk->pelanggan->nama_pelanggan }}</td>
+                                            <td>
+                                                @if ($spk->depositpemesanan->first())
+                                                    {{ $spk->depositpemesanan->first()->kode_deposit }}
+                                                @else
+                                                    tidak ada
+                                                @endif
+                                            </td>
+                                            <td>{{ $spk->spk->merek->nama_merek }}</td>
+                                            <td>{{ $spk->spk->merek->tipe->nama_tipe }}</td>
                                             <td>{{ $spk->typekaroseri->kode_type }}</td>
                                             <td>{{ $spk->typekaroseri->nama_karoseri }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_spk }}', '{{ $spk->pelanggan->nama_pelanggan }}',
-                                                    '{{ $spk->detail_kendaraan->first()->merek->nama_merek }}',
-                                                    '{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
-                                                    '{{ $spk->typekaroseri->kode_type }}',
-                                                    '{{ $spk->typekaroseri->nama_karoseri }}'
-                                                    '{{ $spk->harga }}',
-                                                        )">
+                                                    onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_perintah }}', '{{ $spk->spk->pelanggan->nama_pelanggan }}',
+                                                    '{{ $spk->spk->merek->nama_merek }}',
+                                                    '{{ $spk->spk->merek->tipe->nama_tipe }}',
+                                                    '{{ $spk->spk->typekaroseri->kode_type }}',
+                                                    '{{ $spk->spk->typekaroseri->nama_karoseri }}',
+                                                    '{{ $spk->spk->harga }}',
+                                                    '{{ $spk->depositpemesanan->first() ? $spk->depositpemesanan->first()->id : '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
@@ -316,7 +322,7 @@
             // Set the values in the form fields
             document.getElementById('spk_id').value = Spk_id;
             document.getElementById('kode_spk').value = KodeSPK;
-            document.getElementById('nama_pelanggan').value = KodeSPK;
+            document.getElementById('nama_pelanggan').value = NamaPelanggan;
             document.getElementById('merek').value = Merek;
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;

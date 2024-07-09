@@ -267,6 +267,7 @@
                                         <th class="text-center">No</th>
                                         <th>Kode Spk</th>
                                         <th>Nama Pelanggan</th>
+                                        <th>Deposit</th>
                                         <th>Merek</th>
                                         <th>Type</th>
                                         <th>Kode Karoseri</th>
@@ -280,6 +281,13 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $spk->kode_perintah }}</td>
                                             <td>{{ $spk->spk->pelanggan->nama_pelanggan }}</td>
+                                            <td>
+                                                @if ($spk->depositpemesanan->first())
+                                                    {{ $spk->depositpemesanan->first()->kode_deposit }}
+                                                @else
+                                                    tidak ada
+                                                @endif
+                                            </td>
                                             <td>{{ $spk->spk->merek->nama_merek }}</td>
                                             <td>{{ $spk->spk->merek->tipe->nama_tipe }}</td>
                                             <td>{{ $spk->typekaroseri->kode_type }}</td>
@@ -291,8 +299,8 @@
                                                     '{{ $spk->spk->merek->tipe->nama_tipe }}',
                                                     '{{ $spk->spk->typekaroseri->kode_type }}',
                                                     '{{ $spk->spk->typekaroseri->nama_karoseri }}',
-                                                    '{{ $spk->spk->harga }}'
-                                                    )">
+                                                    '{{ $spk->spk->harga }}',
+                                                    '{{ $spk->depositpemesanan->first() ? $spk->depositpemesanan->first()->id : '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>

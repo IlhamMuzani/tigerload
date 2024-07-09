@@ -41,9 +41,11 @@ class PenjualanController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'depositpemesanan_id' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor spk terlebih dahulu',
+                'depositpemesanan_id.required' => 'Deposit Kosong',
             ]
         );
 

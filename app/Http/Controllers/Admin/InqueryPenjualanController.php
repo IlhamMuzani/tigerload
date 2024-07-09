@@ -19,7 +19,7 @@ use App\Models\Pelanggan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
 use App\Models\Spesifikasi;
-use App\Models\Spk;
+use App\Models\Perintah_kerja;
 use App\Models\Tipe;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -75,7 +75,7 @@ class InqueryPenjualanController extends Controller
     {
         $penjualans = Penjualan::where('id', $id)->first();
         $barangs = Barang::all();
-        $spks = Spk::where(['status' => 'selesai', 'status_penjualan' => null])->get();
+        $spks = Perintah_kerja::where(['status' => 'selesai', 'status_penjualan' => null])->get();
         $details = Spesifikasi::where('penjualan_id', $id)->get();
 
         return view('admin/inquerypenjualan.update', compact('spks', 'barangs', 'penjualans', 'details'));
@@ -86,10 +86,10 @@ class InqueryPenjualanController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
-                'spk_id' => 'required',
+                'perintah_kerja_id' => 'required',
             ],
             [
-                'spk_id.required' => 'Pilih nomor spk terlebih dahulu',
+                'perintah_kerja_id.required' => 'Pilih nomor spk terlebih dahulu',
             ]
         );
 
@@ -187,7 +187,7 @@ class InqueryPenjualanController extends Controller
 
         // Update the main transaction
         $transaksi->update([
-            'spk_id' => $request->spk_id,
+            'perintah_kerja_id' => $request->perintah_kerja_id,
             'depositpemesanan_id' => $request->depositpemesanan_id,
             'status' => 'posting',
         ]);
@@ -227,9 +227,9 @@ class InqueryPenjualanController extends Controller
             }
         }
 
-        $spk = Spk::where('id', $transaksi->spk_id)->first();
-        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
-        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
+        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
+        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
         if ($deposit) {
             $deposit->update(['status' => 'selesai']);
         }
@@ -244,9 +244,9 @@ class InqueryPenjualanController extends Controller
     public function unpostpenjualan($id)
     {
         $transaksi = Penjualan::where('id', $id)->first();
-        $spk = Spk::where('id', $transaksi->spk_id)->first();
-        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => null]);
-        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'selesai'])->first();
+        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
+        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => null]);
+        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'selesai'])->first();
         if ($deposit) {
             $deposit->update(['status' => 'posting']);
         }
@@ -260,9 +260,9 @@ class InqueryPenjualanController extends Controller
     public function postingpenjualan($id)
     {
         $transaksi = Penjualan::where('id', $id)->first();
-        $spk = Spk::where('id', $transaksi->spk_id)->first();
-        $spks = Spk::where('id', $transaksi->spk_id)->update(['status_penjualan' => 'penjualan']);
-        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
+        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
+        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
         if ($deposit) {
             $deposit->update(['status' => 'selesai']);
         }
