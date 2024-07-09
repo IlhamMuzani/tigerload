@@ -16,7 +16,7 @@ use App\Models\Depositpemesanan;
 use App\Models\Marketing;
 use App\Models\Penjualan;
 use App\Models\Spesifikasi;
-use App\Models\Spk;
+use App\Models\Perintah_kerja;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,7 +26,7 @@ class PenjualanController extends Controller
     {
         $deposits = Depositpemesanan::all();
         $barangs = Barang::all();
-        $spks = Spk::where(function ($query) {
+        $spks = Perintah_kerja::where(function ($query) {
             $query->where('status', 'selesai')
                 ->orWhere('status', 'posting');
         })
@@ -40,10 +40,10 @@ class PenjualanController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
-                'spk_id' => 'required',
+                'perintah_kerja_id' => 'required',
             ],
             [
-                'spk_id.required' => 'Pilih nomor spk terlebih dahulu',
+                'perintah_kerja_id.required' => 'Pilih nomor spk terlebih dahulu',
             ]
         );
 
@@ -130,7 +130,7 @@ class PenjualanController extends Controller
         $penjualans = Penjualan::create(array_merge(
             $request->all(),
             [
-                'spk_id' => $request->spk_id,
+                'perintah_kerja_id' => $request->perintah_kerja_id,
                 'depositpemesanan_id' => $request->depositpemesanan_id,
                 // 'harga' => $request->harga,
                 'kode_penjualan' => $this->kode(),
@@ -158,10 +158,10 @@ class PenjualanController extends Controller
         }
 
 
-        $spk = Spk::where('id', $penjualans->spk_id)->first();
-        $spks = Spk::where('id', $penjualans->spk_id)->update(['status_penjualan' => 'penjualan']);
+        $spk = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $spks = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
 
-        $deposit = Depositpemesanan::where(['spk_id' => $spk->id, 'status' => 'posting'])->first();
+        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
         if ($deposit) {
             $deposit->update(['status' => 'selesai']);
         }

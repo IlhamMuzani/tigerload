@@ -17,7 +17,7 @@ class Penjualan extends Model
     [
         'kode_penjualan',
         'qrcode_penjualan',
-        'spk_id',
+        'perintah_kerja_id',
         'depositpemesanan_id',
         'spesifikasi_id',
         'status',
@@ -44,6 +44,11 @@ class Penjualan extends Model
     public function spk()
     {
         return $this->belongsTo(Spk::class);
+    }
+
+    public function perintah_kerja()
+    {
+        return $this->belongsTo(Perintah_kerja::class);
     }
 
 

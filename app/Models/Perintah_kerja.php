@@ -26,6 +26,7 @@ class Perintah_kerja extends Model
         'tanggal_awal',
         'tanggal_akhir',
         'status',
+        'status_penjualan',
         'status_deposit',
     ];
 

@@ -77,8 +77,8 @@
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id SPK</label>
-                                <input type="text" class="form-control" id="spk_id" name="spk_id"
-                                    value="{{ old('spk_id') }}" readonly placeholder="">
+                                <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
+                                    value="{{ old('perintah_kerja_id') }}" readonly placeholder="">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
@@ -278,20 +278,20 @@
                                     @foreach ($spks as $spk)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $spk->kode_spk }}</td>
-                                            <td>{{ $spk->pelanggan->nama_pelanggan }}</td>
-                                            <td>{{ $spk->detail_kendaraan->first()->merek->nama_merek }}</td>
-                                            <td>{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
+                                            <td>{{ $spk->kode_perintah }}</td>
+                                            <td>{{ $spk->spk->pelanggan->nama_pelanggan }}</td>
+                                            <td>{{ $spk->spk->merek->nama_merek }}</td>
+                                            <td>{{ $spk->spk->merek->tipe->nama_tipe }}</td>
                                             <td>{{ $spk->typekaroseri->kode_type }}</td>
                                             <td>{{ $spk->typekaroseri->nama_karoseri }}</td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_spk }}', '{{ $spk->pelanggan->nama_pelanggan }}',
-                                                    '{{ $spk->detail_kendaraan->first()->merek->nama_merek }}',
-                                                    '{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
-                                                    '{{ $spk->typekaroseri->kode_type }}',
-                                                    '{{ $spk->typekaroseri->nama_karoseri }}',
-                                                    '{{ $spk->harga }}'
+                                                    onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_perintah }}', '{{ $spk->spk->pelanggan->nama_pelanggan }}',
+                                                    '{{ $spk->spk->merek->nama_merek }}',
+                                                    '{{ $spk->spk->merek->tipe->nama_tipe }}',
+                                                    '{{ $spk->spk->typekaroseri->kode_type }}',
+                                                    '{{ $spk->spk->typekaroseri->nama_karoseri }}',
+                                                    '{{ $spk->spk->harga }}'
                                                     )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -314,9 +314,9 @@
 
         function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga, Dp_id) {
             // Set the values in the form fields
-            document.getElementById('spk_id').value = Spk_id;
+            document.getElementById('perintah_kerja_id').value = Spk_id;
             document.getElementById('kode_spk').value = KodeSPK;
-            document.getElementById('nama_pelanggan').value = KodeSPK;
+            document.getElementById('nama_pelanggan').value = NamaPelanggan;
             document.getElementById('merek').value = Merek;
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;

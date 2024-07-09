@@ -171,7 +171,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Nama Pelanggan</td>
             <td style="text-align: left;">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->nama_pelanggan }}
+                    {{ $spk->pelanggan->nama_pelanggan }}
                 </span>
                 <br>
             </td>
@@ -186,7 +186,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Alamat</td>
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->alamat }} </span>
+                    {{ $spk->pelanggan->alamat }} </span>
                 <br>
             </td>
         </tr>
@@ -196,7 +196,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->telp }}
+                    {{ $spk->pelanggan->telp }}
                 </span>
                 <br>
             </td>
@@ -208,7 +208,7 @@
 
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->kode_pelanggan }} </span>
+                    {{ $spk->pelanggan->kode_pelanggan }} </span>
                 <br>
             </td>
         </tr>
@@ -258,22 +258,22 @@
         <tr>
             <td class="td" style="text-align: center; padding: 0px;">1</td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->kode_spk }}
+                {{ $deposits->perintah_kerja->kode_perintah }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->pelanggan->nama_pelanggan }}
+                {{ $deposits->perintah_kerja->spk->pelanggan->nama_pelanggan }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->detail_kendaraan->first()->merek->nama_merek }}
+                {{ $deposits->perintah_kerja->spk->merek->nama_merek }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}
+                {{ $deposits->perintah_kerja->spk->merek->tipe->nama_tipe }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->typekaroseri->kode_type }}
+                {{ $deposits->perintah_kerja->spk->typekaroseri->kode_type }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->typekaroseri->nama_karoseri }}
+                {{ $deposits->perintah_kerja->spk->typekaroseri->nama_karoseri }}
             </td>
             <td class="td" style="text-align: center; padding: 2px;">Rp
                 {{ number_format($deposits->harga, 0, ',', '.') }}
@@ -282,7 +282,7 @@
 
         @php
             $startFrom = 2;
-            $totalSubtotal = $deposits->spk->harga; // Inisialisasi dengan harga awal
+            $totalSubtotal = $deposits->perintah_kerja->harga; // Inisialisasi dengan harga awal
         @endphp
 
         {{-- <tr style="border-bottom: 1px solid black;">

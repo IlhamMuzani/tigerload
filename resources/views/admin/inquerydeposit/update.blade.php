@@ -53,7 +53,8 @@
                         <div class="form-group" hidden>
                             <label for="nopol">Id SPK</label>
                             <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
-                                value="{{ old('perintah_kerja_id', $deposits->perintah_kerja->spk->id) }}" readonly placeholder="" value="">
+                                value="{{ old('perintah_kerja_id', $deposits->perintah_kerja->spk->id) }}" readonly
+                                placeholder="" value="">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Kode SPK</label>
@@ -94,7 +95,7 @@
                         <div class="form-group mb-3">
                             <label for="nama">DP</label>
                             <input type="text" class="form-control" id="harga" name="harga" placeholder=""
-                                value="{{ number_format(old('harga', $deposits->perintah_kerja->harga), 0, ',', '.') }}"
+                                value="{{ number_format(old('harga', $deposits->harga), 0, ',', '.') }}"
                                 oninput="formatRupiahform(this)"
                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>

@@ -32,7 +32,7 @@
         }
 
         span.h2 {
-            font-size: 24px;
+            font-size: 15px;
             font-weight: 500;
         }
 
@@ -73,7 +73,7 @@
             display: flex;
             justify-content: space-between;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 13px;
             margin: 5px 0;
         }
 
@@ -172,7 +172,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Nama Pelanggan</td>
             <td style="text-align: left;">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->nama_pelanggan }}
+                    {{ $deposits->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                 </span>
                 <br>
             </td>
@@ -187,7 +187,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Alamat</td>
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->alamat }} </span>
+                    {{ $deposits->perintah_kerja->spk->pelanggan->alamat }} </span>
                 <br>
             </td>
         </tr>
@@ -197,7 +197,7 @@
             <td class="info-catatan2" style=" margin-left: 40px; display: block;">Telp / Hp</td>
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->telp }}
+                    {{ $deposits->perintah_kerja->spk->pelanggan->telp }}
                 </span>
                 <br>
             </td>
@@ -209,7 +209,7 @@
 
             <td style="text-align: left; ">
                 <span class="content2">
-                    {{ $deposits->spk->pelanggan->kode_pelanggan }} </span>
+                    {{ $deposits->perintah_kerja->spk->pelanggan->kode_pelanggan }} </span>
                 <br>
             </td>
         </tr>
@@ -222,8 +222,8 @@
         <br>
         <br>
     </div>
-    <hr style="border-top: 0.5px solid black; margin: 3px 0;">
-    <table width="100%">
+    <hr style="border-top: 0.5px solid black; margin: 3px 0; ">
+    <table style="font-size:13px" width="100%">
         <tr>
             <td>
                 <span class="info-item">No. Faktur: {{ $deposits->kode_deposit }}</span>
@@ -239,14 +239,14 @@
     <hr style="border-top: 0.5px solid black; margin: 3px 0;">
     <table style="width: 100%;" cellpadding="2" cellspacing="0">
         <tr>
-            <td class="td" style="text-align: center; padding: 0px;">No.</td>
-            <td class="td" style="text-align: center; padding: 2px;">Kode SPK</td>
-            <td class="td" style="text-align: center; padding: 2px;">Nama Pelanggan</td>
-            <td class="td" style="text-align: center; padding: 2px;">Merek Kendaraan</td>
-            <td class="td" style="text-align: center; padding: 2px;">Type Kendaraan</td>
-            <td class="td" style="text-align: center; padding: 2px;">Kode Karoseri</td>
-            <td class="td" style="text-align: center; padding: 2px;">Bentuk Karoseri</td>
-            <td class="td" style="text-align: center; padding: 2px;">DP</td>
+            <td class="td" style="text-align: center; padding: 0px; font-size:13px">No.</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Kode SPK</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Nama Pelanggan</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Merek Kendaraan</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Type Kendaraan</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Kode Karoseri</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">Bentuk Karoseri</td>
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">DP</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;">
@@ -258,32 +258,32 @@
         {{-- @foreach ($kendaraans as $item) --}}
         <tr>
             <td class="td" style="text-align: center; padding: 0px;">1</td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->kode_spk }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
+                {{ $deposits->perintah_kerja->kode_perintah }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->pelanggan->nama_pelanggan }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
+                {{ $deposits->perintah_kerja->spk->pelanggan->nama_pelanggan }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->detail_kendaraan->first()->merek->nama_merek }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
+                {{ $deposits->perintah_kerja->spk->detail_kendaraan->first()->merek->nama_merek }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
+                {{ $deposits->perintah_kerja->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->typekaroseri->kode_type }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
+                {{ $deposits->perintah_kerja->spk->typekaroseri->kode_type }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">
-                {{ $deposits->spk->typekaroseri->nama_karoseri }}
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px;">
+                {{ $deposits->perintah_kerja->spk->typekaroseri->nama_karoseri }}
             </td>
-            <td class="td" style="text-align: center; padding: 2px;">Rp
+            <td class="td" style="text-align: center; padding: 2px; font-size:13px">
                 {{ number_format($deposits->harga, 0, ',', '.') }}
             </td>
         </tr>
 
         @php
             $startFrom = 2;
-            $totalSubtotal = $deposits->spk->harga; // Inisialisasi dengan harga awal
+            $totalSubtotal = $deposits->perintah_kerja->spk->harga; // Inisialisasi dengan harga awal
         @endphp
 
         {{-- <tr style="border-bottom: 1px solid black;">

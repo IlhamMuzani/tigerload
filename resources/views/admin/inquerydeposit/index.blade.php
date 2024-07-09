@@ -101,9 +101,9 @@
                                 <tr class="dropdown"{{ $deposit->id }}>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $deposit->kode_deposit }}</td>
-                                    <td>{{ $deposit->spk->kode_spk }}</td>
-                                    <td>{{ $deposit->spk->pelanggan->nama_pelanggan }}</td>
-                                    <td>{{ $deposit->spk->typekaroseri->kode_type }}</td>
+                                    <td>{{ $deposit->perintah_kerja->kode_perintah }}</td>
+                                    <td>{{ $deposit->perintah_kerja->pelanggan->nama_pelanggan }}</td>
+                                    <td>{{ $deposit->perintah_kerja->typekaroseri->kode_type }}</td>
                                     <td>{{ $deposit->tanggal_awal }}</td>
                                     {{-- <td>
                                         @if ($deposit->pelanggan)

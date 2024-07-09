@@ -62,8 +62,8 @@ class DepositpemesananController extends Controller
 
 
         $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
-
-        return view('admin.depositpemesanan.show', compact('deposits'));
+        $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->first();
+        return view('admin.depositpemesanan.show', compact('deposits', 'spk'));
     }
 
     public function cetakpdf($id)
