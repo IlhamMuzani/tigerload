@@ -69,7 +69,7 @@
                         <div class="form-group">
                             <label class="form-label" for="kode_spk">Kode Penawaran</label>
                             <input type="text" class="form-control" id="kode_spk" readonly name="kode_spk"
-                                placeholder="" value="{{ old('kode_spk', $pembelian->kode_spk) }}">
+                                placeholder="" value="{{ old('kode_spk', $pembelian->surat_penawaran->kode_spk) }}">
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="kategori">Kategori</label>
