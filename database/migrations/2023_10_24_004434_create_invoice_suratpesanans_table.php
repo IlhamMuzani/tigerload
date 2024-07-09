@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('ppn')->nullable();
             $table->string('biaya_tambahan')->nullable();
-            $table->string('ppn')->nullable();
             $table->string('sub_total')->nullable();
             $table->string('grand_total')->nullable();
             $table->string('tanggal')->nullable();

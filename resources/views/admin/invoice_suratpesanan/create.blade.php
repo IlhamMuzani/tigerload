@@ -141,26 +141,6 @@
                                             value="{{ old('alamat_pelanggan') }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <label>Periode:</label>
-                                    <div class="input-group date" id="reservationdatetime">
-                                        <input type="date" id="periode_awal" name="periode_awal"
-                                            placeholder="d M Y sampai d M Y"
-                                            data-options='{"mode":"range","dateFormat":"d M Y","disableMobile":true}'
-                                            value="{{ old('periode_awal') }}" class="form-control datetimepicker-input"
-                                            data-target="#reservationdatetime">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label style="color:white">.</label>
-                                    <div class="input-group date" id="reservationdatetime">
-                                        <input type="date" id="periode_akhir" name="periode_akhir"
-                                            placeholder="d M Y sampai d M Y"
-                                            data-options='{"mode":"range","dateFormat":"d M Y","disableMobile":true}'
-                                            value="{{ old('periode_akhir') }}" class="form-control datetimepicker-input"
-                                            data-target="#reservationdatetime">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

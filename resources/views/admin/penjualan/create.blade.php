@@ -288,11 +288,11 @@
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                     onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_spk }}', '{{ $spk->pelanggan->nama_pelanggan }}',
                                                     '{{ $spk->detail_kendaraan->first()->merek->nama_merek }}',
-                                                     '{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
-                                                     '{{ $spk->typekaroseri->kode_type }}',
-                                                     '{{ $spk->typekaroseri->nama_karoseri }}',
-                                                      '{{ $spk->harga }}',
-                                                       {{ $spk->detail_deposit->first() ? $spk->detail_deposit->first()->id : 'null' }})">
+                                                    '{{ $spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
+                                                    '{{ $spk->typekaroseri->kode_type }}',
+                                                    '{{ $spk->typekaroseri->nama_karoseri }}',
+                                                    '{{ $spk->harga }}'
+                                                    )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
@@ -352,7 +352,7 @@
             $('#tableBarang').modal('hide');
         }
 
-  // Function to filter the table rows based on the search input
+        // Function to filter the table rows based on the search input
         function filterTable() {
             var input, filter, table, tr, td, i, j, txtValue;
             input = document.getElementById("searchInput");

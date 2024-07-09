@@ -184,6 +184,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('laporan_fakturpelunasanpembelian', [\App\Http\Controllers\Admin\LaporanPelunasanpembelianController::class, 'index']);
     Route::get('hapuspelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'hapuspelunasan'])->name('hapuspelunasan');
 
+    Route::get('editnonppn/{id}', [\App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class, 'editnonppn'])->name('editnonppn');
+
     Route::get('inquery_penerimaankaskecil/unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan']);
     Route::get('inquery_penerimaankaskecil/postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan']);
 

@@ -403,7 +403,7 @@
                 </a>
             </li>
         @endif
-        {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
+        @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
                 <a href="{{ url('admin/invoice_suratpesanan') }}"
                     class="nav-link {{ request()->is('admin/invoice_suratpesanan*') ? 'active' : '' }}">
@@ -411,7 +411,7 @@
                     <p style="font-size: 14px;">Invoice Surat Pesanan</p>
                 </a>
             </li>
-        @endif --}}
+        @endif
         @if (auth()->check() && auth()->user()->menu['pengambilan kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepengeluaran') }}"
@@ -636,17 +636,17 @@
                 </a>
             </li>
         @endif --}}
-        {{-- @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+        @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
-                <a href="{{ url('admin/invoice_suratpesanan') }}"
-                    class="nav-link {{ request()->is('admin/invoice_suratpesanan*') ? 'active' : '' }}">
+                <a href="{{ url('admin/inquery_invoicesuratpesanan') }}"
+                    class="nav-link {{ request()->is('admin/inquery_invoicesuratpesanan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Invoice-<br>
                         <span style="margin-left: 32px">Surat Pesanan</span>
                     </p>
                 </a>
             </li>
-        @endif --}}
+        @endif
         @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_penjualan') }}"
