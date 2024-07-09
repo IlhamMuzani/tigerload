@@ -210,6 +210,7 @@
     request()->is('admin/perintah_kerja*') ||
     request()->is('admin/perhitungan_bahanbaku*') ||
     request()->is('admin/dokumen_project*') ||
+    request()->is('admin/invoice_suratpesanan*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -243,6 +244,7 @@
         request()->is('admin/perintah_kerja*') ||
         request()->is('admin/perhitungan_bahanbaku*') ||
         request()->is('admin/dokumen_project*') ||
+        request()->is('admin/invoice_suratpesanan*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -401,6 +403,15 @@
                 </a>
             </li>
         @endif
+        {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/invoice_suratpesanan') }}"
+                    class="nav-link {{ request()->is('admin/invoice_suratpesanan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Invoice Surat Pesanan</p>
+                </a>
+            </li>
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['pengambilan kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepengeluaran') }}"
@@ -432,6 +443,7 @@
     request()->is('admin/inquery_perintahkerja*') ||
     request()->is('admin/inquery_perhitunganbahanbaku*') ||
     request()->is('admin/inquery_dokumenproject*') ||
+    request()->is('admin/inquery_invoicesuratpesanan*') ||
     request()->is('admin/inquery_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -454,6 +466,7 @@
         request()->is('admin/inquery_perintahkerja*') ||
         request()->is('admin/inquery_perhitunganbahanbaku*') ||
         request()->is('admin/inquery_dokumenproject*') ||
+        request()->is('admin/inquery_invoicesuratpesanan*') ||
         request()->is('admin/inquery_penjualan*')
             ? 'active'
             : '' }}">
@@ -620,6 +633,17 @@
                     class="nav-link {{ request()->is('admin/inquery_deposit*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Deposit</p>
+                </a>
+            </li>
+        @endif --}}
+        {{-- @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/invoice_suratpesanan') }}"
+                    class="nav-link {{ request()->is('admin/invoice_suratpesanan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Invoice-<br>
+                        <span style="margin-left: 32px">Surat Pesanan</span>
+                    </p>
                 </a>
             </li>
         @endif --}}

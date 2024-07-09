@@ -90,7 +90,7 @@
                                 <th>Surat Pesanan Karoseri</th>
                                 <th>Kategori</th>
                                 <th>Tanggal</th>
-                                <th class="text-center">Supplier</th>
+                                <th class="text-center">Pelanggan</th>
                                 <th class="text-center">Harga</th>
                                 <th class="text-center" width="30">Opsi</th>
                             </tr>

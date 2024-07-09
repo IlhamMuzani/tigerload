@@ -187,6 +187,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_penerimaankaskecil/unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan']);
     Route::get('inquery_penerimaankaskecil/postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan']);
 
+    Route::get('inquery_invoicesuratpesanan/unpostpesanan/{id}', [\App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class, 'unpostpesanan']);
+    Route::get('inquery_invoicesuratpesanan/postingpesanan/{id}', [\App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class, 'postingpesanan']);
+    Route::get('hapuspesanan/{id}', [\App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class, 'hapuspesanan'])->name('hapuspesanan');
+
     Route::get('unpostpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'unpostpenerimaan'])->name('unpostpenerimaan');
     Route::get('postingpenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'postingpenerimaan'])->name('postingpenerimaan');
     Route::get('hapuspenerimaan/{id}', [\App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class, 'hapuspenerimaan'])->name('hapuspenerimaan');
@@ -240,23 +244,25 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('laporan_penerimaanpembayaran', \App\Http\Controllers\Admin\LaporanpenerimaanpembayaranController::class);
     Route::get('print_laporanpenerimaanpembayaran', [\App\Http\Controllers\Admin\LaporanpenerimaanpembayaranController::class, 'print_laporanpenerimaanpembayaran']);
 
-    Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
+    Route::get('invoice_suratpesanannonpp', [\App\Http\Controllers\Admin\InvoicesuratpesananController::class, 'createnonppn']);
 
-
+    
     Route::resource('laporan_perhitunganbahan', \App\Http\Controllers\Admin\LaporanPerhitunganbahanbakuController::class);
     Route::get('print_laporanperhitunganbahan', [\App\Http\Controllers\Admin\LaporanPerhitunganbahanbakuController::class, 'print_laporanperhitunganbahan']);
-
+    
     Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
-
+    
     Route::resource('laporan_dokumenproject', \App\Http\Controllers\Admin\LaporanDokumenprojectController::class);
     Route::get('print_laporandokumenproject', [\App\Http\Controllers\Admin\LaporanDokumenprojectController::class, 'print_laporandokumenproject']);
-
+    
     Route::get('cetak_pengambilanfilter', [\App\Http\Controllers\Admin\PengambilanbahanController::class, 'cetak_pengambilanfilter']);
-
-    Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
+    Route::get('invoice_suratpesanan/get_suratpesanan/{id}', [\App\Http\Controllers\Admin\InvoicesuratpesananController::class, 'get_suratpesanan']);
     Route::get('penerimaan_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaankaskecilController::class, 'cetakpdf']);
+    
+    Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
+    Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::resource('tablepengeluaran', \App\Http\Controllers\Admin\TablepengeluaranController::class);
     Route::resource('inquery_penerimaankaskecil', \App\Http\Controllers\Admin\InqueryPenerimaankaskecilController::class);
     Route::resource('penerimaan_kaskecil', \App\Http\Controllers\Admin\PenerimaankaskecilController::class);
@@ -311,5 +317,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_perhitunganbahanbaku', \App\Http\Controllers\Admin\InqueryPerhitunganbahanbakuController::class);
     Route::resource('dokumen_project', \App\Http\Controllers\Admin\DokumenprojectController::class);
     Route::resource('inquery_dokumenproject', \App\Http\Controllers\Admin\InqueryDokumenprojectController::class);
+    Route::resource('invoice_suratpesanan', \App\Http\Controllers\Admin\InvoicesuratpesananController::class);
+    Route::resource('inquery_invoicesuratpesanan', \App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class);
 
 });

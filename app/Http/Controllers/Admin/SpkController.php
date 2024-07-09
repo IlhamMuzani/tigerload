@@ -87,6 +87,7 @@ class SpkController extends Controller
                 'warna' => $request->warna,
                 'spesifikasi' => $request->spesifikasi,
                 'aksesoris' => $request->aksesoris,
+                'jumlah_unit' => $request->jumlah_unit,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
                 // 'qrcode_spk' => 'https:///tigerload.id/spk/' . $kode,

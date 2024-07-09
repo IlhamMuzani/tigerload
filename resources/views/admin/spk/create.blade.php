@@ -102,6 +102,12 @@
                                 value="{{ old('surat_penawaran_id') }}" readonly />
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="kode_spk">Kod Penawaran</label>
+                            <input class="form-control @error('kode_spk') is-invalid @enderror" id="kode_spk"
+                                name="kode_spk" type="text" placeholder=" " value="{{ old('kode_spk') }}"
+                                readonly />
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="kategori">Kategori</label>
                             <input class="form-control @error('kategori') is-invalid @enderror" id="kategori"
                                 name="kategori" type="text" placeholder=" " value="{{ old('kategori') }}" readonly />
@@ -134,8 +140,8 @@
                         </div>
                         <div class="form-group">
                             <label for="kode_pelanggan">Kode Pelanggan</label>
-                            <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan" readonly
-                                placeholder="" value="{{ old('kode_pelanggan') }}">
+                            <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan"
+                                readonly placeholder="" value="{{ old('kode_pelanggan') }}">
                         </div>
                         {{-- <div class="form-group">
                             <label for="umur">Umur</label>
@@ -261,6 +267,14 @@
                             <input type="text" class="form-control" readonly name="aksesoris"
                                 value="{{ old('aksesoris') }}" id="aksesoris" placeholder="">
                         </div>
+
+                        <!-- /.card-header -->
+                        <div class="form-group">
+                            <label for="jumlah_unit">Jumlah Unit</label>
+                            <input type="text" class="form-control" id="jumlah_unit" readonly name="jumlah_unit"
+                                placeholder="" value="{{ old('jumlah_unit') }}">
+                        </div>
+
                         <div class="form-group">
                             <label class="form-label" for="warna">Warna</label>
                             <select class="form-control" id="warna" name="warna">
@@ -296,13 +310,14 @@
                     </div>
                 </div>
                 <div class="card">
+
                     <div class="card-header">
                         <label for="nama_karoseri">Harga</label>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <input type="text" class="form-control" id="harga" readonly name="harga"
-                            placeholder="" value="{{ number_format(old('harga'), 0, ',', '.') }}">
+                            placeholder="" value="{{ old('harga') }}">
                     </div>
                     <div class="card-footer text-right mt-3">
                         <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
@@ -393,8 +408,9 @@
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 onclick="getSelectedDatapelanggan('{{ $suratpenawaran->id }}',
-                                                    '{{ $suratpenawaran->kategori }}',
-                                                    '{{ $suratpenawaran->no_npwp }}',
+                                                '{{ $suratpenawaran->kode_spk }}',
+                                                '{{ $suratpenawaran->kategori }}',
+                                                '{{ $suratpenawaran->no_npwp }}',
                                                 '{{ $suratpenawaran->pelanggan_id }}',
                                                 '{{ $suratpenawaran->kode_pelanggan }}',
                                                 '{{ $suratpenawaran->nama_pelanggan }}',
@@ -411,6 +427,7 @@
                                                 '{{ $suratpenawaran->tinggi }}',
                                                 '{{ $suratpenawaran->spesifikasi }}',
                                                 '{{ $suratpenawaran->aksesoris }}',
+                                                '{{ $suratpenawaran->jumlah_unit }}',
                                                 '{{ $suratpenawaran->harga }}'
                                                 )">
                                                 <i class="fas fa-plus"></i>
@@ -607,12 +624,15 @@
             $('#tablepenawaran').modal('show');
         }
 
-        function getSelectedDatapelanggan(Id, Kategori, NoNpwp, pelanggan_id, kodePelanggan, namaPelanggan, Telp, Alamat,
+        function getSelectedDatapelanggan(Id, KodePenawaran, Kategori, NoNpwp, pelanggan_id, kodePelanggan, namaPelanggan,
+            Telp, Alamat,
             Merek_id,
-            Nama_merek, Tipe, KodeKaroseri_id, KodeType, Namakaroseri, Panjang, Lebar, Tinggi, Spesifikasi, Aksesoris, Harga
+            Nama_merek, Tipe, KodeKaroseri_id, KodeType, Namakaroseri, Panjang, Lebar, Tinggi, Spesifikasi, Aksesoris, JumlahUnit,
+            Harga
         ) {
             // Set the values in the form fields
             document.getElementById('surat_penawaran_id').value = Id;
+            document.getElementById('kode_spk').value = KodePenawaran;
             document.getElementById('kategori').value = Kategori;
             document.getElementById('no_npwp').value = NoNpwp;
             document.getElementById('pelanggan_id').value = pelanggan_id;
@@ -632,6 +652,7 @@
             document.getElementById('tinggi').value = Tinggi;
             document.getElementById('spesifikasi').value = Spesifikasi;
             document.getElementById('aksesoris').value = Aksesoris;
+            document.getElementById('jumlah_unit').value = JumlahUnit;
 
             var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
             document.getElementById('harga').value = formattedNominal;

@@ -38,12 +38,15 @@ class Merek extends Model
         return $this->belongsTo(Modelken::class);
     }
 
-
     public function tipe()
     {
         return $this->belongsTo(Tipe::class);
     }
 
+    public function typekaroseri()
+    {
+        return $this->hasMany(Typekaroseri::class);
+    }
 
     public static function getId()
     {

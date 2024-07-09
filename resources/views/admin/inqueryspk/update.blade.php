@@ -67,6 +67,11 @@
                                 value="{{ old('surat_penawaran_id', $pembelian->id) }}" readonly />
                         </div>
                         <div class="form-group">
+                            <label class="form-label" for="kode_spk">Kode Penawaran</label>
+                            <input type="text" class="form-control" id="kode_spk" readonly name="kode_spk"
+                                placeholder="" value="{{ old('kode_spk', $pembelian->kode_spk) }}">
+                        </div>
+                        <div class="form-group">
                             <label class="form-label" for="kategori">Kategori</label>
                             <input type="text" class="form-control" id="kategori" readonly name="kategori"
                                 placeholder="" value="{{ old('kategori', $pembelian->kategori) }}">
@@ -221,34 +226,52 @@
                                 value="{{ old('aksesoris', $pembelian->aksesoris) }}">
                         </div>
                         <div class="form-group">
+                            <label for="jumlah_unit">Jumlah Unit</label>
+                            <input type="text" class="form-control" id="jumlah_unit" readonly placeholder=""
+                                value="{{ old('jumlah_unit', $pembelian->jumlah_unit) }}">
+                        </div>
+                        <div class="form-group">
                             <label class="form-label" for="warna">Warna</label>
                             <select class="form-control" id="warna" name="warna">
                                 <option value="">- Pilih -</option>
-                                <option value="Hitam" {{ old('warna', $pembelian->warna) == 'Hitam' ? 'selected' : null }}>
+                                <option value="Hitam"
+                                    {{ old('warna', $pembelian->warna) == 'Hitam' ? 'selected' : null }}>
                                     Hitam</option>
-                                <option value="Putih" {{ old('warna', $pembelian->warna) == 'Putih' ? 'selected' : null }}>
+                                <option value="Putih"
+                                    {{ old('warna', $pembelian->warna) == 'Putih' ? 'selected' : null }}>
                                     Putih</option>
-                                <option value="Cokelat" {{ old('warna', $pembelian->warna) == 'Cokelat' ? 'selected' : null }}>
+                                <option value="Cokelat"
+                                    {{ old('warna', $pembelian->warna) == 'Cokelat' ? 'selected' : null }}>
                                     Cokelat</option>
-                                <option value="Hijau" {{ old('warna', $pembelian->warna) == 'Hijau' ? 'selected' : null }}>
+                                <option value="Hijau"
+                                    {{ old('warna', $pembelian->warna) == 'Hijau' ? 'selected' : null }}>
                                     Hijau</option>
-                                <option value="Orange" {{ old('warna', $pembelian->warna) == 'Orange' ? 'selected' : null }}>
+                                <option value="Orange"
+                                    {{ old('warna', $pembelian->warna) == 'Orange' ? 'selected' : null }}>
                                     Orange</option>
-                                <option value="Merah" {{ old('warna', $pembelian->warna) == 'Merah' ? 'selected' : null }}>
+                                <option value="Merah"
+                                    {{ old('warna', $pembelian->warna) == 'Merah' ? 'selected' : null }}>
                                     Merah</option>
-                                <option value="Ungu" {{ old('warna', $pembelian->warna) == 'Ungu' ? 'selected' : null }}>
+                                <option value="Ungu"
+                                    {{ old('warna', $pembelian->warna) == 'Ungu' ? 'selected' : null }}>
                                     Ungu</option>
-                                <option value="Kuning" {{ old('warna', $pembelian->warna) == 'Kuning' ? 'selected' : null }}>
+                                <option value="Kuning"
+                                    {{ old('warna', $pembelian->warna) == 'Kuning' ? 'selected' : null }}>
                                     Kuning</option>
-                                <option value="Biru" {{ old('warna', $pembelian->warna) == 'Biru' ? 'selected' : null }}>
+                                <option value="Biru"
+                                    {{ old('warna', $pembelian->warna) == 'Biru' ? 'selected' : null }}>
                                     Biru</option>
-                                <option value="Silver" {{ old('warna', $pembelian->warna) == 'Silver' ? 'selected' : null }}>
+                                <option value="Silver"
+                                    {{ old('warna', $pembelian->warna) == 'Silver' ? 'selected' : null }}>
                                     Silver</option>
-                                <option value="Hitam" {{ old('warna', $pembelian->warna) == 'Hitam' ? 'selected' : null }}>
+                                <option value="Hitam"
+                                    {{ old('warna', $pembelian->warna) == 'Hitam' ? 'selected' : null }}>
                                     Hitam</option>
-                                <option value="Putih" {{ old('warna', $pembelian->warna) == 'Putih' ? 'selected' : null }}>
+                                <option value="Putih"
+                                    {{ old('warna', $pembelian->warna) == 'Putih' ? 'selected' : null }}>
                                     Putih</option>
-                                <option value="Abu-abu" {{ old('warna', $pembelian->warna) == 'Abu-abu' ? 'selected' : null }}>
+                                <option value="Abu-abu"
+                                    {{ old('warna', $pembelian->warna) == 'Abu-abu' ? 'selected' : null }}>
                                     Abu-abu</option>
                             </select>
                         </div>
@@ -333,6 +356,7 @@
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 onclick="getSelectedDatapelanggan('{{ $suratpenawaran->id }}',
+                                                    '{{ $suratpenawaran->kode_spk }}',
                                                     '{{ $suratpenawaran->kategori }}',
                                                     '{{ $suratpenawaran->no_npwp }}',
                                                 '{{ $suratpenawaran->pelanggan_id }}',
@@ -351,6 +375,7 @@
                                                 '{{ $suratpenawaran->tinggi }}',
                                                 '{{ $suratpenawaran->spesifikasi }}',
                                                 '{{ $suratpenawaran->aksesoris }}',
+                                                '{{ $suratpenawaran->jumlah_unit }}',
                                                 '{{ $suratpenawaran->harga }}'
                                                 )">
                                                 <i class="fas fa-plus"></i>
@@ -589,12 +614,13 @@
             $('#tablepenawaran').modal('show');
         }
 
-        function getSelectedDatapelanggan(Id, Kategori, NoNpwp, pelanggan_id, kodePelanggan, namaPelanggan, Telp, Alamat,
+        function getSelectedDatapelanggan(Id, kodeSPk, Kategori, NoNpwp, pelanggan_id, kodePelanggan, namaPelanggan, Telp, Alamat,
             Merek_id,
-            Nama_merek, Tipe, KodeKaroseri_id, KodeType, Namakaroseri, Panjang, Lebar, Tinggi, Spesifikasi, Aksesoris, Harga
+            Nama_merek, Tipe, KodeKaroseri_id, KodeType, Namakaroseri, Panjang, Lebar, Tinggi, Spesifikasi, Aksesoris, JumlahUnit, Harga
         ) {
             // Set the values in the form fields
             document.getElementById('surat_penawaran_id').value = Id;
+            document.getElementById('kode_spk').value = kodeSPk;
             document.getElementById('kategori').value = Kategori;
             document.getElementById('no_npwp').value = NoNpwp;
             document.getElementById('pelanggan_id').value = pelanggan_id;
@@ -613,6 +639,7 @@
             document.getElementById('tinggi').value = Tinggi;
             document.getElementById('spesifikasi').value = Spesifikasi;
             document.getElementById('aksesoris').value = Aksesoris;
+            document.getElementById('jumlah_unit').value = JumlahUnit;
             var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
             document.getElementById('harga').value = formattedNominal;
             // Close the modal (if needed)
