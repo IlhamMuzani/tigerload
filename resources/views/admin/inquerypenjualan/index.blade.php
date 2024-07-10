@@ -125,7 +125,7 @@
                                     </td>
                                     <td>
                                         @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->kode_deposit }}
+                                            {{ $penjualan->perintah_kerja->depositpemesanan->first()->kode_deposit }}
                                         @else
                                             tidak DP
                                         @endif

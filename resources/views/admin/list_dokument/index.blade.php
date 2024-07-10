@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Penjualan')
+@section('title', 'Dokumen Project')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Penjualan</h1>
+                    <h1 class="m-0">Dokumen Project</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Penjualan</li>
+                        <li class="breadcrumb-item active">Dokumen Project</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -47,11 +47,20 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5>
+                        <i class="icon fas fa-ban"></i> Error!
+                    </h5>
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Penjualan</h3>
+                    <h3 class="card-title">Dokumen Project</h3>
                     <div class="float-right">
-                        <a href="{{ url('admin/penjualan') }}" class="btn btn-primary btn-sm">
+                        <a href="{{ url('admin/list_dokument/create') }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-plus"></i> Tambah
                         </a>
                     </div>
@@ -61,98 +70,86 @@
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
+                                <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th>Faktur Penjualan</th>
                                 <th>Kode SPK</th>
-                                <th>Nama Pelanggan</th>
                                 <th>Kode Karoseri</th>
-                                <th>Kode Deposit</th>
-                                <th>Tanggal</th>
-                                {{-- <th class="text-center">Harga</th> --}}
-                                <th class="text-center" width="30">Opsi</th>
+                                <th>Merek</th>
+                                <th>Model</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody class="list">
-                            @foreach ($inquery as $penjualan)
-                                <tr class="dropdown"{{ $penjualan->id }}>
+                        <tbody>
+                            @foreach ($inquery as $kendaraan)
+                                <tr class="dropdown"{{ $kendaraan->id }}>
+                                    <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
+                                            value="{{ $kendaraan->id }}">
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $penjualan->kode_penjualan }}</td>
+                                    <td>{{ $kendaraan->kode_dokumen }}</td>
                                     <td>
-                                        @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->spk->kode_spk }}
+                                        @if ($kendaraan->typekaroseri)
+                                            {{ $kendaraan->typekaroseri->kode_type }}
                                         @else
-                                            {{ $penjualan->spk->kode_spk }}
+                                            data tidak ada
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                        @if ($kendaraan->typekaroseri)
+                                            {{ $kendaraan->typekaroseri->merek->nama_merek }}
                                         @else
-                                            {{ $penjualan->spk->pelanggan->nama_pelanggan }}
+                                            data tidak ada
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
+                                        @if ($kendaraan->typekaroseri)
+                                            {{ $kendaraan->typekaroseri->merek->tipe->nama_tipe }}
                                         @else
-                                            {{ $penjualan->spk->typekaroseri->kode_type }}
+                                            data tidak ada
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->depositpemesanan->first()->kode_deposit }}
-                                        @else
-                                            tidak DP
-                                        @endif
-                                    </td>
-                                    <td>{{ $penjualan->tanggal_awal }}</td>
-                                    {{-- <td>Rp {{ number_format($penjualan->harga, 0, ',', '.') }}</td> --}}
                                     <td class="text-center">
-                                        @if ($penjualan->status == 'posting')
-                                            <button type="button" class="btn btn-success btn-sm">
-                                                <i class="fas fa-check"></i>
-                                            </button>
-                                        @endif
-                                        @if ($penjualan->status == 'selesai')
-                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
-                                                width="40" alt="Roda Mobil">
-                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($penjualan->status == 'unpost')
-                                                <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $penjualan->id }}">Posting</a>
+                                            @if ($kendaraan->status == 'unpost')
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/list_dokument/' . $kendaraan->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penjualan/' . $penjualan->id . '/edit') }}">Update</a>
-
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penjualan/' . $penjualan->id) }}">Show</a>
+                                                    href="{{ url('admin/list_dokument/' . $kendaraan->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapuspenjualan', ['id' => $penjualan->id]) }}">
+                                                    action="{{ route('hapusdokumenproject', ['id' => $kendaraan->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($penjualan->status == 'posting')
-                                                <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $penjualan->id }}">Unpost</a>
+                                            @if ($kendaraan->status == 'posting')
+                                                <a class="dropdown-item"
+                                                    href="{{ url('admin/list_dokument/' . $kendaraan->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penjualan/' . $penjualan->id) }}">Show</a>
+                                                    href="{{ url('admin/list_dokument/' . $kendaraan->id) }}">Show</a>
                                             @endif
-                                            @if ($penjualan->status == 'selesai')
+                                            @if ($kendaraan->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_penjualan/' . $penjualan->id) }}">Show</a>
+                                                    href="{{ url('admin/list_dokument/' . $kendaraan->id) }}">Show</a>
                                             @endif
+
+                                            <form style="margin-top:5px" method="GET"
+                                                action="{{ route('hapusdokumenproject', ['id' => $kendaraan->id]) }}">
+                                                <button type="submit"
+                                                    class="dropdown-item btn btn-outline-danger btn-block mt-2">
+                                                    </i> Delete
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Modal Loading -->
                     <div class="modal fade" id="modal-loading" tabindex="-1" role="dialog"
                         aria-labelledby="modal-loading-label" aria-hidden="true" data-backdrop="static">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -169,7 +166,7 @@
             </div>
         </div>
     </section>
-    <!-- /.card -->
+
     <script>
         var tanggalAwal = document.getElementById('tanggal_awal');
         var tanggalAkhir = document.getElementById('tanggal_akhir');
@@ -194,93 +191,10 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_penjualan') }}";
+            form.action = "{{ url('admin/inquery_dokumenproject') }}";
             form.submit();
         }
     </script>
-
-
-    {{-- unpost memo  --}}
-    <script>
-        $(document).ready(function() {
-            $('.unpost-btn').click(function() {
-                var memoId = $(this).data('memo-id');
-
-                // Tampilkan modal loading saat permintaan AJAX diproses
-                $('#modal-loading').modal('show');
-
-                // Kirim permintaan AJAX untuk melakukan unpost
-                $.ajax({
-                    url: "{{ url('admin/inquery_penjualan/unpostpenjualan/') }}/" + memoId,
-                    type: 'GET',
-                    data: {
-                        id: memoId
-                    },
-                    success: function(response) {
-                        // Sembunyikan modal loading setelah permintaan selesai
-                        $('#modal-loading').modal('hide');
-
-                        // Tampilkan pesan sukses atau lakukan tindakan lain sesuai kebutuhan
-                        console.log(response);
-
-                        // Tutup modal setelah berhasil unpost
-                        $('#modal-posting-' + memoId).modal('hide');
-
-                        // Reload the page to refresh the table
-                        location.reload();
-                    },
-                    error: function(error) {
-                        // Sembunyikan modal loading setelah permintaan selesai
-                        $('#modal-loading').modal('hide');
-
-                        // Tampilkan pesan error atau lakukan tindakan lain sesuai kebutuhan
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
-    {{-- posting memo --}}
-    <script>
-        $(document).ready(function() {
-            $('.posting-btn').click(function() {
-                var memoId = $(this).data('memo-id');
-
-                // Tampilkan modal loading saat permintaan AJAX diproses
-                $('#modal-loading').modal('show');
-
-                // Kirim permintaan AJAX untuk melakukan posting
-                $.ajax({
-                    url: "{{ url('admin/inquery_penjualan/postingpenjualan/') }}/" + memoId,
-                    type: 'GET',
-                    data: {
-                        id: memoId
-                    },
-                    success: function(response) {
-                        // Sembunyikan modal loading setelah permintaan selesai
-                        $('#modal-loading').modal('hide');
-
-                        // Tampilkan pesan sukses atau lakukan tindakan lain sesuai kebutuhan
-                        console.log(response);
-
-                        // Tutup modal setelah berhasil posting
-                        $('#modal-posting-' + memoId).modal('hide');
-
-                        // Reload the page to refresh the table
-                        location.reload();
-                    },
-                    error: function(error) {
-                        // Sembunyikan modal loading setelah permintaan selesai
-                        $('#modal-loading').modal('hide');
-
-                        // Tampilkan pesan error atau lakukan tindakan lain sesuai kebutuhan
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
-
     <script>
         $(document).ready(function() {
             $('tbody tr.dropdown').click(function(e) {
@@ -336,4 +250,5 @@
             });
         });
     </script>
+
 @endsection

@@ -18,9 +18,10 @@ use App\Models\Modelken;
 use App\Models\Pelanggan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
-use App\Models\Spesifikasi;
+use App\Models\Detail_penjualan;
 use App\Models\Perintah_kerja;
 use App\Models\Tipe;
+use App\Models\Typekaroseri;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
@@ -66,7 +67,7 @@ class InqueryPenjualanController extends Controller
 
         $penjualans = Penjualan::where('id', $id)->first();
         $penjual = Penjualan::find($id);
-        $spesifikasis = Spesifikasi::where('penjualan_id', $penjual->id)->get();
+        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjual->id)->get();
         return view('admin.inquerypenjualan.show', compact('penjualans', 'spesifikasis'));
     }
 
@@ -74,9 +75,9 @@ class InqueryPenjualanController extends Controller
     public function edit($id)
     {
         $penjualans = Penjualan::where('id', $id)->first();
-        $barangs = Barang::all();
+        $barangs = Typekaroseri::all();
         $spks = Perintah_kerja::where(['status' => 'selesai', 'status_penjualan' => null])->get();
-        $details = Spesifikasi::where('penjualan_id', $id)->get();
+        $details = Detail_penjualan::where('penjualan_id', $id)->get();
 
         return view('admin/inquerypenjualan.update', compact('spks', 'barangs', 'penjualans', 'details'));
     }
@@ -87,9 +88,11 @@ class InqueryPenjualanController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'depositpemesanan_id' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor spk terlebih dahulu',
+                'depositpemesanan_id.required' => 'Deposit Kosong',
             ]
         );
 
@@ -102,70 +105,43 @@ class InqueryPenjualanController extends Controller
         $error_pesanans = array();
         $data_pembelians = collect();
 
-        // if ($request->has('barang_id')) {
-        //     for ($i = 0; $i < count($request->barang_id); $i++) {
-        //         $validasi_produk = Validator::make($request->all(), [
-        //             'barang_id.' . $i => 'required',
-        //             'kode_barang.' . $i => 'required',
-        //             'nama.' . $i => 'required',
-        //             'jumlah.' . $i => 'required',
-        //             'harga.' . $i => 'required',
-        //         ]);
-
-        //         if ($validasi_produk->fails()) {
-        //             array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
-        //         }
-
-
-        //         $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-        //         $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
-        //         $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
-        //         $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
-        //         $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
-
-        //         $data_pembelians->push([
-        //             'detail_id' => $request->detail_ids[$i] ?? null,
-        //             'barang_id' => $barang_id,
-        //             'kode_barang' => $kode_barang,
-        //             'nama' => $nama,
-        //             'jumlah' => $jumlah,
-        //             'harga' => $harga
-        //         ]);
-        //     }
-        // } else {
-        // }
-
-        if ($request->has('barang_id') || $request->has('kode_barang') || $request->has('nama') || $request->has('jumlah') || $request->has('harga')) {
-            for ($i = 0; $i < count($request->barang_id); $i++) {
+        if ($request->has('typekaroseri_id') || $request->has('kode_types') || $request->has('nama_karoseri') || $request->has('jumlah') || $request->has('harga')) {
+            for ($i = 0; $i < count($request->typekaroseri_id); $i++) {
                 // Check if either 'keterangan_tambahan' or 'nominal_tambahan' has input
-                if (empty($request->barang_id[$i]) && empty($request->kode_barang[$i]) && empty($request->nama[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
+                if (empty($request->typekaroseri_id[$i]) && empty($request->kode_types[$i]) && empty($request->nama_karoseri[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
                     continue; // Skip validation if both are empty
                 }
 
                 $validasi_produk = Validator::make($request->all(), [
-                    'barang_id.' . $i => 'required',
-                    'kode_barang.' . $i => 'required',
-                    'nama.' . $i => 'required',
+                    'typekaroseri_id.' . $i => 'required',
+                    'kode_types.' . $i => 'required',
+                    'nama_karoseri.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
+                    // 'diskon.' . $i => 'required',
+                    'total.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Spesifikasi nomor " . ($i + 1) . " belum dilengkapi!");
+                    array_push($error_pesanans, "Detail_penjualan nomor " . ($i + 1) . " belum dilengkapi!");
                 }
 
-                $barang_id = $request->barang_id[$i] ?? '';
-                $kode_barang = $request->kode_barang[$i] ?? '';
-                $nama = $request->nama[$i] ?? '';
+                $typekaroseri_id = $request->typekaroseri_id[$i] ?? '';
+                $kode_types = $request->kode_types[$i] ?? '';
+                $nama_karoseri = $request->nama_karoseri[$i] ?? '';
                 $jumlah = $request->jumlah[$i] ?? '';
                 $harga = $request->harga[$i] ?? '';
+                $diskon = $request->diskon[$i] ?? '';
+                $total = $request->total[$i] ?? '';
                 $data_pembelians->push([
                     'detail_id' => $request->detail_ids[$i] ?? null,
-                    'barang_id' => $barang_id,
-                    'kode_barang' => $kode_barang,
-                    'nama' => $nama,
+                    'typekaroseri_id' => $typekaroseri_id,
+                    'kode_types' => $kode_types,
+                    'nama_karoseri' => $nama_karoseri,
                     'jumlah' => $jumlah,
-                    'harga' => $harga
+                    'harga' => $harga,
+                    'diskon' => $diskon,
+                    'total' => $total
                 ]);
             }
         }
@@ -200,28 +176,32 @@ class InqueryPenjualanController extends Controller
             $detailId = $data_pesanan['detail_id'];
 
             if ($detailId) {
-                Spesifikasi::where('id', $detailId)->update([
+                Detail_penjualan::where('id', $detailId)->update([
                     'penjualan_id' => $transaksi->id,
-                    'barang_id' => $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama' => $data_pesanan['nama'],
+                    'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
+                    'kode_types' => $data_pesanan['kode_types'],
+                    'nama_karoseri' => $data_pesanan['nama_karoseri'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => str_replace('.', '', $data_pesanan['harga']),
+                    'diskon' => str_replace('.', '', $data_pesanan['diskon']),
+                    'total' => str_replace('.', '', $data_pesanan['total']),
                 ]);
             } else {
-                $existingDetail = Spesifikasi::where([
+                $existingDetail = Detail_penjualan::where([
                     'penjualan_id' => $transaksi->id,
-                    'barang_id' => $data_pesanan['barang_id'],
+                    'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
                 ])->first();
 
                 if (!$existingDetail) {
-                    Spesifikasi::create([
+                    Detail_penjualan::create([
                         'penjualan_id' => $transaksi->id,
-                        'barang_id' => $data_pesanan['barang_id'],
-                        'kode_barang' => $data_pesanan['kode_barang'],
-                        'nama' => $data_pesanan['nama'],
+                        'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
+                        'kode_types' => $data_pesanan['kode_types'],
+                        'nama_karoseri' => $data_pesanan['nama_karoseri'],
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => str_replace('.', '', $data_pesanan['harga']),
+                        'diskon' => str_replace('.', '', $data_pesanan['diskon']),
+                        'total' => str_replace('.', '', $data_pesanan['total']),
                     ]);
                 }
             }
@@ -236,7 +216,7 @@ class InqueryPenjualanController extends Controller
 
         $penjualans = Penjualan::find($transaksi_id);
 
-        $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
+        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
 
         return view('admin.inquerypenjualan.show', compact('spesifikasis', 'penjualans'));
     }

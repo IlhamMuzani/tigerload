@@ -12,7 +12,7 @@
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/dokumen_project') }}">Dokumen Project</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/list_dokument') }}">Dokumen Project</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div><!-- /.col -->
@@ -43,87 +43,79 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ url('admin/dokumen_project', $inquery->id) }}" method="POST" enctype="multipart/form-data"
+            <form action="{{ url('admin/list_dokument') }}" method="POST" enctype="multipart/form-data"
                 autocomplete="off">
-                @method('put')
                 @csrf
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Tambah Dokumen Project</h3>
                     </div>
-                    @if (isset($inquery->perintah_kerja))
-                        <div class="card-body">
-                            <div class="mb-3 mt-4">
-                                <button class="btn btn-primary btn-sm" type="button"
-                                    onclick="showCategoryModalsuratpenawaran(this.value)">
-                                    <i class="fas fa-plus mr-2"></i> Pilih SPK
-                                </button>
+                    <div class="card-body">
+                        <div class="mb-3 mt-4">
+                            <button class="btn btn-primary btn-sm" type="button"
+                                onclick="showCategoryModalsuratpenawaran(this.value)">
+                                <i class="fas fa-plus mr-2"></i> Pilih SPK
+                            </button>
+                        </div>
+                        <div hidden class="mb-3">
+                            <label class="form-label" for="perintah_kerja_id">Surat Perintah Kerja Id</label>
+                            <input class="form-control @error('perintah_kerja_id') is-invalid @enderror"
+                                id="perintah_kerja_id" name="perintah_kerja_id" type="text" placeholder=" "
+                                value="{{ old('perintah_kerja_id') }}" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="kode_spk">Kode SPK</label>
+                            <input class="form-control @error('kode_spk') is-invalid @enderror" id="kode_spk"
+                                name="kode_spk" type="text" placeholder=" " value="{{ old('kode_spk') }}" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="kategori">Kategori</label>
+                            <input class="form-control @error('kategori') is-invalid @enderror" id="kategori"
+                                name="kategori" type="text" placeholder=" " value="{{ old('kategori') }}" readonly />
+                        </div>
+                        <div>
+                            <div class="form-group" id="no_npwp_group">
+                                <label for="no_npwp">No NPWP</label>
+                                <input type="text" readonly class="form-control" id="no_npwp" name="no_npwp"
+                                    placeholder="" value="{{ old('no_npwp') }}">
                             </div>
-                            <div hidden class="mb-3">
-                                <label class="form-label" for="perintah_kerja_id">Surat Perintah Kerja Id</label>
-                                <input class="form-control @error('perintah_kerja_id') is-invalid @enderror"
-                                    id="perintah_kerja_id" name="perintah_kerja_id" type="text" placeholder=" "
-                                    value="{{ old('perintah_kerja_id', $inquery->perintah_kerja->id) }}" readonly />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="kode_spk">Kode SPK</label>
-                                <input class="form-control @error('kode_spk') is-invalid @enderror" id="kode_spk"
-                                    name="kode_spk" type="text" placeholder=" "
-                                    value="{{ old('kode_spk', $inquery->perintah_kerja->kode_perintah) }}" readonly />
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="kategori">Kategori</label>
-                                <input class="form-control @error('kategori') is-invalid @enderror" id="kategori"
-                                    name="kategori" type="text" placeholder=" "
-                                    value="{{ old('kategori', $inquery->perintah_kerja->kategori) }}" readonly />
-                            </div>
-                            <div>
-                                <div class="form-group" id="no_npwp_group">
-                                    <label for="no_npwp">No NPWP</label>
-                                    <input type="text" readonly class="form-control" id="no_npwp" name="no_npwp"
-                                        placeholder="" value="{{ old('no_npwp', $inquery->perintah_kerja->no_npwp) }}">
-                                </div>
-                            </div>
-                            <label class="form-label" for="nama_pelanggan">Nama Pelanggan</label>
-                            <div class="mb-2 d-flex">
-                                <input class="form-control @error('nama_pelanggan') is-invalid @enderror"
-                                    id="nama_pelanggan" name="nama_pelanggan" type="text" placeholder=""
-                                    value="{{ old('nama_pelanggan', $inquery->perintah_kerja->pelanggan->nama_pelanggan) }}"
-                                    readonly />
-                            </div>
-                            <div class="form-group" hidden>
-                                <label for="pelanggan_id">Id Pelanggan</label>
-                                <input type="text" class="form-control" id="pelanggan_id" name="pelanggan_id"
-                                    placeholder=""
-                                    value="{{ old('pelanggan_id', $inquery->perintah_kerja->pelanggan->id) }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="kode_pelanggan">Kode Pelanggan</label>
-                                <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan"
-                                    readonly placeholder=""
-                                    value="{{ old('kode_pelanggan', $inquery->perintah_kerja->pelanggan->kode_pelanggan) }}">
-                            </div>
-                            {{-- <div class="form-group">
+                        </div>
+                        <label class="form-label" for="nama_pelanggan">Nama Pelanggan</label>
+                        <div class="mb-2 d-flex">
+                            <input class="form-control @error('nama_pelanggan') is-invalid @enderror" id="nama_pelanggan"
+                                name="nama_pelanggan" type="text" placeholder="" value="{{ old('nama_pelanggan') }}"
+                                readonly />
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="pelanggan_id">Id Pelanggan</label>
+                            <input type="text" class="form-control" id="pelanggan_id" name="pelanggan_id" placeholder=""
+                                value="{{ old('pelanggan_id') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="kode_pelanggan">Kode Pelanggan</label>
+                            <input type="text" class="form-control" id="kode_pelanggan" name="kode_pelanggan" readonly
+                                placeholder="" value="{{ old('kode_pelanggan') }}">
+                        </div>
+                        {{-- <div class="form-group">
                             <label for="umur">Umur</label>
                             <input type="text" class="form-control" id="umur" name="umur" placeholder="" readonly
                                 value="{{ old('umur') }}">
                         </div> --}}
-                            <div class="form-group">
-                                <label for="alamat">Alamat</label>
-                                <textarea type="text" class="form-control" id="alamat" name="alamat" readonly placeholder="">{{ old('alamat', $inquery->perintah_kerja->pelanggan->alamat) }}</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="telp">No. Telepon</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">+62</span>
-                                    </div>
-                                    <input type="text" id="telp" name="telp" class="form-control" readonly
-                                        placeholder=""
-                                        value="{{ old('telp', $inquery->perintah_kerja->pelanggan->telp) }}">
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <textarea type="text" class="form-control" id="alamat" name="alamat" readonly placeholder="">{{ old('alamat') }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="telp">No. Telepon</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">+62</span>
                                 </div>
+                                <input type="text" id="telp" name="telp" class="form-control" readonly
+                                    placeholder="" value="{{ old('telp') }}">
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
@@ -134,20 +126,18 @@
                         <div hidden class="mb-3">
                             <label class="form-label" for="merek_id">Merek_id</label>
                             <input class="form-control @error('merek_id') is-invalid @enderror" id="merek_id"
-                                name="merek_id" readonly type="text" placeholder=""
-                                value="{{ old('merek_id', $inquery->perintah_kerja->typekaroseri->merek->id) }}" />
+                                name="merek_id" readonly type="text" placeholder="" value="{{ old('merek_id') }}" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="nama_merek">Merek</label>
                             <input class="form-control @error('nama_merek') is-invalid @enderror" id="nama_merek"
                                 name="nama_merek" readonly type="text" placeholder=""
-                                value="{{ old('nama_merek', $inquery->perintah_kerja->typekaroseri->merek->nama_merek) }}" />
+                                value="{{ old('nama_merek') }}" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="tipe">Type</label>
                             <input class="form-control @error('tipe') is-invalid @enderror" id="tipe" name="tipe"
-                                readonly type="text" placeholder=""
-                                value="{{ old('tipe', $inquery->perintah_kerja->typekaroseri->merek->tipe->nama_tipe) }}" />
+                                readonly type="text" placeholder="" value="{{ old('tipe') }}" />
                         </div>
                     </div>
                 </div>
@@ -160,21 +150,18 @@
                         <label class="form-label" for="kode_type">Kode Karoseri</label>
                         <div class="mb-2 d-flex">
                             <input class="form-control @error('kode_type') is-invalid @enderror" id="kode_type"
-                                name="kode_type" type="text" placeholder=" "
-                                value="{{ old('kode_type', $inquery->perintah_kerja->typekaroseri->kode_type) }}"
+                                name="kode_type" type="text" placeholder=" " value="{{ old('kode_type') }}"
                                 readonly />
                         </div>
                         <div class="form-group">
                             <label for="nama_karoseri">Bentuk Karoseri</label>
                             <input type="text" class="form-control" id="nama_karoseri" name="nama_karoseri" readonly
-                                placeholder=""
-                                value="{{ old('nama_karoseri', $inquery->perintah_kerja->typekaroseri->nama_karoseri) }}">
+                                placeholder="" value="{{ old('nama_karoseri') }}">
                         </div>
                         <div class="form-group"hidden>
                             <label for="karoseri_id">Id Karoseri</label>
                             <input type="text" class="form-control" id="karoseri_id" name="typekaroseri_id"
-                                placeholder=""
-                                value="{{ old('typekaroseri_id', $inquery->perintah_kerja->typekaroseri->typekaroseri_id) }}">
+                                placeholder="" value="{{ old('typekaroseri_id') }}">
                         </div>
                     </div>
                 </div>
@@ -188,19 +175,17 @@
                         <div class="form-group">
                             <label for="panjang">Panjang</label>
                             <input type="text" class="form-control" id="panjang" name="panjang" readonly
-                                placeholder=""
-                                value="{{ old('panjang', $inquery->perintah_kerja->typekaroseri->panjang) }}">
+                                placeholder="" value="{{ old('panjang') }}">
                         </div>
                         <div class="form-group">
                             <label for="lebar">Lebar</label>
                             <input type="text" class="form-control" id="lebar" name="lebar" readonly
-                                placeholder="" value="{{ old('lebar', $inquery->perintah_kerja->typekaroseri->lebar) }}">
+                                placeholder="" value="{{ old('lebar') }}">
                         </div>
                         <div class="form-group">
                             <label for="tinggi">Tinggi</label>
                             <input type="text" class="form-control" id="tinggi" name="tinggi" readonly
-                                placeholder=""
-                                value="{{ old('tinggi', $inquery->perintah_kerja->typekaroseri->tinggi) }}">
+                                placeholder="" value="{{ old('tinggi') }}">
                         </div>
                     </div>
                 </div>
@@ -212,24 +197,21 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="spesifikasi" name="spesifikasi" readonly
-                                placeholder=""
-                                value=" {{ implode(', ', $inquery->typekaroseri->spesifikasi->pluck('nama')->toArray()) }}">
+                            <textarea type="text" class="form-control" id="spesifikasi" readonly name="spesifikasi" placeholder="">{{ old('typekaroseri_id') }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="aksesoris">Aksesoris</label>
                             <input type="text" class="form-control" readonly name="aksesoris"
-                                value="{{ old('aksesoris', $inquery->typekaroseri->aksesoris) }}" id="aksesoris"
-                                placeholder="">
+                                value="{{ old('aksesoris') }}" id="aksesoris" placeholder="">
                         </div>
 
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan', $inquery->keterangan) }}</textarea>
+                            <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
                         </div>
                     </div>
                 </div>
-                @endif
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Foto Dokumen</h3>
@@ -237,30 +219,12 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group mb-3">
-                            @if ($inquery->gambar_depan == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_depan) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="gambar_depan">Foto Depan</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambar_depan" name="gambar_depan"
                                     accept="image/*">
                                 <label class="custom-file-label" for="gambar_depan">Masukkan foto</label>
                             </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambar_belakang == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_belakang) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
                         </div>
                         <div class="form-group mb-3">
                             <label for="gambar_belakang">Foto Belakang</label>
@@ -271,30 +235,12 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            @if ($inquery->gambar_kanan == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_kanan) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="gambar_kanan">Foto Kanan</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambar_kanan" name="gambar_kanan"
                                     accept="image/*">
                                 <label class="custom-file-label" for="gambar_kanan">Masukkan foto</label>
                             </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambar_kiri == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_kiri) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
                         </div>
                         <div class="form-group mb-3">
                             <label for="gambar_kiri">Foto Kiri</label>
@@ -304,16 +250,7 @@
                                 <label class="custom-file-label" for="gambar_kiri">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambardepan_serongkanan == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkanan) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
+
                         <div class="form-group mb-3">
                             <label for="gambardepan_serongkanan">Foto Depan Serong Kanan</label>
                             <div class="custom-file">
@@ -322,16 +259,7 @@
                                 <label class="custom-file-label" for="gambardepan_serongkanan">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambardepan_serongkiri == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkiri) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
+
                         <div class="form-group mb-3">
                             <label for="gambardepan_serongkiri">Foto Depan Serong Kiri</label>
                             <div class="custom-file">
@@ -340,16 +268,7 @@
                                 <label class="custom-file-label" for="gambardepan_serongkiri">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambarbelakang_serongkanan == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkanan) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
+
                         <div class="form-group mb-3">
                             <label for="gambarbelakang_serongkanan">Foto Belakang Serong Kanan</label>
                             <div class="custom-file">
@@ -358,16 +277,7 @@
                                 <label class="custom-file-label" for="gambarbelakang_serongkanan">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambarbelakang_serongkekiri == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkekiri) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
+
                         <div class="form-group mb-3">
                             <label for="gambarbelakang_serongkekiri">Foto Belakang Serong Kiri</label>
                             <div class="custom-file">
@@ -376,15 +286,16 @@
                                 <label class="custom-file-label" for="gambarbelakang_serongkekiri">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambar_faktur == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_faktur) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
+
+                        {{-- <div class="form-group mb-3">
+                            <label for="gambarbelakang_serongkiri">Foto Belakang Serong Kiri</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="gambarbelakang_serongkiri"
+                                    name="gambarbelakang_serongkiri" accept="image/*">
+                                <label class="custom-file-label" for="gambarbelakang_serongkiri">Masukkan foto</label>
+                            </div>
+                        </div> --}}
+
                         <div class="form-group mb-3">
                             <label for="gambar_faktur">Foto Faktur</label>
                             <div class="custom-file">
@@ -392,15 +303,6 @@
                                     accept="image/*">
                                 <label class="custom-file-label" for="gambar_faktur">Masukkan foto</label>
                             </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambar_serut == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambar_serut) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
                         </div>
                         <div class="form-group mb-3">
                             <label for="gambar_serut">Foto Serut</label>
@@ -411,32 +313,12 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            @if ($inquery->gambar_rancangbangun == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambar_rancangbangun) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="gambar_rancangbangun">Foto Rancang Bangun</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambar_rancangbangun"
                                     name="gambar_rancangbangun" accept="image/*">
                                 <label class="custom-file-label" for="gambar_rancangbangun">Masukkan foto</label>
                             </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambar_gesekannomesin == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambar_gesekannomesin) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
                         </div>
                         <div class="form-group mb-3">
                             <label for="gambar_gesekannomesin">Foto Gesekan Nomor Mesin Dan Rangka</label>
@@ -446,6 +328,7 @@
                                 <label class="custom-file-label" for="gambar_gesekannomesin">Masukkan foto</label>
                             </div>
                         </div>
+
                         {{-- <div class="form-group">
                             <label for="gambar_gesekanrangka">Foto gesekan nomor rangka</label>
                             <div class="custom-file">
@@ -454,15 +337,6 @@
                                 <label class="custom-file-label" for="gambar_gesekanrangka">Masukkan foto</label>
                             </div>
                         </div> --}}
-                        <div class="form-group mb-3">
-                            @if ($inquery->gambarberita_acara == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
-                            @else
-                                <img class="mt-3" src="{{ asset('storage/uploads/' . $inquery->gambarberita_acara) }}"
-                                    alt="tigerload" height="180" width="200">
-                            @endif
-                        </div>
                         <div class="form-group mb-5">
                             <label for="gambarberita_acara">Foto Berita Acara</label>
                             <div class="custom-file">

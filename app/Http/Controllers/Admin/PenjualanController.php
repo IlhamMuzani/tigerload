@@ -15,8 +15,9 @@ use App\Models\Barang;
 use App\Models\Depositpemesanan;
 use App\Models\Marketing;
 use App\Models\Penjualan;
-use App\Models\Spesifikasi;
+use App\Models\Detail_penjualan;
 use App\Models\Perintah_kerja;
+use App\Models\Typekaroseri;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,7 +26,7 @@ class PenjualanController extends Controller
     public function index()
     {
         $deposits = Depositpemesanan::all();
-        $barangs = Barang::all();
+        $barangs = Typekaroseri::all();
         $spks = Perintah_kerja::where(function ($query) {
             $query->where('status', 'selesai')
                 ->orWhere('status', 'posting');
@@ -61,57 +62,35 @@ class PenjualanController extends Controller
         $error_pesanans = array();
         $data_pembelians = collect();
 
-        // if ($request->has('barang_id')) {
-        //     for ($i = 0; $i < count($request->barang_id); $i++) {
-        //         $validasi_produk = Validator::make($request->all(), [
-        //             'barang_id.' . $i => 'required',
-        //             'kode_barang.' . $i => 'required',
-        //             'nama.' . $i => 'required',
-        //             'jumlah.' . $i => 'required',
-        //             'harga.' . $i => 'required',
-        //         ]);
-
-        //         if ($validasi_produk->fails()) {
-        //             array_push($error_pesanans, "Spesifikasi nomor " . $i + 1 . " belum dilengkapi!");
-        //         }
-
-
-        //         $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
-        //         $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
-        //         $nama = is_null($request->nama[$i]) ? '' : $request->nama[$i];
-        //         $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
-        //         $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
-
-        //         $data_pembelians->push(['barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama' => $nama, 'barang_id' => $barang_id, 'jumlah' => $jumlah, 'harga' => $harga]);
-        //     }
-        // } else {
-        // }
-
-        if ($request->has('barang_id') || $request->has('kode_barang') || $request->has('nama') || $request->has('jumlah') || $request->has('harga')) {
-            for ($i = 0; $i < count($request->barang_id); $i++) {
+        if ($request->has('typekaroseri_id') || $request->has('kode_type') || $request->has('nama_karoseri') || $request->has('jumlah') || $request->has('harga')) {
+            for ($i = 0; $i < count($request->typekaroseri_id); $i++) {
                 // Check if either 'keterangan_tambahan' or 'nominal_tambahan' has input
-                if (empty($request->barang_id[$i]) && empty($request->kode_barang[$i]) && empty($request->nama[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
+                if (empty($request->typekaroseri_id[$i]) && empty($request->kode_type[$i]) && empty($request->nama_karoseri[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
                     continue; // Skip validation if both are empty
                 }
 
                 $validasi_produk = Validator::make($request->all(), [
-                    'barang_id.' . $i => 'required',
-                    'kode_barang.' . $i => 'required',
-                    'nama.' . $i => 'required',
+                    'typekaroseri_id.' . $i => 'required',
+                    'kode_types.' . $i => 'required',
+                    'nama_karoseri.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
+                    // 'diskon.' . $i => 'required',
+                    'total.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
-                    array_push($error_pesanans, "Spesifikasi nomor " . ($i + 1) . " belum dilengkapi!");
+                    array_push($error_pesanans, "Detail_penjualan nomor " . ($i + 1) . " belum dilengkapi!");
                 }
 
-                $barang_id = $request->barang_id[$i] ?? '';
-                $kode_barang = $request->kode_barang[$i] ?? '';
-                $nama = $request->nama[$i] ?? '';
+                $typekaroseri_id = $request->typekaroseri_id[$i] ?? '';
+                $kode_types = $request->kode_types[$i] ?? '';
+                $nama_karoseri = $request->nama_karoseri[$i] ?? '';
                 $jumlah = $request->jumlah[$i] ?? '';
                 $harga = $request->harga[$i] ?? '';
-                $data_pembelians->push(['barang_id' => $barang_id, 'kode_barang' => $kode_barang, 'nama' => $nama, 'jumlah' => $jumlah, 'harga' => $harga]);
+                $diskon = $request->diskon[$i] ?? '';
+                $total = $request->total[$i] ?? '';
+                $data_pembelians->push(['typekaroseri_id' => $typekaroseri_id, 'kode_types' => $kode_types, 'nama_karoseri' => $nama_karoseri, 'jumlah' => $jumlah, 'harga' =>$harga, 'diskon' => $diskon, 'total' => $total]);
             }
         }
 
@@ -148,13 +127,15 @@ class PenjualanController extends Controller
         if ($penjualans) {
 
             foreach ($data_pembelians as $data_pesanan) {
-                Spesifikasi::create([
+                Detail_penjualan::create([
                     'penjualan_id' => $penjualans->id,
-                    'barang_id' => $data_pesanan['barang_id'],
-                    'kode_barang' => $data_pesanan['kode_barang'],
-                    'nama' => $data_pesanan['nama'],
+                    'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
+                    'kode_types' => $data_pesanan['kode_types'],
+                    'nama_karoseri' => $data_pesanan['nama_karoseri'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => str_replace('.', '', $data_pesanan['harga']),
+                    'diskon' => str_replace('.', '', $data_pesanan['diskon']),
+                    'total' => str_replace('.', '', $data_pesanan['total']),
                 ]);
             }
         }
@@ -168,39 +149,10 @@ class PenjualanController extends Controller
             $deposit->update(['status' => 'selesai']);
         }
 
-        $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
+        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
 
         return view('admin.penjualan.show', compact('penjualans', 'spesifikasis'));
     }
-
-    //     $kode = $this->kode();
-
-    //     // tgl indo
-    //     $tanggal1 = Carbon::now('Asia/Jakarta');
-    //     $format_tanggal = $tanggal1->format('d F Y');
-
-    //     $tanggal = Carbon::now()->format('Y-m-d');
-    //     $penjualans = Penjualan::create(array_merge(
-    //         $request->all(),
-    //         [
-    //             'depositpemesanan_id' => $request->depositpemesanan_id,
-    //             'harga' => $request->harga,
-    //             'kode_penjualan' => $this->kode(),
-    //             'qrcode_penjualan' => 'https:///tigerload.id/penjualan/' . $kode,
-    //             'tanggal' => $format_tanggal,
-    //             'tanggal_awal' => $tanggal,
-    //             'status' => 'posting',
-    //             'status_komisi' => 'tidak aktif',
-    //         ]
-    //     ));
-
-    //     $kendaraan = Kendaraan::findOrFail($request->kendaraan_id);
-    //     $kendaraan->update([
-    //         'status' => 'terjual'
-    //     ]);
-
-    //     return view('admin.penjualan.show', compact('penjualans'));
-    // }
 
     public function kode()
     {
@@ -231,7 +183,7 @@ class PenjualanController extends Controller
     {
         $penjualans = Penjualan::find($id);
         $penjual = Penjualan::find($id);
-        $spesifikasis = Spesifikasi::where('penjualan_id', $penjual->id)->get();
+        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjual->id)->get();
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('admin.penjualan.cetak_pdf', compact('penjualans', 'spesifikasis'));
         $pdf->setPaper('letter', 'portrait');
@@ -254,8 +206,8 @@ class PenjualanController extends Controller
                 // 'gambar_ktp' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             ],
             [
-                'nama_pelanggan.required' => 'Masukkan nama lengkap',
-                'nama_alias.required' => 'Masukkan nama alias',
+                'nama_pelanggan.required' => 'Masukkan nama_karoseri lengkap',
+                'nama_alias.required' => 'Masukkan nama_karoseri alias',
                 'gender.required' => 'Pilih gender',
                 'umur.required' => 'Masukkan umur',
                 'telp.required' => 'Masukkan no telepon',

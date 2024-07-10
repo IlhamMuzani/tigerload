@@ -59,14 +59,13 @@
                             <div class="form-group" hidden>
                                 <label for="nopol">Id Deposit</label>
                                 <input type="text" class="form-control" id="depositpemesanan_id"
-                                    name="depositpemesanan_id" value="{{ $penjualans->depositpemesanan_id }}"
-                                    readonly placeholder="" value="">
+                                    name="depositpemesanan_id" value="{{ $penjualans->depositpemesanan_id }}" readonly
+                                    placeholder="" value="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id SPK</label>
                                 <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
-                                    value="{{ $penjualans->perintah_kerja->id }}"
-                                    readonly placeholder="" value="">
+                                    value="{{ $penjualans->perintah_kerja->id }}" readonly placeholder="" value="">
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
@@ -79,30 +78,30 @@
                                     value="{{ $penjualans->perintah_kerja->spk->pelanggan->nama_pelanggan }}">
                             </div>
                             <div class="form-group">
-                                <label for="nama">Merek Kendaraan</label>
+                                <label>Merek Kendaraan</label>
                                 <input type="text" class="form-control" id="merek" readonly placeholder=""
                                     value="{{ $penjualans->perintah_kerja->spk->typekaroseri->merek->nama_merek }}">
                             </div>
                             <div class="form-group">
-                                <label for="nama">Type Kendaraan</label>
+                                <label>Type Kendaraan</label>
                                 <input type="text" class="form-control" id="tipe" readonly placeholder=""
                                     value="{{ $penjualans->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}">
 
                             </div>
                             <div class="form-group">
-                                <label for="nama">Kode Karoseri</label>
+                                <label>Kode Karoseri</label>
                                 <input type="text" class="form-control" id="kode_type"readonly placeholder=""
                                     value="{{ $penjualans->perintah_kerja->spk->typekaroseri->kode_type }}">
 
                             </div>
                             <div class="form-group">
-                                <label for="nama">Bentuk Karoseri</label>
+                                <label>Bentuk Karoseri</label>
                                 <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
                                     value="{{ $penjualans->perintah_kerja->spk->typekaroseri->nama_karoseri }}">
 
                             </div>
                             <div class="form-group">
-                                <label for="nama">Harga Pemesanan</label>
+                                <label>Harga Pemesanan</label>
                                 <input type="text" class="form-control" id="harga_awal" name="harga_awal" readonly
                                     placeholder="" value="{{ $penjualans->perintah_kerja->spk->harga }}">
                             </div>
@@ -125,8 +124,8 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
+                                        <th>Kode Produk</th>
+                                        <th>Nama Produk</th>
                                         <th>Qty</th>
                                         <th>Harga</th>
                                         <th>Opsi</th>
@@ -143,33 +142,52 @@
                                                 </div>
                                                 <div class="form-group" hidden>
                                                     <input type="text" class="form-control"
-                                                        id="barang_id-{{ $loop->index }}" name="barang_id[]"
-                                                        value="{{ $detail['barang_id'] }}">
+                                                        id="typekaroseri_id-{{ $loop->index }}" name="typekaroseri_id[]"
+                                                        value="{{ $detail['typekaroseri_id'] }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" readonly
-                                                        id="kode_barang-{{ $loop->index }}" name="kode_barang[]"
-                                                        value="{{ $detail['kode_barang'] }}">
+                                                        id="kode_types-{{ $loop->index }}" name="kode_types[]"
+                                                        value="{{ $detail['kode_types'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" readonly
-                                                        id="nama-{{ $loop->index }}" name="nama[]"
-                                                        value="{{ $detail['nama'] }}">
+                                                        id="nama_karoseri-{{ $loop->index }}" name="nama_karoseri[]"
+                                                        value="{{ $detail['nama_karoseri'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="jumlah-0"
-                                                        name="jumlah[]" value="{{ $detail['jumlah'] }}">
+                                                    <input type="text" class="form-control jumlah"
+                                                        id="jumlah-{{ $loop->index }}" name="jumlah[]"
+                                                        value="{{ $detail['jumlah'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="harga-0"
-                                                        name="harga[]"
+                                                    <input type="text" class="form-control harga"
+                                                        id="harga-{{ $loop->index }}" name="harga[]"
                                                         value="{{ number_format($detail['harga'], 0, ',', '.') }}"
+                                                        oninput="formatRupiahform(this)"
+                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control diskon"
+                                                        id="diskon-{{ $loop->index }}" name="diskon[]"
+                                                        value="{{ number_format($detail['diskon'], 0, ',', '.') }}"
+                                                        oninput="formatRupiahform(this)"
+                                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control total"
+                                                        id="total-{{ $loop->index }}" name="total[]"
+                                                        value="{{ number_format($detail['total'], 0, ',', '.') }}"
                                                         oninput="formatRupiahform(this)"
                                                         onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                                 </div>
@@ -203,7 +221,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Data Barang</h4>
+                        <h4 class="modal-title">Data Produk</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -216,23 +234,24 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama barang</th>
-                                    <th>Spesifikasi</th>
+                                    <th>Kode Produk</th>
+                                    <th>Nama Produk</th>
+                                    <th>Harga</th>
                                     {{-- <th>Keterangan</th> --}}
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
+                                    <tr data-typekaroseri_id="{{ $barang->id }}"
+                                        data-kode_type="{{ $barang->kode_type }}"
+                                        data-nama_karoseri="{{ $barang->nama_karoseri }}"
+                                        data-harga="{{ $barang->harga }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $barang->kode_barang }}</td>
-                                        <td>{{ $barang->nama_barang }}</td>
-                                        <td>{{ $barang->spesifikasi }}</td>
-                                        {{-- <td>{{ $barang->keterangan }}</td> --}}
+                                        <td>{{ $barang->kode_type }}</td>
+                                        <td>{{ $barang->nama_karoseri }}</td>
+                                        <td style="text-align: right">{{ number_format($barang->harga, 0, ',', '.') }}
+                                        </td>
                                         <td class="text-center">
                                             <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
                                                 onclick="getBarang({{ $loop->index }})">
@@ -249,7 +268,7 @@
         </div>
 
         <div class="modal fade" id="tableSpk" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl"> <!-- Changed modal-lg to modal-xl -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Data SPK</h4>
@@ -344,18 +363,25 @@
 
         function getBarang(rowIndex) {
             var selectedRow = $('#tables tbody tr:eq(' + rowIndex + ')');
-            var barang_id = selectedRow.data('barang_id');
-            var kode_barang = selectedRow.data('kode_barang');
-            var nama_barang = selectedRow.data('nama_barang');
+            var typekaroseri_id = selectedRow.data('typekaroseri_id');
+            var kode_type = selectedRow.data('kode_type');
+            var nama_karoseri = selectedRow.data('nama_karoseri');
+            var harga = selectedRow.data('harga');
+            var jumlah = 0;
+            var diskon = 0;
+            var total = 0;
 
             // Update the form fields for the active specification
-            $('#barang_id-' + activeSpecificationIndex).val(barang_id);
-            $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
-            $('#nama-' + activeSpecificationIndex).val(nama_barang);
+            $('#typekaroseri_id-' + activeSpecificationIndex).val(typekaroseri_id);
+            $('#kode_types-' + activeSpecificationIndex).val(kode_type);
+            $('#nama_karoseri-' + activeSpecificationIndex).val(nama_karoseri);
+            $('#harga-' + activeSpecificationIndex).val(Number(harga).toLocaleString('id-ID'));
+            $('#jumlah-' + activeSpecificationIndex).val(jumlah);
+            $('#diskon-' + activeSpecificationIndex).val(diskon);
+            $('#total-' + activeSpecificationIndex).val(total);
 
             $('#tableBarang').modal('hide');
         }
-
         // Function to filter the table rows based on the search input
         function filterTable() {
             var input, filter, table, tr, td, i, j, txtValue;
@@ -453,45 +479,49 @@
         }
 
         function itemPembelian(identifier, key, value = null) {
-            var barang_id = '';
-            var kode_barang = '';
-            var nama = '';
+            var typekaroseri_id = '';
+            var kode_types = '';
+            var nama_karoseri = '';
             var jumlah = '';
             var harga = '';
+            var diskon = '';
+            var total = '';
 
             if (value !== null) {
-                barang_id = value.barang_id;
-                nama = value.nama;
-                kode_barang = value.kode_barang;
+                typekaroseri_id = value.typekaroseri_id;
+                nama_karoseri = value.nama_karoseri;
+                kode_types = value.kode_types;
                 jumlah = value.jumlah;
                 harga = value.harga;
+                diskon = value.diskon;
+                total = value.total;
             }
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + key + '">';
             item_pembelian += '<td class="text-center" id="urutan">' + key + '</td>';
 
-            // barang_id 
+            // typekaroseri_id 
             item_pembelian += '<td hidden>';
             item_pembelian += '<div class="form-group" >'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + key +
-                '" name="barang_id[]" value="' + barang_id + '" ';
+            item_pembelian += '<input type="text" class="form-control" id="typekaroseri_id-' + key +
+                '" name="typekaroseri_id[]" value="' + typekaroseri_id + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // kode_barang 
+            // kode_types 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + key +
-                '" name="kode_barang[]" value="' + kode_barang + '" ';
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_types-' + key +
+                '" name="kode_types[]" value="' + kode_types + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // nama 
+            // nama_karoseri 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + key +
-                '" name="nama[]" value="' + nama + '" ';
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama_karoseri-' + key +
+                '" name="nama_karoseri[]" value="' + nama_karoseri + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
@@ -503,11 +533,31 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // kode_barang 
+            // harga 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="harga-' + key +
+            item_pembelian += '<input type="text" class="form-control harga" id="harga-' + key +
                 '" name="harga[]" value="' + harga + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            // diskon 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control diskon" id="diskon-' + key +
+                '" name="diskon[]" value="' + diskon + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            // total 
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control total" id="total-' + key +
+                '" name="total[]" value="' + total + '" ';
             item_pembelian += 'oninput="formatRupiahform(this)" ';
             item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
             item_pembelian += '</div>';
@@ -539,5 +589,26 @@
             // Tampilkan nilai yang sudah diformat ke dalam input
             input.value = value;
         }
+    </script>
+
+    <script>
+        function perhitungan() {
+            $(document).on("input", ".harga, .jumlah, .diskon", function() {
+                var currentRow = $(this).closest('tr');
+
+                // Function to remove non-numeric characters and convert to float
+                function parseCurrency(value) {
+                    return parseFloat(value.replace(/[^0-9,-]+/g, "").replace(",", ".")) || 0;
+                }
+
+                var harga = parseCurrency(currentRow.find(".harga").val());
+                var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+                var diskon = parseCurrency(currentRow.find(".diskon").val());
+                var total = harga * jumlah - diskon;
+
+                currentRow.find(".total").val(total.toLocaleString('id-ID'));
+            });
+        }
+        perhitungan();
     </script>
 @endsection

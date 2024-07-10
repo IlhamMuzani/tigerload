@@ -171,6 +171,14 @@
         @endif --}}
         @if (auth()->check() && auth()->user()->menu['barang'])
             <li class="nav-item">
+                <a href="{{ url('admin/list_dokument') }}" class="nav-link {{ request()->is('admin/list_dokument*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Dokumen Project</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['barang'])
+            <li class="nav-item">
                 <a href="{{ url('admin/akun') }}" class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Barang Akun</p>
@@ -289,7 +297,7 @@
                 <a href="{{ url('admin/tablepembelian') }}"
                     class="nav-link {{ request()->is('admin/pembelian*') || request()->is('admin/tablepembelian*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Pembelian</p>
+                    <p style="font-size: 14px;">Faktur Pembelian</p>
                 </a>
             </li>
         @endif
@@ -390,7 +398,7 @@
                 <a href="{{ url('admin/tablepenjualan') }}"
                     class="nav-link {{ request()->is('admin/penjualan*') || request()->is('admin/tablepenjualan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
-                    <p style="font-size: 14px;">Penjualan</p>
+                    <p style="font-size: 14px;">Faktur Penjualan</p>
                 </a>
             </li>
         @endif
@@ -403,7 +411,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pelunasan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
                 <a href="{{ url('admin/invoice_suratpesanan') }}"
                     class="nav-link {{ request()->is('admin/invoice_suratpesanan*') ? 'active' : '' }}">
@@ -411,7 +419,7 @@
                     <p style="font-size: 14px;">Invoice Surat Pesanan</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['pengambilan kas kecil'])
             <li class="nav-item">
                 <a href="{{ url('admin/tablepengeluaran') }}"
@@ -618,7 +626,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_dokumenproject') }}"
                     class="nav-link {{ request()->is('admin/inquery_dokumenproject*') ? 'active' : '' }}">
@@ -626,7 +634,7 @@
                     <p style="font-size: 14px;">Inquery Dokumen Project</p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['inquery deposit'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_deposit') }}"
@@ -636,7 +644,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
+        {{-- @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_invoicesuratpesanan') }}"
                     class="nav-link {{ request()->is('admin/inquery_invoicesuratpesanan*') ? 'active' : '' }}">
@@ -646,7 +654,7 @@
                     </p>
                 </a>
             </li>
-        @endif
+        @endif --}}
         @if (auth()->check() && auth()->user()->menu['inquery penjualan'])
             <li class="nav-item">
                 <a href="{{ url('admin/inquery_penjualan') }}"

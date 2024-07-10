@@ -35,10 +35,21 @@
         </div>
     </div>
 
-
     <section class="content" style="display: none;" id="mainContentSection">
         <div class="container-fluid">
             <div class="container-fluid">
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5>
+                            <i class="icon fas fa-ban"></i> Error!
+                        </h5>
+                        @foreach (session('error') as $error)
+                            - {{ $error }} <br>
+                        @endforeach
+                    </div>
+                @endif
+
                 @if (session('error_pelanggans') || session('error_pesanans'))
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -135,10 +146,12 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
+                                        <th>Kode Produk</th>
+                                        <th>Nama Produk</th>
                                         <th>Qty</th>
                                         <th>Harga</th>
+                                        <th>Diskon</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-pembelian">
@@ -146,31 +159,50 @@
                                         <td style="width: 70px" class="text-center" id="urutan">1</td>
                                         <td hidden>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="barang_id-0"
-                                                    name="barang_id[]">
+                                                <input type="text" class="form-control" id="typekaroseri_id-0"
+                                                    name="typekaroseri_id[]">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" readonly id="kode_barang-0"
-                                                    name="kode_barang[]">
+                                                <input type="text" class="form-control" readonly id="kode_types-0"
+                                                    name="kode_types[]">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" readonly id="nama-0"
-                                                    name="nama[]">
+                                                <input type="text" class="form-control" readonly id="nama_karoseri-0"
+                                                    name="nama_karoseri[]">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="jumlah-0"
-                                                    name="jumlah[]">
+                                                <input type="text" class="form-control jumlah" style="font-size:14px"
+                                                    id="jumlah-0" name="jumlah[]" data-row-id="0"
+                                                    oninput="formatRupiahform(this)"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="harga-0" name="harga[]"
+                                                <input type="text" class="form-control harga" style="font-size:14px"
+                                                    id="harga-0" name="harga[]" data-row-id="0"
+                                                    oninput="formatRupiahform(this)"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control diskon" style="font-size:14px"
+                                                    id="diskon-0" name="diskon[]" data-row-id="0"
+                                                    oninput="formatRupiahform(this)"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control total" style="font-size:14px"
+                                                    id="total-0" name="total[]" readonly
                                                     oninput="formatRupiahform(this)"
                                                     onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                             </div>
@@ -205,7 +237,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Data Barang</h4>
+                        <h4 class="modal-title">Data Produk</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -218,23 +250,24 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama barang</th>
-                                    <th>Spesifikasi</th>
+                                    <th>Kode Produk</th>
+                                    <th>Nama Produk</th>
+                                    <th>Harga</th>
                                     {{-- <th>Keterangan</th> --}}
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($barangs as $barang)
-                                    <tr data-barang_id="{{ $barang->id }}"
-                                        data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
+                                    <tr data-typekaroseri_id="{{ $barang->id }}"
+                                        data-kode_type="{{ $barang->kode_type }}"
+                                        data-nama_karoseri="{{ $barang->nama_karoseri }}"
+                                        data-harga="{{ $barang->harga }}" data-param="{{ $loop->index }}">
                                         <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td>{{ $barang->kode_barang }}</td>
-                                        <td>{{ $barang->nama_barang }}</td>
-                                        <td>{{ $barang->spesifikasi }}</td>
-                                        {{-- <td>{{ $barang->keterangan }}</td> --}}
+                                        <td>{{ $barang->kode_type }}</td>
+                                        <td>{{ $barang->nama_karoseri }}</td>
+                                        <td style="text-align: right">{{ number_format($barang->harga, 0, ',', '.') }}
+                                        </td>
                                         <td class="text-center">
                                             <button type="button" id="btnTambah" class="btn btn-primary btn-sm"
                                                 onclick="getBarang({{ $loop->index }})">
@@ -251,7 +284,7 @@
         </div>
 
         <div class="modal fade" id="tableSpk" data-backdrop="static">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-xl"> <!-- Changed modal-lg to modal-xl -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Data SPK</h4>
@@ -348,17 +381,26 @@
 
         function getBarang(rowIndex) {
             var selectedRow = $('#tables tbody tr:eq(' + rowIndex + ')');
-            var barang_id = selectedRow.data('barang_id');
-            var kode_barang = selectedRow.data('kode_barang');
-            var nama_barang = selectedRow.data('nama_barang');
+            var typekaroseri_id = selectedRow.data('typekaroseri_id');
+            var kode_type = selectedRow.data('kode_type');
+            var nama_karoseri = selectedRow.data('nama_karoseri');
+            var harga = selectedRow.data('harga');
+            var jumlah = 0;
+            var diskon = 0;
+            var total = 0;
 
             // Update the form fields for the active specification
-            $('#barang_id-' + activeSpecificationIndex).val(barang_id);
-            $('#kode_barang-' + activeSpecificationIndex).val(kode_barang);
-            $('#nama-' + activeSpecificationIndex).val(nama_barang);
-
+            $('#typekaroseri_id-' + activeSpecificationIndex).val(typekaroseri_id);
+            $('#kode_types-' + activeSpecificationIndex).val(kode_type);
+            $('#nama_karoseri-' + activeSpecificationIndex).val(nama_karoseri);
+            $('#harga-' + activeSpecificationIndex).val(Number(harga).toLocaleString('id-ID'));
+            $('#jumlah-' + activeSpecificationIndex).val(jumlah);
+            $('#diskon-' + activeSpecificationIndex).val(diskon);
+            $('#total-' + activeSpecificationIndex).val(total);
+            
             $('#tableBarang').modal('hide');
         }
+
 
         // Function to filter the table rows based on the search input
         function filterTable() {
@@ -439,66 +481,92 @@
 
 
         function itemPembelian(urutan, key, value = null) {
-            var barang_id = '';
-            var nama = '';
-            var kode_barang = '';
+            var typekaroseri_id = '';
+            var nama_karoseri = '';
+            var kode_types = '';
             var jumlah = '';
             var harga = '';
+            var diskon = '';
+            var total = '';
 
             if (value !== null) {
-                barang_id = value.barang_id;
-                nama = value.nama;
-                kode_barang = value.kode_barang;
+                typekaroseri_id = value.typekaroseri_id;
+                nama_karoseri = value.nama_karoseri;
+                kode_types = value.kode_types;
                 jumlah = value.jumlah;
                 harga = value.harga;
+                diskon = value.diskon;
+                total = value.total;
             }
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
             item_pembelian += '<td style="width: 70px" class="text-center" id="urutan-' + urutan + '">' + urutan + '</td>';
 
-            // barang_id 
+            // typekaroseri_id 
             item_pembelian += '<td hidden>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="barang_id-' + urutan +
-                '" name="barang_id[]" value="' + barang_id + '" ';
+            item_pembelian += '<input type="text" class="form-control" id="typekaroseri_id-' + urutan +
+                '" name="typekaroseri_id[]" value="' + typekaroseri_id + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // kode_barang 
+            // kode_types 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + urutan +
-                '" name="kode_barang[]" value="' + kode_barang + '" ';
+            item_pembelian += '<input type="text" class="form-control" readonly id="kode_types-' + urutan +
+                '" name="kode_types[]" value="' + kode_types + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // nama 
+            // nama_karoseri 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="nama-' + urutan +
-                '" name="nama[]" value="' + nama + '" ';
+            item_pembelian += '<input type="text" class="form-control" readonly id="nama_karoseri-' + urutan +
+                '" name="nama_karoseri[]" value="' + nama_karoseri + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // jumlah 
+            // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="jumlah-' + urutan +
+            item_pembelian += '<input type="text" class="form-control jumlah" style="font-size:14px" id="jumlah-' + urutan +
                 '" name="jumlah[]" value="' + jumlah + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // harga 
+            // harga
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" id="harga-' + urutan +
+            item_pembelian += '<input type="text" class="form-control harga" style="font-size:14px" id="harga-' + urutan +
                 '" name="harga[]" value="' + harga + '" ';
             item_pembelian += 'oninput="formatRupiahform(this)" ';
-            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
+            // diskon
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" class="form-control diskon" style="font-size:14px" id="diskon-' + urutan +
+                '" name="diskon[]" value="' + diskon + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
+
+            // total
+            item_pembelian += '<td>';
+            item_pembelian += '<div class="form-group">'
+            item_pembelian += '<input type="text" readonly class="form-control total" style="font-size:14px" id="total-' +
+                urutan +
+                '" name="total[]" value="' + total + '" readonly';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">'
+            item_pembelian += '</div>';
+            item_pembelian += '</td>';
 
             item_pembelian += '<td style="width: 120px">';
             item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + urutan + ')">';
@@ -542,4 +610,25 @@
             });
         });
     </script>
+
+    <script>
+        $(document).on("input", ".harga, .jumlah, .diskon", function() {
+            var currentRow = $(this).closest('tr');
+
+            // Function to remove non-numeric characters and convert to float
+            function parseCurrency(value) {
+                return parseFloat(value.replace(/[^0-9,-]+/g, "").replace(",", ".")) || 0;
+            }
+
+            var harga = parseCurrency(currentRow.find(".harga").val());
+            var jumlah = parseFloat(currentRow.find(".jumlah").val()) || 0;
+            var diskon = parseCurrency(currentRow.find(".diskon").val());
+            var total = harga * jumlah - diskon;
+
+            currentRow.find(".total").val(total.toLocaleString('id-ID'));
+
+            updateGrandTotal();
+        });
+    </script>
+
 @endsection

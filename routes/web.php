@@ -39,6 +39,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('marketings', [\App\Http\Controllers\Admin\KomisiController::class, 'tambah_marketing']);
     Route::get('penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenjualanController::class, 'cetakpdf']);
     Route::get('dokumen_project/cetak-pdf/{id}', [\App\Http\Controllers\Admin\DokumenprojectController::class, 'cetakpdf']);
+    Route::get('list_dokument/cetak-pdf/{id}', [\App\Http\Controllers\Admin\ListdokumentController::class, 'cetakpdf']);
     Route::get('pelunasan_penjualan/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'cetakpdf']);
     Route::get('unpostpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'unpostpenjualan'])->name('unpostpenjualan');
     Route::get('postingpenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'postingpenjualan'])->name('postingpenjualan');
@@ -321,5 +322,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_dokumenproject', \App\Http\Controllers\Admin\InqueryDokumenprojectController::class);
     Route::resource('invoice_suratpesanan', \App\Http\Controllers\Admin\InvoicesuratpesananController::class);
     Route::resource('inquery_invoicesuratpesanan', \App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class);
+    Route::resource('list_dokument', \App\Http\Controllers\Admin\ListdokumentController::class);
 
 });

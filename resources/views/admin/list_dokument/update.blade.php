@@ -51,13 +51,19 @@
                     <div class="card-header">
                         <h3 class="card-title">Tambah Dokumen Project</h3>
                     </div>
-                    @if (isset($inquery->perintah_kerja))
-                        <div class="card-body">
-                            <div class="mb-3 mt-4">
-                                <button class="btn btn-primary btn-sm" type="button"
-                                    onclick="showCategoryModalsuratpenawaran(this.value)">
-                                    <i class="fas fa-plus mr-2"></i> Pilih SPK
-                                </button>
+                    <div class="card-body">
+                        <div class="mb-3 mt-4">
+                            <button class="btn btn-primary btn-sm" type="button"
+                                onclick="showCategoryModalsuratpenawaran(this.value)">
+                                <i class="fas fa-plus mr-2"></i> Pilih SPK
+                            </button>
+                        </div>
+                        @if (isset($inquery->perintah_kerja))
+                            <div hidden class="mb-3">
+                                <label class="form-label" for="perintah_kerja_id">Surat Perintah Kerja Id</label>
+                                <input class="form-control @error('perintah_kerja_id') is-invalid @enderror"
+                                    id="perintah_kerja_id" name="perintah_kerja_id" type="text" placeholder=" "
+                                    value="{{ old('perintah_kerja_id', $inquery->perintah_kerja->id) }}" readonly />
                             </div>
                             <div hidden class="mb-3">
                                 <label class="form-label" for="perintah_kerja_id">Surat Perintah Kerja Id</label>
@@ -123,7 +129,7 @@
                                         value="{{ old('telp', $inquery->perintah_kerja->pelanggan->telp) }}">
                                 </div>
                             </div>
-                        </div>
+                    </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
