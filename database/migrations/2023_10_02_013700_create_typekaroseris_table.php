@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('typekaroseris', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('kategori_produk_id')->nullable();
+            $table->foreign('kategori_produk_id')->references('id')->on('kategori_produks')->onDelete('set null');
             $table->string('nama_karoseri')->nullable();
             $table->string('kode_type')->nullable();
             $table->string('qrcode_karoseri')->nullable();

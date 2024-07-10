@@ -15,6 +15,7 @@ class Typekaroseri extends Model
     use LogsActivity;
 
     protected $fillable = [
+        'kategori_produk_id',
         'kode_type',
         'merek_id',
         'nama_merek',

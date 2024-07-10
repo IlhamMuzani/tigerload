@@ -50,6 +50,17 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group">
+                            <label for="kategori_produk_id">Kategori</label>
+                            <select class="custom-select form-control" id="kategori_produk_id" name="kategori_produk_id">
+                                <option value="">- Pilih Departemen -</option>
+                                @foreach ($kategori_produks as $kategori_produk)
+                                    <option value="{{ $kategori_produk->id }}"
+                                        {{ old('kategori_produk_id') == $kategori_produk->id ? 'selected' : '' }}>
+                                        {{ $kategori_produk->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_karoseri">Bentuk Karoseri</label>
                             <input type="text" class="form-control" id="nama_karoseri" name="nama_karoseri"
                                 placeholder="masukkan bentuk karoseri" value="{{ old('nama_karoseri') }}">

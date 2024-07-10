@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
+use App\Models\Kategori_produk;
 use App\Models\Merek;
 use App\Models\Spesifikasi;
 use App\Models\Tipe;
@@ -26,10 +27,11 @@ class TypekaroseriController extends Controller
     public function create()
     {
 
+        $kategori_produks = Kategori_produk::all();
         $barangs = Barang::all();
         $mereks = Merek::all();
         $tipes = Tipe::all();
-        return view('admin/typekaroseri.create', compact('barangs', 'tipes', 'mereks'));
+        return view('admin/typekaroseri.create', compact('kategori_produks', 'barangs', 'tipes', 'mereks'));
     }
 
     public function store(Request $request)
@@ -37,6 +39,7 @@ class TypekaroseriController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
+                'kategori_produk_id' => 'required',
                 'nama_karoseri' => 'required',
                 // 'type_kendaraan' => 'required',
                 'panjang' => 'required',
@@ -46,6 +49,7 @@ class TypekaroseriController extends Controller
                 'harga' => 'required',
             ],
             [
+                'kategori_produk_id.required' => 'Pilih Kategori',
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
                 // 'type_kendaraan.required' => 'Masukkan tipe kendaraan',
                 'panjang.required' => 'Masukkan panjang',
@@ -113,6 +117,7 @@ class TypekaroseriController extends Controller
             [
                 'kode_type' => $this->kode(),
                 'gambar_skrb' => $namaGambar,
+                'kategori_produk_id' => $request->kategori_produk_id,
                 'merek_id' => $request->merek_id,
                 'varian' => $request->varian,
                 'nama_merek' => $request->nama_merek,
@@ -124,11 +129,6 @@ class TypekaroseriController extends Controller
 
             ]
         ));
-
-        $transaksi_id = $transaksi->id;
-
-        // $kodeban = $this->kodeban();
-
         if ($transaksi) {
 
             foreach ($data_pembelians as $data_pesanan) {
@@ -163,14 +163,14 @@ class TypekaroseriController extends Controller
 
     public function edit($id)
     {
-
+        $kategori_produks = Kategori_produk::all();
         $barangs = Barang::all();
         $typekaroseri = Typekaroseri::where('id', $id)->first();
         $mereks = Merek::all();
         $tipes = Tipe::all();
         $details = Spesifikasi::where('typekaroseri_id', $id)->get();
 
-        return view('admin/typekaroseri.update', compact('barangs', 'typekaroseri', 'details', 'mereks', 'tipes'));
+        return view('admin/typekaroseri.update', compact('kategori_produks', 'barangs', 'typekaroseri', 'details', 'mereks', 'tipes'));
     }
 
     public function update(Request $request, $id)
@@ -178,6 +178,7 @@ class TypekaroseriController extends Controller
         $validasi_pelanggan = Validator::make(
             $request->all(),
             [
+                'kategori_produk_id' => 'required',
                 'nama_karoseri' => 'required',
                 'panjang' => 'required',
                 'lebar' => 'required',
@@ -186,6 +187,7 @@ class TypekaroseriController extends Controller
 
             ],
             [
+                'kategori_produk_id' => 'Pilih kategori',
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
                 'panjang.required' => 'Masukkan panjang',
                 'lebar.required' => 'Masukkan lebar',
@@ -253,6 +255,7 @@ class TypekaroseriController extends Controller
         // Update the main transaction
         $transaksi->update([
             'gambar_skrb' => $namaGambar,
+            'kategori_produk_id' => $request->kategori_produk_id,
             'varian' => $request->varian,
             'nama_karoseri' => $request->nama_karoseri,
             'merek_id' => $request->merek_id,
