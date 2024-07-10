@@ -35,6 +35,7 @@
     request()->is('admin/barang*') ||
     request()->is('admin/barangnonbesi*') ||
     request()->is('admin/tipe*') ||
+    request()->is('admin/kategori_produk*') ||
     request()->is('admin/kendaraan*')
         ? 'menu-open'
         : '' }}">
@@ -52,6 +53,7 @@
         request()->is('admin/barang*') ||
         request()->is('admin/barangnonbesi*') ||
         request()->is('admin/tipe*') ||
+        request()->is('admin/kategori_produk*') ||
         request()->is('admin/kendaraan*')
             ? 'active'
             : '' }}">
@@ -144,6 +146,15 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['type karoseri'])
             <li class="nav-item">
+                <a href="{{ url('admin/kategori_produk') }}"
+                    class="nav-link {{ request()->is('admin/kategori_produk*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Kategori Produk</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['type karoseri'])
+            <li class="nav-item">
                 <a href="{{ url('admin/typekaroseri') }}"
                     class="nav-link {{ request()->is('admin/typekaroseri*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
@@ -171,7 +182,8 @@
         @endif --}}
         @if (auth()->check() && auth()->user()->menu['barang'])
             <li class="nav-item">
-                <a href="{{ url('admin/list_dokument') }}" class="nav-link {{ request()->is('admin/list_dokument*') ? 'active' : '' }}">
+                <a href="{{ url('admin/list_dokument') }}"
+                    class="nav-link {{ request()->is('admin/list_dokument*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Dokumen Project</p>
                 </a>
@@ -179,7 +191,8 @@
         @endif
         @if (auth()->check() && auth()->user()->menu['barang'])
             <li class="nav-item">
-                <a href="{{ url('admin/akun') }}" class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}">
+                <a href="{{ url('admin/akun') }}"
+                    class="nav-link {{ request()->is('admin/akun*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Barang Akun</p>
                 </a>

@@ -323,5 +323,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('invoice_suratpesanan', \App\Http\Controllers\Admin\InvoicesuratpesananController::class);
     Route::resource('inquery_invoicesuratpesanan', \App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class);
     Route::resource('list_dokument', \App\Http\Controllers\Admin\ListdokumentController::class);
+    Route::resource('kategori_produk', \App\Http\Controllers\Admin\KategoriprodukController::class);
 
 });
