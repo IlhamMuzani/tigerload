@@ -36,6 +36,7 @@
     request()->is('admin/barangnonbesi*') ||
     request()->is('admin/tipe*') ||
     request()->is('admin/kategori_produk*') ||
+    request()->is('admin/list_dokument*') ||
     request()->is('admin/kendaraan*')
         ? 'menu-open'
         : '' }}">
@@ -54,6 +55,7 @@
         request()->is('admin/barangnonbesi*') ||
         request()->is('admin/tipe*') ||
         request()->is('admin/kategori_produk*') ||
+        request()->is('admin/list_dokument*') ||
         request()->is('admin/kendaraan*')
             ? 'active'
             : '' }}">
