@@ -63,7 +63,7 @@
                                 <i class="fas fa-plus mr-2"></i> Pilih Spk
                             </button>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="nopol">Id SPK</label>
                             <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
                                 value="{{ old('perintah_kerja_id') }}" readonly placeholder="" value="">
