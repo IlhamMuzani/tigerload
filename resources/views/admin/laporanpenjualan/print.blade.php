@@ -147,10 +147,12 @@
     </table>
     <table>
         <tr>
-            <th style="width: 35%;">Faktur Penjualan</th>
-            <th style="width: 30%;">Tanggal</th>
+            <th style="width: 5%;">No</th>
+            <th style="width: 25%;">Faktur Penjualan</th>
+            <th style="width: 20%;">Kode SPK</th>
             <th style="width: 30%;">Pelanggan</th>
-            {{-- <th style="width: 20%;">Merek</th> --}}
+            <th style="width: 25%;">Kode Deposit</th>
+            <th style="width: 35%;">Tanggal</th>
             <th style="width: 40%;">Harga</th>
         </tr>
         @php
@@ -158,22 +160,48 @@
         @endphp
         @foreach ($inquery as $penjualan)
             <tr>
+                <td class="text-center">{{ $loop->iteration }}</td>
                 <td>{{ $penjualan->kode_penjualan }}</td>
-                <td>{{ $penjualan->tanggal_awal }}</td>
                 <td>
-                    @if ($penjualan->depositpemesanan)
-                        {{ $penjualan->depositpemesanan->first()->spk->pelanggan->nama_pelanggan }}
+                    @if ($penjualan->perintah_kerja)
+                        {{ $penjualan->perintah_kerja->kode_perintah }}
                     @else
-                        data tidak ada
+                        {{ $penjualan->spk->kode_spk }}
                     @endif
                 </td>
-                <td> Rp.
-                    {{ number_format($penjualan->depositpemesanan->first()->spk->harga - $penjualan->depositpemesanan->first()->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
+                <td>
+                    @if ($penjualan->perintah_kerja)
+                        {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                    @else
+                        {{ $penjualan->spk->pelanggan->nama_pelanggan }}
+                    @endif
                 </td>
+                <td>
+                    @if ($penjualan->perintah_kerja)
+                        @if ($penjualan->perintah_kerja->depositpemesanan->first())
+                            {{ $penjualan->perintah_kerja->depositpemesanan->first()->kode_deposit }}
+                        @else
+                            tidak ada
+                        @endif
+                    @else
+                        tidak DP
+                    @endif
+                </td>
+                <td>{{ $penjualan->tanggal_awal }}</td>
+                <td>
+                    @if ($penjualan->perintah_kerja)
+                        {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}
+                    @else
+                    @endif
+                </td>
+                {{-- <td>Rp {{ number_format($penjualan->harga, 0, ',', '.') }}</td> --}}
             </tr>
-            @php
-                $total += $penjualan->depositpemesanan->first()->spk->harga - $penjualan->depositpemesanan->first()->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga');
-            @endphp
+            {{-- @php
+                $total +=
+                    $penjualan->depositpemesanan->first()->spk->harga -
+                    $penjualan->depositpemesanan->first()->harga +
+                    $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga');
+            @endphp --}}
         @endforeach
 
     </table>
@@ -181,7 +209,7 @@
     <br>
     <!-- Tampilkan sub-total di bawah tabel -->
     <div style="text-align: right;">
-        <strong>Total: Rp. {{ number_format($total, 0, ',', '.') }}</strong>
+        {{-- <strong>Total: Rp. {{ number_format($total, 0, ',', '.') }}</strong> --}}
     </div>
 
 

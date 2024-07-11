@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
+            $table->string('kategori')->nullable();
             $table->string('kode_penjualan')->nullable();
             $table->string('qrcode_penjualan')->nullable();
             $table->unsignedBigInteger('spk_id')->nullable();

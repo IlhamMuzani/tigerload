@@ -81,28 +81,53 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Faktur Penjualan</th>
+                                <th>Kode SPK</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Kode Karoseri</th>
+                                <th>Kode Deposit</th>
                                 <th>Tanggal</th>
-                                <th>Pelanggan</th>
-                                <th class="text-center">Total</th>
                                 {{-- <th class="text-center" width="220">Opsi</th> --}}
                             </tr>
                         </thead>
                         <tbody class="list">
                             @foreach ($inquery as $penjualan)
-                                <tr>
+                                <tr class="dropdown"{{ $penjualan->id }}>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $penjualan->kode_penjualan }}</td>
-                                    <td>{{ $penjualan->tanggal_awal }}</td>
                                     <td>
-                                        @if ($penjualan->depositpemesanan)
-                                            {{ $penjualan->depositpemesanan->first()->spk->pelanggan->nama_pelanggan }}
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->kode_spk }}
                                         @else
-                                            data tidak ada
+                                            {{ $penjualan->spk->kode_spk }}
                                         @endif
                                     </td>
-                                    <td>Rp
-                                        {{ number_format($penjualan->depositpemesanan->spk->harga - $penjualan->depositpemesanan->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
+                                    <td>
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                        @else
+                                            {{ $penjualan->spk->pelanggan->nama_pelanggan }}
+                                        @endif
                                     </td>
+                                    <td>
+                                        @if ($penjualan->perintah_kerja)
+                                            {{ $penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
+                                        @else
+                                            {{ $penjualan->spk->typekaroseri->kode_type }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($penjualan->perintah_kerja)
+                                            @if ($penjualan->perintah_kerja->depositpemesanan->first())
+                                                {{ $penjualan->perintah_kerja->depositpemesanan->first()->kode_deposit }}
+                                            @else
+                                                tidak ada
+                                            @endif
+                                        @else
+                                            tidak DP
+                                        @endif
+                                    </td>
+                                    <td>{{ $penjualan->tanggal_awal }}</td>
+                                    {{-- <td>Rp {{ number_format($penjualan->harga, 0, ',', '.') }}</td> --}}
                                 </tr>
                             @endforeach
                         </tbody>

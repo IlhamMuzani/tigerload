@@ -81,23 +81,29 @@
                                 </button>
                             </div>
                             <div class="form-group" hidden>
-                                <label for="nopol">Id Deposit</label>
+                                <label for="kategori">Kategori</label>
+                                <input type="text" class="form-control" id="kategori"
+                                    name="kategori" value="{{ old('kategori') }}" readonly
+                                    placeholder="">
+                            </div>
+                            <div class="form-group" hidden>
+                                <label for="depositpemesanan_id">Id Deposit</label>
                                 <input type="text" class="form-control" id="depositpemesanan_id"
                                     name="depositpemesanan_id" value="{{ old('depositpemesanan_id') }}" readonly
                                     placeholder="">
                             </div>
                             <div class="form-group" hidden>
-                                <label for="nopol">Id SPK</label>
+                                <label>Id SPK</label>
                                 <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
                                     value="{{ old('perintah_kerja_id') }}" readonly placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="nopol">Kode SPK</label>
+                                <label>Kode SPK</label>
                                 <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
                                     value="{{ old('kode_spk') }}">
                             </div>
                             <div class="form-group">
-                                <label for="nopol">Nama Pelanggan</label>
+                                <label>Nama Pelanggan</label>
                                 <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
                                     value="{{ old('nama_pelanggan') }}">
                             </div>
@@ -333,6 +339,7 @@
                                                     '{{ $spk->spk->typekaroseri->kode_type }}',
                                                     '{{ $spk->spk->typekaroseri->nama_karoseri }}',
                                                     '{{ $spk->spk->harga }}',
+                                                    '{{ $spk->spk->kategori }}',
                                                     '{{ $spk->depositpemesanan->first() ? $spk->depositpemesanan->first()->id : '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -353,7 +360,8 @@
             $('#tableSpk').modal('show');
         }
 
-        function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga, Dp_id) {
+        function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga, Kategori,
+            Dp_id) {
             // Set the values in the form fields
             document.getElementById('perintah_kerja_id').value = Spk_id;
             document.getElementById('kode_spk').value = KodeSPK;
@@ -363,6 +371,7 @@
             document.getElementById('kode_type').value = KodeKaroseri;
             document.getElementById('nama_karoseri').value = BentukKaroseri;
             document.getElementById('depositpemesanan_id').value = Dp_id;
+            document.getElementById('kategori').value = Kategori;
 
             var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
             document.getElementById('harga_awal').value = formattedNominal;
@@ -397,7 +406,7 @@
             $('#jumlah-' + activeSpecificationIndex).val(jumlah);
             $('#diskon-' + activeSpecificationIndex).val(diskon);
             $('#total-' + activeSpecificationIndex).val(total);
-            
+
             $('#tableBarang').modal('hide');
         }
 

@@ -17,6 +17,7 @@ class Penjualan extends Model
     [
         'kode_penjualan',
         'qrcode_penjualan',
+        'kategori',
         'perintah_kerja_id',
         'depositpemesanan_id',
         'spesifikasi_id',

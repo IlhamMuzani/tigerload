@@ -324,5 +324,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_invoicesuratpesanan', \App\Http\Controllers\Admin\InqueryinvoicesuratpesananController::class);
     Route::resource('list_dokument', \App\Http\Controllers\Admin\ListdokumentController::class);
     Route::resource('kategori_produk', \App\Http\Controllers\Admin\KategoriprodukController::class);
+    Route::resource('faktur_pajak', \App\Http\Controllers\Admin\FakturpajakController::class);
 
 });

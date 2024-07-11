@@ -234,6 +234,7 @@
     request()->is('admin/perhitungan_bahanbaku*') ||
     request()->is('admin/dokumen_project*') ||
     request()->is('admin/invoice_suratpesanan*') ||
+    request()->is('admin/faktur_pajak*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -268,6 +269,7 @@
         request()->is('admin/perhitungan_bahanbaku*') ||
         request()->is('admin/dokumen_project*') ||
         request()->is('admin/invoice_suratpesanan*') ||
+        request()->is('admin/faktur_pajak*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -426,6 +428,15 @@
                 </a>
             </li>
         @endif
+        {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/faktur_pajak') }}"
+                    class="nav-link {{ request()->is('admin/faktur_pajak*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Faktur Pajak</p>
+                </a>
+            </li>
+        @endif --}}
         {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
                 <a href="{{ url('admin/invoice_suratpesanan') }}"

@@ -113,6 +113,7 @@ class PenjualanController extends Controller
             [
                 'perintah_kerja_id' => $request->perintah_kerja_id,
                 'depositpemesanan_id' => $request->depositpemesanan_id,
+                'kategori' => $request->kategori,
                 // 'harga' => $request->harga,
                 'kode_penjualan' => $this->kode(),
                 'qrcode_penjualan' => 'https:///tigerload.id/penjualan/' . $kode,

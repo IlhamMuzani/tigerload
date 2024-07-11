@@ -48,13 +48,18 @@
                     @method('put')
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah</h3>
+                            <h3 class="card-title">Perbarui</h3>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 mt-4">
                                 <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
                                     <i class="fas fa-plus mr-2"></i> Pilih Spk
                                 </button>
+                            </div>
+                            <div class="form-group" hidden>
+                                <label for="nopol">Kategori</label>
+                                <input type="text" class="form-control" id="kategori" name="kategori"
+                                    value="{{ $penjualans->kategori }}" readonly placeholder="" value="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="nopol">Id Deposit</label>
@@ -69,7 +74,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="nopol">Kode SPK</label>
-                                <input type="text" class="form-control" id="kode_perintah" readonly placeholder=""
+                                <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
                                     value="{{ $penjualans->perintah_kerja->kode_perintah }}">
                             </div>
                             <div class="form-group">
@@ -317,6 +322,7 @@
                                                     '{{ $spk->spk->typekaroseri->kode_type }}',
                                                     '{{ $spk->spk->typekaroseri->nama_karoseri }}',
                                                     '{{ $spk->spk->harga }}',
+                                                    '{{ $spk->spk->kategori }}',
                                                     '{{ $spk->depositpemesanan->first() ? $spk->depositpemesanan->first()->id : '' }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -337,21 +343,24 @@
             $('#tableSpk').modal('show');
         }
 
-        function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga, Dp_id) {
+        function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga, Kategori,
+            Dp_id) {
             // Set the values in the form fields
-            document.getElementById('spk_id').value = Spk_id;
+            document.getElementById('perintah_kerja_id').value = Spk_id;
             document.getElementById('kode_spk').value = KodeSPK;
             document.getElementById('nama_pelanggan').value = NamaPelanggan;
             document.getElementById('merek').value = Merek;
             document.getElementById('tipe').value = Type;
             document.getElementById('kode_type').value = KodeKaroseri;
             document.getElementById('nama_karoseri').value = BentukKaroseri;
-            document.getElementById('harga_awal').value = Harga;
             document.getElementById('depositpemesanan_id').value = Dp_id;
+            document.getElementById('kategori').value = Kategori;
+
+            var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
+            document.getElementById('harga_awal').value = formattedNominal;
             // Close the modal (if needed)
             $('#tableSpk').modal('hide');
         }
-
 
         var activeSpecificationIndex = 0;
 

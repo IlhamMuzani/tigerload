@@ -165,6 +165,7 @@ class InqueryPenjualanController extends Controller
         $transaksi->update([
             'perintah_kerja_id' => $request->perintah_kerja_id,
             'depositpemesanan_id' => $request->depositpemesanan_id,
+            'kategori' => $request->kategori,
             'status' => 'posting',
         ]);
 
