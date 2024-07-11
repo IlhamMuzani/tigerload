@@ -496,12 +496,23 @@
                     @endif
                 </td>
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
-                    <span style="float: right; text-decoration: underline">
+                    <span style="float: right;">
                         @if ($penjualans->depositpemesanan)
                             {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}
                         @else
                             0
                         @endif
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6"
+                    style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px; border-bottom: 1px solid black;">
+                </td>
+                <td class="td"
+                    style="font-size: 13px; text-align: right; font-weight: bold; border-bottom: 1px solid black;">
+                    <span style="float: right;">
+                        <!-- Your subtotal value here -->
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -540,7 +551,7 @@
             </td> --}}
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                     {{-- <span style="float: center;">Rp.</span> --}}
-                    <span style="float: right; text-decoration: underline">
+                    <span style="float: right;">
                         @if ($penjualans->depositpemesanan)
                             {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}
                         @else
@@ -549,6 +560,19 @@
                         {{-- </span> --}}
                 </td>
             </tr>
+
+            <tr>
+                <td colspan="6"
+                    style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px; border-bottom: 1px solid black;">
+                </td>
+                <td class="td"
+                    style="font-size: 13px; text-align: right; font-weight: bold; border-bottom: 1px solid black;">
+                    <span style="float: right;">
+                        <!-- Your subtotal value here -->
+                    </span>
+                </td>
+            </tr>
+
             <tr>
                 <td colspan="6"
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
