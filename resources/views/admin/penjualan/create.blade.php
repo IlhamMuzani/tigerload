@@ -49,7 +49,15 @@
                         @endforeach
                     </div>
                 @endif
-
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5>
+                            <i class="icon fas fa-check"></i> Success!
+                        </h5>
+                        {{ session('success') }}
+                    </div>
+                @endif
                 @if (session('error_pelanggans') || session('error_pesanans'))
                     <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -82,9 +90,8 @@
                             </div>
                             <div class="form-group" hidden>
                                 <label for="kategori">Kategori</label>
-                                <input type="text" class="form-control" id="kategori"
-                                    name="kategori" value="{{ old('kategori') }}" readonly
-                                    placeholder="">
+                                <input type="text" class="form-control" id="kategori" name="kategori"
+                                    value="{{ old('kategori') }}" readonly placeholder="">
                             </div>
                             <div class="form-group" hidden>
                                 <label for="depositpemesanan_id">Id Deposit</label>
@@ -99,32 +106,33 @@
                             </div>
                             <div class="form-group">
                                 <label>Kode SPK</label>
-                                <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
+                                <input type="text" class="form-control" id="kode_spk" name="kode_spk" readonly placeholder=""
                                     value="{{ old('kode_spk') }}">
                             </div>
                             <div class="form-group">
                                 <label>Nama Pelanggan</label>
-                                <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                    value="{{ old('nama_pelanggan') }}">
+                                <input class="form-control @error('nama_pelanggan') is-invalid @enderror"
+                                    id="nama_pelanggan" name="nama_pelanggan" type="text" placeholder=""
+                                    value="{{ old('nama_pelanggan') }}" readonly />
                             </div>
                             <div class="form-group">
                                 <label for="nama">Merek Kendaraan</label>
-                                <input type="text" class="form-control" id="merek" readonly placeholder=""
+                                <input type="text" class="form-control" name="merek" id="merek" readonly placeholder=""
                                     value="{{ old('merek') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Type Kendaraan</label>
-                                <input type="text" class="form-control" id="tipe" readonly placeholder=""
+                                <input type="text" class="form-control" name="tipe" id="tipe" readonly placeholder=""
                                     value="{{ old('tipe') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Kode Karoseri</label>
-                                <input type="text" class="form-control" id="kode_type"readonly placeholder=""
+                                <input type="text" class="form-control" name="kode_type" id="kode_type"readonly placeholder=""
                                     value="{{ old('kode_type') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nama">Bentuk Karoseri</label>
-                                <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
+                                <input type="text" class="form-control" name="nama_karoseri" id="nama_karoseri" readonly placeholder=""
                                     value="{{ 'nama_karoseri' }}">
                             </div>
                             <div class="form-group">

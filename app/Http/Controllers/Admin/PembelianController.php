@@ -186,6 +186,7 @@ class PembelianController extends Controller
         $tanggal = Carbon::now()->format('Y-m-d');
         $transaksi = Pembelian::create([
             'kode_pembelian' => $this->kode(),
+            'kategori' => $request->kategori,
             'supplier_id' => $request->supplier_id,
             'tanggal' => $format_tanggal,
             'tanggal_awal' => $tanggal,

@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Depositpemesanan;
 use App\Models\Faktur_pajak;
-use App\Models\Penjualan;
+use App\Models\Pembelian;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class FakturpajakController extends Controller
+class FakturpajakpembelianController extends Controller
 {
     public function index()
     {
         $today = Carbon::today();
 
-        $inquery = Faktur_pajak::where('kategori', 'PENJUALAN')->whereDate('created_at', $today)
+        $inquery = Faktur_pajak::where('kategori', 'PEMBELIAN')->whereDate('created_at', $today)
             ->orWhere(function ($query) use ($today) {
                 $query->where('status', 'unpost')
                     ->whereDate('created_at', '<', $today);
@@ -28,13 +28,13 @@ class FakturpajakController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.faktur_pajak.index', compact('inquery'));
+        return view('admin.faktur_pajakpembelian.index', compact('inquery'));
     }
 
     public function create()
     {
-        $penjualans = Penjualan::where(['status' => 'posting', 'kategori' => 'PPN'])->get();
-        return view('admin/faktur_pajak.create', compact('penjualans'));
+        $penjualans = Pembelian::where(['status' => 'posting', 'kategori' => 'PPN'])->get();
+        return view('admin/faktur_pajakpembelian.create', compact('penjualans'));
     }
 
     public function store(Request $request)
@@ -42,11 +42,11 @@ class FakturpajakController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'penjualan_id' => 'required',
+                'pembelian_id' => 'required',
                 'gambar_pajak' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             ],
             [
-                'penjualan_id.required' => 'Pilih Penjualan',
+                'pembelian_id.required' => 'Pilih Pembelian',
                 'gambar_pajak.image' => 'Foto yang dimasukan salah!',
                 'gambar_pajak.required' => 'Bukti foto tidak boleh kosong!',
             ]
@@ -59,7 +59,7 @@ class FakturpajakController extends Controller
 
         if ($request->gambar_pajak) {
             $gambar = str_replace(' ', '', $request->gambar_pajak->getClientOriginalName());
-            $namaGambar = 'faktur_pajak/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
+            $namaGambar = 'faktur_pajakpembelian/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_pajak->storeAs('public/uploads/', $namaGambar);
         } else {
             $namaGambar = null;
@@ -74,37 +74,37 @@ class FakturpajakController extends Controller
             $request->all(),
             [
                 'gambar_pajak' => $namaGambar,
-                'penjualan_id' => $request->penjualan_id,
+                'pembelian_id' => $request->pembelian_id,
                 'kode_pajak' => $this->kode(),
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
-                'kategori' => 'PENJUALAN',
+                'kategori' => 'PEMBELIAN',
                 'status' => 'posting',
             ]
         ));
 
         $encryptedId = Crypt::encryptString($inquery->id);
-        $inquery->qrcode_pajak = 'https://tigerload.id/faktur_pajak/' . $encryptedId;
+        $inquery->qrcode_pajak = 'https://tigerload.id/faktur_pajakpembelian/' . $encryptedId;
         $inquery->save();
 
 
-        $faktur_pajak = Penjualan::where('id', $inquery->penjualan_id)->update(['status' => 'selesai', 'status_pajak' => 'aktif']);
-        return view('admin.faktur_pajak.show', compact('inquery'));
+        $faktur_pajakpembelian = Pembelian::where('id', $inquery->pembelian_id)->update(['status' => 'selesai', 'status_pajak' => 'aktif']);
+        return view('admin.faktur_pajakpembelian.show', compact('inquery'));
     }
 
     public function show($id)
     {
         $inquery = Faktur_pajak::where('id', $id)->first();
-        $penjualan = Penjualan::where('id', $inquery->perintah_kerja_id)->first();
+        $penjualan = Pembelian::where('id', $inquery->perintah_kerja_id)->first();
 
-        return view('admin.faktur_pajak.show', compact('inquery', 'penjualan'));
+        return view('admin.faktur_pajakpembelian.show', compact('inquery', 'penjualan'));
     }
 
     public function cetakpdf($id)
     {
         $cetakpdf = Faktur_pajak::where('id', $id)->first();
 
-        $pdf = PDF::loadView('admin.faktur_pajak.cetak_pdf', compact('cetakpdf'));
+        $pdf = PDF::loadView('admin.faktur_pajakpembelian.cetak_pdf', compact('cetakpdf'));
         $pdf->setPaper('letter', 'portrait'); // Set the paper size to portrait letter
 
         return $pdf->stream('Faktur_pajak.pdf');
@@ -133,6 +133,6 @@ class FakturpajakController extends Controller
         $deposit = Pelanggan::find($id);
         $deposit->delete();
 
-        return redirect('admin/faktur_pajak')->with('success', 'Berhasil menghapus faktur');
+        return redirect('admin/faktur_pajakpembelian')->with('success', 'Berhasil menghapus faktur');
     }
 }

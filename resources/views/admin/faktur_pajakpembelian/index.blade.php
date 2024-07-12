@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Deposit')
+@section('title', 'Faktur Pajak Pembelian')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Deposit</h1>
+                    <h1 class="m-0">Faktur Pajak Pembelian</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Deposit</li>
+                        <li class="breadcrumb-item active">Faktur Pajak Pembelian</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -49,111 +49,117 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Deposit</h3>
+                    <h3 class="card-title">Data Faktur Pajak Pembelian</h3>
+                    <div class="float-right">
+                        <a href="{{ url('admin/faktur_pajakpembelian/create') }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-plus"></i> Tambah
+                        </a>
+                    </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form method="GET" id="form-action">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <select class="custom-select form-control" id="status" name="status">
-                                    <option value="">- Semua Status -</option>
-                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
-                                        Posting
-                                    </option>
-                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
-                                        Unpost</option>
-                                </select>
-                                <label for="status">(Pilih Status)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
-                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Awal)</label>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
-                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
-                                <label for="tanggal_awal">(Tanggal Akhir)</label>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
-                                </button>
-                            </div>
+                    <div class="form-group" style="flex: 8;">
+                        <div class="col-md-2 mt-4 mb-3">
+                            <label>Kategori</label>
+                            <select class="custom-select form-control" id="kategori" name="kategori">
+                                <option value="">- Pilih Kategori -</option>
+                                <option value="pembelian"selected>PEMBELIAN</option>
+                                <option value="penjualan">PENJUALAN</option>
+                            </select>
                         </div>
-                    </form>
+                    </div>
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Kode Deposit Pemesanan</th>
-                                <th>Kode SPK</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Kode Karoseri</th>
+                                <th>Kode Faktur Pajak</th>
+                                <th>Kode Pembelian</th>
+                                <th>Nama Supplier</th>
                                 <th>Tanggal</th>
-                                <th class="text-center" width="100">DP</th>
+                                <th class="text-right">Nominal</th>
+                                <th class="text-right">PPN</th>
                                 <th class="text-center" width="30">Opsi</th>
                             </tr>
                         </thead>
                         <tbody class="list">
-                            @foreach ($inquery as $deposit)
-                                <tr class="dropdown"{{ $deposit->id }}>
+                            @foreach ($inquery as $faktur_pajakpembelian)
+                                <tr class="dropdown"{{ $faktur_pajakpembelian->id }}>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $deposit->kode_deposit }}</td>
-                                    <td>{{ $deposit->perintah_kerja->kode_perintah }}</td>
-                                    <td>{{ $deposit->perintah_kerja->pelanggan->nama_pelanggan }}</td>
-                                    <td>{{ $deposit->perintah_kerja->typekaroseri->kode_type }}</td>
-                                    <td>{{ $deposit->tanggal_awal }}</td>
-                                    {{-- <td>
-                                        @if ($deposit->pelanggan)
-                                            {{ $deposit->pelanggan->nama_pelanggan }}
+                                    <td>{{ $faktur_pajakpembelian->kode_pajak }}</td>
+                                    <td>
+                                        @if ($faktur_pajakpembelian->pembelian)
+                                            {{ $faktur_pajakpembelian->pembelian->kode_pembelian }}
                                         @else
-                                            data tidak ada
+                                            tidak ada
                                         @endif
-                                    </td> --}}
-
-                                    <td>Rp {{ number_format($deposit->harga, 0, ',', '.') }}</td>
+                                    </td>
+                                    <td>
+                                        @if ($faktur_pajakpembelian->pembelian)
+                                            {{ $faktur_pajakpembelian->pembelian->supplier->nama_supp }}
+                                        @else
+                                            tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $faktur_pajakpembelian->tanggal_awal }}
+                                    </td>
+                                    <td>
+                                        @if ($faktur_pajakpembelian->pembelian)
+                                            Rp
+                                            {{ number_format($faktur_pajakpembelian->pembelian->grand_total, 0, ',', '.') }}
+                                        @else
+                                            Rp 0
+                                        @endif
+                                    </td>
+                                    <?php
+                                    $total_price = $faktur_pajakpembelian->pembelian->grand_total ?? 0; // Default to 0 if grand_total is not set
+                                    $tax_rate = 0.11;
+                                    $original_price = $total_price / (1 + $tax_rate);
+                                    ?>
+                                    <td>
+                                        Rp
+                                        {{ number_format($original_price, 0, ',', '.') }}
+                                    </td>
 
                                     <td class="text-center">
-                                        @if ($deposit->status == 'posting')
+                                        @if ($faktur_pajakpembelian->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
-                                        @if ($deposit->status == 'selesai')
+                                        @if ($faktur_pajakpembelian->status == 'selesai')
                                             <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
                                                 width="40" alt="Roda Mobil">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($deposit->status == 'unpost')
+                                            @if ($faktur_pajakpembelian->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $deposit->id }}">Posting</a>
+                                                    data-memo-id="{{ $faktur_pajakpembelian->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajakpembelian->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/faktur_pajakpembelian/' . $faktur_pajakpembelian->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapusdeposit', ['id' => $deposit->id]) }}">
+                                                    action="{{ route('hapus_pajakpembelian', ['id' => $faktur_pajakpembelian->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($deposit->status == 'posting')
+                                            @if ($faktur_pajakpembelian->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $deposit->id }}">Unpost</a>
+                                                    data-memo-id="{{ $faktur_pajakpembelian->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/faktur_pajakpembelian/' . $faktur_pajakpembelian->id) }}">Show</a>
                                             @endif
-                                            @if ($deposit->status == 'selesai')
+                                            @if ($faktur_pajakpembelian->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/faktur_pajakpembelian/' . $faktur_pajakpembelian->id) }}">Show</a>
                                             @endif
                                         </div>
                                     </td>
@@ -218,7 +224,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_deposit/unpostdeposit/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_fakturpajak/unpostfakturpajak/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -258,7 +264,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_deposit/postingdeposit/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_fakturpajak/postingfakturpajak/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -340,6 +346,29 @@
                 $('.dropdown-menu').hide();
                 $('tr.dropdown').removeClass('selected').css('background-color',
                     ''); // Menghapus warna latar belakang dari semua baris saat menutup dropdown
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Detect the change event on the 'status' dropdown
+            $('#kategori').on('change', function() {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Check the selected value and redirect accordingly
+                switch (selectedValue) {
+                    case 'pembelian':
+                        window.location.href = "{{ url('admin/faktur_pajakpembelian') }}";
+                        break;
+                    case 'penjualan':
+                        window.location.href = "{{ url('admin/faktur_pajak') }}";
+                        break;
+                    default:
+                        // Handle other cases or do nothing
+                        break;
+                }
             });
         });
     </script>

@@ -99,6 +99,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_deposit/unpostdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'unpostdeposit']);
     Route::get('inquery_deposit/postingdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'postingdeposit']);
 
+
+    Route::get('inquery_fakturpajak/unpostfakturpajak/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakController::class, 'unpostfakturpajak']);
+    Route::get('inquery_fakturpajak/postingfakturpajak/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakController::class, 'postingfakturpajak']);
+
+    Route::get('inquery_fakturpajakpembelian/unpostfakturpajakpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class, 'unpostfakturpajakpembelian']);
+    Route::get('inquery_fakturpajakpembelian/postingfakturpajakpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class, 'postingfakturpajakpembelian']);
+
     Route::get('inquery_spk/unpost/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'unpost']);
     Route::get('inquery_spk/posting/{id}', [\App\Http\Controllers\Admin\InquerySpkController::class, 'posting']);
 
@@ -137,6 +144,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('hapuspenerimaanpembayaran/{id}', [\App\Http\Controllers\Admin\InquerypenerimaanpembayaranController::class, 'hapuspenerimaanpembayaran'])->name('hapuspenerimaanpembayaran');
     Route::get('hapusperhitunganbahan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitunganbahanbakuController::class, 'hapusperhitunganbahan'])->name('hapusperhitunganbahan');
     Route::get('hapusdokumenproject/{id}', [\App\Http\Controllers\Admin\InqueryDokumenprojectController::class, 'hapusdokumenproject'])->name('hapusdokumenproject');
+    Route::get('hapus_pajak/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakController::class, 'hapus_pajak'])->name('hapus_pajak');
+    Route::get('hapus_pajakpembelian/{id}', [\App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class, 'hapus_pajakpembelian'])->name('hapus_pajakpembelian');
 
     Route::get('hapusperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'hapusperintahkerja'])->name('hapusperintahkerja');
     Route::get('inquery_perintahkerja/unpostperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'unpostperintahkerja']);
@@ -263,7 +272,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('cetak_pengambilanfilter', [\App\Http\Controllers\Admin\PengambilanbahanController::class, 'cetak_pengambilanfilter']);
     Route::get('invoice_suratpesanan/get_suratpesanan/{id}', [\App\Http\Controllers\Admin\InvoicesuratpesananController::class, 'get_suratpesanan']);
     Route::get('penerimaan_kaskecil/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaankaskecilController::class, 'cetakpdf']);
-    
+
+    Route::get('faktur_pajak/cetak-pdf/{id}', [\App\Http\Controllers\Admin\FakturpajakController::class, 'cetakpdf']);
+    Route::get('faktur_pajakpembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\FakturpajakpembelianController::class, 'cetakpdf']);
+
     Route::resource('pilih_laporankaskecil', \App\Http\Controllers\Admin\PilihLaporankaskecilController::class);
     Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::resource('tablepengeluaran', \App\Http\Controllers\Admin\TablepengeluaranController::class);
@@ -325,5 +337,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('list_dokument', \App\Http\Controllers\Admin\ListdokumentController::class);
     Route::resource('kategori_produk', \App\Http\Controllers\Admin\KategoriprodukController::class);
     Route::resource('faktur_pajak', \App\Http\Controllers\Admin\FakturpajakController::class);
+    Route::resource('inquery_fakturpajak', \App\Http\Controllers\Admin\InqueryFakturpajakController::class);
+    Route::resource('faktur_pajakpembelian', \App\Http\Controllers\Admin\FakturpajakpembelianController::class);
+    Route::resource('inquery_fakturpajakpembelian', \App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class);
 
 });

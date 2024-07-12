@@ -2,32 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class Pembelian extends Model
+class Faktur_pajak extends Model
 {
     use HasFactory;
     use LogsActivity;
 
     protected $fillable =
     [
-        'kode_pembelian',
-        'qrcode_pembelian',
+        'kode_pajak',
+        'qrcode_pajak',
         'kategori',
-        'supplier_id',
-        'grand_total',
+        'penjualan_id',
+        'pembelian_id',
+        'gambar_pajak',
         'tanggal',
         'tanggal_awal',
         'tanggal_akhir',
+        'status_pajak',
         'status',
-        'status_notif',
-
     ];
 
     use SoftDeletes;
@@ -38,24 +37,19 @@ class Pembelian extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
+    public function penjualan()
+    {
+        return $this->belongsTo(Penjualan::class);
+    }
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class);
+    }
+
     public static function getId()
     {
-        return $getId = DB::table('pembelians')->orderBy('id', 'DESC')->take(1)->get();
-    }
-
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
-
-    public function detail_pembelian()
-    {
-        return $this->hasMany(Detailpembelian::class);
-    }
-
-    public function faktur_pajak()
-    {
-        return $this->hasMany(Faktur_pajak::class);
+        return $getId = DB::table('faktur_pajaks')->orderBy('id', 'DESC')->take(1)->get();
     }
 }

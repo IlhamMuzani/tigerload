@@ -21,6 +21,7 @@ class Penjualan extends Model
         'perintah_kerja_id',
         'depositpemesanan_id',
         'spesifikasi_id',
+        'status_pajak',
         'status',
         'status_pelunasan',
         'tanggal',
@@ -61,6 +62,16 @@ class Penjualan extends Model
     public function pelunasan()
     {
         return $this->hasMany(Pelunasan::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
+    public function faktur_pajak()
+    {
+        return $this->hasMany(Faktur_pajak::class);
     }
 
     public static function getId()

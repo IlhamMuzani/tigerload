@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Faktur Deposit Pemesanan')
+@section('title', 'Faktur Pajak')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,12 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Faktur Deposit Pemesanan</h1>
+                    <h1 class="m-0">Faktur Pajak</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/deposit_pemesanan') }}">Faktur Deposit
-                                Pemesanan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/faktur_pajak') }}">Faktur Pajak</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -50,64 +49,81 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/deposit_pemesanan') }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/faktur_pajak') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Tambah</h3>
                     </div>
                     <div class="card-body">
+                        <div class="form-group" style="flex: 8;">
+                            <div class="col-md-0 mb-3">
+                                <label>Kategori</label>
+                                <select class="custom-select form-control" id="kategori" name="kategori">
+                                    <option value="">- Pilih Kategori -</option>
+                                    <option value="pembelian">PEMBELIAN</option>
+                                    <option value="penjualan"selected>PENJUALAN</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="mb-3 mt-4">
-                            <button class="btn btn-primary btn-sm" type="button" onclick="showSpk(this.value)">
-                                <i class="fas fa-plus mr-2"></i> Pilih Spk
+                            <button class="btn btn-primary btn-sm" type="button" onclick="showPenjualan(this.value)">
+                                <i class="fas fa-plus mr-2"></i> Pilih Penjualan
                             </button>
                         </div>
                         <div class="form-group" hidden>
-                            <label for="nopol">Id SPK</label>
-                            <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
-                                value="{{ old('perintah_kerja_id') }}" readonly placeholder="">
+                            <label for="nopol">Id Penjualan</label>
+                            <input type="text" class="form-control  @error('penjualan_id') is-invalid @enderror"
+                                id="penjualan_id" name="penjualan_id" value="{{ old('penjualan_id') }}" readonly
+                                placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="nopol">Kode SPK</label>
-                            <input type="text" class="form-control" id="kode_spk" readonly placeholder="" name="kode_spk"
-                                value="{{ old('kode_spk') }}">
+                            <label for="nopol">Kode Penjualan</label>
+                            <input type="text" class="form-control  @error('kode_penjualan') is-invalid @enderror"
+                                name="kode_penjualan" id="kode_penjualan" readonly placeholder=""
+                                value="{{ old('kode_penjualan') }}">
                         </div>
                         <div class="form-group">
-                            <label for="nopol">Nama Pelanggan</label>
-                            <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder="" name="nama_pelanggan"
-                                value="{{ old('nama_pelanggan') }}">
+                            <label>Nama Pelanggan</label>
+                            <input class="form-control @error('nama_pelanggan') is-invalid @enderror" id="nama_pelanggan"
+                                name="nama_pelanggan" type="text" placeholder="" value="{{ old('nama_pelanggan') }}"
+                                readonly />
                         </div>
                         <div class="form-group">
                             <label for="nama">Merek Kendaraan</label>
-                            <input type="text" class="form-control" id="merek" readonly placeholder="" name="merek"
-                                value="{{ old('merek') }}">
+                            <input type="text" class="form-control @error('merek') is-invalid @enderror" id="merek"
+                                name="merek" readonly placeholder="" value="{{ old('merek') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Type Kendaraan</label>
-                            <input type="text" class="form-control" id="tipe" readonly placeholder="" name="tipe"
-                                value="{{ old('tipe') }}">
+                            <input type="text" class="form-control @error('tipe') is-invalid @enderror" id="tipe"
+                                name="tipe" readonly placeholder="" value="{{ old('tipe') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Kode Karoseri</label>
-                            <input type="text" class="form-control" id="kode_type"readonly placeholder="" name="kode_type" value="{{ old('kode_type') }}">
+                            <input type="text" class="form-control @error('kode_type') is-invalid @enderror"
+                                name="kode_type" id="kode_type"readonly placeholder="" value="{{ old('kode_type') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Bentuk Karoseri</label>
-                            <input type="text" class="form-control" id="nama_karoseri" name="nama_karoseri" readonly placeholder=""
+                            <input type="text" class="form-control @error('nama_karoseri') is-invalid @enderror"
+                                name="nama_karoseri" id="nama_karoseri" readonly placeholder=""
                                 value="{{ old('nama_karoseri') }}">
                         </div>
                         <div class="form-group">
-                            <label for="nama">Harga Pemesanan</label>
-                            <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                placeholder="" name="harga_awal" value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
-
+                            <label for="nama">Harga</label>
+                            <input type="text" class="form-control @error('harga') is-invalid @enderror" readonly
+                                id="harga" name="harga" placeholder="" placeholder=""
+                                value="{{ old('harga') }}">
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="nama">DP</label>
-                            <input type="text" class="form-control" id="harga" name="harga" placeholder=""
-                                value="{{ number_format(old('harga'), 0, ',', '.') }}" oninput="formatRupiahform(this)"
-                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+
+                        <div class="form-group">
+                            <label for="gambar">Foto bukti </label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="gambar_pajak" name="gambar_pajak"
+                                    accept="image/*">
+                                <label class="custom-file-label" for="gambar_pajak">Masukkan Foto Bukti</label>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer text-right mt-3">
@@ -126,7 +142,7 @@
             <div class="modal-dialog modal-xl"> <!-- Changed modal-lg to modal-xl -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Data SPK</h4>
+                        <h4 class="modal-title">Data Penjualan</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -137,33 +153,32 @@
                                 <thead class="bg-200 text-900">
                                     <tr>
                                         <th class="text-center">No</th>
-                                        <th>Kode Spk</th>
+                                        <th>Kode Penjualan</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Merek</th>
-                                        <th>Type</th>
-                                        <th>Kode Karoseri</th>
                                         <th>Bentuk Karoseri</th>
+                                        <th>Harga</th>
                                         <th>Opsi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($spks as $spk)
+                                    @foreach ($penjualans as $penjualan)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td>{{ $spk->kode_perintah }}</td>
-                                            <td>{{ $spk->pelanggan->nama_pelanggan }}</td>
-                                            <td>{{ $spk->spk->detail_kendaraan->first()->merek->nama_merek }}</td>
-                                            <td>{{ $spk->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
-                                            <td>{{ $spk->typekaroseri->kode_type }}</td>
-                                            <td>{{ $spk->typekaroseri->nama_karoseri }}</td>
+                                            <td>{{ $penjualan->kode_penjualan }}</td>
+                                            <td>{{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}</td>
+                                            <td>{{ $penjualan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
+                                            </td>
+                                            <td class="text-right">
+                                                {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}
+                                            </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData('{{ $spk->id }}', '{{ $spk->kode_perintah }}', '{{ $spk->spk->pelanggan->nama_pelanggan }}',
-                                                    '{{ $spk->spk->detail_kendaraan->first()->merek->nama_merek }}',
-                                                    '{{ $spk->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
-                                                    '{{ $spk->spk->typekaroseri->kode_type }}',
-                                                    '{{ $spk->spk->typekaroseri->nama_karoseri }}',
-                                                    '{{ $spk->spk->harga }}')">
+                                                    onclick="getSelectedData('{{ $penjualan->id }}', '{{ $penjualan->kode_penjualan }}', '{{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}',
+                                                    '{{ $penjualan->perintah_kerja->spk->detail_kendaraan->first()->merek->nama_merek }}',
+                                                    '{{ $penjualan->perintah_kerja->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}',
+                                                    '{{ $penjualan->perintah_kerja->spk->typekaroseri->kode_type }}',
+                                                    '{{ $penjualan->perintah_kerja->spk->typekaroseri->nama_karoseri }}',
+                                                    '{{ $penjualan->perintah_kerja->spk->harga }}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
@@ -179,14 +194,14 @@
     </section>
 
     <script>
-        function showSpk(selectedCategory) {
+        function showPenjualan(selectedCategory) {
             $('#tableSpk').modal('show');
         }
 
-        function getSelectedData(Spk_id, KodeSPK, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga) {
+        function getSelectedData(Spk_id, kodePenjualan, NamaPelanggan, Merek, Type, KodeKaroseri, BentukKaroseri, Harga) {
             // Set the values in the form fields
-            document.getElementById('perintah_kerja_id').value = Spk_id;
-            document.getElementById('kode_spk').value = KodeSPK;
+            document.getElementById('penjualan_id').value = Spk_id;
+            document.getElementById('kode_penjualan').value = kodePenjualan;
             document.getElementById('nama_pelanggan').value = NamaPelanggan;
             document.getElementById('merek').value = Merek;
             document.getElementById('tipe').value = Type;
@@ -194,7 +209,7 @@
             document.getElementById('nama_karoseri').value = BentukKaroseri;
 
             var formattedNominal = parseFloat(Harga).toLocaleString('id-ID');
-            document.getElementById('harga_awal').value = formattedNominal;
+            document.getElementById('harga').value = formattedNominal;
             // Close the modal (if needed)
             $('#tableSpk').modal('hide');
         }
@@ -224,6 +239,29 @@
 
                 // Lakukan pengiriman formulir
                 $('form').submit();
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Detect the change event on the 'status' dropdown
+            $('#kategori').on('change', function() {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Check the selected value and redirect accordingly
+                switch (selectedValue) {
+                    case 'pembelian':
+                        window.location.href = "{{ url('admin/faktur_pajakpembelian/create') }}";
+                        break;
+                    case 'penjualan':
+                        window.location.href = "{{ url('admin/faktur_pajak/create') }}";
+                        break;
+                    default:
+                        // Handle other cases or do nothing
+                        break;
+                }
             });
         });
     </script>

@@ -90,6 +90,16 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label" for="kategori">Kategori</label>
+                            <select class="form-control" id="kategori" name="kategori">
+                                <option value="">- Pilih -</option>
+                                <option value="PPN" {{ old('kategori') == 'PPN' ? 'selected' : null }}>
+                                    PPN</option>
+                                <option value="NON PPN" {{ old('kategori') == 'NON PPN' ? 'selected' : null }}>
+                                    NON PPN</option>
+                            </select>
+                        </div>
                         <div class="form-group" style="flex: 8;">
                             <label for="supplier_id">Nama Supplier</label>
                             <select class="select2bs4 select2-hidden-accessible" name="supplier_id"
@@ -141,24 +151,26 @@
                                     <td style="width: 70px" class="text-center" id="urutan">1</td>
                                     <td hidden>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="barang_id-0" name="barang_id[]">
+                                            <input type="text" class="form-control" id="barang_id-0"
+                                                name="barang_id[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" style="font-size:14px" class="form-control" id="kode_barang-0" readonly
-                                                name="kode_barang[]">
+                                            <input type="text" style="font-size:14px" class="form-control"
+                                                id="kode_barang-0" readonly name="kode_barang[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" style="font-size:14px" class="form-control" id="nama_barang-0" readonly
-                                                name="nama_barang[]">
+                                            <input type="text" style="font-size:14px" class="form-control"
+                                                id="nama_barang-0" readonly name="nama_barang[]">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <select class="form-control" id="satuan-0" style="font-size:14px" name="satuan[]">
+                                            <select class="form-control" id="satuan-0" style="font-size:14px"
+                                                name="satuan[]">
                                                 <option value="">- Pilih -</option>
                                                 <option value="M3" {{ old('satuan') == 'M3' ? 'selected' : null }}>
                                                     M&sup3;</option>
@@ -185,32 +197,32 @@
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control jumlah" style="font-size:14px" id="jumlah-0"
-                                                name="jumlah[]" data-row-id="0">
+                                            <input type="number" class="form-control jumlah" style="font-size:14px"
+                                                id="jumlah-0" name="jumlah[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga" style="font-size:14px" id="harga-0"
-                                                name="harga[]" data-row-id="0">
+                                            <input type="number" class="form-control harga" style="font-size:14px"
+                                                id="harga-0" name="harga[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control harga_jual" style="font-size:14px" id="harga_jual-0"
-                                                name="harga_jual[]" data-row-id="0">
+                                            <input type="number" class="form-control harga_jual" style="font-size:14px"
+                                                id="harga_jual-0" name="harga_jual[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" class="form-control diskon" style="font-size:14px" id="diskon-0"
-                                                name="diskon[]" data-row-id="0">
+                                            <input type="number" class="form-control diskon" style="font-size:14px"
+                                                id="diskon-0" name="diskon[]" data-row-id="0">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control total" style="font-size:14px" id="total-0"
-                                                name="total[]">
+                                            <input type="text" class="form-control total" style="font-size:14px"
+                                                id="total-0" name="total[]">
                                         </div>
                                     </td>
                                     <td style="width: 100px">
@@ -613,7 +625,8 @@
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + urutan + '">';
-            item_pembelian += '<td style="width: 70px" class="text-center" style="font-size:14px" id="urutan-' + urutan + '">' + urutan + '</td>';
+            item_pembelian += '<td style="width: 70px" class="text-center" style="font-size:14px" id="urutan-' + urutan +
+                '">' + urutan + '</td>';
 
             // barang_id 
             item_pembelian += '<td hidden>';
@@ -626,7 +639,8 @@
             // kode_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' +
+                urutan +
                 '" name="kode_barang[]" value="' + kode_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -634,7 +648,8 @@
             // nama_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' + urutan +
+            item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' +
+                urutan +
                 '" name="nama_barang[]" value="' + nama_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -642,7 +657,8 @@
             // satuan 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" style="font-size:14px" id="satuan-' + urutan +
+            item_pembelian += '<select style="font-size:14px" class="form-control" style="font-size:14px" id="satuan-' +
+                urutan +
                 '" name="satuan[]">';
             item_pembelian += '<option value="">- Pilih -</option>';
             item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
@@ -687,7 +703,8 @@
             // harga_jual
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="number" class="form-control harga_jual" style="font-size:14px" id="harga_jual-' + urutan +
+            item_pembelian +=
+                '<input type="number" class="form-control harga_jual" style="font-size:14px" id="harga_jual-' + urutan +
                 '" name="harga_jual[]" value="' + harga_jual + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -712,7 +729,8 @@
             item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + urutan + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
-            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger btn-sm" onclick="removeBan(' +
+            item_pembelian +=
+                '<button style="margin-left:5px" type="button" class="btn btn-danger btn-sm" onclick="removeBan(' +
                 urutan + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';

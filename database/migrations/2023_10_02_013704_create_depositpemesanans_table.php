@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_deposit')->nullable();
             $table->string('qrcode_deposit')->nullable();
-            $table->unsignedBigInteger('spk_id')->nullable();
-            $table->foreign('spk_id')->references('id')->on('spks')->onDelete('set null');
+            $table->unsignedBigInteger('perintah_kerja_id')->nullable();
+            $table->foreign('perintah_kerja_id')->references('id')->on('perintah_kerjas')->onDelete('set null');
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();
             $table->string('tanggal_awal')->nullable();

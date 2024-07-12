@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Deposit')
+@section('title', 'Inquery Faktur Pajak Penjualan')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Deposit</h1>
+                    <h1 class="m-0">Inquery Faktur Pajak Penjualan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Deposit</li>
+                        <li class="breadcrumb-item active">Inquery Faktur Pajak Penjualan</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -49,13 +49,21 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Deposit</h3>
+                    <h3 class="card-title">Data Inquery Faktur Pajak Penjualan</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <form method="GET" id="form-action">
                         <div class="row">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-2 mb-3">
+                                <select class="custom-select form-control" id="kategori" name="kategori">
+                                    <option value="">- Pilih Kategori -</option>
+                                    <option value="pembelian">PEMBELIAN</option>
+                                    <option value="penjualan"selected>PENJUALAN</option>
+                                </select>
+                                <label>Kategori</label>
+                            </div>
+                            <div class="col-md-2 mb-3">
                                 <select class="custom-select form-control" id="status" name="status">
                                     <option value="">- Semua Status -</option>
                                     <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
@@ -66,17 +74,17 @@
                                 </select>
                                 <label for="status">(Pilih Status)</label>
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
                                     value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
                                 <label for="tanggal_awal">(Tanggal Awal)</label>
                             </div>
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-2 mb-3">
                                 <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
                                     value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
                                 <label for="tanggal_awal">(Tanggal Akhir)</label>
                             </div>
-                            <div class="col-md-2 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
                                     <i class="fas fa-search"></i> Cari
                                 </button>
@@ -87,73 +95,94 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
-                                <th>Kode Deposit Pemesanan</th>
-                                <th>Kode SPK</th>
+                                <th>Kode Faktur Pajak</th>
+                                <th>Kode Penjualan</th>
                                 <th>Nama Pelanggan</th>
-                                <th>Kode Karoseri</th>
                                 <th>Tanggal</th>
-                                <th class="text-center" width="100">DP</th>
+                                <th class="text-right">Nominal</th>
+                                <th class="text-right">PPN</th>
                                 <th class="text-center" width="30">Opsi</th>
                             </tr>
                         </thead>
                         <tbody class="list">
-                            @foreach ($inquery as $deposit)
-                                <tr class="dropdown"{{ $deposit->id }}>
+                            @foreach ($inquery as $faktur_pajak)
+                                <tr class="dropdown"{{ $faktur_pajak->id }}>
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $deposit->kode_deposit }}</td>
-                                    <td>{{ $deposit->perintah_kerja->kode_perintah }}</td>
-                                    <td>{{ $deposit->perintah_kerja->pelanggan->nama_pelanggan }}</td>
-                                    <td>{{ $deposit->perintah_kerja->typekaroseri->kode_type }}</td>
-                                    <td>{{ $deposit->tanggal_awal }}</td>
-                                    {{-- <td>
-                                        @if ($deposit->pelanggan)
-                                            {{ $deposit->pelanggan->nama_pelanggan }}
+                                    <td>{{ $faktur_pajak->kode_pajak }}</td>
+                                    <td>
+                                        @if ($faktur_pajak->penjualan)
+                                            {{ $faktur_pajak->penjualan->kode_penjualan }}
                                         @else
-                                            data tidak ada
+                                            tidak ada
                                         @endif
-                                    </td> --}}
-
-                                    <td>Rp {{ number_format($deposit->harga, 0, ',', '.') }}</td>
+                                    </td>
+                                    <td>
+                                        @if ($faktur_pajak->penjualan->perintah_kerja)
+                                            {{ $faktur_pajak->penjualan->perintah_kerja->pelanggan->nama_pelanggan }}
+                                        @else
+                                            tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $faktur_pajak->tanggal_awal }}
+                                    </td>
+                                    <td>
+                                        @if ($faktur_pajak->penjualan->perintah_kerja->spk)
+                                            Rp
+                                            {{ number_format($faktur_pajak->penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}
+                                        @else
+                                        @endif
+                                    </td>
+                                    <?php
+                                    // Calculate the increase and round it
+                                    $total_price = $faktur_pajak->penjualan->perintah_kerja->spk->harga;
+                                    $tax_rate = 0.11;
+                                    $original_price = $total_price / (1 + $tax_rate);
+                                    ?>
+                                    <td>
+                                        Rp
+                                        {{ number_format($original_price, 0, ',', '.') }}
+                                    </td>
 
                                     <td class="text-center">
-                                        @if ($deposit->status == 'posting')
+                                        @if ($faktur_pajak->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
-                                        @if ($deposit->status == 'selesai')
+                                        @if ($faktur_pajak->status == 'selesai')
                                             <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
                                                 width="40" alt="Roda Mobil">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($deposit->status == 'unpost')
+                                            @if ($faktur_pajak->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $deposit->id }}">Posting</a>
+                                                    data-memo-id="{{ $faktur_pajak->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapusdeposit', ['id' => $deposit->id]) }}">
+                                                    action="{{ route('hapus_pajak', ['id' => $faktur_pajak->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($deposit->status == 'posting')
+                                            @if ($faktur_pajak->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $deposit->id }}">Unpost</a>
+                                                    data-memo-id="{{ $faktur_pajak->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
                                             @endif
-                                            @if ($deposit->status == 'selesai')
+                                            @if ($faktur_pajak->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_deposit/' . $deposit->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
                                             @endif
                                         </div>
                                     </td>
@@ -202,7 +231,7 @@
         var form = document.getElementById('form-action');
 
         function cari() {
-            form.action = "{{ url('admin/inquery_deposit') }}";
+            form.action = "{{ url('admin/inquery_fakturpajak') }}";
             form.submit();
         }
     </script>
@@ -218,7 +247,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan unpost
                 $.ajax({
-                    url: "{{ url('admin/inquery_deposit/unpostdeposit/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_fakturpajak/unpostfakturpajak/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -258,7 +287,7 @@
 
                 // Kirim permintaan AJAX untuk melakukan posting
                 $.ajax({
-                    url: "{{ url('admin/inquery_deposit/postingdeposit/') }}/" + memoId,
+                    url: "{{ url('admin/inquery_fakturpajak/postingfakturpajak/') }}/" + memoId,
                     type: 'GET',
                     data: {
                         id: memoId
@@ -340,6 +369,29 @@
                 $('.dropdown-menu').hide();
                 $('tr.dropdown').removeClass('selected').css('background-color',
                     ''); // Menghapus warna latar belakang dari semua baris saat menutup dropdown
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Detect the change event on the 'status' dropdown
+            $('#kategori').on('change', function() {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Check the selected value and redirect accordingly
+                switch (selectedValue) {
+                    case 'pembelian':
+                        window.location.href = "{{ url('admin/inquery_fakturpajakpembelian') }}";
+                        break;
+                    case 'penjualan':
+                        window.location.href = "{{ url('admin/inquery_fakturpajak') }}";
+                        break;
+                    default:
+                        // Handle other cases or do nothing
+                        break;
+                }
             });
         });
     </script>

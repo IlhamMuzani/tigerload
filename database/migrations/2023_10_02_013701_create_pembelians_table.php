@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pembelians', function (Blueprint $table) {
             $table->id();
+            $table->string('kategori')->nullable();
             $table->string('kode_pembelian')->nullable();
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
