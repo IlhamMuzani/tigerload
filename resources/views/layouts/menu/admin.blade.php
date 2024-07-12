@@ -742,6 +742,7 @@
     request()->is('admin/laporan_perintahkerja*') ||
     request()->is('admin/laporan_perhitunganbahan*') ||
     request()->is('admin/laporan_dokumenproject*') ||
+    request()->is('admin/laporan_fakturpajak*') ||
     request()->is('admin/laporan_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -761,6 +762,7 @@
         request()->is('admin/laporan_perintahkerja*') ||
         request()->is('admin/laporan_perhitunganbahan*') ||
         request()->is('admin/laporan_dokumenproject*') ||
+        request()->is('admin/laporan_fakturpajak*') ||
         request()->is('admin/laporan_penjualan*')
             ? 'active'
             : '' }}">
@@ -909,6 +911,15 @@
                     <p style="font-size: 14px;">Laporan Pelunasan -<br>
                         <span style="margin-left: 32px">Faktur Pembelian</span>
                     </p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['laporan penjualan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/laporan_fakturpajak') }}"
+                    class="nav-link {{ request()->is('admin/laporan_fakturpajak*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Laporan Faktur Pajak</p>
                 </a>
             </li>
         @endif

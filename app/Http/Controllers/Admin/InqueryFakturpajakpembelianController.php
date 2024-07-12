@@ -9,6 +9,7 @@ use App\Models\Faktur_pajak;
 use App\Models\Pembelian;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class InqueryFakturpajakpembelianController extends Controller
 {
@@ -128,5 +129,18 @@ class InqueryFakturpajakpembelianController extends Controller
         $tagihan = Faktur_pajak::where('id', $id)->first();
         $tagihan->delete();
         return back()->with('success', 'Berhasil menghapus Surat penawaran');
+    }
+
+    public function cetak_buktifilterpembelian(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('ids'));
+
+        // Mengambil faktur berdasarkan id yang dipilih
+        $cetakpdfs = Faktur_pajak::whereIn('id', $selectedIds)->orderBy('id', 'DESC')->get();
+
+        $pdf = PDF::loadView('admin.inquery_fakturpajakpembelian.cetak_pdffilter', compact('cetakpdfs'));
+        $pdf->setPaper('a4');
+
+        return $pdf->stream('Bukti_Potong_pajak.pdf');
     }
 }

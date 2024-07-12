@@ -169,6 +169,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('postingbarangpo/{id}', [\App\Http\Controllers\Admin\InqueryPopembelianController::class, 'postingbarangpo'])->name('postingbarangpo');
     Route::get('popembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PopembelianController::class, 'cetakpdf']);
 
+    Route::get('cetak_buktifilterpenjualan', [\App\Http\Controllers\Admin\InqueryFakturpajakController::class, 'cetak_buktifilterpenjualan']);
+    Route::get('cetak_buktifilterpembelian', [\App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class, 'cetak_buktifilterpembelian']);
+
     Route::get('unpostpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'unpostpelunasan'])->name('unpostpelunasan');
     Route::get('postingpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'postingpelunasan'])->name('postingpelunasan');
 
@@ -265,6 +268,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     
     Route::resource('laporan_perintahkerja', \App\Http\Controllers\Admin\LaporanperintahkerjaController::class);
     Route::get('print_laporanperintahkerja', [\App\Http\Controllers\Admin\LaporanperintahkerjaController::class, 'print_laporanperintahkerja']);
+
+    Route::resource('laporan_fakturpajak', \App\Http\Controllers\Admin\LaporanfakturpajakController::class);
+    Route::get('print_laporanfakturpajak', [\App\Http\Controllers\Admin\LaporanfakturpajakController::class, 'print_laporanperintahkerja']);
     
     Route::resource('laporan_dokumenproject', \App\Http\Controllers\Admin\LaporanDokumenprojectController::class);
     Route::get('print_laporandokumenproject', [\App\Http\Controllers\Admin\LaporanDokumenprojectController::class, 'print_laporandokumenproject']);

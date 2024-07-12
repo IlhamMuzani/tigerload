@@ -85,8 +85,13 @@
                                 <label for="tanggal_awal">(Tanggal Akhir)</label>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <button type="button" class="btn btn-outline-primary mr-2" onclick="cari()">
-                                    <i class="fas fa-search"></i> Cari
+                                <button type="button" class="btn btn-primary btn-block" onclick="cari()">
+                                    <i class="fas fa-print"></i> Cari Bukti Foto
+                                </button>
+                                <input type="hidden" name="ids" id="selectedIds" value="">
+                                <button type="button" class="btn btn-outline-primary btn-block mt-1" id="checkfilter"
+                                    onclick="printSelectedDatafoto()" target="_blank">
+                                    <i class="fas fa-print"></i> Cetak Bukti Foto
                                 </button>
                             </div>
                         </div>
@@ -94,6 +99,7 @@
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
+                                <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
                                 <th>Kode Faktur Pajak</th>
                                 <th>Kode Pembelian</th>
@@ -107,6 +113,9 @@
                         <tbody class="list">
                             @foreach ($inquery as $faktur_pajakpembelian)
                                 <tr class="dropdown"{{ $faktur_pajakpembelian->id }}>
+                                    <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
+                                            value="{{ $faktur_pajakpembelian->id }}">
+                                    </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $faktur_pajakpembelian->kode_pajak }}</td>
                                     <td>
@@ -396,5 +405,30 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        $(function(e) {
+            $("#select_all_ids").click(function() {
+                $('.checkbox_ids').prop('checked', $(this).prop('checked'))
+            })
+        });
+
+        function printSelectedDatafoto() {
+            var selectedIds = document.querySelectorAll(".checkbox_ids:checked");
+            if (selectedIds.length === 0) {
+                alert("Harap centang setidaknya satu item sebelum mencetak.");
+            } else {
+                var selectedCheckboxes = document.querySelectorAll('.checkbox_ids:checked');
+                var selectedIds = [];
+                selectedCheckboxes.forEach(function(checkbox) {
+                    selectedIds.push(checkbox.value);
+                });
+                document.getElementById('selectedIds').value = selectedIds.join(',');
+                var selectedIdsString = selectedIds.join(',');
+                window.location.href = "{{ url('admin/cetak_buktifilterpembelian') }}?ids=" + selectedIdsString;
+                // var url = "{{ url('admin/ban/cetak_pdffilter') }}?ids=" + selectedIdsString;
+            }
+        }
     </script>
 @endsection
