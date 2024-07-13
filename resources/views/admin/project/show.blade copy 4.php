@@ -85,16 +85,16 @@
                             <div class="row">
                                 <div class="col-md-7 ">
                                     <div class="detail-box">
-                                        {{-- <h1>
+                                        <h1>
                                             KAROSERI <br>
                                             TIGER LOAD ENGINEERING
-                                        </h1> --}}
-                                        {{-- <p>
+                                        </h1>
+                                        <p>
                                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum magnam,
                                             voluptates distinctio, officia architecto tenetur debitis hic aspernatur
                                             libero commodi atque fugit adipisci, blanditiis quidem dolorum odit
                                             voluptas? Voluptate, eveniet?
-                                        </p> --}}
+                                        </p>
 
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->nama_pelanggan }}</td>
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td width="50%" valign="top">
                                 Telp
                             </td>
@@ -166,7 +166,7 @@
                                 Alamat
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->alamat }}</td>
-                        </tr> --}}
+                        </tr>
                     </table>
 
                 </div>
@@ -238,7 +238,7 @@
                             </td>
 
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td width="50%" valign="top">
                                 Nomor Mesin
                             </td>
@@ -249,22 +249,10 @@
                                     -
                                 @endif
                             </td>
-                        </tr> --}}
-                        <tr>
-                            <td width="50%" valign="top">
-                                Nomor Serut
-                            </td>
-                            <td width="50%" valign="top">
-                                @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
-                                    {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_serut }}
-                                @else
-                                    -
-                                @endif
-                            </td>
                         </tr>
                         <tr>
                             <td width="50%" valign="top">
-                                Nomor SKRP
+                                Nomor Serut
                             </td>
                             <td width="50%" valign="top">
                                 @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())

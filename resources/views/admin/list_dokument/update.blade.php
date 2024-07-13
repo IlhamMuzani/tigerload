@@ -43,7 +43,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ url('admin/dokumen_project', $inquery->id) }}" method="POST" enctype="multipart/form-data"
+            <form action="{{ url('admin/list_dokument', $inquery->id) }}" method="POST" enctype="multipart/form-data"
                 autocomplete="off">
                 @method('put')
                 @csrf
@@ -232,6 +232,30 @@
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
                             <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan', $inquery->keterangan) }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_seru">No Serut</label>
+                            <input type="text" class="form-control" id="no_seru" name="no_seru" placeholder=""
+                                value="{{ old('no_seru', $inquery->no_serut) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_rangka">No Rangka</label>
+                            <input type="text" class="form-control" id="no_rangka" name="no_rangka" placeholder=""
+                                value="{{ old('no_rangka', $inquery->no_rangka) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_mesin">No Mesin</label>
+                            <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
+                                value="{{ old('no_mesin', $inquery->no_rangka) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tahun">Tahun</label>
+                            <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""
+                                value="{{ old('tahun', $inquery->tahun) }}">
                         </div>
                     </div>
                 </div>

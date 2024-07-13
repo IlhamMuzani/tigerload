@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cetak Qrcode Project')
+@section('title', 'Inquery Cetak Qrcode Project')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Cetak Qrcode Project</h1>
+                    <h1 class="m-0">Inquery Cetak Qrcode Project</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Cetak Qrcode Project</li>
+                        <li class="breadcrumb-item active">Inquery Cetak Qrcode Project</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -51,21 +51,46 @@
                 <div class="card-header">
                     <h3 class="card-title">Data Cetak Qrcode Project</h3>
                     <div class="float-right">
-                        <a href="{{ url('admin/project/create') }}" class="btn btn-primary btn-sm">
-                            <i class="fas fa-plus"></i> Tambah
-                        </a>
                     </div>
                 </div>
                 <!-- /.card-header -->
 
                 <div class="card-body">
-                    <div class="col-md-3 mb-3">
-                        <input type="hidden" name="ids" id="selectedIds" value="">
-                        <button type="button" class="btn btn-outline-primary btn-block mt-1" id="checkfilter"
-                            onclick="printSelectedData()" target="_blank">
-                            <i class="fas fa-print"></i> Cetak Qrcode
-                        </button>
-                    </div>
+                    <form method="GET" id="form-action">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <select class="custom-select form-control" id="status" name="status">
+                                    <option value="">- Semua Status -</option>
+                                    <option value="posting" {{ Request::get('status') == 'posting' ? 'selected' : '' }}>
+                                        Posting
+                                    </option>
+                                    <option value="unpost" {{ Request::get('status') == 'unpost' ? 'selected' : '' }}>
+                                        Unpost</option>
+                                </select>
+                                <label for="status">(Pilih Status)</label>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <input class="form-control" id="tanggal_awal" name="tanggal_awal" type="date"
+                                    value="{{ Request::get('tanggal_awal') }}" max="{{ date('Y-m-d') }}" />
+                                <label for="tanggal_awal">(Tanggal Awal)</label>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <input class="form-control" id="tanggal_akhir" name="tanggal_akhir" type="date"
+                                    value="{{ Request::get('tanggal_akhir') }}" max="{{ date('Y-m-d') }}" />
+                                <label for="tanggal_awal">(Tanggal Akhir)</label>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <button type="button" class="btn btn-primary btn-block" onclick="cari()">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                                <input type="hidden" name="ids" id="selectedIds" value="">
+                                <button type="button" class="btn btn-outline-primary btn-block mt-1" id="checkfilter"
+                                    onclick="printSelectedData()" target="_blank">
+                                    <i class="fas fa-print"></i> Cetak Qrcode
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
@@ -77,36 +102,35 @@
                                 <th>Tahun Pembuatan</th>
                                 <th>No Serut</th>
                                 <th>No Rangka</th>
-                                <th>QR Code</th>
                                 <th>Tanggal</th>
                                 <th class="text-center" width="30">Opsi</th>
                             </tr>
                         </thead>
                         <tbody class="list">
-                            @foreach ($inquery as $project)
-                                <tr class="dropdown"{{ $project->id }}>
+                            @foreach ($inquery as $inquery_project)
+                                <tr class="dropdown"{{ $inquery_project->id }}>
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
-                                            value="{{ $project->id }}">
+                                            value="{{ $inquery_project->id }}">
                                     <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{ $project->kode_project }}</td>
+                                    <td>{{ $inquery_project->kode_project }}</td>
                                     <td>
-                                        @if ($project->perintah_kerja)
-                                            {{ $project->perintah_kerja->kode_perintah }}
+                                        @if ($inquery_project->perintah_kerja)
+                                            {{ $inquery_project->perintah_kerja->kode_perintah }}
                                         @else
                                             tidak ada
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($project->perintah_kerja)
-                                            {{ $project->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                                        @if ($inquery_project->perintah_kerja)
+                                            {{ $inquery_project->perintah_kerja->spk->typekaroseri->nama_karoseri }}
                                         @else
                                             tidak ada
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($project->perintah_kerja)
-                                            @if ($project->perintah_kerja->dokumen_project->first())
-                                                {{ $project->perintah_kerja->dokumen_project->first()->tahun }}
+                                        @if ($inquery_project->perintah_kerja)
+                                            @if ($inquery_project->perintah_kerja->dokumen_project->first())
+                                                {{ $inquery_project->perintah_kerja->dokumen_project->first()->tahun }}
                                             @else
                                                 tidak ada
                                             @endif
@@ -115,9 +139,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($project->perintah_kerja)
-                                            @if ($project->perintah_kerja->dokumen_project->first())
-                                                {{ $project->perintah_kerja->dokumen_project->first()->no_serut }}
+                                        @if ($inquery_project->perintah_kerja)
+                                            @if ($inquery_project->perintah_kerja->dokumen_project->first())
+                                                {{ $inquery_project->perintah_kerja->dokumen_project->first()->no_serut }}
                                             @else
                                                 tidak ada
                                             @endif
@@ -126,9 +150,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if ($project->perintah_kerja)
-                                            @if ($project->perintah_kerja->dokumen_project->first())
-                                                {{ $project->perintah_kerja->dokumen_project->first()->no_rangka }}
+                                        @if ($inquery_project->perintah_kerja)
+                                            @if ($inquery_project->perintah_kerja->dokumen_project->first())
+                                                {{ $inquery_project->perintah_kerja->dokumen_project->first()->no_rangka }}
                                             @else
                                                 tidak ada
                                             @endif
@@ -136,103 +160,64 @@
                                             tidak ada
                                         @endif
                                     </td>
-                                    <td data-toggle="modal" data-target="#modal-qrcode-{{ $project->id }}"
-                                        style="text-align: center;">
-                                        <div style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$project->qrcode_project", 'QRCODE', 2, 2) !!}
-                                        </div>
-                                    </td>
                                     <td>
-                                        {{ $project->tanggal_awal }}
+                                        {{ $inquery_project->tanggal_awal }}
                                     </td>
                                     <td class="text-center">
-                                        @if ($project->status == 'posting')
+                                        @if ($inquery_project->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
-                                        @if ($project->status == 'selesai')
+                                        @if ($inquery_project->status == 'selesai')
                                             <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
                                                 width="40" alt="Roda Mobil">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if ($project->status == 'unpost')
+                                            @if ($inquery_project->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"
-                                                    data-memo-id="{{ $project->id }}">Posting</a>
+                                                    data-memo-id="{{ $inquery_project->id }}">Posting</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_project/' . $project->id . '/edit') }}">Update</a>
+                                                    href="{{ url('admin/inquery_project/' . $inquery_project->id . '/edit') }}">Update</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/' . $project->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_project/' . $inquery_project->id) }}">Show</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/cetakqrcode/' . $project->id) }}">Cetak
+                                                    href="{{ url('admin/project/cetakqrcode/' . $inquery_project->id) }}">Cetak
                                                     Qrcode</a>
 
                                                 <form style="margin-top:5px" method="GET"
-                                                    action="{{ route('hapusproject', ['id' => $project->id]) }}">
+                                                    action="{{ route('hapusproject', ['id' => $inquery_project->id]) }}">
                                                     <button type="submit"
                                                         class="dropdown-item btn btn-outline-danger btn-block mt-2">
                                                         </i> Delete
                                                     </button>
                                                 </form>
                                             @endif
-                                            @if ($project->status == 'posting')
+                                            @if ($inquery_project->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
-                                                    data-memo-id="{{ $project->id }}">Unpost</a>
+                                                    data-memo-id="{{ $inquery_project->id }}">Unpost</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/' . $project->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_project/' . $inquery_project->id) }}">Show</a>
 
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/cetakqrcode/' . $project->id) }}">Cetak
+                                                    href="{{ url('admin/project/cetakqrcode/' . $inquery_project->id) }}">Cetak
                                                     Qrcode</a>
                                             @endif
-                                            @if ($project->status == 'selesai')
+                                            @if ($inquery_project->status == 'selesai')
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/' . $project->id) }}">Show</a>
+                                                    href="{{ url('admin/inquery_project/' . $inquery_project->id) }}">Show</a>
+
                                                 <a class="dropdown-item"
-                                                    href="{{ url('admin/project/cetakqrcode/' . $project->id) }}">Cetak
+                                                    href="{{ url('admin/project/cetakqrcode/' . $inquery_project->id) }}">Cetak
                                                     Qrcode</a>
                                             @endif
                                         </div>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modal-qrcode-{{ $project->id }}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Gambar QR Code</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div style="text-align: center;">
-                                                    <p style="font-size:20px; font-weight: bold;">
-                                                        {{ $project->kode_project }}
-                                                    </p>
-                                                    <div style="display: inline-block;">
-                                                        {!! DNS2D::getBarcodeHTML("$project->qrcode_project", 'QRCODE', 15, 15) !!}
-                                                    </div>
-                                                    <p style="font-size:20px; font-weight: bold;">
-                                                        {{ $project->nama_lengkap }}
-                                                    </p>
-                                                </div>
-                                                <div class="modal-footer justify-content-between">
-                                                    <button type="button" class="btn btn-default"
-                                                        data-dismiss="modal">Batal</button>
-                                                    <a href="{{ url('admin/project/cetak-pdf/' . $project->id) }}"
-                                                        class="btn btn-primary btn-sm">
-                                                        <i class=""></i> Cetak
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             @endforeach
                         </tbody>
                     </table>

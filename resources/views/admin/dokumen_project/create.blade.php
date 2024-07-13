@@ -221,7 +221,11 @@
                             <input type="text" class="form-control" id="no_rangka" name="no_rangka" placeholder=""
                                 value="{{ old('no_rangka') }}">
                         </div>
-
+                        <div class="form-group">
+                            <label for="no_rangka">No Mesin</label>
+                            <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
+                                value="{{ old('no_mesin') }}">
+                        </div>
                         <div class="form-group">
                             <label for="tahun">Tahun Pembuatan</label>
                             <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""

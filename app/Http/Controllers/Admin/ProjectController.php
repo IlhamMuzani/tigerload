@@ -92,6 +92,30 @@ class ProjectController extends Controller
         return $pdf->stream('Faktur_Pembelian.pdf');
     }
 
+
+    public function cetakqrcode($id)
+    {
+        $projects = Project::find($id);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadView('admin.project.cetak_qrcode', compact('projects'));
+
+        // Mengatur jenis kertas dan orientasi menjadi lanscape
+        $pdf->setPaper([0, 0, 200, 90], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+
+        return $pdf->stream('QrCodeKendaraan.pdf');
+    }
+
+    // public function cetakqrcode($id)
+    // {
+    //     $projects = Project::find($id);
+    //     $pdf = app('dompdf.wrapper');
+    //     $pdf->loadView('admin.project.cetak_qrcode', compact('projects'));
+
+    //     // Mengatur jenis kertas dan orientasi menjadi lanscape
+    //     $pdf->setPaper([0, 0, 200, 100], 'landscape'); // 612x396 piksel setara dengan 8.5x5.5 inci
+
+    //     return $pdf->stream('QrCodeKendaraan.pdf');
+    // }
     public function kode()
     {
         $project = Project::all();
@@ -116,5 +140,21 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect('admin/deposit_pemesanan')->with('success', 'Berhasil menghapus DP');
+    }
+
+    public function cetak_projectfilter(Request $request)
+    {
+        $selectedIds = explode(',', $request->input('ids'));
+
+        // Mengambil faktur berdasarkan id yang dipilih
+        $cetakpdfs = Project::whereIn('id', $selectedIds)->orderBy('id', 'DESC')->get();
+
+        $pdf = app('dompdf.wrapper');
+
+        $pdf->setPaper([0, 0, 200, 90], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+
+        $pdf->loadView('admin.project.cetak_qrcodefilter', compact('cetakpdfs'));
+
+        return $pdf->stream('SelectedFaktur.pdf');
     }
 }

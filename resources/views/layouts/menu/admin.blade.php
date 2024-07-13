@@ -235,6 +235,7 @@
     request()->is('admin/dokumen_project*') ||
     request()->is('admin/invoice_suratpesanan*') ||
     request()->is('admin/faktur_pajak*') ||
+    request()->is('admin/project*') ||
     request()->is('admin/pelunasan_pembelian*')
         ? 'menu-open'
         : '' }}">
@@ -270,6 +271,7 @@
         request()->is('admin/dokumen_project*') ||
         request()->is('admin/invoice_suratpesanan*') ||
         request()->is('admin/faktur_pajak*') ||
+        request()->is('admin/project*') ||
         request()->is('admin/pelunasan_pembelian*')
             ? 'active'
             : '' }}">
@@ -488,6 +490,7 @@
     request()->is('admin/inquery_dokumenproject*') ||
     request()->is('admin/inquery_invoicesuratpesanan*') ||
     request()->is('admin/inquery_fakturpajak*') ||
+    request()->is('admin/inquery_project*') ||
     request()->is('admin/inquery_penjualan*')
         ? 'menu-open'
         : '' }}">
@@ -512,6 +515,7 @@
         request()->is('admin/inquery_dokumenproject*') ||
         request()->is('admin/inquery_invoicesuratpesanan*') ||
         request()->is('admin/inquery_fakturpajak*') ||
+        request()->is('admin/inquery_project*') ||
         request()->is('admin/inquery_penjualan*')
             ? 'active'
             : '' }}">
@@ -718,6 +722,17 @@
                     class="nav-link {{ request()->is('admin/inquery_fakturpajak*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Inquery Faktur Pajak
+                    </p>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->check() && auth()->user()->menu['inquery pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/inquery_project') }}"
+                    class="nav-link {{ request()->is('admin/inquery_project*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Inquery Cetak Qrcode
                     </p>
                 </a>
             </li>

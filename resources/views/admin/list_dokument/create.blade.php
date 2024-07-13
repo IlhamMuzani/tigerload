@@ -43,8 +43,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ url('admin/list_dokument') }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/list_dokument') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -208,6 +207,28 @@
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
                             <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan') }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_serut">No Serut</label>
+                            <input type="text" class="form-control" id="no_serut" name="no_serut" placeholder=""
+                                value="{{ old('no_serut') }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_rangka">No Rangka</label>
+                            <input type="text" class="form-control" id="no_rangka" name="no_rangka" placeholder=""
+                                value="{{ old('no_rangka') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="no_rangka">No Mesin</label>
+                            <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
+                                value="{{ old('no_mesin') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tahun">Tahun Pembuatan</label>
+                            <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""
+                                value="{{ old('tahun') }}">
                         </div>
                     </div>
                 </div>

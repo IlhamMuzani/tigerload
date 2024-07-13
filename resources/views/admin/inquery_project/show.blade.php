@@ -85,10 +85,10 @@
                             <div class="row">
                                 <div class="col-md-7 ">
                                     <div class="detail-box">
-                                        {{-- <h1>
+                                        <h1>
                                             KAROSERI <br>
                                             TIGER LOAD ENGINEERING
-                                        </h1> --}}
+                                        </h1>
                                         {{-- <p>
                                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum magnam,
                                             voluptates distinctio, officia architecto tenetur debitis hic aspernatur
@@ -155,7 +155,7 @@
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->nama_pelanggan }}</td>
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td width="50%" valign="top">
                                 Telp
                             </td>
@@ -166,7 +166,7 @@
                                 Alamat
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->alamat }}</td>
-                        </tr> --}}
+                        </tr>
                     </table>
 
                 </div>
@@ -238,7 +238,7 @@
                             </td>
 
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td width="50%" valign="top">
                                 Nomor Mesin
                             </td>
@@ -249,22 +249,10 @@
                                     -
                                 @endif
                             </td>
-                        </tr> --}}
-                        <tr>
-                            <td width="50%" valign="top">
-                                Nomor Serut
-                            </td>
-                            <td width="50%" valign="top">
-                                @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
-                                    {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_serut }}
-                                @else
-                                    -
-                                @endif
-                            </td>
                         </tr>
                         <tr>
                             <td width="50%" valign="top">
-                                Nomor SKRP
+                                Nomor Serut
                             </td>
                             <td width="50%" valign="top">
                                 @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
@@ -369,7 +357,18 @@
     <!-- end client section -->
 
     <!-- contact section -->
-
+    <section class="contact_section">
+        <div class="container-fluid">
+            <div class="px-0">
+                <div class="map_container">
+                    <iframe class="map"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.233479813905!2d109.136441!3d-6.9681249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6fbf3deee187ff%3A0x833b538351d7297c!2sJava+Line+Logistics!5e0!3m2!1sid!2sid!4v1683776095371!5m2!1sid!2sid"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
     <!-- end contact section -->
 
     <!-- info section -->

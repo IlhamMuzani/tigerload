@@ -33,10 +33,18 @@ class ListdokumentController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                // 'perintah_kerja_id' => 'required',
+                'perintah_kerja_id' => 'required',
+                'no_serut' => 'required',
+                'no_rangka' => 'required',
+                'no_mesin' => 'required',
+                'tahun' => 'required',
             ],
             [
-                // 'perintah_kerja_id.required' => 'Pilih nomor SPK',
+                'perintah_kerja_id.required' => 'Pilih nomor SPK',
+                'no_serut.required' => 'No Serut',
+                'no_rangka.required' => 'No Rangka',
+                'no_mesin.required' => 'No Mesin',
+                'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
 
@@ -226,10 +234,10 @@ class ListdokumentController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'perintah_kerja_id' => 'required',
+                // 'perintah_kerja_id' => 'required',
             ],
             [
-                'perintah_kerja_id.required' => 'Pilih nomor SPK',
+                // 'perintah_kerja_id.required' => 'Pilih nomor SPK',
             ]
         );
 
@@ -358,7 +366,8 @@ class ListdokumentController extends Controller
             $namaGambar15 = $dokumen_project->gambarbelakang_serongkekiri;
         }
 
-        Dokumen_project::where('id', $id)->update([
+        // Update the main transaction
+        $dokumen_project->update([
             'pelanggan_id' > $request->perintah_kerja_id,
             'typekaroseri_id' > $request->typekaroseri_id,
             'gambar_rancangbangun' => $namaGambar,
@@ -376,14 +385,17 @@ class ListdokumentController extends Controller
             // 'gambarbelakang_serongkiri	' => $namaGambar13,
             'gambarbelakang_serongkekiri	' => $namaGambar15,
             'gambarberita_acara' => $namaGambar14,
+            'no_serut' > $request->no_serut,
+            'no_rangka' > $request->no_rangka,
+            'no_mesin' > $request->no_mesin,
+            'tahun' > $request->tahun,
             'status' => 'posting',
         ]);
 
-        $pengambilans = Dokumen_project::where('id', $id)->first();
+        $inquery = Dokumen_project::where('id', $id)->first();
         $pengambil = Dokumen_project::find($id);
-        $spks = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->first();
 
-        return view('admin.list_dokument.show', compact('cetakpdfs', 'pengambilans'));
+        return view('admin.list_dokument.show', compact('inquery'));
     }
 
 

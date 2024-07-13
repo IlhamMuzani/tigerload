@@ -241,6 +241,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="no_mesin">No Mesin</label>
+                            <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
+                                value="{{ old('no_mesin', $inquery->no_rangka) }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="tahun">Tahun</label>
                             <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""
                                 value="{{ old('tahun', $inquery->tahun) }}">

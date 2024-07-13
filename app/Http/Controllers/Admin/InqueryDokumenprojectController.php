@@ -75,12 +75,14 @@ class InqueryDokumenprojectController extends Controller
                 'perintah_kerja_id' => 'required',
                 'no_serut' => 'required',
                 'no_rangka' => 'required',
+                'no_mesin' => 'required',
                 'tahun' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor SPK',
                 'no_serut.required' => 'No Serut',
                 'no_rangka.required' => 'No Rangka',
+                'no_mesin.required' => 'No Mesin',
                 'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
@@ -89,7 +91,6 @@ class InqueryDokumenprojectController extends Controller
             $error = $validator->errors()->all();
             return back()->withInput()->with('error', $error);
         }
-
 
         $dokumen_project = Dokumen_project::findOrFail($id);
 
@@ -210,7 +211,7 @@ class InqueryDokumenprojectController extends Controller
             $namaGambar15 = $dokumen_project->gambarbelakang_serongkekiri;
         }
 
-        Dokumen_project::where('id', $id)->update([
+        $dokumen_project->update([
             'pelanggan_id' > $request->perintah_kerja_id,
             'typekaroseri_id' > $request->typekaroseri_id,
             'gambar_rancangbangun' => $namaGambar,
@@ -230,6 +231,7 @@ class InqueryDokumenprojectController extends Controller
             'gambarberita_acara' => $namaGambar14,
             'no_serut' > $request->no_serut,
             'no_rangka' > $request->no_rangka,
+            'no_mesin' > $request->no_mesin,
             'tahun' > $request->tahun,
             'status' => 'posting',
         ]);

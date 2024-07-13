@@ -26,7 +26,7 @@ Route::get('surat_penawaran/{kode}', [\App\Http\Controllers\SuratPenawaranContro
 Route::get('spk/{kode}', [\App\Http\Controllers\SpkController::class, 'detail']);
 Route::get('perintah_kerja/{kode}', [\App\Http\Controllers\PerintahkerjaController::class, 'detail']);
 Route::get('penerimaan_pembayaran/{kode}', [\App\Http\Controllers\PenerimaanpembayaranController::class, 'detail']);
-Route::get('project/{kode}', [\App\Http\Controllers\ProjectController::class, 'detail']);
+Route::get('project/{kode}', [\App\Http\Controllers\ProjectController::class, 'qrcode_detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
@@ -140,7 +140,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'cetakpdf']);
     Route::get('return_pembelian/cetak-pdf/{id}', [\App\Http\Controllers\Admin\ReturnpembelianController::class, 'cetakpdf']);
     Route::get('perhitungan_bahanbaku/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PerhitunganbahanbakuController::class, 'cetakpdf']);
-
+    
+    Route::get('hapusproject/{id}', [\App\Http\Controllers\Admin\InqueryProjectController::class, 'hapusproject'])->name('hapusproject');
     Route::get('hapuspenjualan/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'hapuspenjualan'])->name('hapuspenjualan');
     Route::get('hapuspenerimaanpembayaran/{id}', [\App\Http\Controllers\Admin\InquerypenerimaanpembayaranController::class, 'hapuspenerimaanpembayaran'])->name('hapuspenerimaanpembayaran');
     Route::get('hapusperhitunganbahan/{id}', [\App\Http\Controllers\Admin\InqueryPerhitunganbahanbakuController::class, 'hapusperhitunganbahan'])->name('hapusperhitunganbahan');
@@ -151,6 +152,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('hapusperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'hapusperintahkerja'])->name('hapusperintahkerja');
     Route::get('inquery_perintahkerja/unpostperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'unpostperintahkerja']);
     Route::get('inquery_perintahkerja/postingperintahkerja/{id}', [\App\Http\Controllers\Admin\InqueryperintahkerjaController::class, 'postingperintahkerja']);
+
+    Route::get('inquery_project/unpostproject/{id}', [\App\Http\Controllers\Admin\InqueryProjectController::class, 'unpostproject']);
+    Route::get('inquery_project/postingproject/{id}', [\App\Http\Controllers\Admin\InqueryProjectController::class, 'postingproject']);
     
     Route::get('hapusdeposit/{id}', [\App\Http\Controllers\Admin\InqueryDepositController::class, 'hapusdeposit'])->name('hapusdeposit');
     Route::get('hapuspengambilan/{id}', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'hapuspengambilan'])->name('hapuspengambilan');
@@ -164,6 +168,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('inquery_pengambilan', [\App\Http\Controllers\Admin\InqueryPengambilanbahanController::class, 'index']);
     Route::get('penerimaan_pembayaran/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PenerimaanpembayaranController::class, 'cetakpdf']);
     Route::get('perintah_kerja/cetak-pdf/{id}', [\App\Http\Controllers\Admin\PerintahkerjaController::class, 'cetakpdf']);
+    Route::get('project/cetakqrcode/{id}', [\App\Http\Controllers\Admin\ProjectController::class, 'cetakqrcode']);
 
     Route::get('inquery_popembelian', [\App\Http\Controllers\Admin\InqueryPopembelianController::class, 'index']);
     Route::get('unpostbarangpo/{id}', [\App\Http\Controllers\Admin\InqueryPopembelianController::class, 'unpostbarangpo'])->name('unpostbarangpo');
@@ -172,6 +177,8 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
     Route::get('cetak_buktifilterpenjualan', [\App\Http\Controllers\Admin\InqueryFakturpajakController::class, 'cetak_buktifilterpenjualan']);
     Route::get('cetak_buktifilterpembelian', [\App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class, 'cetak_buktifilterpembelian']);
+
+    Route::get('cetak_projectfilter', [\App\Http\Controllers\Admin\ProjectController::class, 'cetak_projectfilter']);
 
     Route::get('unpostpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'unpostpelunasan'])->name('unpostpelunasan');
     Route::get('postingpelunasan/{id}', [\App\Http\Controllers\Admin\InqueryPelunasanController::class, 'postingpelunasan'])->name('postingpelunasan');
@@ -348,5 +355,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('faktur_pajakpembelian', \App\Http\Controllers\Admin\FakturpajakpembelianController::class);
     Route::resource('inquery_fakturpajakpembelian', \App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class);
     Route::resource('project', \App\Http\Controllers\Admin\ProjectController::class);
+    Route::resource('inquery_project', \App\Http\Controllers\Admin\InqueryProjectController::class);
 
 });
