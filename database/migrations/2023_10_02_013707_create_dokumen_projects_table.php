@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('keterangan')->nullable();
             $table->string('no_rangka')->nullable();
             $table->string('no_mesin')->nullable();
+            $table->string('no_serut')->nullable();
             $table->string('tahun')->nullable();
             $table->string('warna')->nullable();
             $table->unsignedBigInteger('merek_id')->nullable();

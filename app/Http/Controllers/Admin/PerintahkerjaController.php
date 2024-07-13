@@ -158,40 +158,55 @@ class PerintahkerjaController extends Controller
         return view('admin.perintah_kerja.show', compact('parts', 'inquery', 'karoseries', 'spesifikasis'));
     }
 
+    // public function kode()
+    // {
+    //     // Mengambil kode terbaru dari database dengan awalan 'MP'
+    //     $lastBarang = Perintah_kerja::where('kode_perintah', 'like', 'SPK%')->latest()->first();
+
+    //     // Mendapatkan bulan dari tanggal kode terakhir
+    //     $lastMonth = $lastBarang ? date('m', strtotime($lastBarang->created_at)) : null;
+    //     $currentMonth = date('m');
+
+    //     // Jika tidak ada kode sebelumnya atau bulan saat ini berbeda dari bulan kode terakhir
+    //     if (!$lastBarang || $currentMonth != $lastMonth) {
+    //         $num = 1; // Mulai dari 1 jika bulan berbeda
+    //     } else {
+    //         // Jika ada kode sebelumnya, ambil nomor terakhir
+    //         $lastCode = $lastBarang->kode_perintah;
+
+    //         // Pisahkan kode menjadi bagian-bagian terpisah
+    //         $parts = explode('/', $lastCode);
+    //         $lastNum = end($parts); // Ambil bagian terakhir sebagai nomor terakhir
+    //         $num = (int) $lastNum + 1; // Tambahkan 1 ke nomor terakhir
+    //     }
+
+    //     // Format nomor dengan leading zeros sebanyak 6 digit
+    //     $formattedNum = sprintf("%03s", $num);
+
+    //     // Awalan untuk kode baru
+    //     $prefix = 'SPK';
+    //     $tahun = date('y');
+    //     $tanggal = date('dm');
+
+    //     // Buat kode baru dengan menggabungkan awalan, tanggal, tahun, dan nomor yang diformat
+    //     $newCode = $prefix . "/" . $tanggal . $tahun . "/" . $formattedNum;
+
+    //     // Kembalikan kode
+    //     return $newCode;
+    // }
+
     public function kode()
     {
-        // Mengambil kode terbaru dari database dengan awalan 'MP'
-        $lastBarang = Perintah_kerja::where('kode_perintah', 'like', 'SPK%')->latest()->first();
-
-        // Mendapatkan bulan dari tanggal kode terakhir
-        $lastMonth = $lastBarang ? date('m', strtotime($lastBarang->created_at)) : null;
-        $currentMonth = date('m');
-
-        // Jika tidak ada kode sebelumnya atau bulan saat ini berbeda dari bulan kode terakhir
-        if (!$lastBarang || $currentMonth != $lastMonth) {
-            $num = 1; // Mulai dari 1 jika bulan berbeda
+        $lastBarang = Perintah_kerja::latest()->first();
+        if (!$lastBarang) {
+            $num = 1;
         } else {
-            // Jika ada kode sebelumnya, ambil nomor terakhir
             $lastCode = $lastBarang->kode_perintah;
-
-            // Pisahkan kode menjadi bagian-bagian terpisah
-            $parts = explode('/', $lastCode);
-            $lastNum = end($parts); // Ambil bagian terakhir sebagai nomor terakhir
-            $num = (int) $lastNum + 1; // Tambahkan 1 ke nomor terakhir
+            $num = (int) substr($lastCode, strlen('SPK')) + 1;
         }
-
-        // Format nomor dengan leading zeros sebanyak 6 digit
-        $formattedNum = sprintf("%03s", $num);
-
-        // Awalan untuk kode baru
+        $formattedNum = sprintf("%06s", $num);
         $prefix = 'SPK';
-        $tahun = date('y');
-        $tanggal = date('dm');
-
-        // Buat kode baru dengan menggabungkan awalan, tanggal, tahun, dan nomor yang diformat
-        $newCode = $prefix . "/" . $tanggal . $tahun . "/" . $formattedNum;
-
-        // Kembalikan kode
+        $newCode = $prefix . $formattedNum;
         return $newCode;
     }
 

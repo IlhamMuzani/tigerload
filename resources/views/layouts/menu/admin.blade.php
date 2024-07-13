@@ -437,6 +437,15 @@
                 </a>
             </li>
         @endif
+        @if (auth()->check() && auth()->user()->menu['pelunasan'])
+            <li class="nav-item">
+                <a href="{{ url('admin/project') }}"
+                    class="nav-link {{ request()->is('admin/project*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Cetak QRcode Project</p>
+                </a>
+            </li>
+        @endif
         {{-- @if (auth()->check() && auth()->user()->menu['pelunasan'])
             <li class="nav-item">
                 <a href="{{ url('admin/invoice_suratpesanan') }}"

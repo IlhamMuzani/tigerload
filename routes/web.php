@@ -26,6 +26,7 @@ Route::get('surat_penawaran/{kode}', [\App\Http\Controllers\SuratPenawaranContro
 Route::get('spk/{kode}', [\App\Http\Controllers\SpkController::class, 'detail']);
 Route::get('perintah_kerja/{kode}', [\App\Http\Controllers\PerintahkerjaController::class, 'detail']);
 Route::get('penerimaan_pembayaran/{kode}', [\App\Http\Controllers\PenerimaanpembayaranController::class, 'detail']);
+Route::get('project/{kode}', [\App\Http\Controllers\ProjectController::class, 'detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
@@ -346,5 +347,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('inquery_fakturpajak', \App\Http\Controllers\Admin\InqueryFakturpajakController::class);
     Route::resource('faktur_pajakpembelian', \App\Http\Controllers\Admin\FakturpajakpembelianController::class);
     Route::resource('inquery_fakturpajakpembelian', \App\Http\Controllers\Admin\InqueryFakturpajakpembelianController::class);
+    Route::resource('project', \App\Http\Controllers\Admin\ProjectController::class);
 
 });

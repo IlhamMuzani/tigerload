@@ -79,6 +79,11 @@ class Perintah_kerja extends Model
         return $this->hasMany(Perhitunganbahanbaku::class);
     }
 
+    public function dokumen_project()
+    {
+        return $this->hasMany(Dokumen_project::class);
+    }
+
 
     public static function getId()
     {

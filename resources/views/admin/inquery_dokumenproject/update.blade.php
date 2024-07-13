@@ -227,6 +227,24 @@
                             <label for="keterangan">Keterangan</label>
                             <textarea type="text" class="form-control" id="keterangan" name="keterangan" placeholder="Masukan keterangan">{{ old('keterangan', $inquery->keterangan) }}</textarea>
                         </div>
+
+                        <div class="form-group">
+                            <label for="no_seru">No Serut</label>
+                            <input type="text" class="form-control" id="no_seru" name="no_seru" placeholder=""
+                                value="{{ old('no_seru', $inquery->no_serut) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_rangka">No Rangka</label>
+                            <input type="text" class="form-control" id="no_rangka" name="no_rangka" placeholder=""
+                                value="{{ old('no_rangka', $inquery->no_rangka) }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tahun">Tahun</label>
+                            <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""
+                                value="{{ old('tahun', $inquery->tahun) }}">
+                        </div>
                     </div>
                 </div>
                 @endif

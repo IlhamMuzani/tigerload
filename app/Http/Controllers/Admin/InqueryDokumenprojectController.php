@@ -73,9 +73,15 @@ class InqueryDokumenprojectController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'no_serut' => 'required',
+                'no_rangka' => 'required',
+                'tahun' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor SPK',
+                'no_serut.required' => 'No Serut',
+                'no_rangka.required' => 'No Rangka',
+                'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
 
@@ -222,6 +228,9 @@ class InqueryDokumenprojectController extends Controller
             // 'gambarbelakang_serongkiri	' => $namaGambar13,
             'gambarbelakang_serongkekiri	' => $namaGambar15,
             'gambarberita_acara' => $namaGambar14,
+            'no_serut' > $request->no_serut,
+            'no_rangka' > $request->no_rangka,
+            'tahun' > $request->tahun,
             'status' => 'posting',
         ]);
 

@@ -26,6 +26,7 @@ class Dokumen_project extends Model
         'keterangan',
         'no_rangka',
         'no_mesin',
+        'no_serut',
         'tahun',
         'warna',
         'gambar_gesekannorangka',

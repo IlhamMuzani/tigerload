@@ -51,9 +51,15 @@ class DokumenprojectController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'no_serut' => 'required',
+                'no_rangka' => 'required',
+                'tahun' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor SPK',
+                'no_serut.required' => 'No Serut',
+                'no_rangka.required' => 'No Rangka',
+                'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
 
