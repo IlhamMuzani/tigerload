@@ -155,18 +155,20 @@
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->nama_pelanggan }}</td>
                         </tr>
-                        {{-- <tr>
-                            <td width="50%" valign="top">
-                                Telp
-                            </td>
-                            <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->telp }}</td>
-                        </tr>
-                        <tr>
-                            <td width="50%" valign="top">
-                                Alamat
-                            </td>
-                            <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->alamat }}</td>
-                        </tr> --}}
+                        @auth
+                            <tr>
+                                <td width="50%" valign="top">
+                                    Telp
+                                </td>
+                                <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->telp }}</td>
+                            </tr>
+                            <tr>
+                                <td width="50%" valign="top">
+                                    Alamat
+                                </td>
+                                <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->alamat }}</td>
+                            </tr>
+                        @endauth
                     </table>
 
                 </div>

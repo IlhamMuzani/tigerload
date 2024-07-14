@@ -29,9 +29,6 @@ Route::get('penerimaan_pembayaran/{kode}', [\App\Http\Controllers\Penerimaanpemb
 Route::get('project/{kode}', [\App\Http\Controllers\ProjectController::class, 'qrcode_detail']);
 
 Route::middleware('admin')->prefix('admin')->group(function () {
-    Route::get('project/{kode}', [\App\Http\Controllers\Admin\ProjectController::class, 'qrcode_detail']);
-
-    
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
     Route::get('user/access/{id}', [\App\Http\Controllers\Admin\UserController::class, 'access']);
     Route::post('user-access/{id}', [\App\Http\Controllers\Admin\UserController::class, 'access_user']);
