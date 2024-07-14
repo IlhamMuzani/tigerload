@@ -240,18 +240,20 @@
                             </td>
 
                         </tr>
-                        {{-- <tr>
-                            <td width="50%" valign="top">
-                                Nomor Mesin
-                            </td>
-                            <td width="50%" valign="top">
-                                @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
-                                    {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_mesin }}
-                                @else
-                                    -
-                                @endif
-                            </td>
-                        </tr> --}}
+                        @auth
+                            <tr>
+                                <td width="50%" valign="top">
+                                    Nomor Mesin
+                                </td>
+                                <td width="50%" valign="top">
+                                    @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
+                                        {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_mesin }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                        @endauth
                         <tr>
                             <td width="50%" valign="top">
                                 Nomor Serut
@@ -270,7 +272,7 @@
                             </td>
                             <td width="50%" valign="top">
                                 @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
-                                    {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_serut }}
+                                    {{ $cetakpdf->perintah_kerja->dokumen_project->first()->no_skrb }}
                                 @else
                                     -
                                 @endif
