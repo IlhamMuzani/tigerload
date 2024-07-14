@@ -139,7 +139,7 @@
                                     <td data-toggle="modal" data-target="#modal-qrcode-{{ $project->id }}"
                                         style="text-align: center;">
                                         <div style="display: inline-block;">
-                                            {!! DNS2D::getBarcodeHTML("$project->qrcode_project", 'QRCODE', 2, 2) !!}
+                                            {!! DNS2D::getBarcodeHTML("$project->qrcode_project", 'QRCODE', 1.5, 1.5) !!}
                                         </div>
                                     </td>
                                     <td>

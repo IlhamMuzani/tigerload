@@ -69,8 +69,8 @@ class ProjectController extends Controller
             ]
         ));
 
-        $shortId = substr(hash('sha256', $projects->id), 0, 20);
-        $projects->qrcode_project = 'https://tigerload.id/project/' . Crypt::encryptString($projects->id);
+        $encryptedId = Crypt::encryptString($projects->id);
+        $projects->qrcode_project = 'https://tigerload.id/project/' . $encryptedId;
         $projects->save();
 
         return redirect('admin/project');
