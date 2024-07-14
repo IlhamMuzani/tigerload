@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('no_serut')->nullable();
             $table->string('tahun')->nullable();
             $table->string('warna')->nullable();
+            $table->string('no_skrb')->nullable();
             $table->unsignedBigInteger('merek_id')->nullable();
             $table->foreign('merek_id')->references('id')->on('mereks')->onDelete('set null');
             $table->string('gambar_gesekannorangka')->nullable();

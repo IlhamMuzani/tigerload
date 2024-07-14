@@ -222,9 +222,14 @@
                                 value="{{ old('no_rangka') }}">
                         </div>
                         <div class="form-group">
-                            <label for="no_rangka">No Mesin</label>
+                            <label for="no_mesin">No Mesin</label>
                             <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
                                 value="{{ old('no_mesin') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="no_skrb">No Skrb</label>
+                            <input type="text" class="form-control" id="no_skrb" name="no_skrb" placeholder=""
+                                value="{{ old('no_skrb') }}">
                         </div>
                         <div class="form-group">
                             <label for="tahun">Tahun Pembuatan</label>

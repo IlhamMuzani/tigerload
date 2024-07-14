@@ -54,6 +54,7 @@ class DokumenprojectController extends Controller
                 'no_serut' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'no_skrb' => 'required',
                 'tahun' => 'required',
             ],
             [
@@ -61,6 +62,7 @@ class DokumenprojectController extends Controller
                 'no_serut.required' => 'No Serut',
                 'no_rangka.required' => 'No Rangka',
                 'no_mesin.required' => 'No Mesin',
+                'no_skrb.required' => 'No Skrb',
                 'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );

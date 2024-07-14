@@ -76,6 +76,7 @@ class InqueryDokumenprojectController extends Controller
                 'no_serut' => 'required',
                 'no_rangka' => 'required',
                 'no_mesin' => 'required',
+                'no_skrb' => 'required',
                 'tahun' => 'required',
             ],
             [
@@ -83,6 +84,7 @@ class InqueryDokumenprojectController extends Controller
                 'no_serut.required' => 'No Serut',
                 'no_rangka.required' => 'No Rangka',
                 'no_mesin.required' => 'No Mesin',
+                'no_skrb.required' => 'No Mesin',
                 'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
@@ -232,6 +234,7 @@ class InqueryDokumenprojectController extends Controller
             'no_serut' > $request->no_serut,
             'no_rangka' > $request->no_rangka,
             'no_mesin' > $request->no_mesin,
+            'no_skrb' > $request->no_skrb,
             'tahun' > $request->tahun,
             'status' => 'posting',
         ]);

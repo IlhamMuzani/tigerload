@@ -253,6 +253,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="no_skrb">No Skrb</label>
+                            <input type="text" class="form-control" id="no_skrb" name="no_skrb" placeholder=""
+                                value="{{ old('no_skrb', $inquery->no_skrb) }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="tahun">Tahun</label>
                             <input type="text" class="form-control" id="tahun" name="tahun" placeholder=""
                                 value="{{ old('tahun', $inquery->tahun) }}">
