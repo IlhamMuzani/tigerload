@@ -29,18 +29,18 @@ class ProjectController extends Controller
     //     return view('admin.project.detail', compact('cetakpdf'));
     // }
 
-    public function qrcode_detail($encryptedId)
+   public function qrcode_detail($encryptedId)
     {
         try {
-            // Decrypt the ID
+            // Dekripsi ID
             $id = Crypt::decryptString($encryptedId);
         } catch (DecryptException $e) {
-            // Handle the error if the ID cannot be decrypted
+            // Tangani kesalahan jika ID tidak dapat didekripsi
             return abort(404, 'Invalid encrypted ID');
         }
 
         // Retrieve the main record
-        $cetakpdf = Project::find($id);
+        $cetakpdf = Project::where('id', $id)->first();
 
         // Check if the main record exists
         if (!$cetakpdf) {
