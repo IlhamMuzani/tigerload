@@ -29,7 +29,7 @@ class ProjectController extends Controller
     //     return view('admin.project.detail', compact('cetakpdf'));
     // }
 
-   public function qrcode_detail($encryptedId)
+    public function qrcode_detail($encryptedId)
     {
         try {
             // Dekripsi ID

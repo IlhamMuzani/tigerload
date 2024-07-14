@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProjectController extends Controller
 {
@@ -156,5 +157,26 @@ class ProjectController extends Controller
         $pdf->loadView('admin.project.cetak_qrcodefilter', compact('cetakpdfs'));
 
         return $pdf->stream('SelectedFaktur.pdf');
+    }
+
+    public function qrcode_detail($encryptedId)
+    {
+        try {
+            // Dekripsi ID
+            $id = Crypt::decryptString($encryptedId);
+        } catch (DecryptException $e) {
+            // Tangani kesalahan jika ID tidak dapat didekripsi
+            return abort(404, 'Invalid encrypted ID');
+        }
+
+        // Retrieve the main record
+        $cetakpdf = Project::where('id', $id)->first();
+
+        // Check if the main record exists
+        if (!$cetakpdf) {
+            return abort(404, 'Project not found');
+        }
+
+        return view('admin.project.detail', compact('cetakpdf'));
     }
 }
