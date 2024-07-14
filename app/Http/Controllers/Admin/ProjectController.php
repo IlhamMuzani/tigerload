@@ -56,13 +56,13 @@ class ProjectController extends Controller
         $kode = $this->kode();
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
-
         $tanggal = Carbon::now()->format('Y-m-d');
+
         $projects = Project::create(array_merge(
             $request->all(),
             [
                 'perintah_kerja_id' => $request->perintah_kerja_id,
-                'kode_project' => $this->kode(),
+                'kode_project' => $kode,
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
                 'status' => 'posting',
@@ -70,12 +70,12 @@ class ProjectController extends Controller
         ));
 
         $shortId = substr(hash('sha256', $projects->id), 0, 20);
-        $projects->qrcode_project = 'https://tigerload.id/project/' . $shortId;
+        $projects->qrcode_project = 'https://tigerload.id/project/' . Crypt::encryptString($projects->id);
         $projects->save();
 
         return redirect('admin/project');
-        // return view('admin.project.show', compact('projects', 'spk'));
     }
+
 
     public function show($id)
     {

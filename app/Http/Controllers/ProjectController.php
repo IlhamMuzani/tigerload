@@ -32,15 +32,15 @@ class ProjectController extends Controller
     public function qrcode_detail($encryptedId)
     {
         try {
-            // Dekripsi ID
+            // Decrypt the ID
             $id = Crypt::decryptString($encryptedId);
         } catch (DecryptException $e) {
-            // Tangani kesalahan jika ID tidak dapat didekripsi
+            // Handle the error if the ID cannot be decrypted
             return abort(404, 'Invalid encrypted ID');
         }
 
         // Retrieve the main record
-        $cetakpdf = Project::where('id', $id)->first();
+        $cetakpdf = Project::find($id);
 
         // Check if the main record exists
         if (!$cetakpdf) {
