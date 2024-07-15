@@ -91,7 +91,7 @@
                             <td style="font-size: 13px; font-weight: lighter;">Telp, (0283) 4563746</td>
                         </tr>
                         <tr>
-                            <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 551.25/ 8502</td>
+                            <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 400.7.22/ 11428</td>
                         </tr>
 
                     </table>

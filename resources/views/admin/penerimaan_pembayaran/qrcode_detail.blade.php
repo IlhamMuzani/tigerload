@@ -63,8 +63,8 @@
     <div class="">
         <table>
             <tr>
-                <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" style="margin-top:10px"
-                    width="150" height="35" alt="Logo Tigerload">
+                <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" style="margin-top:10px" width="150"
+                    height="35" alt="Logo Tigerload">
                 <td>
                     <div class="center-table" style="margin-left:20px">
                         <table>
@@ -79,7 +79,8 @@
                                 <td style="font-size: 15px; font-weight: lighter;">Telp, (0283) 4563746</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 15px; font-weight: lighter;">No. Izin Karoseri : 551.25/ 8502</td>
+                                <td style="font-size: 15px; font-weight: lighter;">No. Izin Karoseri : 400.7.22/ 11428
+                                </td>
                             </tr>
                         </table>
                     </div>

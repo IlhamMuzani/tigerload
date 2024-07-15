@@ -90,7 +90,8 @@
                                 <td style="font-size: 25px; font-weight: lighter;">Telp, (0283) 4563746</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 25px; font-weight: lighter;">No. Izin Karoseri : 551.25/ 8502</td>
+                                <td style="font-size: 25px; font-weight: lighter;">No. Izin Karoseri : 400.7.22/ 11428
+                                </td>
                             </tr>
 
                         </table>
@@ -150,9 +151,8 @@
                     <table>
                         <tr>
                             <td>
-                                <img style="margin-top: 5px"
-                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                    height="8" alt="Logo Tigerload">
+                                <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                    width="8" height="8" alt="Logo Tigerload">
                             </td>
                             <td>Model</td>
                             <td>
@@ -166,9 +166,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <img style="margin-top: 5px"
-                                    src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
-                                    height="8" alt="Logo Tigerload">
+                                <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
+                                    width="8" height="8" alt="Logo Tigerload">
                             </td>
                             <td>Merek / Type</td>
                             <td>
@@ -226,8 +225,8 @@
                             <tr>
                                 <td>
                                     <img style="margin-top: 5px"
-                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
-                                        width="8" height="8" alt="Logo Tigerload">
+                                        src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}" width="8"
+                                        height="8" alt="Logo Tigerload">
                                 </td>
                                 <td>Aksesoris</td>
                                 <td>

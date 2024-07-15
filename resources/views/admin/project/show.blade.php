@@ -274,6 +274,42 @@
                                 @endif
                             </td>
                         </tr>
+                        <tr>
+                            <td width="50%" valign="top">
+                                Panjang
+                            </td>
+                            <td width="50%" valign="top">
+                                {{ $cetakpdf->perintah_kerja->spk->surat_penawaran->typekaroseri->panjang }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" valign="top">
+                                Lebar
+                            </td>
+                            <td width="50%" valign="top">
+                                {{ $cetakpdf->perintah_kerja->spk->surat_penawaran->typekaroseri->lebar }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" valign="top">
+                                Tinggi
+                            </td>
+                            <td width="50%" valign="top">
+                                {{ $cetakpdf->perintah_kerja->spk->surat_penawaran->typekaroseri->tinggi }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" valign="top">
+                                Spesifikasi
+                            </td>
+                            <td width="50%" valign="top">
+
+                                @foreach ($cetakpdf->perintah_kerja->spk->surat_penawaran->typekaroseri->spesifikasi as $spesifikasi)
+                                    <li>{{ $spesifikasi->nama }}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+
                     </table>
                 </div>
             </div>
@@ -397,7 +433,7 @@
                         <a href="">
                             <i aria-hidden="true"></i>
                             <span>
-                                No. Izin Karoseri : 551.25/ 8502
+                                No. Izin Karoseri : 400.7.22/ 11428
                             </span>
                         </a>
                     </div>

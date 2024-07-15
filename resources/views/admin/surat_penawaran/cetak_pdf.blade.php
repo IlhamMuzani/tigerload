@@ -110,8 +110,8 @@
                                     <td style="font-size: 13px; font-weight: lighter;">Telp, (0283) 4563746</td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 551.25/
-                                        8502</td>
+                                    <td style="font-size: 13px; font-weight: lighter;">No. Izin Karoseri : 400.7.22/
+                                        11428</td>
                                 </tr>
                             </table>
                         </div>
@@ -167,8 +167,7 @@
                             <div class="">
                                 <table>
                                     <tr>
-                                        <td
-                                            style="display: inline-block;">
+                                        <td style="display: inline-block;">
                                             {!! DNS2D::getBarcodeHTML("$pembelians->qrcode_penawaran", 'QRCODE', 1.5, 1.5) !!}
                                         </td>
                                     </tr>
