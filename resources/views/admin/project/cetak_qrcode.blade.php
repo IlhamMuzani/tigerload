@@ -49,11 +49,11 @@
                         <table>
                             <td>
                                 <div style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 3.5, 3.5) !!}
+                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 2, 2) !!}
                                 </div>
                             </td>
                             <td>
-                                <div class="text" style="font-size: 16px">
+                                <div class="text" style="font-size: 16px; margin-left:8px">
                                     <p class="bold-text">
                                         @if ($projects->perintah_kerja)
                                             {{ $projects->perintah_kerja->kode_perintah }}

@@ -102,6 +102,7 @@
                                 <th>Tahun Pembuatan</th>
                                 <th>No Serut</th>
                                 <th>No Rangka</th>
+                                <th>QR Code</th>
                                 <th>Tanggal</th>
                                 <th class="text-center" width="30">Opsi</th>
                             </tr>
@@ -160,9 +161,16 @@
                                             tidak ada
                                         @endif
                                     </td>
+                                    <td data-toggle="modal" data-target="#modal-qrcode-{{ $inquery_project->id }}"
+                                        style="text-align: center;">
+                                        <div style="display: inline-block;">
+                                            {!! DNS2D::getBarcodeHTML("$inquery_project->qrcode_project", 'QRCODE', 1.5, 1.5) !!}
+                                        </div>
+                                    </td>
                                     <td>
                                         {{ $inquery_project->tanggal_awal }}
                                     </td>
+
                                     <td class="text-center">
                                         @if ($inquery_project->status == 'posting')
                                             <button type="button" class="btn btn-success btn-sm">
