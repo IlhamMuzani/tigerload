@@ -36,7 +36,6 @@ class ProjectController extends Controller
         $spks = Perintah_kerja::get();
         return view('admin.project.create', compact('spks'));
     }
-
     public function store(Request $request)
     {
         $validator = Validator::make(
@@ -70,15 +69,12 @@ class ProjectController extends Controller
             ]
         ));
 
-        // Encrypt the project ID and take a substring of the encoded value
         $encryptedId = Crypt::encryptString($projects->id);
-        $encodedId = substr(base64_encode($encryptedId), 0, 20);
-        $projects->qrcode_project = 'https://tigerload.id/project/' . $encodedId;
+        $projects->qrcode_project = 'https://tigerload.id/project/' . $encryptedId;
         $projects->save();
 
         return redirect('admin/project');
     }
-
 
 
     public function show($id)

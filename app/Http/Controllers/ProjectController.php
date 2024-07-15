@@ -8,15 +8,35 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProjectController extends Controller
 {
-    public function qrcode_detail($encodedId)
+    // public function detail($encryptedId)
+    // {
+    //     try {
+    //         // Dekripsi ID
+    //         $id = Crypt::decryptString($encryptedId);
+    //     } catch (DecryptException $e) {
+    //         // Tangani kesalahan jika ID tidak dapat didekripsi
+    //         return abort(404, 'Invalid encrypted ID');
+    //     }
+
+    //     // Retrieve the main record
+    //     $cetakpdf = Project::where('id', $id)->first();
+
+    //     // Check if the main record exists
+    //     if (!$cetakpdf) {
+    //         return abort(404, 'Project not found');
+    //     }
+
+    //     return view('admin.project.detail', compact('cetakpdf'));
+    // }
+
+   public function qrcode_detail($encryptedId)
     {
         try {
-            // Decode the base64 string and decrypt it to get the original ID
-            $decodedId = base64_decode($encodedId . str_repeat('=', strlen($encodedId) % 4));
-            $id = Crypt::decryptString($decodedId);
+            // Dekripsi ID
+            $id = Crypt::decryptString($encryptedId);
         } catch (DecryptException $e) {
-            // Handle error if ID cannot be decrypted
-            return abort(404, 'Invalid encoded ID');
+            // Tangani kesalahan jika ID tidak dapat didekripsi
+            return abort(404, 'Invalid encrypted ID');
         }
 
         // Retrieve the main record
