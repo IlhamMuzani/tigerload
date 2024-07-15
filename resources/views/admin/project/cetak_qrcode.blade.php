@@ -49,7 +49,7 @@
                         <table>
                             <td>
                                 <div style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 2, 2) !!}
+                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 1.8, 1.8) !!}
                                 </div>
                             </td>
                             <td>
