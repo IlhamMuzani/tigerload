@@ -21,7 +21,7 @@
 
         .text-container {
             position: relative;
-            margin-top:6px;
+            margin-top: 8px;
 
         }
 
@@ -50,16 +50,13 @@
                         <table>
                             <td>
                                 <div style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 1.8, 1.8) !!}
+                                    {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 3.4, 3.4) !!}
                                 </div>
                             </td>
                             <td>
                                 <div class="text" style="font-size: 16px; margin-left:8px">
                                     <p class="bold-text">
-                                        @if ($projects->perintah_kerja)
-                                            {{ $projects->perintah_kerja->kode_perintah }}
-                                        @else
-                                        @endif
+                                        {{ $projects->kode_project }}
                                     </p>
                                     <p class="bold-text">
                                         @if ($projects->perintah_kerja)
