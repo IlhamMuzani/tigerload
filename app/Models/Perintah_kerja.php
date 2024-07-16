@@ -28,6 +28,7 @@ class Perintah_kerja extends Model
         'status',
         'status_penjualan',
         'status_deposit',
+        'status_dokumen',
     ];
 
     use SoftDeletes;

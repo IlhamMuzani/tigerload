@@ -1,18 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Pelunasan')
+@section('title', 'Faktur Pelunasan')
 
 @section('content')
     <!-- Content Header (Page header) -->
-    <div class="content-header">
+    <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById("loadingSpinner").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                document.getElementById("mainContentSection").style.display = "block";
+            }, 100); // Adjust the delay time as needed
+        });
+    </script>
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header" style="display: none;" id="mainContent">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Pelunasan</h1>
+                    <h1 class="m-0">Faktur Pelunasan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan') }}">Inquery Pelunasan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan_penjualan') }}">Faktur Pelunasan</a>
+                        </li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -20,7 +36,8 @@
         </div>
     </div>
 
-    <section class="content">
+
+    <section class="content" style="display: none;" id="mainContentSection">
         <div class="container-fluid">
             @if (session('error'))
                 <div class="alert alert-danger alert-dismissible">
@@ -33,13 +50,12 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/inquery_pelunasan/' . $pelunasans->id) }}" method="POST"
-                enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/pelunasan_penjualan') }}" method="POST" enctype="multipart/form-data"
+                autocomplete="off">
                 @csrf
-                @method('put')
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Perbarui</h3>
+                        <h3 class="card-title">Tambah</h3>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 mt-4">
@@ -51,36 +67,27 @@
                         <div class="form-group" hidden>
                             <label for="nopol">Id Penjualan</label>
                             <input type="text" class="form-control" id="penjualan_id" name="penjualan_id"
-                                value="{{ old('penjualan_id', $pelunasans->penjualan->id) }}" readonly placeholder=""
-                                value="">
+                                value="{{ old('penjualan_id') }}" readonly placeholder="" value="">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Kode Faktur Penjualan</label>
-                            <input type="text" class="form-control" id="kode_penjualan" readonly placeholder=""
-                                value="{{ old('kode_penjualan', $pelunasans->penjualan->kode_penjualan) }}">
+                            <input type="text" class="form-control" id="kode_penjualan" name="kode_penjualan" readonly
+                                placeholder="" value="{{ old('kode_penjualan') }}">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Nama Pelanggan</label>
-                            <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
-                                value="{{ old('nama_pelanggan', $pelunasans->penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan) }}">
+                            <input type="text" class="form-control" name="nama_pelanggan" id="nama_pelanggan" readonly
+                                placeholder="" value="{{ old('nama_pelanggan') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Tanggal Penjualan</label>
-                            <input type="text" class="form-control" id="tanggal" readonly placeholder=""
-                                value="{{ old('tanggal', $pelunasans->penjualan->tanggal) }}">
+                            <input type="text" class="form-control" name="tanggal" id="tanggal" readonly placeholder=""
+                                value="{{ old('tanggal') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Total</label>
-                            <input type="text" class="form-control" id="total" readonly placeholder=""
-                                value="@if ($pelunasans->penjualan->perintah_kerja) {{ old(
-                                    'total',
-                                    $pelunasans->penjualan->perintah_kerja->spk->harga +
-                                        $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'),
-                                ) }}@else{{ old(
-                                    'total',
-                                    $pelunasans->penjualan->perintah_kerja->spk->harga +
-                                        $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'),
-                                ) }} @endif">
+                            <input type="text" class="form-control" name="total" id="total" readonly placeholder=""
+                                value="{{ old('total') }}">
                         </div>
                     </div>
                 </div>
@@ -94,20 +101,18 @@
                                 <div class="form-group">
                                     <label for="potongan">Potongan Penjualan</label>
                                     <input type="number" class="form-control" id="potongan" name="potongan"
-                                        placeholder="masukkan potong" value="{{ old('potongan', $pelunasans->potongan) }}">
+                                        placeholder="masukkan potong" value="{{ old('potongan') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="panjang">Kategori Pembayaran</label>
                                     <select class="form-control" id="kategori" name="kategori">
                                         <option value="">- Pilih -</option>
                                         <option value="Bilyet Giro"
-                                            {{ old('kategori', $pelunasans->kategori) == 'Bilyet Giro' ? 'selected' : null }}>
+                                            {{ old('kategori') == 'Bilyet Giro' ? 'selected' : null }}>
                                             Bilyet Giro BG / Cek</option>
-                                        <option value="Transfer"
-                                            {{ old('kategori', $pelunasans->kategori) == 'Transfer' ? 'selected' : null }}>
+                                        <option value="Transfer" {{ old('kategori') == 'Transfer' ? 'selected' : null }}>
                                             Transfer</option>
-                                        <option value="Tunai"
-                                            {{ old('kategori', $pelunasans->kategori) == 'Tunai' ? 'selected' : null }}>
+                                        <option value="Tunai" {{ old('kategori') == 'Tunai' ? 'selected' : null }}>
                                             Tunai</option>
                                     </select>
                                 </div>
@@ -116,7 +121,7 @@
                                     <label id="trans" for="lebar">No. Transfer</label>
                                     <label id="tun" for="lebar">Tunai</label>
                                     <input type="text" class="form-control" id="nomor" name="nomor"
-                                        placeholder="masukkan no" value="{{ old('nomor', $pelunasans->nomor) }}">
+                                        placeholder="masukkan no" value="{{ old('nomor') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">Tanggal</label>
@@ -124,15 +129,14 @@
                                         <input type="date" id="tanggal" name="tanggal_transfer"
                                             placeholder="d M Y sampai d M Y"
                                             data-options='{"mode":"range","dateFormat":"d M Y","disableMobile":true}'
-                                            value="{{ old('tanggal_transfer', $pelunasans->tanggal_transfer) }}"
+                                            value="{{ old('tanggal_transfer') }}"
                                             class="form-control datetimepicker-input" data-target="#reservationdatetime">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">Nominal</label>
                                     <input type="text" class="form-control" id="nominal"
-                                        placeholder="masukkan nominal" name="nominal"
-                                        value="{{ old('nominal', $pelunasans->nominal) }}">
+                                        placeholder="masukkan nominal" name="nominal" value="{{ old('nominal') }}">
                                 </div>
                             </div>
                             <div class="col-md-6" style="margin-left: 80px">
@@ -140,27 +144,24 @@
                                     <label for="totalpenjualan">Sub Total</label>
                                     <input style="text-align: end" type="text" class="form-control"
                                         id="totalpembayaran" readonly name="totalpenjualan" placeholder=""
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('totalpenjualan', $pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }}
-                                        @else{{ number_format(old('totalpenjualan', $pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }} @endif">
+                                        value="{{ old('totalpenjualan') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">DP</label>
                                     <input style="text-align: end" type="text" class="form-control" id="dp"
-                                        readonly name="dp" placeholder=""
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('dp', $pelunasans->penjualan->depositpemesanan->harga), 0, ',', '.') }}@else 0 @endif">
+                                        readonly name="dp" placeholder="" value="{{ old('dp') }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">Potongan</label>
                                     <input style="text-align: end" type="text" class="form-control"
                                         id="potonganselisih" readonly name="potonganselisih" placeholder=""
-                                        value="{{ number_format(old('potongan', $pelunasans->potongan), 0, ',', '.') }}">
+                                        value="{{ old('potonganselisih') }}">
                                 </div>
                                 <hr style="border: 2px solid black;">
                                 <div class="form-group">
                                     <label for="tinggi">Total Pembayaran</label>
                                     <input style="text-align: end" type="text" class="form-control" id="KurangiDP"
-                                        readonly name="totalpembayaran"
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format($pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga') - $pelunasans->penjualan->depositpemesanan->harga, 0, ',', '.') }}@else{{ number_format($pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'), 0, ',', '.') }} @endif"
+                                        readonly name="totalpembayaran" value="{{ old('totalpembayaran') }}"
                                         placeholder="">
                                 </div>
                                 <div class="form-group">
@@ -172,10 +173,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer text-right">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
+        </div>
+        <div class="card-footer text-right mt-3">
+            <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>
+            <button type="submit" class="btn btn-primary" id="btnSimpan">Simpan</button>
+            <div id="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Sedang Menyimpan...
+            </div>
+        </div>
         </div>
         </form>
         {{-- </div> --}}
@@ -209,49 +214,96 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $penjualan->kode_penjualan }}</td>
                                             <td>
-                                                @if ($penjualan->perintah_kerja)
-                                                    {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                                @if ($penjualan->depositpemesanan)
+                                                    @if ($penjualan->depositpemesanan->spk)
+                                                        @if ($penjualan->depositpemesanan->spk->pelanggan)
+                                                            {{ $penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                                        @else
+                                                            tidak ada
+                                                        @endif
+                                                    @else
+                                                        tidak ada
+                                                    @endif
                                                 @else
-                                                    {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                                    @if ($penjualan->perintah_kerja->spk->pelanggan)
+                                                        {{ $penjualan->perintah_kerja->spk->nama_pelanggan }}
+                                                    @else
+                                                        tidak ada
+                                                    @endif
                                                 @endif
                                             </td>
                                             <td>{{ $penjualan->tanggal }}</td>
                                             <td>Rp
-                                                @if ($penjualan->perintah_kerja)
-                                                    @if ($penjualan->perintah_kerja->depositpemesanan->first())
-                                                        {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }}
+                                                @if ($penjualan->depositpemesanan)
+                                                    @if ($penjualan->depositpemesanan->spk)
+                                                        {{ number_format($penjualan->depositpemesanan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
                                                     @else
                                                     @endif
-                                                @else
-                                                    0
-                                                @endif
-                                            </td>
-                                            <td>Rp
-                                                @if ($penjualan->perintah_kerja)
-                                                    {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
                                                 @else
                                                     {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
                                                 @endif
                                             </td> {{-- <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek }}</td>
                                             <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
                                             <td>{{ $penjualan->depositpemesanan->spk->typekaroseri->kode_type }}</td> --}}
+
+                                            @php
+                                                $pelangganNama = '';
+
+                                                if ($penjualan->depositpemesanan) {
+                                                    if ($penjualan->depositpemesanan->spk) {
+                                                        if ($penjualan->depositpemesanan->spk->pelanggan) {
+                                                            $pelangganNama =
+                                                                $penjualan->depositpemesanan->spk->pelanggan
+                                                                    ->nama_pelanggan;
+                                                        }
+                                                    }
+                                                } else {
+                                                    if ($penjualan->spk && $penjualan->spk->pelanggan) {
+                                                        $pelangganNama = $penjualan->spk->pelanggan->nama_pelanggan;
+                                                    }
+                                                }
+
+                                                $hargaTotal = 0;
+                                                if ($penjualan->depositpemesanan && $penjualan->depositpemesanan->spk) {
+                                                    $hargaTotal =
+                                                        $penjualan->depositpemesanan->spk->harga +
+                                                        $penjualan->detail_penjualan
+                                                            ->where('penjualan_id', $penjualan->id)
+                                                            ->sum('harga');
+                                                } elseif ($penjualan->spk) {
+                                                    $hargaTotal =
+                                                        $penjualan->spk->harga +
+                                                        $penjualan->detail_penjualan
+                                                            ->where('penjualan_id', $penjualan->id)
+                                                            ->sum('harga');
+                                                }
+
+                                                $deposit = 0;
+                                                if ($penjualan->depositpemesanan) {
+                                                    $deposit = $penjualan->depositpemesanan->harga;
+                                                }
+
+                                                $sisaPembayaran = $hargaTotal - $deposit;
+                                            @endphp
+
+
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
-                                                    onclick="getSelectedData('{{ $penjualan->id }}',
+                                                    onclick="getSelectedData(
+                                                    '{{ $penjualan->id }}',
                                                     '{{ $penjualan->kode_penjualan }}',
-                                                    '@if ($penjualan->perintah_kerja) {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }} @else {{ $penjualan->spk->pelanggan->nama_pelanggan }} @endif',
+                                                    '{{ $pelangganNama }}',
                                                     '{{ $penjualan->tanggal }}',
-                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif
-@else
-{{ 0 }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    
-                                                    )">
+                                                    '{{ number_format($hargaTotal, 0, ',', '.') }}',
+                                                    '{{ number_format($hargaTotal, 0, ',', '.') }}',
+                                                    '{{ number_format($deposit, 0, ',', '.') }}',
+                                                    '{{ number_format($sisaPembayaran, 0, ',', '.') }}'
+                                                )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </td>
+
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -342,30 +394,17 @@
                 var nominalValue = nominalInput.value;
                 var nominal = parseFloat(hapusTitik(nominalValue)) || 0;
 
-                var NomssInput = document.getElementById('nominal');
-                var NomssValue = NomssInput.value;
-                var Nomss = parseFloat(hapusTitik(NomssValue)) || 0;
-
                 // Hitung selisih
                 var selisih = totalPembayaran - DpPembayaran - nominal;
 
-                var HasilAkhir = totalPembayaran - DpPembayaran - nominal - Nomss;
-
                 // Tampilkan hasil selisih dalam format mata uang Rupiah dengan tanda negatif
-                var hasilDP = document.getElementById('hasilDP');
-                var KurangDP = document.getElementById('KurangiDP');
+                var hasilDP = document.getElementById('KurangiDP');
 
                 // Tambahkan tanda negatif jika selisih negatif
                 if (selisih < 0) {
-                    KurangDP.value = '-' + formatRupiah(-selisih);
+                    hasilDP.value = '-' + formatRupiah(-selisih);
                 } else {
-                    KurangDP.value = ' ' + formatRupiah(selisih);
-                }
-
-                if (HasilAkhir < 0) {
-                    hasilDP.value = ' ' + formatRupiah(HasilAkhir);
-                } else {
-                    hasilDP.value = '-' + formatRupiah(-HasilAkhir);
+                    hasilDP.value = ' ' + formatRupiah(selisih);
                 }
 
                 // Jika Anda ingin menampilkan selisih dalam format lain, sesuaikan kode di atas.
@@ -438,60 +477,6 @@
             // Panggil fungsi hitungSelisih saat halaman dimuat (untuk menginisialisasi nilai selisih)
             window.addEventListener('load', hitungSelisih);
         }
-
-
-        // Selisih()
-
-        // function Selisih() {
-        //     // pembayaran 
-        //     function hapusTitik(string) {
-        //         return string.replace(/\./g, '');
-        //     }
-
-        //     // Fungsi untuk mengubah angka menjadi format mata uang Rupiah
-        //     function formatRupiah(angka) {
-        //         var reverse = angka.toString().split('').reverse().join('');
-        //         var ribuan = reverse.match(/\d{1,3}/g);
-        //         var formatted = ribuan.join('.').split('').reverse().join('');
-        //         return 'Rp ' + formatted;
-        //     }
-
-
-        //     // Fungsi untuk menghitung selisih dan menampilkannya
-        //     function hitungSelisih() {
-        //         // Dapatkan nilai dari input "Total Pembayaran" dan hapus titik
-        //         var totalPembayaranInput = document.getElementById('KurangiDP');
-        //         var totalPembayaranValue = totalPembayaranInput.value;
-        //         var totalPembayaran = parseFloat(hapusTitik(totalPembayaranValue)) || 0;
-
-        //         // Dapatkan nilai dari input "Nominal" dan hapus titik
-        //         var nominalInput = document.getElementById('nominal');
-        //         var nominalValue = nominalInput.value;
-        //         var nominal = parseFloat(hapusTitik(nominalValue)) || 0;
-
-        //         // Hitung selisih
-        //         var selisih = totalPembayaran - nominal;
-
-        //         // Tampilkan hasil selisih dalam format mata uang Rupiah dengan tanda negatif
-        //         var hasilDP = document.getElementById('hasilDP');
-
-        //         // Tambahkan tanda negatif jika selisih negatif
-        //         if (selisih < 0) {
-        //             hasilDP.value = ' ' + formatRupiah(selisih);
-        //         } else {
-        //             hasilDP.value = '-' + formatRupiah(-selisih);
-        //         }
-
-        //         // Jika Anda ingin menampilkan selisih dalam format lain, sesuaikan kode di atas.
-        //     }
-
-
-        //     // Panggil fungsi hitungSelisih saat input "Nominal" berubah
-        //     document.getElementById('nominal').addEventListener('input', hitungSelisih);
-
-        //     // Panggil fungsi hitungSelisih saat halaman dimuat (untuk menginisialisasi nilai selisih)
-        //     window.addEventListener('load', hitungSelisih);
-        // }
 
         function toggleLabels() {
             var kategori = document.getElementById('kategori');
@@ -569,5 +554,20 @@
         //         }
         //     }
         // });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Tambahkan event listener pada tombol "Simpan"
+            $('#btnSimpan').click(function() {
+                // Sembunyikan tombol "Simpan" dan "Reset", serta tampilkan elemen loading
+                $(this).hide();
+                $('#btnReset').hide(); // Tambahkan id "btnReset" pada tombol "Reset"
+                $('#loading').show();
+
+                // Lakukan pengiriman formulir
+                $('form').submit();
+            });
+        });
     </script>
 @endsection

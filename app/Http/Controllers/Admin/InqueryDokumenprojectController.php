@@ -60,7 +60,7 @@ class InqueryDokumenprojectController extends Controller
         if (!$inquery) {
             return redirect()->back()->withErrors('Inquery not found.');
         }
-        $spks = Perintah_kerja::get();
+        $spks = Perintah_kerja::where('status_dokumen', null)->get();
 
         // Pass the retrieved data to the view
         return view('admin.inquery_dokumenproject.update', compact('inquery', 'spks'));
@@ -242,6 +242,7 @@ class InqueryDokumenprojectController extends Controller
         $pengambilans = Dokumen_project::where('id', $id)->first();
         $pengambil = Dokumen_project::find($id);
         $spks = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->first();
+        $spk = Perintah_kerja::where('id', $dokumen_project->perintah_kerja_id)->update(['status_dokumen' => 'aktif']);
 
         $cetakpdfs = Pengambilanbahan::where('perintah_kerja_id', $spks->id)->get();
 
@@ -251,6 +252,9 @@ class InqueryDokumenprojectController extends Controller
     public function unpostdokumenproject($id)
     {
         $item = Dokumen_project::where('id', $id)->first();
+
+        $spk = Perintah_kerja::where('id', $item->perintah_kerja_id)->update(['status_dokumen' => null]);
+
         $item->update([
             'status' => 'unpost'
         ]);
@@ -261,6 +265,9 @@ class InqueryDokumenprojectController extends Controller
     public function postingdokumenproject($id)
     {
         $item = Dokumen_project::where('id', $id)->first();
+
+        $spk = Perintah_kerja::where('id', $item->perintah_kerja_id)->update(['status_dokumen' => 'aktif']);
+
         $item->update([
             'status' => 'posting'
         ]);

@@ -41,7 +41,7 @@ class DokumenprojectController extends Controller
 
     public function create()
     {
-        $spks = Perintah_kerja::get();
+        $spks = Perintah_kerja::where('status_dokumen', null)->get();
         return view('admin/dokumen_project.create', compact('spks'));
     }
 
@@ -217,6 +217,8 @@ class DokumenprojectController extends Controller
                 'status' => 'posting',
             ]
         ));
+
+        $spk = Perintah_kerja::where('id', $dokumen_project->perintah_kerja_id)->update(['status_dokumen' => 'aktif']);
 
         $encryptedId = Crypt::encryptString($dokumen_project->id);
         $dokumen_project->qrcode_dokumen = 'https://tigerload.id/dokumen_project/' . $encryptedId;

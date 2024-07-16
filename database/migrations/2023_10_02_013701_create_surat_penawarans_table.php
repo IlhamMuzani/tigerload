@@ -49,6 +49,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('status_spk')->nullable();
             $table->string('status_komisi')->nullable();
+            $table->string('status_pesanan')->nullable();
             $table->timestamp('deleted_at')->nullable();
 
             $table->timestamps();

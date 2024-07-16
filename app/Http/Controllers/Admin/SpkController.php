@@ -24,7 +24,7 @@ class SpkController extends Controller
 {
     public function index()
     {
-        $suratpenawarans = Surat_penawaran::all();
+        $suratpenawarans = Surat_penawaran::where('status_pesanan', null)->get();
         return view('admin/spk.create', compact('suratpenawarans'));
     }
 
@@ -116,6 +116,8 @@ class SpkController extends Controller
                 'status' => 'stok',
             ]
         ));
+
+        $SuratPenawaran = Surat_penawaran::where('id', $pembelian->surat_penawaran_id)->update(['status_pesanan' => 'aktif', 'status' => 'selesai']);
 
         $pembelians = Spk::find($pembelian_id);
 

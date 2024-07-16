@@ -73,7 +73,7 @@ class InquerySpkController extends Controller
     public function edit($id)
     {
         $pembelian = Spk::where('id', $id)->first();
-        $suratpenawarans = Surat_penawaran::all();
+        $suratpenawarans = Surat_penawaran::where('status_pesanan', null)->get();
         return view('admin/inqueryspk.update', compact('suratpenawarans', 'pembelian'));
     }
 
@@ -150,6 +150,7 @@ class InquerySpkController extends Controller
         );
 
         $pembelians = Spk::find($id);
+        $SuratPenawaran = Surat_penawaran::where('id', $pembelian->surat_penawaran_id)->update(['status_pesanan' => 'aktif', 'status' => 'selesai']);
 
         $kendaraans = Kendaraan::where('spk_id', $pembelians->id)->first();
         $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
@@ -162,9 +163,11 @@ class InquerySpkController extends Controller
 
     public function unpost($id)
     {
-        $ban = Spk::where('id', $id)->first();
+        $item = Spk::where('id', $id)->first();
 
-        $ban->update([
+        $SuratPenawaran = Surat_penawaran::where('id', $item->surat_penawaran_id)->update(['status_pesanan' => null, 'status' => 'posting']);
+
+        $item->update([
             'status' => 'unpost'
         ]);
 
@@ -173,9 +176,10 @@ class InquerySpkController extends Controller
 
     public function posting($id)
     {
-        $ban = Spk::where('id', $id)->first();
+        $item = Spk::where('id', $id)->first();
+        $SuratPenawaran = Surat_penawaran::where('id', $item->surat_penawaran_id)->update(['status_pesanan' => 'aktif', 'status' => 'selesai']);
 
-        $ban->update([
+        $item->update([
             'status' => 'posting'
         ]);
 
@@ -184,9 +188,9 @@ class InquerySpkController extends Controller
 
     public function destroy($id)
     {
-        $ban = Spk::find($id);
-        $ban->detail_kendaraan()->delete();
-        $ban->delete();
+        $item = Spk::find($id);
+        $item->detail_kendaraan()->delete();
+        $item->delete();
 
         return redirect('admin/inquery_spk')->with('success', 'Berhasil menghapus Spk');
     }

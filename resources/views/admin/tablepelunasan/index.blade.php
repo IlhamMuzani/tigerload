@@ -79,42 +79,30 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pelunasan->kode_pelunasan }}</td>
                                     <td>
-                                        @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->kode_spk }}
-                                            @else
-                                                {{ $pelunasan->penjualan->spk->kode_spk }}
-                                            @endif
+                                        @if ($pelunasan->penjualan->perintah_kerja)
+                                            {{ $pelunasan->penjualan->perintah_kerja->kode_perintah }}
                                         @else
                                             data tidak ada
                                         @endif
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
-                                            @else
-                                                {{ $pelunasan->penjualan->spk->pelanggan->nama_pelanggan }}
-                                            @endif
+                                            {{ $pelunasan->penjualan->perintah_kerja->pelanggan->nama_pelanggan }}
+                                        @else
+                                            data tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($pelunasan->penjualan->perintah_kerja->spk)
+                                            {{ $pelunasan->penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
                                         @else
                                             data tidak ada
                                         @endif
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
-                                            @else
-                                                {{ $pelunasan->penjualan->spk->typekaroseri->kode_type }}
-                                            @endif
-                                        @else
-                                            data tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->kode_deposit }}
+                                            @if ($pelunasan->penjualan->depositpemesanan->first())
+                                                {{ $pelunasan->penjualan->depositpemesanan->first()->kode_deposit }}
                                             @else
                                                 tidak dp
                                             @endif

@@ -66,11 +66,13 @@ class ProjectController extends Controller
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
                 'status' => 'posting',
+                'qrcode_project' => 'https://tigerload.id/project/' . $kode,
+
             ]
         ));
 
-        $encryptedId = Crypt::encryptString($projects->id);
-        $projects->qrcode_project = 'https://tigerload.id/project/' . $encryptedId;
+        // $encryptedId = Crypt::encryptString($projects->id);
+        // $projects->qrcode_project = 'https://tigerload.id/project/' . $encryptedId;
         $projects->save();
 
         return redirect('admin/project');
@@ -100,7 +102,7 @@ class ProjectController extends Controller
         $pdf->loadView('admin.project.cetak_qrcode', compact('projects'));
 
         // Mengatur jenis kertas dan orientasi menjadi lanscape
-        $pdf->setPaper([0, 0, 210, 90], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+        $pdf->setPaper([0, 0, 210, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
 
         return $pdf->stream('QrCodeKendaraan.pdf');
     }

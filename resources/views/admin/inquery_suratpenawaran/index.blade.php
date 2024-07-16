@@ -124,6 +124,11 @@
                                                 <i class="fas fa-check"></i>
                                             </button>
                                         @endif
+
+                                        @if ($pembelian->status == 'selesai')
+                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
+                                                width="40" alt="faktur">
+                                        @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($pembelian->status == 'unpost')
                                                 <a class="dropdown-item posting-btn"

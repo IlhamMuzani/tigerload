@@ -21,6 +21,7 @@
 
         .text-container {
             position: relative;
+            margin-top:6px;
 
         }
 

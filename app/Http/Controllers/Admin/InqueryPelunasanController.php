@@ -122,9 +122,9 @@ class InqueryPelunasanController extends Controller
                 'nomor' => $request->nomor,
                 'tanggal_transfer' => $request->tanggal_transfer,
                 'nominal' => $request->nominal,
-                'totalpenjualan' => str_replace('.', '', $request->totalpenjualan),
-                'dp' => str_replace('.', '', $request->dp),
-                'totalpembayaran' => str_replace('.', '', $request->totalpembayaran),
+                'totalpenjualan' => $request->totalpenjualan ? str_replace('.', '', $request->totalpenjualan) : 0,
+                'dp' => $request->dp ? str_replace('.', '', $request->dp) : 0,
+                'totalpembayaran' => $request->totalpembayaran ? str_replace('.', '', $request->totalpembayaran) : 0,
                 'selisih' => (int)str_replace(['Rp', '.', ' '], '', $request->selisih),
                 'status_pelunasan' => $statusPelunasan,
                 'status' => 'posting',
@@ -135,8 +135,8 @@ class InqueryPelunasanController extends Controller
         $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
-        
-        return view('admin.inquerypelunasan.show', compact('pelunasans','penjualans', 'spesifikasis'));
+
+        return view('admin.inquerypelunasan.show', compact('pelunasans', 'penjualans', 'spesifikasis'));
     }
 
 

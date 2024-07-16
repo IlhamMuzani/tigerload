@@ -42,6 +42,7 @@ class Surat_penawaran extends Model
         'tanggal',
         'tanggal_awal',
         'status',
+        'status_pesanan',
         'status_komisi',
     ];
 
