@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Faktur Deposit Pemesanan')
+@section('title', 'Cetak QRcode')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,12 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Faktur Deposit Pemesanan</h1>
+                    <h1 class="m-0">Cetak QRcode</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/project') }}">Faktur Deposit
-                                Pemesanan</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/project') }}">Cetak QRcode</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -50,8 +49,7 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/project') }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/project') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-header">

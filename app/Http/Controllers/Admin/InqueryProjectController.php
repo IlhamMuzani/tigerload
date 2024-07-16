@@ -100,7 +100,9 @@ class InqueryProjectController extends Controller
         // Retrieve the updated Project record to get the perintah_kerja_id
         $deposits = Project::where('id', $id)->first();
         // Return the view with the deposits and spk
-        return view('admin.inquery_project.show', compact('deposits', 'spk'));
+        // return view('admin.inquery_project.show', compact('deposits', 'spk'));
+        return redirect('admin/inquery_project')->with('success', 'Berhasil menyimpan');
+
     }
 
 

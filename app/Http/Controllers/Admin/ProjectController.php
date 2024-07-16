@@ -75,7 +75,7 @@ class ProjectController extends Controller
         // $projects->qrcode_project = 'https://tigerload.id/project/' . $encryptedId;
         $projects->save();
 
-        return redirect('admin/project');
+        return redirect('admin/project')->with('success', 'Berhasil menyimpan');
     }
 
 

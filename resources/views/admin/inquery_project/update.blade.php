@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Faktur Deposit Pemesanan')
+@section('title', 'Cetak QRcode')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,13 +23,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Faktur Deposit Pemesanan</h1>
+                    <h1 class="m-0">Cetak QRcode</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/project') }}">Faktur Deposit
-                                Pemesanan</a></li>
-                        <li class="breadcrumb-item active">Tambah</li>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/project') }}">Cetak QRcode</a></li>
+                        <li class="breadcrumb-item active">Perbarui</li>
                     </ol>
                 </div>
             </div>
@@ -50,12 +49,12 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/project') }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/inquery_project', $inquery->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
+                @method('put')
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Tambah</h3>
+                        <h3 class="card-title">Perbarui</h3>
                     </div>
                     <div class="card-body">
                         <div class="mb-3 mt-4">
@@ -66,32 +65,32 @@
                         <div class="form-group" hidden>
                             <label for="nopol">Id SPK</label>
                             <input type="text" class="form-control" id="perintah_kerja_id" name="perintah_kerja_id"
-                                value="{{ old('perintah_kerja_id') }}" readonly placeholder="">
+                                value="{{ old('perintah_kerja_id', $inquery->perintah_kerja_id) }}" readonly placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Kode SPK</label>
                             <input type="text" class="form-control" id="kode_perintah" readonly placeholder=""
-                                name="kode_perintah" value="{{ old('kode_perintah') }}">
+                                name="kode_perintah" value="{{ old('kode_perintah', $inquery->perintah_kerja->kode_perintah) }}">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Jenis Karoseri</label>
                             <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
-                                name="nama_karoseri" value="{{ old('nama_karoseri') }}">
+                                name="nama_karoseri" value="{{ old('nama_karoseri', $inquery->perintah_kerja->spk->typekaroseri->nama_karoseri) }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Tahun Karoseri</label>
                             <input type="text" class="form-control" id="tahun" readonly placeholder="" name="tahun"
-                                value="{{ old('tahun') }}">
+                                value="{{ old('tahun', $inquery->perintah_kerja->dokumen_project->first()->tahun) }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">No Serut</label>
                             <input type="text" class="form-control" id="no_serut" readonly placeholder=""
-                                name="no_serut" value="{{ old('no_serut') }}">
+                                name="no_serut" value="{{ old('no_serut', $inquery->perintah_kerja->dokumen_project->first()->no_serut) }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">No Rangka</label>
                             <input type="text" class="form-control" id="no_rangka"readonly placeholder=""
-                                name="no_rangka" value="{{ old('no_rangka') }}">
+                                name="no_rangka" value="{{ old('no_rangka', $inquery->perintah_kerja->dokumen_project->first()->no_rangka) }}">
                         </div>
                     </div>
                     <div class="card-footer text-right mt-3">

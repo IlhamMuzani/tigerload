@@ -46,7 +46,7 @@
                     <div class="">
                         <a href="">
                             <span style="color: aliceblue; margin-left:10px; font-weight:bold">
-                                {{ $cetakpdf->perintah_kerja->kode_perintah }}
+                                {{ $cetakpdf->kode_project }}
                             </span>
                         </a>
 
@@ -252,7 +252,7 @@
                         </tr> --}}
                         <tr>
                             <td width="50%" valign="top">
-                                Nomor Serut
+                                Nomor SRUT
                             </td>
                             <td width="50%" valign="top">
                                 @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
@@ -264,7 +264,7 @@
                         </tr>
                         <tr>
                             <td width="50%" valign="top">
-                                Nomor SKRP
+                                Nomor SKRB
                             </td>
                             <td width="50%" valign="top">
                                 @if ($cetakpdf->perintah_kerja->dokumen_project && $cetakpdf->perintah_kerja->dokumen_project->isNotEmpty())
