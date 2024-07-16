@@ -31,7 +31,7 @@ class ProjectController extends Controller
 
     public function qrcode_detail($kode)
     {
-        $kendaraan = Project::where('kode_project', $kode)->first();
+        $cetakpdf = Project::where('kode_project', $kode)->first();
         return view('admin.project.qrcode_detail', compact('cetakpdf'));
     }
 }
