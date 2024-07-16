@@ -392,7 +392,7 @@
     <!-- end client section -->
 
     <!-- contact section -->
-    <section class="contact_section">
+    {{-- <section class="contact_section">
         <div class="container-fluid">
             <div class="px-0">
                 <div class="map_container">
@@ -403,7 +403,7 @@
             </div>
         </div>
         </div>
-    </section>
+    </section> --}}
     <!-- end contact section -->
 
     <!-- info section -->

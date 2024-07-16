@@ -314,7 +314,6 @@ class InqueryPengeluarankaskecilController extends Controller
                 $detail_cicilan = Detail_cicilan::where('detail_gajikaryawan_id', $detail->id)
                     ->where('status', 'posting')
                     ->where('status_cicilan', 'lunas')
-                    ->latest() // Mengambil data terbaru berdasarkan waktu pembuatan
                     ->first();
 
                 if ($detail_cicilan) {
@@ -682,7 +681,6 @@ class InqueryPengeluarankaskecilController extends Controller
                             $detail_cicilan = Detail_cicilan::where('detail_gajikaryawan_id', $detail->id)
                                 ->where('status', 'posting')
                                 ->where('status_cicilan', 'lunas')
-                                ->latest() // Mengambil data terbaru berdasarkan waktu pembuatan
                                 ->first();
 
                             if ($detail_cicilan) {

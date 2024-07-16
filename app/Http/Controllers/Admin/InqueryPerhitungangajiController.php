@@ -64,7 +64,7 @@ class InqueryPerhitungangajiController extends Controller
 
         $inquery = Perhitungan_gajikaryawan::where('id', $id)->first();
         $karyawans = Karyawan::where('departemen_id', 2)
-        ->orderBy('nama_lengkap')
+            ->orderBy('nama_lengkap')
             ->get();
         $details = Detail_gajikaryawan::where('perhitungan_gajikaryawan_id', $id)->get();
 
@@ -362,7 +362,7 @@ class InqueryPerhitungangajiController extends Controller
             if (!$lastSaldo) {
                 return back()->with('error', 'Saldo tidak ditemukan');
             }
-            
+
             $sisaSaldo = $lastSaldo->sisa_saldo + $TotalGaji;
             Saldo::create([
                 'sisa_saldo' => $sisaSaldo,
@@ -391,7 +391,6 @@ class InqueryPerhitungangajiController extends Controller
                 $detail_cicilan = Detail_cicilan::where('detail_gajikaryawan_id', $detail->id)
                     ->where('status', 'posting')
                     ->where('status_cicilan', 'lunas')
-                    ->latest() // Mengambil data terbaru berdasarkan waktu pembuatan
                     ->first();
 
                 if ($detail_cicilan) {
