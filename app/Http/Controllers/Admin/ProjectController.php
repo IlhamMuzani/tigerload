@@ -120,20 +120,17 @@ class ProjectController extends Controller
     // }
     public function kode()
     {
-        $project = Project::all();
-        if ($project->isEmpty()) {
-            $num = "000001";
+        $lastBarang = Project::latest()->first();
+        if (!$lastBarang) {
+            $num = 1;
         } else {
-            $id = Project::getId();
-            foreach ($id as $value);
-            $idlm = $value->id;
-            $idbr = $idlm + 1;
-            $num = sprintf("%06s", $idbr);
+            $lastCode = $lastBarang->qrcode_project;
+            $num = (int) substr($lastCode, strlen('TGR')) + 1;
         }
-
-        $data = 'CT';
-        $kode_deposit = $data . $num;
-        return $kode_deposit;
+        $formattedNum = sprintf("%06s", $num);
+        $prefix = 'TGR';
+        $newCode = $prefix . $formattedNum;
+        return $newCode;
     }
 
     public function destroy($id)
