@@ -118,11 +118,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="gambar">Foto bukti </label>
+                            <label for="gambar">Dokumen bukti </label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambar_pajak" name="gambar_pajak"
-                                    accept="image/*">
-                                <label class="custom-file-label" for="gambar_pajak">Masukkan Foto Bukti</label>
+                                    accept="application/pdf">
+                                <label class="custom-file-label" for="gambar_pajak">Pilih PDF</label>
                             </div>
                         </div>
                     </div>

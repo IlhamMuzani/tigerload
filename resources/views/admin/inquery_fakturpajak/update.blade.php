@@ -114,24 +114,25 @@
                                 value="{{ old('harga', $inquery->penjualan->perintah_kerja->spk->harga) }}">
                         </div>
 
-                        <div class="form-group mb-3">
+
+                        <div class="form-group mt-5">
                             @if ($inquery->gambar_pajak == null)
-                                <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                    alt="tigerload" height="180" width="200">
+                                <p class="mt-3">Tidak ada PDF yang diunggah.</p>
                             @else
-                                <img class="mt-3"
-                                    src="{{ asset('storage/uploads/' . $inquery->gambar_pajak) }}"
-                                    alt="tigerload" height="180" width="200">
+                                <p class="mt-3">
+                                    <a href="{{ asset('storage/uploads/' . $inquery->gambar_pajak) }}"
+                                        target="_blank">Lihat
+                                        PDF yang diunggah</a>
+                                </p>
                             @endif
-                        </div>
-                        <div class="form-group">
-                            <label for="gambar">Foto bukti </label>
+                            <label for="nama">Dokumen Bukti</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambar_pajak" name="gambar_pajak"
-                                    accept="image/*">
-                                <label class="custom-file-label" for="gambar_pajak">Masukkan Foto Bukti</label>
+                                    accept="application/pdf">
+                                <label class="custom-file-label" for="gambar_pajak">Pilih PDF</label>
                             </div>
                         </div>
+
                     </div>
                     <div class="card-footer text-right mt-3">
                         <button type="reset" class="btn btn-secondary" id="btnReset">Reset</button>

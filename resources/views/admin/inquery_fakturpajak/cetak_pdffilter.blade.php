@@ -10,16 +10,10 @@
         html,
         body {
             font-family: 'DOSVGA', Arial, Helvetica, sans-serif;
-            /* font-family: 'DOSVGA', monospace; */
             color: black;
-
             margin-top: 0px;
             margin-right: 13px;
             margin-left: 13px;
-            /* Margin kiri sebesar 20 piksel */
-
-            /* font-weight: bold; */
-            /* Atur ketebalan huruf menjadi bold */
         }
 
         .container {
@@ -40,15 +34,11 @@
             transform: translateY(-50%);
         }
 
-        .info-column {
-            /* padding-left: 5px; */
-        }
+        .info-column {}
 
         .info-titik {
             vertical-align: top;
         }
-
-        /* tanda tangan  */
 
         table {
             width: 100%;
@@ -67,46 +57,36 @@
             position: relative;
             top: -8px;
         }
+
+        .image-preview {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
     </style>
 </head>
 
 <body style="margin-top: 0px; padding: 0;">
-    @for ($i = 0; $i < count($cetakpdfs); $i += 2)
-        @for ($j = $i; $j < $i + 2 && $j < count($cetakpdfs); $j++)
-            @php
-                $cetakpdf = $cetakpdfs[$j];
-            @endphp
-
-            <table style="width: 100%;">
-                <tr>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="width: 50%; text-align: center;">
-                                <div style="width: 100%;">
-                                    <p>Foto Bukti </p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 100%; text-align: center;">
-                                <div style="width: 100%;">
-                                    @if ($cetakpdf->gambar_pajak == null)
-                                        <img class="mt-3"
-                                            src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
-                                            style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
-                                    @else
-                                        <img src="{{ asset('storage/uploads/' . $cetakpdf->gambar_pajak) }}"
-                                            alt="{{ $cetakpdf->gambar_pajak }}"
-                                            style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </tr>
-            </table>
-        @endfor
-    @endfor
+    @foreach ($cetakpdfs as $cetakpdf)
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 50%; text-align: center;">
+                    <div style="width: 100%;">
+                        <p>Dokumen Bukti</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 100%; text-align: center;">
+                    <div style="width: 100%;">
+                        <img class="image-preview"
+                            src="{{ asset('storage/uploads/' . $cetakpdf->gambar_pajak) }}"
+                            alt="Dokumen Bukti" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    @endforeach
     <div style="text-align: right; font-size:13px; margin-bottom:5px;">
         <span style="font-style: italic;">Printed Date
             {{ \Carbon\Carbon::now()->format('Y-m-d H:i:s') }}</span>

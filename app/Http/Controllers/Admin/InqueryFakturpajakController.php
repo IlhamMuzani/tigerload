@@ -65,9 +65,12 @@ class InqueryFakturpajakController extends Controller
             $request->all(),
             [
                 'penjualan_id' => 'required',
+                'gambar_pajak' => 'nullable|mimes:pdf|max:2048',
             ],
             [
                 'penjualan_id.required' => 'Pilih Penjualan',
+                'gambar_pajak.mimes' => 'Hanya file PDF yang diperbolehkan!',
+                'gambar_pajak.max' => 'Ukuran file PDF maksimal 2MB!',
             ]
         );
 
@@ -79,15 +82,16 @@ class InqueryFakturpajakController extends Controller
         $inquery = Faktur_pajak::findOrFail($id);
 
         if ($request->gambar_pajak) {
-            Storage::disk('local')->delete('public/uploads/' . $inquery->gambar_pajak);
-            $gambar = str_replace(' ', '', $request->gambar_pajak->getClientOriginalName());
-            $namaGambar = 'faktur_pajak/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
-            $request->gambar_pajak->storeAs('public/uploads/', $namaGambar);
+            Storage::disk('local')->delete('public/uploads/' . $inquery ->gambar_pajak);
+            $pdf = str_replace(' ', '', $request->gambar_pajak->getClientOriginalName());
+            $namaPdf = 'faktur_pajak/' . date('mYdHs') . rand(1, 10) . '_' . $pdf;
+            $request->gambar_pajak->storeAs('public/uploads/', $namaPdf);
         } else {
-            $namaGambar = $inquery->gambar_pajak;
+            $namaPdf = $inquery->gambar_pajak;  // Retain existing file if no new file is uploaded
         }
+        
         Faktur_pajak::where('id', $id)->update([
-            'gambar_pajak' => $namaGambar,
+            'gambar_pajak' => $namaPdf,
             'penjualan_id' => $request->penjualan_id,
             'status' => 'posting',
         ]);
@@ -138,7 +142,7 @@ class InqueryFakturpajakController extends Controller
         // Mengambil faktur berdasarkan id yang dipilih
         $cetakpdfs = Faktur_pajak::whereIn('id', $selectedIds)->orderBy('id', 'DESC')->get();
 
-        $pdf = PDF::loadView('admin.inquery_fakturpajakpembelian.cetak_pdffilter', compact('cetakpdfs'));
+        $pdf = PDF::loadView('admin.inquery_fakturpajak.cetak_pdffilter', compact('cetakpdfs'));
         $pdf->setPaper('a4');
 
         return $pdf->stream('Bukti_Potong_pajak.pdf');

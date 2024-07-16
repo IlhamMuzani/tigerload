@@ -43,12 +43,12 @@ class FakturpajakController extends Controller
             $request->all(),
             [
                 'penjualan_id' => 'required',
-                'gambar_pajak' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+                'gambar_pajak' => 'nullable|mimes:pdf|max:2048',
             ],
             [
                 'penjualan_id.required' => 'Pilih Penjualan',
-                'gambar_pajak.image' => 'Foto yang dimasukan salah!',
-                'gambar_pajak.required' => 'Bukti foto tidak boleh kosong!',
+                'gambar_pajak.mimes' => 'Hanya file PDF yang diperbolehkan!',
+                'gambar_pajak.max' => 'Ukuran file PDF maksimal 2MB!',
             ]
         );
 
