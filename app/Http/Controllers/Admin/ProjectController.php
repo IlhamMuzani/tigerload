@@ -150,7 +150,7 @@ class ProjectController extends Controller
 
         $pdf = app('dompdf.wrapper');
 
-        $pdf->setPaper([0, 0, 210, 90], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+        $pdf->setPaper([0, 0, 210, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
 
         $pdf->loadView('admin.project.cetak_qrcodefilter', compact('cetakpdfs'));
 

@@ -21,6 +21,7 @@
 
         .text-container {
             position: relative;
+            margin-top: 8px;
 
         }
 
@@ -49,7 +50,7 @@
                             <table>
                                 <td>
                                     <div style="display: inline-block;">
-                                        {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 1.8, 1.8) !!}
+                                        {!! DNS2D::getBarcodeHTML("$projects->qrcode_project", 'QRCODE', 3.4, 3.4) !!}
                                     </div>
                                 </td>
                                 <td>
