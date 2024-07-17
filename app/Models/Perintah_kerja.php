@@ -16,6 +16,7 @@ class Perintah_kerja extends Model
     protected $fillable =
     [
         'kode_perintah',
+        'kode_qrcode',
         'qrcode_perintah',
         'user_id',
         'pelanggan_id',

@@ -17,6 +17,7 @@ class Depositpemesanan extends Model
     protected $fillable =
     [
         'kode_deposit',
+        'kode_qrcode',
         'qrcode_deposit',
         'perintah_kerja_id',
         'harga',

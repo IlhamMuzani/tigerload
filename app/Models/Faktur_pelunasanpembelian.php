@@ -18,6 +18,7 @@ class Faktur_pelunasanpembelian extends Model
     [
         'user_id',
         'kode_pelunasan',
+        'kode_qrcode',
         'qrcode_pelunasan',
         'supplier_id',
         'kode_supplier',

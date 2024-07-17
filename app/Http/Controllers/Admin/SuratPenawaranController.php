@@ -66,6 +66,7 @@ class SuratPenawaranController extends Controller
         }
 
         $kode = $this->kode();
+        $kode_qrcode = $this->kode_qrcode();
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
@@ -98,11 +99,13 @@ class SuratPenawaranController extends Controller
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
+                'qrcode_penawaran' => 'https://tigerload.id/surat_penawaran/' . $kode_qrcode,
+
             ]
         ));
 
-        $encryptedId = Crypt::encryptString($pembelian->id);
-        $pembelian->qrcode_penawaran = 'https://tigerload.id/surat_penawaran/' . $encryptedId;
+        // $encryptedId = Crypt::encryptString($pembelian->id);
+        // $pembelian->qrcode_penawaran = 'https://tigerload.id/surat_penawaran/' . $encryptedId;
         $pembelian->save();
 
         // $kode = $this->kodekendaraan();
@@ -173,6 +176,22 @@ class SuratPenawaranController extends Controller
     //     return $kode_kendaraan;
     // }
 
+    public function kode_qrcode()
+    {
+        $length = 9;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Menggunakan huruf kecil
+        $charactersLength = strlen($characters);
+
+        do {
+            $newCode = '';
+            for ($i = 0; $i < $length; $i++) {
+                $newCode .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $existingCode = Surat_penawaran::where('kode_qrcode', $newCode)->first();
+        } while ($existingCode);
+
+        return $newCode;
+    }
 
 
     public function kode()

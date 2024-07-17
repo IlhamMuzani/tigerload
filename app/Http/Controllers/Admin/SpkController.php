@@ -58,6 +58,7 @@ class SpkController extends Controller
         }
 
         $kode = $this->kode();
+        $kode_qrcode = $this->kode_qrcode();
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
@@ -95,11 +96,12 @@ class SpkController extends Controller
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
                 'status_komisi' => 'tidak aktif',
+                'qrcode_spk' => 'https://tigerload.id/spk/' . $kode_qrcode,
             ]
         ));
 
-        $encryptedId = Crypt::encryptString($pembelian->id);
-        $pembelian->qrcode_spk = 'https://tigerload.id/spk/' . $encryptedId;
+        // $encryptedId = Crypt::encryptString($pembelian->id);
+        // $pembelian->qrcode_spk = 'https://tigerload.id/spk/' . $encryptedId;
         $pembelian->save();
 
         $kode = $this->kodekendaraan();
@@ -129,23 +131,22 @@ class SpkController extends Controller
         return view('admin.spk.show', compact('kendaraans', 'pembelians', 'spesifikasis'));
     }
 
-    // public function kode()
-    // {
-    //     $kendaraan = Spk::all();
-    //     if ($kendaraan->isEmpty()) {
-    //         $num = "000001";
-    //     } else {
-    //         $id = Spk::getId();
-    //         foreach ($id as $value);
-    //         $idlm = $value->id;
-    //         $idbr = $idlm + 1;
-    //         $num = sprintf("%06s", $idbr);
-    //     }
+    public function kode_qrcode()
+    {
+        $length = 9;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Menggunakan huruf kecil
+        $charactersLength = strlen($characters);
 
-    //     $data = 'FM';
-    //     $kode_kendaraan = $data . $num;
-    //     return $kode_kendaraan;
-    // }
+        do {
+            $newCode = '';
+            for ($i = 0; $i < $length; $i++) {
+                $newCode .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $existingCode = Spk::where('kode_qrcode', $newCode)->first();
+        } while ($existingCode);
+
+        return $newCode;
+    }
 
     public function kode()
     {

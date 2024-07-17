@@ -133,21 +133,6 @@ class ProjectController extends Controller
         return $newCode;
     }
 
-    // public function kode_qrcode()
-    // {
-    //     $lastBarang = Project::latest()->first();
-    //     if (!$lastBarang) {
-    //         $num = 1;
-    //     } else {
-    //         $lastCode = $lastBarang->kode_project;
-    //         $num = (int) substr($lastCode, strlen('TGR')) + 1;
-    //     }
-    //     $formattedNum = sprintf("%06s", $num);
-    //     $prefix = 'TGR';
-    //     $newCode = $prefix . $formattedNum;
-    //     return $newCode;
-    // }
-
     public function destroy($id)
     {
         $project = Pelanggan::find($id);

@@ -17,6 +17,7 @@ class Popembelian extends Model
     protected $fillable =
     [
         'kode_po_pembelian',
+        'kode_qrcode',
         'qrcode_popembelian',
         'supplier_id',
         'tanggal',

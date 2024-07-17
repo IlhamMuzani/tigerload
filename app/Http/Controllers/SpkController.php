@@ -13,17 +13,10 @@ use Illuminate\Contracts\Encryption\DecryptException;
 
 class SpkController extends Controller
 {
-    public function detail($encryptedId)
+
+    public function detail($kode)
     {
-        try {
-            // Dekripsi ID
-            $id = Crypt::decryptString($encryptedId);
-        } catch (DecryptException $e) {
-            // Tangani kesalahan jika ID tidak dapat didekripsi
-            return abort(404, 'Invalid encrypted ID');
-        }
-                
-        $pembelians = Spk::where('id', $id)->first();
+        $pembelians = Spk::where('kode_qrcode', $kode)->first();
 
         // Check if the main record exists
         if (!$pembelians) {
@@ -43,4 +36,35 @@ class SpkController extends Controller
 
         return view('admin.spk.qrcode_detail', compact('kendaraans', 'pembelians', 'spesifikasis'));
     }
+
+    // public function detail($encryptedId)
+    // {
+    //     try {
+    //         // Dekripsi ID
+    //         $id = Crypt::decryptString($encryptedId);
+    //     } catch (DecryptException $e) {
+    //         // Tangani kesalahan jika ID tidak dapat didekripsi
+    //         return abort(404, 'Invalid encrypted ID');
+    //     }
+
+    //     $pembelians = Spk::where('id', $id)->first();
+
+    //     // Check if the main record exists
+    //     if (!$pembelians) {
+    //         return abort(404, 'Surat Penawaran not found');
+    //     }
+
+    //     // Retrieve the related records
+    //     $kendaraans = Kendaraan::where('spk_id', $pembelians->id)->first();
+    //     $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
+
+    //     // Check if the related records exist
+    //     if (!$karoseries) {
+    //         return abort(404, 'Typekaroseri not found');
+    //     }
+
+    //     $spesifikasis = Spesifikasi::where('typekaroseri_id', $karoseries->id)->get();
+
+    //     return view('admin.spk.qrcode_detail', compact('kendaraans', 'pembelians', 'spesifikasis'));
+    // }
 }

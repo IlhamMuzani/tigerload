@@ -18,6 +18,7 @@ class Penerimaan_pembayaran extends Model
     protected $fillable =
     [
         'kode_penerimaan',
+        'kode_qrcode',
         'qrcode_penerimaan',
         'user_id',
         'pelanggan_id',

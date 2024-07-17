@@ -17,6 +17,7 @@ class Departemen extends Model
     protected $fillable = [
         'nama',
         'qrcode_departemen',
+        'kode_qrcode',
         'tanggal_awal',
         'tanggal_akhir',
     ];

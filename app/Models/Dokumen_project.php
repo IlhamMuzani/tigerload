@@ -18,6 +18,7 @@ class Dokumen_project extends Model
     protected $fillable =
     [
         'kode_dokumen',
+        'kode_qrcode',
         'qrcode_dokumen',
         'user_id',
         'perintah_kerja_id',

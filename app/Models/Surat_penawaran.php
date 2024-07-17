@@ -16,6 +16,7 @@ class Surat_penawaran extends Model
     protected $fillable =
     [
         'kode_spk',
+        'kode_qrcode',
         'kategori',
         'no_npwp',
         'gambar_npwp',

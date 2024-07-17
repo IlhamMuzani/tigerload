@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('no_npwp')->nullable();
             $table->string('gambar_npwp')->nullable();
             $table->string('kode_spk')->nullable();
+            $table->string('kode_qrcode')->nullable();
             $table->string('qrcode_spk')->nullable();
             $table->unsignedBigInteger('typekaroseri_id')->nullable();
             $table->foreign('typekaroseri_id')->references('id')->on('typekaroseris')->onDelete('set null');

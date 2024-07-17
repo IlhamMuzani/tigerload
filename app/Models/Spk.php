@@ -16,6 +16,7 @@ class Spk extends Model
     protected $fillable =
     [
         'kode_spk',
+        'kode_qrcode',
         'surat_penawaran_id',
         'kategori',
         'no_npwp',

@@ -17,6 +17,7 @@ class Faktur_pajak extends Model
     protected $fillable =
     [
         'kode_pajak',
+        'kode_qrcode',
         'qrcode_pajak',
         'kategori',
         'penjualan_id',

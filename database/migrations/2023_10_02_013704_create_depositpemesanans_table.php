@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('depositpemesanans', function (Blueprint $table) {
             $table->id();
             $table->string('kode_deposit')->nullable();
+            $table->string('kode_qrcode')->nullable();
             $table->string('qrcode_deposit')->nullable();
             $table->unsignedBigInteger('perintah_kerja_id')->nullable();
             $table->foreign('perintah_kerja_id')->references('id')->on('perintah_kerjas')->onDelete('set null');

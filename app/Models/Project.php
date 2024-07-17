@@ -17,6 +17,7 @@ class Project extends Model
     protected $fillable =
     [
         'kode_project',
+        'kode_qrcode',
         'qrcode_project',
         'perintah_kerja_id',
         'tanggal',

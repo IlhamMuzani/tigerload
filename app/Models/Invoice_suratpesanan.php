@@ -18,6 +18,7 @@ class Invoice_suratpesanan extends Model
     [
         'user_id',
         'kode_invoice',
+        'kode_qrcode',
         'kategori',
         'qrcode_invoice',
         'pelanggan_id',

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('perintah_kerjas', function (Blueprint $table) {
             $table->id();
             $table->string('kode_perintah')->nullable();
+            $table->string('kode_qrcode')->nullable();
             $table->string('qrcode_perintah')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

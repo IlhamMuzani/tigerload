@@ -19,6 +19,7 @@ class Pengambilanbahan extends Model
     [
         'user_id',
         'kode_pengambilan',
+        'kode_qrcode',
         'qrcode_pengambilan',
         'perintah_kerja_id',
         'tanggal',
