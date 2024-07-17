@@ -91,6 +91,7 @@ class SpkController extends Controller
                 'jumlah_unit' => $request->jumlah_unit,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
+                'kode_qrcode' => $this->kode_qrcode(),
                 // 'qrcode_spk' => 'https:///tigerload.id/spk/' . $kode,
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
