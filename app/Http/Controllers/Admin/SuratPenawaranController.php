@@ -95,7 +95,7 @@ class SuratPenawaranController extends Controller
                 'jumlah_unit' => $request->jumlah_unit,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'kode_spk' => $this->kode(),
-                'kode_qrcode' => $this->kode_qrcode(),
+                'kode_qrcode' => $kode_qrcode,
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
