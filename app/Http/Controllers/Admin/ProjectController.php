@@ -124,7 +124,7 @@ class ProjectController extends Controller
         if (!$lastBarang) {
             $num = 1;
         } else {
-            $lastCode = $lastBarang->qrcode_project;
+            $lastCode = $lastBarang->kode_project;
             $num = (int) substr($lastCode, strlen('TGR')) + 1;
         }
         $formattedNum = sprintf("%06s", $num);
@@ -132,6 +132,21 @@ class ProjectController extends Controller
         $newCode = $prefix . $formattedNum;
         return $newCode;
     }
+
+    // public function kode_qrcode()
+    // {
+    //     $lastBarang = Project::latest()->first();
+    //     if (!$lastBarang) {
+    //         $num = 1;
+    //     } else {
+    //         $lastCode = $lastBarang->kode_project;
+    //         $num = (int) substr($lastCode, strlen('TGR')) + 1;
+    //     }
+    //     $formattedNum = sprintf("%06s", $num);
+    //     $prefix = 'TGR';
+    //     $newCode = $prefix . $formattedNum;
+    //     return $newCode;
+    // }
 
     public function destroy($id)
     {
