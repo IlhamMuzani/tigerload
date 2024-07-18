@@ -103,7 +103,7 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/barangnonbesi/' . $barangnonbesi->id . '/edit') }}"
+                                        <a href="{{ url('admin/barangnonbesi/' . $barang->id . '/edit') }}"
                                             class="btn btn-warning btn-sm">
                                             <i class="fas fa-edit"></i>
                                         </a>

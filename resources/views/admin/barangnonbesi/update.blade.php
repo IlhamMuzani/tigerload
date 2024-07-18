@@ -49,10 +49,10 @@
                             <select class="form-control" id="kategori" name="kategori">
                                 <option value="">- Pilih -</option>
                                 <option value="besi"
-                                    {{ old('kategori', $barang->kategori) == 'besi' ? 'selected' : null }}>
+                                    {{ old('kategori', $barangnonbesi->kategori) == 'besi' ? 'selected' : null }}>
                                     Besi</option>
                                 <option value="non besi"
-                                    {{ old('kategori', $barang->kategori) == 'non besi' ? 'selected' : null }}>
+                                    {{ old('kategori', $barangnonbesi->kategori) == 'non besi' ? 'selected' : null }}>
                                     Non Besi</option>
                             </select>
                         </div>

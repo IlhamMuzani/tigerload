@@ -124,7 +124,7 @@ class BarangnonbesiController extends Controller
             'harga' => $request->harga,
         ]);
 
-        return back('admin/barangnonbesi')->with('success', 'Berhasil memperbarui barang');
+        return redirect('admin/barangnonbesi')->with('success', 'Berhasil memperbarui barang');
     }
 
 
