@@ -438,6 +438,12 @@
                         <a href="">
                             <i aria-hidden="true"></i>
                             <span>
+                                No Hp, +62 878-1590-5141
+                            </span>
+                        </a>
+                        <a href="">
+                            <i aria-hidden="true"></i>
+                            <span>
                                 No. Izin Karoseri : 400.7.22/ 11428
                             </span>
                         </a>

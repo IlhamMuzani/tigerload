@@ -54,6 +54,7 @@ class ProjectController extends Controller
         }
 
         $kode = $this->kode();
+        $kode_qrcode = $this->kode_qrcode();
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
@@ -63,11 +64,12 @@ class ProjectController extends Controller
             [
                 'perintah_kerja_id' => $request->perintah_kerja_id,
                 'kode_project' => $kode,
+                'kode_qrcode' => $kode_qrcode,
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
                 'status' => 'posting',
-                'qrcode_project' => 'https://tigerload.id/project/' . $kode,
-
+                // 'qrcode_project' => 'https://tigerload.id/project/' . $kode,
+                'qrcode_project' => 'https://tigerload.id/project/' . $kode_qrcode,
             ]
         ));
 
@@ -107,17 +109,24 @@ class ProjectController extends Controller
         return $pdf->stream('QrCodeKendaraan.pdf');
     }
 
-    // public function cetakqrcode($id)
-    // {
-    //     $projects = Project::find($id);
-    //     $pdf = app('dompdf.wrapper');
-    //     $pdf->loadView('admin.project.cetak_qrcode', compact('projects'));
+    public function kode_qrcode()
+    {
+        $length = 9;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Menggunakan huruf kecil
+        $charactersLength = strlen($characters);
 
-    //     // Mengatur jenis kertas dan orientasi menjadi lanscape
-    //     $pdf->setPaper([0, 0, 200, 100], 'landscape'); // 612x396 piksel setara dengan 8.5x5.5 inci
+        do {
+            $newCode = '';
+            for ($i = 0; $i < $length; $i++) {
+                $newCode .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $existingCode = Project::where('kode_qrcode', $newCode)->first();
+        } while ($existingCode);
 
-    //     return $pdf->stream('QrCodeKendaraan.pdf');
-    // }
+        return $newCode;
+    }
+
+    
     public function kode()
     {
         $lastBarang = Project::latest()->first();

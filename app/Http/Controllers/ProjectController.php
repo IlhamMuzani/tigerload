@@ -10,7 +10,7 @@ class ProjectController extends Controller
 {
     public function qrcode_detail($kode)
     {
-        $cetakpdf = Project::where('kode_project', $kode)->first();
+        $cetakpdf = Project::where('kode_qrcode', $kode)->first();
 
         if (!$cetakpdf) {
             abort(404, 'Project not found');
