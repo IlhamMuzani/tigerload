@@ -118,6 +118,10 @@
             </td>
             <td class="td"
                 style="text-align: right; padding-left: 1px; font-size: 12px;  font-weight:bold;width:15%">
+                TAMBAHAN <span> <br>LAINYA</span></td>
+            </td>
+            <td class="td"
+                style="text-align: right; padding-left: 1px; font-size: 12px;  font-weight:bold;width:15%">
                 PELUNASAN <span> <br>KASBON</span></td>
             </td>
             <td class="td" style="text-align: right; font-size: 12px;  font-weight:bold; width:10%">GAJI BERSIH
@@ -125,7 +129,7 @@
         </tr>
         <!-- Add horizontal line below this row -->
         <tr>
-            <td colspan="14" style="padding: 0px;">
+            <td colspan="15" style="padding: 0px;">
                 <hr style="border: 0.5px solid; margin-top:3px; margin-bottom: 1px; padding: 0;">
                 <hr style="border: 0.5px solid; margin-top:1px; margin-bottom: 1px; padding: 0;">
             </td>
@@ -133,6 +137,7 @@
         @php
             $Grandtotal = 0;
             $Grandpelunasan = 0;
+            $Grandtambahanlainya = 0;
             $Grandbpjs = 0;
             $Grandtdkabsen = 0;
             $Grandterlambat15 = 0;
@@ -205,6 +210,9 @@
                     {{ number_format($item->hasil_absen, 0, ',', '.') }}
                 </td>
                 <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;">
+                    {{ number_format($item->tambahan_lainya, 0, ',', '.') }}
+                </td>
+                <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px;">
                     {{ number_format($item->pelunasan_kasbon, 0, ',', '.') }}
                 </td>
                 <td class="td" style="text-align: right; font-size: 12px;">
@@ -214,6 +222,7 @@
             @php
                 $Grandtotal += $item->gaji_bersih;
                 $Grandpelunasan += $item->pelunasan_kasbon;
+                $Grandtambahanlainya += $item->tambahan_lainya;
                 $Grandbpjs += $item->potongan_bpjs;
                 $Grandtdkabsen += $item->hasil_absen;
                 $Grandterlambat15 += $item->hasilkurang;
@@ -225,7 +234,7 @@
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="13" style="padding: 0px;"></td>
+            <td colspan="14" style="padding: 0px;"></td>
         </tr>
         <tr>
             <td colspan="5"
@@ -266,6 +275,9 @@
                 {{ number_format($Grandbpjs, 0, ',', '.') }}
             <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
                 {{ number_format($Grandtdkabsen, 0, ',', '.') }}
+            </td>
+            <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
+                {{ number_format($Grandtambahanlainya, 0, ',', '.') }}
             </td>
             <td class="td" style="text-align: right; padding-right: 7px; font-size: 12px; font-weight:bold;">
                 {{ number_format($Grandpelunasan, 0, ',', '.') }}

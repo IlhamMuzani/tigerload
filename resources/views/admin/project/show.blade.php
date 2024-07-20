@@ -155,7 +155,7 @@
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->nama_pelanggan }}</td>
                         </tr>
-                        {{-- <tr>
+                        <tr>
                             <td width="50%" valign="top">
                                 Telp
                             </td>
@@ -166,7 +166,7 @@
                                 Alamat
                             </td>
                             <td width="50%">{{ $cetakpdf->perintah_kerja->pelanggan->alamat }}</td>
-                        </tr> --}}
+                        </tr>
                     </table>
 
                 </div>
@@ -393,6 +393,23 @@
                                 @endif
                             </div>
                             <p style="text-align: center; margin-top:5px">Tampak Kiri</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 text-center mb-4">
+                        <div class="d-flex justify-content-center align-items-center flex-column">
+                            <div class="boxs"
+                                style="width: 200px; height: 200px; border: 1px solid #ccc; overflow: hidden; position: relative;">
+                                @if ($cetakpdf->perintah_kerja->typekaroseri->gambar_skrb == null)
+                                    <img src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                                        alt="tigerload" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                                @else
+                                    <img class="mt-3"
+                                        src="{{ asset('storage/uploads/' . $cetakpdf->perintah_kerja->typekaroseri->gambar_skrb) }}"
+                                        alt="tigerload" style="max-width: 100%; max-height: 100%; object-fit: cover;">
+                                @endif
+                            </div>
+                            <p style="text-align: center; margin-top:5px">Gambar SKRB</p>
                         </div>
                     </div>
                 </div>

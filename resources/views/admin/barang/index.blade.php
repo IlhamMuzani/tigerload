@@ -103,14 +103,14 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ url('admin/barang/' . $barang->id . '/edit') }}"
-                                            class="btn btn-warning btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
                                         <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
                                             data-target="#modal-hapus-{{ $barang->id }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
+                                        <a href="{{ url('admin/barang/' . $barang->id . '/edit') }}"
+                                            class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
                                         <button class="btn btn-info btn-sm" data-toggle="collapse"
                                             data-target="#barang-{{ $index }}"><i class="fas fa-eye"></i></button>
                                     </td>

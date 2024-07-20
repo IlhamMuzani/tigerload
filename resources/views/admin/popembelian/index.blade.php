@@ -115,7 +115,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Tambah Barang</h3>
                         <div class="float-right">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="addPesanan()">
+                            <button type="button" class="btn btn-primary btn-sm"  id="addPesananBtn" onclick="addPesanan()">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -657,6 +657,15 @@
                 // Lakukan pengiriman formulir
                 $('form').submit();
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('addPesananBtn').click();
+            }
         });
     </script>
 @endsection

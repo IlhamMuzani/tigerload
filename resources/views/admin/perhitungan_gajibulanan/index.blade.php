@@ -125,7 +125,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <div class="float-right mb-3">
-                        <button type="button" class="btn btn-primary btn-sm" onclick="addPesanan()">
+                        <button type="button" class="btn btn-primary btn-sm" id="addPesananBtn" onclick="addPesanan()">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -1111,7 +1111,7 @@
                         0;
                     var lainya = parseFloat(currentRow.find(".lainya").val().replace(/[.]/g, '')) || 0;
                     var tambahan_lainya = parseFloat(currentRow.find(".tambahan_lainya").val().replace(/[.]/g, '')) ||
-                    0;
+                        0;
                     var absen = parseFloat(currentRow.find(".absen").val()) || 0;
                     var potongan_bpjs = parseFloat(currentRow.find(".potongan_bpjs").val().replace(/[.]/g, '')) || 0;
 
@@ -1381,4 +1381,13 @@
         }
     </script>
 
+
+    <script>
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('addPesananBtn').click();
+            }
+        });
+    </script>
 @endsection
