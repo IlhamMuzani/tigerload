@@ -114,7 +114,7 @@
                             @foreach ($inquery as $faktur_pajak)
                                 <tr class="dropdown"{{ $faktur_pajak->id }}>
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
-                                        value="{{ $faktur_pajak->id }}">
+                                            value="{{ $faktur_pajak->id }}">
                                     </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $faktur_pajak->kode_pajak }}</td>
@@ -171,8 +171,14 @@
                                                 <a class="dropdown-item"
                                                     href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id . '/edit') }}">Update</a>
 
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
+                                                <a class="dropdown-item" style="margin-left:0px; margin-right:15px;">
+                                                    @if ($faktur_pajak->gambar_pajak == null)
+                                                    @else
+                                                        <a style="margin-left:15px; margin-right:15px;"
+                                                            href="{{ asset('storage/uploads/' . $faktur_pajak->gambar_pajak) }}"
+                                                            target="_blank" class="text-bold">Lihat Bukti Potong Pajak</a>
+                                                    @endif
+                                                </a>
 
                                                 <form style="margin-top:5px" method="GET"
                                                     action="{{ route('hapus_pajak', ['id' => $faktur_pajak->id]) }}">
@@ -185,13 +191,24 @@
                                             @if ($faktur_pajak->status == 'posting')
                                                 <a class="dropdown-item unpost-btn"
                                                     data-memo-id="{{ $faktur_pajak->id }}">Unpost</a>
-
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
+                                                <a class="dropdown-item" style="margin-left:0px; margin-right:15px;">
+                                                    @if ($faktur_pajak->gambar_pajak == null)
+                                                    @else
+                                                        <a style="margin-left:15px; margin-right:15px;"
+                                                            href="{{ asset('storage/uploads/' . $faktur_pajak->gambar_pajak) }}"
+                                                            target="_blank" class="text-bold">Lihat Bukti Potong Pajak</a>
+                                                    @endif
+                                                </a>
                                             @endif
                                             @if ($faktur_pajak->status == 'selesai')
-                                                <a class="dropdown-item"
-                                                    href="{{ url('admin/inquery_fakturpajak/' . $faktur_pajak->id) }}">Show</a>
+                                                <a class="dropdown-item" style="margin-left:0px; margin-right:15px;">
+                                                    @if ($faktur_pajak->gambar_pajak == null)
+                                                    @else
+                                                        <a style="margin-left:15px; margin-right:15px;"
+                                                            href="{{ asset('storage/uploads/' . $faktur_pajak->gambar_pajak) }}"
+                                                            target="_blank" class="text-bold">Lihat Bukti Potong Pajak</a>
+                                                    @endif
+                                                </a>
                                             @endif
                                         </div>
                                     </td>
