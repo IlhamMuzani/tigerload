@@ -68,7 +68,9 @@ class InqueryPenjualanController extends Controller
         $penjualans = Penjualan::where('id', $id)->first();
         $penjual = Penjualan::find($id);
         $spesifikasis = Detail_penjualan::where('penjualan_id', $penjual->id)->get();
-        return view('admin.inquerypenjualan.show', compact('penjualans', 'spesifikasis'));
+        $perintah_kerja = Perintah_kerja::where('id', $penjual->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
+        return view('admin.inquerypenjualan.show', compact('depositpemesanans', 'penjualans', 'spesifikasis'));
     }
 
 
@@ -208,51 +210,83 @@ class InqueryPenjualanController extends Controller
             }
         }
 
+        // Fetch the Perintah_kerja record
         $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
-        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
-        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
-        if ($deposit) {
-            $deposit->update(['status' => 'selesai']);
+
+        // Update the status of Perintah_kerja
+        if ($spk) {
+            $spk->update(['status_penjualan' => 'penjualan']);
         }
+
+        // Update the status of all related Depositpemesanan records
+        Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])
+            ->update(['status' => 'selesai']);
 
         $penjualans = Penjualan::find($transaksi_id);
 
         $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.inquerypenjualan.show', compact('spesifikasis', 'penjualans'));
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
+
+        return view('admin.inquerypenjualan.show', compact('depositpemesanans', 'spesifikasis', 'penjualans'));
     }
 
     public function unpostpenjualan($id)
     {
+        // Fetch the Penjualan record
         $transaksi = Penjualan::where('id', $id)->first();
-        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
-        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => null]);
-        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'selesai'])->first();
-        if ($deposit) {
-            $deposit->update(['status' => 'posting']);
+
+        if (!$transaksi) {
+            return back()->with('error', 'Transaksi not found.');
         }
-        $transaksi->update([
-            'status' => 'unpost'
-        ]);
+
+        // Fetch the related Perintah_kerja record
+        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
+
+        if ($spk) {
+            // Update the status of Perintah_kerja
+            $spk->update(['status_penjualan' => null]);
+        }
+
+        // Update the status of all related Depositpemesanan records
+        Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'selesai'])
+            ->update(['status' => 'posting']);
+
+        // Update the status of the Penjualan record
+        $transaksi->update(['status' => 'unpost']);
 
         return back()->with('success', 'Berhasil');
     }
+
 
     public function postingpenjualan($id)
     {
+        // Fetch the Penjualan record
         $transaksi = Penjualan::where('id', $id)->first();
-        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
-        $spks = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
-        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
-        if ($deposit) {
-            $deposit->update(['status' => 'selesai']);
+
+        if (!$transaksi) {
+            return back()->with('error', 'Transaksi not found.');
         }
-        $transaksi->update([
-            'status' => 'posting'
-        ]);
+
+        // Fetch the related Perintah_kerja record
+        $spk = Perintah_kerja::where('id', $transaksi->perintah_kerja_id)->first();
+
+        if ($spk) {
+            // Update the status of Perintah_kerja
+            $spk->update(['status_penjualan' => 'penjualan']);
+        }
+
+        // Update the status of all related Depositpemesanan records
+        Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])
+            ->update(['status' => 'selesai']);
+
+        // Update the status of the Penjualan record
+        $transaksi->update(['status' => 'posting']);
 
         return back()->with('success', 'Berhasil');
     }
+
 
 
     public function hapuspenjualan($id)

@@ -61,7 +61,7 @@ class DepositpemesananController extends Controller
         $deposits->save();
 
 
-        $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
+        // $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status' => 'selesai', 'status_deposit' => 'deposit']);
         $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->first();
         return view('admin.depositpemesanan.show', compact('deposits', 'spk'));
     }

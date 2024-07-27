@@ -90,7 +90,7 @@ class PenjualanController extends Controller
                 $harga = $request->harga[$i] ?? '';
                 $diskon = $request->diskon[$i] ?? '';
                 $total = $request->total[$i] ?? '';
-                $data_pembelians->push(['typekaroseri_id' => $typekaroseri_id, 'kode_types' => $kode_types, 'nama_karoseri' => $nama_karoseri, 'jumlah' => $jumlah, 'harga' =>$harga, 'diskon' => $diskon, 'total' => $total]);
+                $data_pembelians->push(['typekaroseri_id' => $typekaroseri_id, 'kode_types' => $kode_types, 'nama_karoseri' => $nama_karoseri, 'jumlah' => $jumlah, 'harga' => $harga, 'diskon' => $diskon, 'total' => $total]);
             }
         }
 
@@ -142,17 +142,21 @@ class PenjualanController extends Controller
         }
 
 
+        // Fetch the Perintah_kerja record
         $spk = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
-        $spks = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->update(['status_penjualan' => 'penjualan']);
-
-        $deposit = Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])->first();
-        if ($deposit) {
-            $deposit->update(['status' => 'selesai']);
+        if ($spk) {
+            $spk->update(['status_penjualan' => 'penjualan']);
         }
+        Depositpemesanan::where(['perintah_kerja_id' => $spk->id, 'status' => 'posting'])
+            ->update(['status' => 'selesai']);
+
 
         $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.penjualan.show', compact('penjualans', 'spesifikasis'));
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
+
+        return view('admin.penjualan.show', compact('depositpemesanans', 'penjualans', 'spesifikasis'));
     }
 
     public function kode()
@@ -175,18 +179,26 @@ class PenjualanController extends Controller
 
     public function show($id)
     {
-        $penjualans = Penjualan::where('id', $id)->first();
 
-        return view('admin.penjualan.show', compact('penjualans'));
+        $penjualans = Penjualan::where('id', $id)->first();
+        $penjual = Penjualan::find($id);
+        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjual->id)->get();
+        $perintah_kerja = Perintah_kerja::where('id', $penjual->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
+        return view('admin.penjualan.show', compact('depositpemesanans', 'penjualans', 'spesifikasis'));
     }
+
 
     public function cetakpdf($id)
     {
         $penjualans = Penjualan::find($id);
         $penjual = Penjualan::find($id);
         $spesifikasis = Detail_penjualan::where('penjualan_id', $penjual->id)->get();
+        $perintah_kerja = Perintah_kerja::where('id', $penjual->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
+
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.penjualan.cetak_pdf', compact('penjualans', 'spesifikasis'));
+        $pdf->loadView('admin.penjualan.cetak_pdf', compact('depositpemesanans', 'penjualans', 'spesifikasis'));
         $pdf->setPaper('letter', 'portrait');
 
         // Return the PDF as a response

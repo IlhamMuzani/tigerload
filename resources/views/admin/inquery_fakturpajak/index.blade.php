@@ -179,7 +179,6 @@
                                                             target="_blank" class="text-bold">Lihat Bukti Potong Pajak</a>
                                                     @endif
                                                 </a>
-
                                                 <form style="margin-top:5px" method="GET"
                                                     action="{{ route('hapus_pajak', ['id' => $faktur_pajak->id]) }}">
                                                     <button type="submit"

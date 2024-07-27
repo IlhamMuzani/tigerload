@@ -106,10 +106,10 @@ class InqueryDepositController extends Controller
         $deposits = Depositpemesanan::where('id', $id)->first();
 
         // Update the Perintah_kerja record based on the perintah_kerja_id from deposits
-        Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update([
-            'status' => 'selesai',
-            'status_deposit' => 'deposit',
-        ]);
+        // Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update([
+        //     'status' => 'selesai',
+        //     'status_deposit' => 'deposit',
+        // ]);
 
         // Retrieve the updated Perintah_kerja record
         $spk = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->first();
@@ -123,7 +123,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => null, 'status' => 'posting',]);
+        // $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => null, 'status' => 'posting',]);
 
         $deposits->update([
             'status' => 'unpost'
@@ -136,7 +136,7 @@ class InqueryDepositController extends Controller
     {
         $deposits = Depositpemesanan::where('id', $id)->first();
 
-        $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => 'deposit', 'status' => 'selesai',]);
+        // $spks = Perintah_kerja::where('id', $deposits->perintah_kerja_id)->update(['status_deposit' => 'deposit', 'status' => 'selesai',]);
 
         $deposits->update([
             'status' => 'posting'

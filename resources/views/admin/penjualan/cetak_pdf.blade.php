@@ -408,7 +408,7 @@
         @endif
 
         @php
-            $totalSubtotaldp = 0; // Menambahkan harga saat iterasi
+            $totalSubtotalppn = 0; // Menambahkan harga saat iterasi
         @endphp
         @foreach ($spesifikasis as $item)
             <tr>
@@ -440,7 +440,7 @@
                 </td>
             </tr>
             @php
-                $totalSubtotaldp += $item->total; // Menambahkan harga saat iterasi
+                $totalSubtotalppn += $item->total; // Menambahkan harga saat iterasi
             @endphp
         @endforeach
 
@@ -455,12 +455,12 @@
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">Total</td>
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($original_price + $totalSubtotaldp, 2, ',', '.') }}
+                        {{ number_format($original_price + $totalSubtotalppn, 2, ',', '.') }}
                 </td>
             </tr>
             <?php
             // Calculate the increase and round it
-            $total_price2 = $original_price + $totalSubtotaldp;
+            $total_price2 = $original_price + $totalSubtotalppn;
             $tax_rate2 = 0.11;
             // Calculate original price
             $original_price2 = $total_price2 / (1 + $tax_rate2);
@@ -483,29 +483,30 @@
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">Sub Total</td>
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($original_price + $totalSubtotaldp + $original_price2, 2, ',', '.') }}
+                        {{ number_format($original_price + $totalSubtotalppn + $original_price2, 2, ',', '.') }}
                 </td>
             </tr>
             <tr><br></tr>
-            <tr>
-                <td colspan="6"
-                    style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
-                    DP
-                    @if ($penjualans->depositpemesanan)
-                        ({{ $penjualans->depositpemesanan->kode_deposit }}
-                        {{ $penjualans->depositpemesanan->tanggal }})
-                    @else
-                    @endif
-                </td>
-                <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
-                    <span style="float: right;">
-                        @if ($penjualans->depositpemesanan)
-                            {{ number_format($penjualans->depositpemesanan->harga, 2, ',', '.') }}
-                        @else
-                            0
-                        @endif
-                </td>
-            </tr>
+
+            @php
+                $totalDP = 0;
+            @endphp
+            @foreach ($depositpemesanans as $index => $deposit)
+                <tr>
+                    <td colspan="6"
+                        style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
+                        DP
+                        ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                    </td>
+                    <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
+                        <span style="float: right;">
+                            {{ number_format($deposit->harga, 2, ',', '.') }}
+                    </td>
+                </tr>
+                @php
+                    $totalDP += $deposit->harga;
+                @endphp
+            @endforeach
             <tr>
                 <td colspan="6"
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px; border-bottom: 1px solid black;">
@@ -524,9 +525,9 @@
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                     <span style="float: right">
                         @if ($penjualans->depositpemesanan)
-                            {{ number_format($original_price + $totalSubtotaldp + $original_price2 - $penjualans->depositpemesanan->harga, 2, ',', '.') }}
+                            {{ number_format($original_price + $totalSubtotalppn + $original_price2 - $totalDP, 2, ',', '.') }}
                         @else
-                            {{ number_format($original_price + $totalSubtotaldp + $original_price2 - 0, 2, ',', '.') }}
+                            {{ number_format($original_price + $totalSubtotalppn + $original_price2 - 0, 2, ',', '.') }}
                         @endif
                 </td>
             </tr>
@@ -537,33 +538,28 @@
                     Total</td>
                 <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($totalSubtotalharga + $totalSubtotaldp, 2, ',', '.') }}
+                        {{ number_format($totalSubtotalharga + $totalSubtotalppn, 2, ',', '.') }}
                 </td>
             </tr>
-            <tr>
-                <td colspan="6"
-                    style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
-                    DP
-                    @if ($penjualans->depositpemesanan)
-                        ({{ $penjualans->depositpemesanan->kode_deposit }}
-                        {{ $penjualans->depositpemesanan->tanggal }})
-                    @else
-                    @endif
-                </td>
-                {{-- <td class="td" style="text-align: right; font-weight: bold;">Rp.
-                {{ number_format($totalSubtotal, 0, ',', '.') }}
-            </td> --}}
-                <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
-                    {{-- <span style="float: center;">Rp.</span> --}}
-                    <span style="float: right;">
-                        @if ($penjualans->depositpemesanan)
-                            {{ number_format($penjualans->depositpemesanan->harga, 2, ',', '.') }}
-                        @else
-                            0
-                        @endif
-                        {{-- </span> --}}
-                </td>
-            </tr>
+            @php
+                $totalDP1 = 0;
+            @endphp
+            @foreach ($depositpemesanans as $index => $deposit)
+                <tr>
+                    <td colspan="6"
+                        style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
+                        DP
+                        ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                    </td>
+                    <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
+                        <span style="float: right;">
+                            {{ number_format($deposit->harga, 2, ',', '.') }}
+                    </td>
+                </tr>
+                @php
+                    $totalDP1 += $deposit->harga;
+                @endphp
+            @endforeach
 
             <tr>
                 <td colspan="6"
@@ -588,9 +584,9 @@
                     {{-- <span style="float: center;">Rp.</span> --}}
                     <span style="float: right">
                         @if ($penjualans->depositpemesanan)
-                            {{ number_format($totalSubtotalharga + $totalSubtotaldp - $penjualans->depositpemesanan->harga, 2, ',', '.') }}
+                            {{ number_format($totalSubtotalharga + $totalSubtotalppn - $totalDP1, 2, ',', '.') }}
                         @else
-                            {{ number_format($totalSubtotalharga + $totalSubtotaldp - 0, 2, ',', '.') }}
+                            {{ number_format($totalSubtotalharga + $totalSubtotalppn - 0, 2, ',', '.') }}
                         @endif
                         {{-- </span> --}}
                 </td>
