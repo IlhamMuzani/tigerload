@@ -74,6 +74,11 @@ class Karyawan extends Model
         return $this->hasMany(Detail_cicilan::class);
     }
 
+    public function penerimaan_pembayaran()
+    {
+        return $this->hasMany(Penerimaan_pembayaran::class);
+    }
+
     public function user()
     {
         return $this->hasMany(User::class);

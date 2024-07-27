@@ -63,6 +63,11 @@ class Penerimaan_pembayaran extends Model
         return $this->belongsTo(Surat_penawaran::class);
     }
 
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class);
+    }
+
     public static function getId()
     {
         return $getId = DB::table('penerimaan_pembayaran')->orderBy('id', 'DESC')->take(1)->get();

@@ -249,7 +249,13 @@
                                 <tr style="text-align: center;">
                                     <table style="margin: 0 auto;">
                                         <tr style="text-align: center;">
-                                            <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
+                                            <td class="label">
+                                                @if (auth()->user()->karyawan)
+                                                    {{ auth()->user()->karyawan->nama_lengkap }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="separator" colspan="2"><span></span></td>

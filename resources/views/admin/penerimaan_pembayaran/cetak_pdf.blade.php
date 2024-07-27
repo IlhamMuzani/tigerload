@@ -91,7 +91,7 @@
                             <tr>
                                 <td data-toggle="modal" data-target="#modal-qrcode-{{ $cetakpdf->id }}"
                                     style="display: inline-block;">
-                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 1.5, 1.5) !!}
+                                    {!! DNS2D::getBarcodeHTML("$cetakpdf->qrcode_penerimaan", 'QRCODE', 2, 2) !!}
                                 </td>
                             </tr>
                         </table>
