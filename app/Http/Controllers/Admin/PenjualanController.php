@@ -70,13 +70,13 @@ class PenjualanController extends Controller
                 }
 
                 $validasi_produk = Validator::make($request->all(), [
-                    'typekaroseri_id.' . $i => 'required',
-                    'kode_types.' . $i => 'required',
-                    'nama_karoseri.' . $i => 'required',
-                    'jumlah.' . $i => 'required',
-                    'harga.' . $i => 'required',
-                    // 'diskon.' . $i => 'required',
-                    'total.' . $i => 'required',
+                    // 'typekaroseri_id.' . $i => 'required',
+                    // 'kode_types.' . $i => 'required',
+                    // 'nama_karoseri.' . $i => 'required',
+                    // 'jumlah.' . $i => 'required',
+                    // 'harga.' . $i => 'required',
+                    // // 'diskon.' . $i => 'required',
+                    // 'total.' . $i => 'required',
                 ]);
 
                 if ($validasi_produk->fails()) {
@@ -125,21 +125,21 @@ class PenjualanController extends Controller
 
         $transaksi_id = $penjualans->id;
 
-        if ($penjualans) {
+        // if ($penjualans) {
 
-            foreach ($data_pembelians as $data_pesanan) {
-                Detail_penjualan::create([
-                    'penjualan_id' => $penjualans->id,
-                    'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
-                    'kode_types' => $data_pesanan['kode_types'],
-                    'nama_karoseri' => $data_pesanan['nama_karoseri'],
-                    'jumlah' => $data_pesanan['jumlah'],
-                    'harga' => str_replace('.', '', $data_pesanan['harga']),
-                    'diskon' => str_replace('.', '', $data_pesanan['diskon']),
-                    'total' => str_replace('.', '', $data_pesanan['total']),
-                ]);
-            }
-        }
+        //     foreach ($data_pembelians as $data_pesanan) {
+        //         Detail_penjualan::create([
+        //             'penjualan_id' => $penjualans->id,
+        //             'typekaroseri_id' => $data_pesanan['typekaroseri_id'],
+        //             'kode_types' => $data_pesanan['kode_types'],
+        //             'nama_karoseri' => $data_pesanan['nama_karoseri'],
+        //             'jumlah' => $data_pesanan['jumlah'],
+        //             'harga' => str_replace('.', '', $data_pesanan['harga']),
+        //             'diskon' => str_replace('.', '', $data_pesanan['diskon']),
+        //             'total' => str_replace('.', '', $data_pesanan['total']),
+        //         ]);
+        //     }
+        // }
 
 
         // Fetch the Perintah_kerja record
@@ -151,7 +151,7 @@ class PenjualanController extends Controller
             ->update(['status' => 'selesai']);
 
 
-        $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
+        // $spesifikasis = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
 
         $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
         $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
