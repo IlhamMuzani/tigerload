@@ -62,10 +62,10 @@ class PenjualanController extends Controller
         $error_pesanans = array();
         $data_pembelians = collect();
 
-        if ($request->has('typekaroseri_id') || $request->has('kode_type') || $request->has('nama_karoseri') || $request->has('jumlah') || $request->has('harga')) {
+        if ($request->has('typekaroseri_id') || $request->has('kode_types') || $request->has('nama_karoseri') || $request->has('jumlah') || $request->has('harga')) {
             for ($i = 0; $i < count($request->typekaroseri_id); $i++) {
                 // Check if either 'keterangan_tambahan' or 'nominal_tambahan' has input
-                if (empty($request->typekaroseri_id[$i]) && empty($request->kode_type[$i]) && empty($request->nama_karoseri[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
+                if (empty($request->typekaroseri_id[$i]) && empty($request->kode_types[$i]) && empty($request->nama_karoseri[$i]) && empty($request->jumlah[$i]) && empty($request->harga[$i])) {
                     continue; // Skip validation if both are empty
                 }
 

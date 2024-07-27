@@ -309,7 +309,9 @@
         <tr>
             <td class="td" style="text-align: center; font-size: 13px; width:5%">No.</td>
             <td class="td" style="text-align: left; font-size: 13px; width:15%">Kode Produk</td>
-            <td class="td" style="text-align: left; font-size: 13px; width:45%">Nama Produk</td>
+            <td class="td"
+                style="text-align: left; font-size: 13px; width:45%; word-wrap: break-word; white-space: normal;">Nama
+                Produk</td>
             <td class="td" style="text-align: left; font-size: 13px; width: 15%">Qty</td>
             <td class="td" style="text-align: right; padding-right:20px; font-size: 13px; width:10%">Harga</td>
             <td class="td" style="text-align: right; padding-right:20px; font-size: 13px; width:10%">Diskon</td>
@@ -333,11 +335,14 @@
                     {{ $penjualans->spk->typekaroseri->kode_type }}
                 @endif
             </td>
-            <td class="info-text info-left" style="font-size: 13px; text-align: left;">
+            <td class="info-text info-left"
+                style="font-size: 13px; text-align: left; word-wrap: break-word; white-space: normal;">
                 @if ($penjualans->perintah_kerja)
                     {{ $penjualans->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $penjualans->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}
                 @else
                     {{ $penjualans->spk->typekaroseri->nama_karoseri }}
+                    {{ $penjualans->spk->typekaroseri->merek->tipe->nama_tipe }}
                 @endif
             </td>
             <td class="td" style="text-align: left;  font-size: 13px;">
@@ -549,7 +554,8 @@
                     <td colspan="6"
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 13px;">
                         DP
-                        ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                        ({{ $deposit->kode_deposit }}
+                        {{ \Carbon\Carbon::parse($deposit->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }})
                     </td>
                     <td class="td" style="font-size: 13px; text-align: right; font-weight: bold;">
                         <span style="float: right;">
