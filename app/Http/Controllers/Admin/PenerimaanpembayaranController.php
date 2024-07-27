@@ -60,6 +60,7 @@ class PenerimaanpembayaranController extends Controller
         }
 
         $kode = $this->kode();
+        $kode_qrcode = $this->kode_qrcode();
         $tanggal1 = Carbon::now('Asia/Jakarta');
         $format_tanggal = $tanggal1->format('d F Y');
         $tanggal = Carbon::now()->format('Y-m-d');
@@ -67,6 +68,7 @@ class PenerimaanpembayaranController extends Controller
             $request->all(),
             [
                 'user_id' => auth()->user()->id,
+                'kode_qrcode' => $kode_qrcode,
                 'tanggal_pembayaran' => $request->tanggal_pembayaran,
                 'keterangan' => $request->keterangan,
                 'kategoris' => $request->kategoris,
@@ -75,11 +77,13 @@ class PenerimaanpembayaranController extends Controller
                 'tanggal' => $format_tanggal,
                 'tanggal_awal' => $tanggal,
                 'status' => 'posting',
+                'qrcode_penerimaan' => 'https://tigerload.id/penerimaan_pembayaran/' . $kode_qrcode,
+
             ]
         ));
 
-        $encryptedId = Crypt::encryptString($pembelian->id);
-        $pembelian->qrcode_penerimaan = 'https://tigerload.id/penerimaan_pembayaran/' . $encryptedId;
+        // $encryptedId = Crypt::encryptString($pembelian->id);
+        // $pembelian->qrcode_penerimaan = 'https://tigerload.id/penerimaan_pembayaran/' . $encryptedId;
         $pembelian->save();
 
         return view('admin.penerimaan_pembayaran.show', compact('pembelian'));
@@ -89,6 +93,23 @@ class PenerimaanpembayaranController extends Controller
     {
         $pembelian = Penerimaan_pembayaran::where('id', $id)->first();
         return view('admin/penerimaan_pembayaran.show', compact('pembelian'));
+    }
+
+    public function kode_qrcode()
+    {
+        $length = 9;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Menggunakan huruf kecil
+        $charactersLength = strlen($characters);
+
+        do {
+            $newCode = '';
+            for ($i = 0; $i < $length; $i++) {
+                $newCode .= $characters[rand(0, $charactersLength - 1)];
+            }
+            $existingCode = Penerimaan_pembayaran::where('kode_qrcode', $newCode)->first();
+        } while ($existingCode);
+
+        return $newCode;
     }
 
     public function kode()

@@ -3,23 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penerimaan_pembayaran;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Contracts\Encryption\DecryptException;
 
 class PenerimaanpembayaranController extends Controller
 {
-    public function detail($encryptedId)
+    public function detail($kode)
     {
-        try {
-            // Dekripsi ID
-            $id = Crypt::decryptString($encryptedId);
-        } catch (DecryptException $e) {
-            // Tangani kesalahan jika ID tidak dapat didekripsi
-            return abort(404, 'Invalid encrypted ID');
-        }
-
-        // Retrieve the main record
-        $cetakpdf = Penerimaan_pembayaran::where('id', $id)->first();
+        $cetakpdf = Penerimaan_pembayaran::where('kode_qrcode', $kode)->first();
 
         // Check if the main record exists
         if (!$cetakpdf) {
