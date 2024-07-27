@@ -250,11 +250,12 @@
                                     <table style="margin: 0 auto;">
                                         <tr style="text-align: center;">
                                             <td class="label">
-                                                @if (auth()->user()->karyawan)
+                                                {{-- @if (auth()->user()->karyawan)
                                                     {{ auth()->user()->karyawan->nama_lengkap }}
                                                 @else
                                                     -
-                                                @endif
+                                                @endif --}}
+                                                -
                                             </td>
                                         </tr>
                                         <tr>
