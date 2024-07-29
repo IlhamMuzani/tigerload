@@ -194,8 +194,8 @@
 
 <body style="margin: 0; padding: 0;">
     <div id="logo-container">
-        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" alt="TIGER LOAD" width="165"
-            height="50">
+        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" alt="TIGER LOAD" width="170"
+            height="40">
     </div>
     <br>
     @if ($cetakpdf->kategori == 'Pengambilan Kasbon')

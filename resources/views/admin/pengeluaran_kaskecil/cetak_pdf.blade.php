@@ -64,8 +64,8 @@
 
 <body style="margin: 0; padding: 0;">
     <div id="logo-container">
-        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" alt="TIGER LOAD" width="165"
-            height="50">
+        <img src="{{ public_path('storage/uploads/gambar_logo/login2.png') }}" alt="TIGER LOAD" width="170"
+            height="40">
     </div>
     <br>
     <div style="font-weight: bold; text-align: center">
@@ -97,7 +97,7 @@
             <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:15%">Kode Akun</td>
             <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:20%">Nama Akun</td>
             <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:40%">Keterangan</td>
-            <td class="td" style="text-align: right; font-size: 15px width:10%; padding-right:7px">Total</td>
+            <td class="td" style="text-align: right; font-size: 15px width:10%; padding-right:8px">Total</td>
         </tr>
         <!-- Add horizontal line below this row -->
         <tr>
@@ -122,7 +122,7 @@
                 <td class="td" style="text-align: left; padding: 0px; font-size: 15px;">
                     {{ $item->keterangan }}
                 </td>
-                <td class="td" style="text-align: right; font-size: 15px; padding-right:7px">
+                <td class="td" style="text-align: right; font-size: 15px; padding-right:8px">
                     {{ number_format($item->nominal, 0, ',', '.') }}
                 </td>
             </tr>
