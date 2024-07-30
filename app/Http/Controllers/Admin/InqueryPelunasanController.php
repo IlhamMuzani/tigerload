@@ -137,9 +137,11 @@ class InqueryPelunasanController extends Controller
         $pelunasans = Pelunasan::where('id', $id)->first();
         $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.inquerypelunasan.show', compact('pelunasans', 'penjualans', 'spesifikasis'));
+        return view('admin.inquerypelunasan.show', compact('depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
     }
 
 

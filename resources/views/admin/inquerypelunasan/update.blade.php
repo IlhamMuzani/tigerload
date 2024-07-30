@@ -140,27 +140,26 @@
                                     <label for="totalpenjualan">Sub Total</label>
                                     <input style="text-align: end" type="text" class="form-control"
                                         id="totalpembayaran" readonly name="totalpenjualan" placeholder=""
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('totalpenjualan', $pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }}
-                                        @else{{ number_format(old('totalpenjualan', $pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga')), 0, ',', '.') }} @endif">
+                                        value="{{ old('totalpenjualan', $pelunasans->totalpenjualan) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">DP</label>
                                     <input style="text-align: end" type="text" class="form-control" id="dp"
                                         readonly name="dp" placeholder=""
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format(old('dp', $pelunasans->penjualan->depositpemesanan->harga), 0, ',', '.') }}@else 0 @endif">
+                                        value="{{ old('totalpenjualan', $pelunasans->penjualan->depositpemesanan->first()->harga) }}">
                                 </div>
                                 <div class="form-group">
                                     <label for="tinggi">Potongan</label>
                                     <input style="text-align: end" type="text" class="form-control"
                                         id="potonganselisih" readonly name="potonganselisih" placeholder=""
-                                        value="{{ number_format(old('potongan', $pelunasans->potongan), 0, ',', '.') }}">
+                                        value="{{ old('potongan', $pelunasans->potongan) }}">
                                 </div>
                                 <hr style="border: 2px solid black;">
                                 <div class="form-group">
                                     <label for="tinggi">Total Pembayaran</label>
                                     <input style="text-align: end" type="text" class="form-control" id="KurangiDP"
                                         readonly name="totalpembayaran"
-                                        value="@if ($pelunasans->penjualan->depositpemesanan) {{ number_format($pelunasans->penjualan->depositpemesanan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga') - $pelunasans->penjualan->depositpemesanan->harga, 0, ',', '.') }}@else{{ number_format($pelunasans->penjualan->spk->harga + $pelunasans->penjualan->detail_penjualan->where('penjualan_id', $pelunasans->penjualan->id)->sum('harga'), 0, ',', '.') }} @endif"
+                                        value=""
                                         placeholder="">
                                 </div>
                                 <div class="form-group">

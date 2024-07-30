@@ -336,7 +336,7 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">F.Penjualan</td>
             <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Total Penjualan</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Sub Total</td>
+            <td class="td" style="text-align: center; padding-right: 40px; font-size: 15px;">Sub Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;"></td>
@@ -354,7 +354,7 @@
             </td>
             <td class="td" style="text-align: center;  font-size: 15px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </td>
-            <td class="td" style="text-align: center; font-size: 15px;">
+            <td class="td" style="text-align: center; padding-right: 35px; font-size: 15px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}
             </td>
         </tr>
@@ -376,7 +376,7 @@
                     </span>
                     <br>
                 </td>
-                <td colspan="4" style="text-align: right; padding-right: 149px;">
+                <td colspan="4" style="text-align: right; padding-right: 215px;">
                     <span class="info-item" style="font-size: 15px; font-weight:bold;">
                         {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}</span>
                     <br>
@@ -404,7 +404,7 @@
                 <td style="text-align: right; padding-right: 196px;">
                     <span class="info-item" style="font-size: 15px; margin;"></span>
                 </td>
-                <td style="text-align: right; padding-right: 156px;">
+                <td style="text-align: right; padding-right: 159px;">
                     <span class="info-item" style="font-size: 15px; margin;">
                         @if ($pelunasans->potongan == null)
                             0
@@ -425,7 +425,7 @@
                 <td style="text-align: right; padding-right: 196px;">
                     <span class="info-item" style="font-size: 15px; margin;"></span>
                 </td>
-                <td style="text-align: right; padding-right: 156px;">
+                <td style="text-align: right; padding-right: 159px;">
                     <span class="info-item" style="font-size: 15px; margin;">
                         {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}
                 </td>
