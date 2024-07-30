@@ -946,6 +946,7 @@
             $('#absen-' + activeSpecificationIndex).val(nol);
             $('#hasil_absen-' + activeSpecificationIndex).val(nol);
             $('#lainya-' + activeSpecificationIndex).val(nol);
+            $('#tambahan_lainya-' + activeSpecificationIndex).val(nol);
             $('#gajinol_pelunasan-' + activeSpecificationIndex).val(nol);
 
             // Check if bpjs is not null or has a value

@@ -259,10 +259,10 @@
                             <td class="info-catatan2" style="font-size: 13px;">Nama Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                @if ($pelunasans->penjualan)
+                                    {{ $pelunasans->penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                 @else
-                                    {{ $penjualans->spk->pelanggan->nama_pelanggan }}
+                                    tidak ada
                                 @endif
                             </td>
                         </tr>
@@ -270,10 +270,10 @@
                             <td class="info-catatan2" style="font-size: 13px;">Alamat</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->alamat }}
+                                @if ($pelunasans->penjualan)
+                                    {{ $pelunasans->penjualan->perintah_kerja->spk->pelanggan->alamat }}
                                 @else
-                                    {{ $penjualans->spk->pelanggan->alamat }}
+                                    tidak ada
                                 @endif
                                 </span>
                             </td>
@@ -282,10 +282,10 @@
                             <td class="info-catatan2" style="font-size: 13px;">Telp</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->telp }}
+                                @if ($pelunasans->penjualan)
+                                    {{ $pelunasans->penjualan->perintah_kerja->spk->pelanggan->telp }}
                                 @else
-                                    {{ $penjualans->spk->pelanggan->telp }}
+                                    tidak ada
                                 @endif
                             </td>
                         </tr>
@@ -293,10 +293,10 @@
                             <td class="info-catatan2" style="font-size: 13px;">ID Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                @if ($penjualans->depositpemesanan)
-                                    {{ $penjualans->depositpemesanan->spk->pelanggan->kode_pelanggan }}
+                                @if ($pelunasans->penjualan)
+                                    {{ $pelunasans->penjualan->perintah_kerja->spk->pelanggan->kode_pelanggan }}
                                 @else
-                                    {{ $penjualans->spk->pelanggan->kode_pelanggan }}
+                                    tidak ada
                                 @endif
                                 </span>
                             </td>
@@ -360,7 +360,7 @@
         </tr>
         {{-- @php
             $startFrom = 2;
-            $totalSubtotal = $penjualans->depositpemesanan->spk->harga; // Inisialisasi dengan harga awal
+            $totalSubtotal = $pelunasans->depositpemesanan->spk->harga; // Inisialisasi dengan harga awal
         @endphp --}}
 
         <tr style="border-bottom: 1px solid black;">
@@ -376,7 +376,7 @@
                     </span>
                     <br>
                 </td>
-                <td colspan="4" style="text-align: right; padding-right: 129px;">
+                <td colspan="4" style="text-align: right; padding-right: 149px;">
                     <span class="info-item" style="font-size: 15px; font-weight:bold;">
                         {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}</span>
                     <br>
@@ -427,12 +427,7 @@
                 </td>
                 <td style="text-align: right; padding-right: 156px;">
                     <span class="info-item" style="font-size: 15px; margin;">
-                        @if ($pelunasans->penjualan->depositpemesanan)
-                            {{ number_format($pelunasans->totalpenjualan - $pelunasans->penjualan->depositpemesanan->harga - $pelunasans->nominal, 0, ',', '.') }}
-                        @else
-                            {{ number_format($pelunasans->totalpenjualan - $pelunasans->penjualan->harga - $pelunasans->nominal, 0, ',', '.') }}
-                        @endif
-                        {{-- {{ number_format($pelunasans->selisih, 0, ',', '.') }} --}}
+                        {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}
                 </td>
             </tr>
         </table>
@@ -450,7 +445,7 @@
                 </td>
                 <td style="text-align: right; padding-right: 128px;">
                     <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}</span>
+                        {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}</span>
                 </td>
             </tr>
             <tr>
@@ -458,26 +453,27 @@
                     <span class="info-item" style="font-size: 15px;"></span>
                     <br>
                 </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Dp
-                        @if ($penjualans->depositpemesanan)
-                            ({{ $penjualans->depositpemesanan->tanggal }})
-                        @else
-                        @endif
-                    </span>
-                </td>
-                <td style="text-align: right; padding-right: 144px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 128px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        @if ($penjualans->depositpemesanan)
-                            {{ number_format($penjualans->depositpemesanan->harga, 0, ',', '.') }}
-                        @else
-                            0
-                        @endif
-                    </span>
-                </td>
+                @php
+                    $totalDP = 0;
+                @endphp
+                @foreach ($depositpemesanans as $index => $deposit)
+                    <td style="">
+                        <span class="info-item" style="font-size: 15px;"> DP
+                            ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                        </span>
+                    </td>
+                    <td style="text-align: right; padding-right: 144px;">
+                        <span class="info-item" style="font-size: 15px; margin;"></span>
+                    </td>
+                    <td style="text-align: right; padding-right: 128px;">
+                        <span class="info-item" style="font-size: 15px; margin;">
+                            {{ number_format($deposit->harga, 0, ',', '.') }}
+                        </span>
+                    </td>
+                    @php
+                        $totalDP += $deposit->harga;
+                    @endphp
+                @endforeach
             </tr>
             <tr>
                 <td>
@@ -499,7 +495,7 @@
 
         {{-- @php
             $startFrom = 2;
-            $SisaTagihan = $penjualans->depositpemesanan->spk->harga + $penjualans->detail_penjualan->where('penjualan_id', $penjualans->id)->sum('harga') - $pelunasans->nominal - $penjualans->depositpemesanan->harga;
+            $SisaTagihan = $pelunasans->depositpemesanan->spk->harga + $pelunasans->detail_penjualan->where('penjualan_id', $pelunasans->id)->sum('harga') - $pelunasans->nominal - $pelunasans->depositpemesanan->harga;
         @endphp --}}
 
         <table style="width: 47%; margin-left:740px; border-top: 1px solid black; margin-bottom:5px">
@@ -524,8 +520,8 @@
     </table>
     <br>
 
-    @if ($pelunasans->penjualan->depositpemesanan)
-        @if ($pelunasans->penjualan->depositpemesanan->spk->kategori == 'NON PPN')
+    @if ($pelunasans->penjualan)
+        @if ($pelunasans->penjualan->perintah_kerja->spk->kategori == 'NON PPN')
             <table width="100%">
                 <tr>
                     <td>
@@ -579,7 +575,7 @@
             </table>
         @endif
     @else
-        @if ($pelunasans->penjualan->spk->kategori == 'NON PPN')
+        @if ($pelunasans->penjualan->perintah_kerja->spk->kategori == 'NON PPN')
             <table width="100%">
                 <tr>
                     <td>

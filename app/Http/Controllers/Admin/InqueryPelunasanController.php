@@ -10,6 +10,7 @@ use App\Models\Kendaraan;
 use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
+use App\Models\Depositpemesanan;
 use App\Models\Marketing;
 use App\Models\Merek;
 use App\Models\Modelken;
@@ -17,6 +18,7 @@ use App\Models\Pelanggan;
 use App\Models\Pelunasan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\Perintah_kerja;
 use App\Models\Spesifikasi;
 use App\Models\Spk;
 use App\Models\Tipe;
@@ -66,10 +68,11 @@ class InqueryPelunasanController extends Controller
         $pelunasans = Pelunasan::where('id', $id)->first();
         $pelunas = Pelunasan::find($id);
         $penjualans = Penjualan::where('id', $pelunas->penjualan_id)->first();
-
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.inquerypelunasan.show', compact('pelunasans', 'penjualans', 'spesifikasis'));
+        return view('admin.inquerypelunasan.show', compact('depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
     }
 
 

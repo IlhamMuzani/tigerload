@@ -16,6 +16,7 @@ use App\Models\Depositpemesanan;
 use App\Models\Marketing;
 use App\Models\Pelunasan;
 use App\Models\Penjualan;
+use App\Models\Perintah_kerja;
 use App\Models\Spesifikasi;
 use App\Models\Spk;
 use Illuminate\Support\Facades\Storage;
@@ -90,10 +91,11 @@ class PelunasanController extends Controller
         $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
 
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
-
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.pelunasan.show', compact('pelunasans', 'penjualans', 'spesifikasis'));
+        return view('admin.pelunasan.show', compact('depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
     }
 
     public function kode()
@@ -125,10 +127,11 @@ class PelunasanController extends Controller
     {
         $pelunasans = Pelunasan::where('id', $id)->first();
         $pelunas = Pelunasan::find($id);
-        // $penjualans = Penjualan::where('id', $pelunas->penjualan_id)->first();
-
+        $penjualans = Penjualan::where('id', $pelunas->penjualan_id)->first();
+        $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
+        $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $pdf = app('dompdf.wrapper');
-        $pdf->loadView('admin.pelunasan.cetak_pdf', compact('pelunasans'));
+        $pdf->loadView('admin.pelunasan.cetak_pdf', compact('depositpemesanans', 'pelunasans'));
         $pdf->setPaper('letter', 'portrait');
 
         // Return the PDF as a response
