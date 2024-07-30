@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label for="kategori_produk_id">Kategori</label>
                             <select class="custom-select form-control" id="kategori_produk_id" name="kategori_produk_id">
-                                <option value="">- Pilih Departemen -</option>
+                                <option value="">- Pilih Kategori -</option>
                                 @foreach ($kategori_produks as $kategori_produk)
                                     <option value="{{ $kategori_produk->id }}"
                                         {{ old('kategori_produk_id') == $kategori_produk->id ? 'selected' : '' }}>
