@@ -80,7 +80,6 @@ class ProjectController extends Controller
         return redirect('admin/project')->with('success', 'Berhasil menyimpan');
     }
 
-
     public function show($id)
     {
         $cetakpdf = Project::where('id', $id)->first();

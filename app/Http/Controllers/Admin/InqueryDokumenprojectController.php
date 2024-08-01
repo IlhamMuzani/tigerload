@@ -73,19 +73,19 @@ class InqueryDokumenprojectController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
-                'no_serut' => 'required',
-                'no_rangka' => 'required',
-                'no_mesin' => 'required',
-                'no_skrb' => 'required',
-                'tahun' => 'required',
+                // 'no_serut' => 'required',
+                // 'no_rangka' => 'required',
+                // 'no_mesin' => 'required',
+                // 'no_skrb' => 'required',
+                // 'tahun' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih nomor SPK',
-                'no_serut.required' => 'No Serut',
-                'no_rangka.required' => 'No Rangka',
-                'no_mesin.required' => 'No Mesin',
-                'no_skrb.required' => 'No Mesin',
-                'tahun.required' => 'Masukkan tahun pembuatan',
+                // 'no_serut.required' => 'No Serut',
+                // 'no_rangka.required' => 'No Rangka',
+                // 'no_mesin.required' => 'No Mesin',
+                // 'no_skrb.required' => 'No Mesin',
+                // 'tahun.required' => 'Masukkan tahun pembuatan',
             ]
         );
 
