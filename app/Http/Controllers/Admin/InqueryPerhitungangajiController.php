@@ -305,6 +305,7 @@ class InqueryPerhitungangajiController extends Controller
                     $detail_cicilan = Detail_cicilan::where('karyawan_id', $data_pesanan['karyawan_id'])
                         ->where('status', 'posting')
                         ->where('status_cicilan', 'belum lunas')
+                        ->whereNull('detail_gajikaryawan_id')
                         ->first();
                     if ($detail_cicilan) {
                         $detail_cicilan->update([
