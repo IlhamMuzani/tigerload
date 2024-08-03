@@ -521,8 +521,8 @@ class InqueryPerhitungangajibulananController extends Controller
                 // Perbarui kembali kasbon dan bayar_kasbon
                 $karyawan = Karyawan::find($detail->karyawan_id);
                 if ($karyawan) {
-                    $kasbon = $karyawan->kasbon_backup;
-                    $bayar_kasbon = $karyawan->bayar_kasbon_backup;
+                    $kasbon = $karyawan->kasbon;
+                    $bayar_kasbon = $karyawan->bayar_kasbon;
 
                     $karyawan->update([
                         'kasbon' => $kasbon,
