@@ -16,13 +16,31 @@ use Illuminate\Support\Facades\Validator;
 
 class TypekaroseriController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $typekaroseris = Typekaroseri::get();
+        // Ambil data merek, tipe, dan kategori produk
         $mereks = Merek::all();
         $tipes = Tipe::all();
-        return view('admin/typekaroseri.index', compact('typekaroseris'));
+        $ketegoris = Kategori_produk::all();
+
+        // Ambil parameter kategori_produk_id dari request
+        $kategori = $request->kategori_produk_id;
+
+        // Buat query untuk Typekaroseri
+        $inquery = Typekaroseri::query();
+
+        // Filter berdasarkan kategori_produk_id jika parameter tersedia
+        if ($kategori) {
+            $inquery->where('kategori_produk_id', $kategori);
+        }
+
+        // Ambil data berdasarkan query
+        $typekaroseris = $inquery->get();
+
+        // Kembalikan view dengan data yang diperlukan
+        return view('admin/typekaroseri.index', compact('typekaroseris', 'ketegoris', 'mereks', 'tipes'));
     }
+
 
     public function create()
     {

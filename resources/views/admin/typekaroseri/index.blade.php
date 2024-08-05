@@ -58,6 +58,30 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    <form method="GET" id="form-action">
+                        <div class="row">
+                            <div class="col-md-2 mb-3">
+                                <select class="select2bs4 select2-hidden-accessible" name="kategori_produk_id"
+                                    data-placeholder="Cari kategori.." style="width: 100%;" data-select2-id="23"
+                                    tabindex="-1" aria-hidden="true" id="kategori_produk_id">
+                                    <option value="">- Pilih -</option>
+                                    @foreach ($ketegoris as $kategori)
+                                        <option value="{{ $kategori->id }}"
+                                            {{ Request::get('kategori_produk_id') == $kategori->id ? 'selected' : '' }}>
+                                            {{ $kategori->nama_kategori }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <label for="status">(Cari Produk)</label>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <button type="button" class="btn btn-outline-primary btn-block" onclick="cari()">
+                                    <i class="fas fa-search"></i> Cari
+                                </button>
+                                <input type="hidden" name="ids" id="selectedIds" value="">
+                            </div>
+                        </div>
+                    </form>
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
@@ -170,6 +194,15 @@
             </div>
         </div>
     </section>
+
+    <script>
+        var form = document.getElementById('form-action');
+
+        function cari() {
+            form.action = "{{ url('admin/typekaroseri') }}";
+            form.submit();
+        }
+    </script>
 
     <!-- /.card -->
 @endsection
