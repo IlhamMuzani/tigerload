@@ -103,7 +103,7 @@ class ProjectController extends Controller
         $pdf->loadView('admin.project.cetak_qrcode', compact('projects'));
 
         // Mengatur jenis kertas dan orientasi menjadi lanscape
-        $pdf->setPaper([0, 0, 216, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+        $pdf->setPaper([0, 0, 218, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
 
         return $pdf->stream('QrCodeKendaraan.pdf');
     }
@@ -158,7 +158,7 @@ class ProjectController extends Controller
 
         $pdf = app('dompdf.wrapper');
 
-        $pdf->setPaper([0, 0, 216, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
+        $pdf->setPaper([0, 0, 218, 105], 'portrait'); // 612x396 piksel setara dengan 8.5x5.5 inci
 
         $pdf->loadView('admin.project.cetak_qrcodefilter', compact('cetakpdfs'));
 
