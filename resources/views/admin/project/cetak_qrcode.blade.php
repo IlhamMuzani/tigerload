@@ -76,12 +76,12 @@
                                         @else
                                         @endif
                                     </p>
-                                    {{-- <p class="bold-text">
+                                    <p class="bold-text">
                                         @if ($projects->perintah_kerja->dokumen_project->first())
                                             {{ $projects->perintah_kerja->dokumen_project->first()->no_rangka }}
                                         @else
                                         @endif
-                                    </p> --}}
+                                    </p>
                                 </div>
                             </td>
                         </table>
