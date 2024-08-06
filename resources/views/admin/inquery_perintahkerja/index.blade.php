@@ -125,8 +125,8 @@
                                             </button>
                                         @endif
                                         @if ($surat->status == 'selesai')
-                                            <img src="{{ asset('storage/uploads/indikator/surat.png') }}" height="40"
-                                                width="40" alt="Roda Mobil">
+                                            <img src="{{ asset('storage/uploads/indikator/faktur.png') }}" height="40"
+                                                width="40" alt="dokumen">
                                         @endif
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($surat->status == 'unpost')
