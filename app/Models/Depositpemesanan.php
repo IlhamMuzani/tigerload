@@ -22,6 +22,7 @@ class Depositpemesanan extends Model
         'perintah_kerja_id',
         'harga',
         'tanggal',
+        'tanggal_transfer',
         'tanggal_awal',
         'tanggal_akhir',
         'status',

@@ -26,10 +26,12 @@ class DepositpemesananController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'tanggal_transfer' => 'required',
                 'harga' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih Perintah kerja',
+                'tanggal_transfer.required' => 'Piih tanggal',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -51,6 +53,7 @@ class DepositpemesananController extends Controller
                 'kode_deposit' => $this->kode(),
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
+                'tanggal_transfer' => $request->tanggal_transfer,
                 'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
                 'status' => 'posting',
             ]

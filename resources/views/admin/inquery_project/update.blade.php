@@ -49,7 +49,8 @@
                     @endforeach
                 </div>
             @endif
-            <form action="{{ url('admin/inquery_project', $inquery->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form action="{{ url('admin/inquery_project', $inquery->id) }}" method="POST" enctype="multipart/form-data"
+                autocomplete="off">
                 @csrf
                 @method('put')
                 <div class="card">
@@ -70,12 +71,14 @@
                         <div class="form-group">
                             <label for="nopol">Kode SPK</label>
                             <input type="text" class="form-control" id="kode_perintah" readonly placeholder=""
-                                name="kode_perintah" value="{{ old('kode_perintah', $inquery->perintah_kerja->kode_perintah) }}">
+                                name="kode_perintah"
+                                value="{{ old('kode_perintah', $inquery->perintah_kerja->kode_perintah) }}">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Jenis Karoseri</label>
                             <input type="text" class="form-control" id="nama_karoseri" readonly placeholder=""
-                                name="nama_karoseri" value="{{ old('nama_karoseri', $inquery->perintah_kerja->spk->typekaroseri->nama_karoseri) }}">
+                                name="nama_karoseri"
+                                value="{{ old('nama_karoseri', $inquery->perintah_kerja->spk->typekaroseri->nama_karoseri) }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Tahun Karoseri</label>
@@ -85,12 +88,14 @@
                         <div class="form-group">
                             <label for="nama">No Serut</label>
                             <input type="text" class="form-control" id="no_serut" readonly placeholder=""
-                                name="no_serut" value="{{ old('no_serut', $inquery->perintah_kerja->dokumen_project->first()->no_serut) }}">
+                                name="no_serut"
+                                value="{{ old('no_serut', $inquery->perintah_kerja->dokumen_project->first()->no_serut) }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">No Rangka</label>
                             <input type="text" class="form-control" id="no_rangka"readonly placeholder=""
-                                name="no_rangka" value="{{ old('no_rangka', $inquery->perintah_kerja->dokumen_project->first()->no_rangka) }}">
+                                name="no_rangka"
+                                value="{{ old('no_rangka', $inquery->perintah_kerja->dokumen_project->first()->no_rangka) }}">
                         </div>
                     </div>
                     <div class="card-footer text-right mt-3">
@@ -122,6 +127,7 @@
                                         <th class="text-center">No</th>
                                         <th>Kode Spk</th>
                                         <th>Jenis Karoseri</th>
+                                        <th>Nama Pelanggan</th>
                                         <th>Tahun</th>
                                         <th>No Serut</th>
                                         <th>No Rangka</th>
@@ -140,6 +146,7 @@
                                                     tidak ada
                                                 @endif
                                             </td>
+                                            <td>{{ $spk->pelanggan->nama_pelanggan ?? null }}</td>
                                             <td>
                                                 @if ($spk->dokumen_project->first())
                                                     {{ $spk->dokumen_project->first()->tahun }}

@@ -91,7 +91,6 @@
                                 <th>Kode SPK</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Kode Karoseri</th>
-                                <th>Kode Deposit</th>
                                 <th>Kode Penjualan</th>
                                 <th style="width: 70px">Tanggal</th>
                                 {{-- <th class="text-center">Harga</th> --}}
@@ -105,8 +104,8 @@
                                     <td>{{ $pelunasan->kode_pelunasan }}</td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->kode_spk }}
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->kode_spk }}
                                             @else
                                                 {{ $pelunasan->penjualan->spk->kode_spk }}
                                             @endif
@@ -116,8 +115,8 @@
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->pelanggan->nama_pelanggan }}
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
                                             @else
                                                 {{ $pelunasan->penjualan->spk->pelanggan->nama_pelanggan }}
                                             @endif
@@ -127,21 +126,10 @@
                                     </td>
                                     <td>
                                         @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->spk->typekaroseri->kode_type }}
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
                                             @else
                                                 {{ $pelunasan->penjualan->spk->typekaroseri->kode_type }}
-                                            @endif
-                                        @else
-                                            data tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan)
-                                                {{ $pelunasan->penjualan->depositpemesanan->kode_deposit }}
-                                            @else
-                                                tidak dp
                                             @endif
                                         @else
                                             data tidak ada

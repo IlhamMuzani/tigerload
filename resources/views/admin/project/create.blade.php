@@ -121,6 +121,7 @@
                                         <th class="text-center">No</th>
                                         <th>Kode Spk</th>
                                         <th>Jenis Karoseri</th>
+                                        <th>Nama Pelanggan</th>
                                         <th>Tahun</th>
                                         <th>No Serut</th>
                                         <th>No Rangka</th>
@@ -139,6 +140,8 @@
                                                     tidak ada
                                                 @endif
                                             </td>
+                                            <td>{{ $spk->pelanggan->nama_pelanggan ?? null}}</td>
+
                                             <td>
                                                 @if ($spk->dokumen_project->first())
                                                     {{ $spk->dokumen_project->first()->tahun }}

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('perintah_kerja_id')->references('id')->on('perintah_kerjas')->onDelete('set null');
             $table->string('harga')->nullable();
             $table->string('tanggal')->nullable();
+            $table->string('tanggal_transfer')->nullable();
             $table->string('tanggal_awal')->nullable();
             $table->string('tanggal_akhir')->nullable();
             $table->string('status')->nullable();

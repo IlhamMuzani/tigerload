@@ -92,6 +92,16 @@
                                 placeholder=""
                                 value="{{ number_format(old('harga_awal', $deposits->perintah_kerja->spk->harga), 0, ',', '.') }}">
                         </div>
+                        <div class="form-group">
+                            <label>Tanggal Transfer:</label>
+                            <div class="input-group date" id="reservationdatetime">
+                                <input type="date" id="tanggal_transfer" name="tanggal_transfer"
+                                    placeholder="d M Y sampai d M Y"
+                                    data-options='{"mode":"range","dateFormat":"d M Y","disableMobile":true}'
+                                    value="{{ old('tanggal_transfer', $deposits->tanggal_transfer) }}"
+                                    class="form-control datetimepicker-input" data-target="#reservationdatetime">
+                            </div>
+                        </div>
                         <div class="form-group mb-3">
                             <label for="nama">DP</label>
                             <input type="text" class="form-control" id="harga" name="harga" placeholder=""

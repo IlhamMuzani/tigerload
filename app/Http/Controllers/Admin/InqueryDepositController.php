@@ -81,10 +81,12 @@ class InqueryDepositController extends Controller
             $request->all(),
             [
                 'perintah_kerja_id' => 'required',
+                'tanggal_transfer' => 'required',
                 'harga' => 'required',
             ],
             [
                 'perintah_kerja_id.required' => 'Pilih Perintah kerja',
+                'tanggal_transfer.required' => 'Pilih tanggal',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -98,6 +100,7 @@ class InqueryDepositController extends Controller
 
         Depositpemesanan::where('id', $id)->update([
             'perintah_kerja_id' => $request->perintah_kerja_id,
+            'tanggal_transfer' => $request->tanggal_transfer,
             'harga' => str_replace(',', '.', str_replace('.', '', $request->harga)),
             'status' => 'posting',
         ]);

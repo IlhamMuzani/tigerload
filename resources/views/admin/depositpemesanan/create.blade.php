@@ -70,13 +70,13 @@
                         </div>
                         <div class="form-group">
                             <label for="nopol">Kode SPK</label>
-                            <input type="text" class="form-control" id="kode_spk" readonly placeholder="" name="kode_spk"
-                                value="{{ old('kode_spk') }}">
+                            <input type="text" class="form-control" id="kode_spk" readonly placeholder=""
+                                name="kode_spk" value="{{ old('kode_spk') }}">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Nama Pelanggan</label>
-                            <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder="" name="nama_pelanggan"
-                                value="{{ old('nama_pelanggan') }}">
+                            <input type="text" class="form-control" id="nama_pelanggan" readonly placeholder=""
+                                name="nama_pelanggan" value="{{ old('nama_pelanggan') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Merek Kendaraan</label>
@@ -90,18 +90,30 @@
                         </div>
                         <div class="form-group">
                             <label for="nama">Kode Karoseri</label>
-                            <input type="text" class="form-control" id="kode_type"readonly placeholder="" name="kode_type" value="{{ old('kode_type') }}">
+                            <input type="text" class="form-control" id="kode_type"readonly placeholder=""
+                                name="kode_type" value="{{ old('kode_type') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Bentuk Karoseri</label>
-                            <input type="text" class="form-control" id="nama_karoseri" name="nama_karoseri" readonly placeholder=""
-                                value="{{ old('nama_karoseri') }}">
+                            <input type="text" class="form-control" id="nama_karoseri" name="nama_karoseri" readonly
+                                placeholder="" value="{{ old('nama_karoseri') }}">
                         </div>
                         <div class="form-group">
                             <label for="nama">Harga Pemesanan</label>
                             <input type="text" class="form-control" id="harga_awal" readonly placeholder=""
-                                placeholder="" name="harga_awal" value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
+                                placeholder="" name="harga_awal"
+                                value="{{ number_format(old('harga_awal'), 0, ',', '.') }}">
 
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Tanggal Transfer:</label>
+                            <div class="input-group date" id="reservationdatetime">
+                                <input type="date" id="tanggal_transfer" name="tanggal_transfer"
+                                    placeholder="d M Y sampai d M Y"
+                                    data-options='{"mode":"range","dateFormat":"d M Y","disableMobile":true}'
+                                    value="{{ old('tanggal_transfer') }}" class="form-control datetimepicker-input"
+                                    data-target="#reservationdatetime">
+                            </div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="nama">DP</label>
