@@ -515,7 +515,7 @@
                 <tr>
                     <td colspan="6"
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 15px;">DP
-                        ({{ $deposit->tanggal }})
+                        ({{ $deposit->tanggal_transfer }})
                     </td>
                     <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
                         <span style="float: right; {{ $index === $lastIndex1 ? 'text-decoration: underline;' : '' }}">
@@ -559,7 +559,7 @@
                 <tr>
                     <td colspan="6"
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 15px;">DP
-                        ({{ $deposit->tanggal }})
+                        ({{ $deposit->tanggal_transfer }})
                     </td>
                     <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
                         <span style="float: right; {{ $index === $lastIndex ? 'text-decoration: underline;' : '' }}">

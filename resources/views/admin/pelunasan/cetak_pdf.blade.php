@@ -461,7 +461,8 @@
                         @foreach ($depositpemesanans as $index => $deposit)
                             <tr>
                                 <td class="" style="font-size: 13px;">DP
-                                    ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                                    ({{ $deposit->kode_deposit }}
+                                    {{ \Carbon\Carbon::parse($deposit->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
                                     </span>
                                 </td>
                                 <td class="info-item" style="font-size: 13px;"></td>

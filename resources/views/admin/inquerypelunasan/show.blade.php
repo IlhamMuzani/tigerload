@@ -459,7 +459,7 @@
                 @foreach ($depositpemesanans as $index => $deposit)
                     <td style="">
                         <span class="info-item" style="font-size: 15px;"> DP
-                            ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                            ({{ $deposit->kode_deposit }} {{ $deposit->tanggal_transfer }})
                         </span>
                     </td>
                     <td style="text-align: right; padding-right: 144px;">

@@ -500,7 +500,8 @@
                     <td colspan="6"
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 14px;">
                         DP
-                        ({{ $deposit->kode_deposit }} {{ $deposit->tanggal }})
+                        ({{ $deposit->kode_deposit }}
+                        {{ \Carbon\Carbon::parse($deposit->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
                     </td>
                     <td class="td" style="font-size: 14px; text-align: right; font-weight: bold;">
                         <span style="float: right;">
@@ -554,7 +555,7 @@
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 14px;">
                         DP
                         ({{ $deposit->kode_deposit }}
-                        {{ \Carbon\Carbon::parse($deposit->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }})
+                        {{ \Carbon\Carbon::parse($deposit->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
                     </td>
                     <td class="td" style="font-size: 14px; text-align: right; font-weight: bold;">
                         <span style="float: right;">
