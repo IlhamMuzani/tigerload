@@ -357,4 +357,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('project', \App\Http\Controllers\Admin\ProjectController::class);
     Route::resource('inquery_project', \App\Http\Controllers\Admin\InqueryProjectController::class);
 
+
+    Route::get('pelunasan/get_itemtambahan/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'get_itemtambahan']);
+
 });

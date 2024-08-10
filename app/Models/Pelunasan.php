@@ -24,6 +24,7 @@ class Pelunasan extends Model
         'tanggal_transfer',
         'nominal',
         'totalpenjualan',
+        'biaya_tambahan',
         'dp',
         'totalpembayaran',
         'selisih',

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\Depositpemesanan;
+use App\Models\Detail_penjualan;
 use App\Models\Marketing;
 use App\Models\Pelunasan;
 use App\Models\Penjualan;
@@ -29,6 +30,14 @@ class PelunasanController extends Controller
         $penjualans = Penjualan::where(['status' => 'posting', 'status_pelunasan' => null])->get();
         return view('admin/pelunasan.create', compact('penjualans'));
     }
+
+    public function get_itemtambahan($penjualan_id)
+    {
+        $details = Detail_penjualan::where(['penjualan_id' => $penjualan_id])
+            ->get();
+        return response()->json($details);
+    }
+
 
     public function store(Request $request)
     {
@@ -75,10 +84,11 @@ class PelunasanController extends Controller
             $request->all(),
             [
                 'kode_pelunasan' => $this->kode(),
-                'qrcode_pelunasan' => 'https://tigerload.id/deposit_pemesanan/' . $kode,
+                'qrcode_pelunasan' => 'https://tigerload.id/pelunasan/' . $kode,
                 'tanggal_awal' => $tanggal,
                 'tanggal' => $format_tanggal,
                 'totalpenjualan' => $request->totalpenjualan ? str_replace('.', '', $request->totalpenjualan) : 0,
+                'biaya_tambahan' => $request->biaya_tambahan ? str_replace('.', '', $request->biaya_tambahan) : 0,
                 'dp' => $request->dp ? str_replace('.', '', $request->dp) : 0,
                 'totalpembayaran' => $request->totalpembayaran ? str_replace('.', '', $request->totalpembayaran) : 0,
                 'selisih' => (int)str_replace(['Rp', '.', ' '], '', $request->selisih),

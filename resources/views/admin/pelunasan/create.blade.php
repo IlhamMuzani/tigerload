@@ -64,10 +64,10 @@
                             </button>
                         </div>
 
-                        <div class="form-group" hidden>
-                            <label for="nopol">Id Penjualan</label>
-                            <input type="text" class="form-control" id="penjualan_id" name="penjualan_id"
-                                value="{{ old('penjualan_id') }}" readonly placeholder="" value="">
+                        <div class="form-group">
+                            <label for="penjualan_id">Penjualan Id</label>
+                            <input type="text" class="form-control" id="penjualan_id" readonly name="penjualan_id"
+                                placeholder="" value="{{ old('penjualan_id') }}">
                         </div>
                         <div class="form-group">
                             <label for="nopol">Kode Faktur Penjualan</label>
@@ -91,6 +91,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Data Item Tambahan</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="detail_penjualan" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th>Kode Produk</th>
+                                    <th>Nama Produk</th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- data  --}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Rincian Pembelian</h3>
@@ -147,6 +172,12 @@
                                         value="{{ old('totalpenjualan') }}">
                                 </div>
                                 <div class="form-group">
+                                    <label for="tinggi">Biaya Tambahan</label>
+                                    <input style="text-align: end" type="text" class="form-control"
+                                        id="biaya_tambahan" readonly name="biaya_tambahan" placeholder=""
+                                        value="{{ old('biaya_tambahan') }}">
+                                </div>
+                                <div class="form-group">
                                     <label for="tinggi">DP</label>
                                     <input style="text-align: end" type="text" class="form-control" id="dp"
                                         readonly name="dp" placeholder="" value="{{ old('dp') }}">
@@ -196,8 +227,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="m-2">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                        </div>
                         <div class="table-responsive scrollbar m-2">
-                            <table id="example2" class="table table-bordered table-striped">
+                            <table id="tables" class="table table-bordered table-striped">
                                 <thead class="bg-200 text-900">
                                     <tr>
                                         <th class="text-center">No</th>
@@ -205,6 +239,7 @@
                                         <th>Nama Pelanggan</th>
                                         <th>Tanggal</th>
                                         <th>DP</th>
+                                        <th>Biaya Tambahan</th>
                                         <th>Total</th>
                                         <th>Opsi</th>
                                     </tr>
@@ -233,6 +268,13 @@
                                                 @endif
                                             </td>
                                             <td>Rp
+                                                {{-- @if ($penjualan->detail_penjualan())
+                                                {{ $penjualan->detail_penjualan()->sum('total') }}
+                                                @else
+                                                    0
+                                                @endif --}}
+                                            </td>
+                                            <td>Rp
                                                 @if ($penjualan->perintah_kerja)
                                                     {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
                                                 @else
@@ -249,7 +291,9 @@
                                                     '{{ $penjualan->tanggal }}',
                                                     '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
                                                     '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif @else {{ 0 }} @endif',
+                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif
+@else
+{{ 0 }} @endif',
                                                     '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
                                                     
                                                     )">
@@ -266,6 +310,37 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // filter rute 
+        function filterMemo() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tables");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                var displayRow = false;
+
+                // Loop through columns (td 1, 2, and 3)
+                for (j = 1; j <= 3; j++) {
+                    td = tr[i].getElementsByTagName("td")[j];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            displayRow = true;
+                            break; // Break the loop if a match is found in any column
+                        }
+                    }
+                }
+
+                // Set the display style based on whether a match is found in any column
+                tr[i].style.display = displayRow ? "" : "none";
+            }
+        }
+        document.getElementById("searchInput").addEventListener("input", filterMemo);
+    </script>
 
     <script>
         PenyamaanDP()
@@ -468,7 +543,8 @@
             $('#tablePenjualan').modal('show');
         }
 
-        function getSelectedData(Penjualan_id, KodePenjualan, NamaPelanggan, Tanggal, Total, TotalPenjualan, Dp, hasilDP) {
+        function getSelectedData(Penjualan_id, KodePenjualan, NamaPelanggan, Tanggal, Total, TotalPenjualan, Dp, hasilDP,
+            Biayatambahan) {
             // Set the values in the form fields
             document.getElementById('penjualan_id').value = Penjualan_id;
             document.getElementById('kode_penjualan').value = KodePenjualan;
@@ -478,7 +554,11 @@
             document.getElementById('totalpembayaran').value = TotalPenjualan;
             document.getElementById('dp').value = Dp;
             document.getElementById('KurangiDP').value = hasilDP;
+            document.getElementById('biaya_tambahan').value = hasilDP;
             // Close the modal (if needed)
+
+            $('#penjualan_id').trigger('input');
+
             $('#tablePenjualan').modal('hide');
         }
 
@@ -520,6 +600,72 @@
                 // Lakukan pengiriman formulir
                 $('form').submit();
             });
+        });
+    </script>
+
+    <script>
+        function formatRupiah(amount) {
+            // Convert amount to a string and add commas as thousand separators
+            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#penjualan_id').on('input', function() {
+                var pelangganID = $(this).val();
+
+                if (pelangganID) {
+                    $.ajax({
+                        url: "{{ url('admin/pelunasan/get_itemtambahan') }}" + '/' +
+                            pelangganID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('#detail_penjualan tbody').empty();
+                            if (data.length > 0) {
+                                $.each(data, function(index, details) {
+                                    var formattedHarga = formatRupiah(details.harga);
+                                    var formattedTotal = formatRupiah(details.total);
+                                    var row = '<tr>' +
+                                        '<td class="text-center">' + (index + 1) +
+                                        '</td>' +
+                                        '<td hidden>' + details.id + '</td>' +
+                                        '<td>' + details.kode_types + '</td>' +
+                                        '<td>' + details.nama_karoseri + '</td>' +
+                                        '<td>' + details.jumlah + '</td>' +
+                                        '<td>' + formattedHarga + '</td>' +
+                                        '<td>' + details.diskon + '</td>' +
+                                        '<td>' + formattedTotal + '</td>' +
+                                        '</td>' +
+                                        '</tr>';
+                                    $('#detail_penjualan tbody').append(row);
+                                });
+                            } else {
+                                $('#detail_penjualan tbody').append(
+                                    '<tr><td colspan="7" class="text-center">No data available</td></tr>'
+                                );
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX Error:", status, error);
+                            $('#detail_penjualan tbody').empty();
+                            $('#detail_penjualan tbody').append(
+                                '<tr><td colspan="7" class="text-center">Error loading data</td></tr>'
+                            );
+                        }
+                    });
+                } else {
+                    $('#detail_penjualan tbody').empty();
+                    $('#detail_penjualan tbody').append(
+                        '<tr><td colspan="7" class="text-center">No data available</td></tr>'
+                    );
+                }
+            });
+
+            // Trigger the input event manually on page load if there's a value in the penjualan_id field
+            if ($('#penjualan_id').val()) {
+                $('#penjualan_id').trigger('input');
+            }
         });
     </script>
 @endsection

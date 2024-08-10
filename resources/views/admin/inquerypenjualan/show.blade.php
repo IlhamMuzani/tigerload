@@ -515,7 +515,8 @@
                 <tr>
                     <td colspan="6"
                         style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 15px;">DP
-                        ({{ $deposit->tanggal_transfer }})
+                        ({{ $deposit->kode_deposit }}
+                        {{ \Carbon\Carbon::parse($deposit->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
                     </td>
                     <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
                         <span style="float: right; {{ $index === $lastIndex1 ? 'text-decoration: underline;' : '' }}">
