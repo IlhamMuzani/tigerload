@@ -23,7 +23,7 @@
 
         html,
         body {
-            font-family: 'DOSVGA', monospace;
+            font-family: Arial, sans-serif;
             color: black;
             padding: 20px;
             */
@@ -37,7 +37,7 @@
         }
 
         .label {
-            font-size: 16px;
+            font-size: 13px;
             /* Sesuaikan ukuran label sesuai preferensi Anda */
             text-align: center;
         }
@@ -158,13 +158,13 @@
         .info-1 {}
 
         /* .label {
-            font-size: 15px;
+            font-size: 13px;
             text-align: center;
 
         } */
 
         .separator {
-            padding-top: 15px;
+            padding-top: 13px;
             /* Atur sesuai kebutuhan Anda */
             text-align: center;
             /* Teks menjadi berada di tengah */
@@ -206,21 +206,14 @@
 </head>
 
 <body style="margin: 0; padding: 0;">
+
     <table width="100%">
         <td style="text-align: left;">
             <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
                 alt="Logo Tigerload">
         </td>
-        {{-- <tr>
-            <!-- First column (Nama PT) -->
-            <td style="width:0%;">
-            </td>
-            <td style="width: 70%; text-align: right;">
-                <img src="{{ asset('storage/uploads/gambar_logo/login2.png') }}" width="120" height="30"
-                    alt="Logo Tigerload">
-            </td>
-        </tr> --}}
     </table>
+
     <table width="100%">
         <tr>
             <!-- First column (Nama PT) -->
@@ -229,29 +222,24 @@
                     <table>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">CV. TIGER LOAD ENGINEERING</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Name</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Jl. Ahmad Yani No. 42,</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Address</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Procot Slawi, Tegal 52411</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Telp, (0283) 4563746
                             </td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                     </table>
                 </div>
             </td>
-            <!-- Second column (Nama Supplier) -->
             <td style="width: 70%;" style="max-width: 230px;">
                 <div class="info-catatan">
                     <table>
@@ -315,16 +303,17 @@
     <table style="width: 100%; border-top: 1px solid black; margin-bottom:5px">
         <tr>
             <td>
-                <span class="info-item" style="font-size: 15px; padding-left: 5px;">No. Faktur:
+                <span class="info-item" style="font-size: 13px; padding-left: 5px;">No. Faktur:
                     {{ $pelunasans->kode_pelunasan }}</span>
                 <br>
             </td>
             <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 15px;">Tanggal:{{ $pelunasans->tanggal }}</span>
+                <span class="info-item" style="font-size: 13px;">Tanggal:{{ $pelunasans->tanggal }}</span>
                 <br>
             </td>
-            <td style="text-align: right; padding-right: 45px;">
-                <span class="info-item" style="font-size: 15px;">Status:{{ $pelunasans->status_pelunasan }}</span>
+            <td style="text-align: right;">
+                <span class="info-item" style="font-size: 13px;">Status: <span
+                        style="font-style: bold">{{ $pelunasans->status_pelunasan }}</span></span>
                 <br>
             </td>
         </tr>
@@ -333,10 +322,10 @@
     {{-- <hr style="border-top: 0.5px solid black; margin: 3px 0;"> --}}
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">No.</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">F.Penjualan</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px;">Total Penjualan</td>
-            <td class="td" style="text-align: center; padding-right: 40px; font-size: 15px;">Sub Total</td>
+            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
+            <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">F. Penjualan</td>
+            <td class="td" style="text-align: right; font-size: 13px;">Total Penjualan</td>
+            <td class="td" style="text-align: right; font-size: 13px;">Sub Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;"></td>
@@ -344,202 +333,211 @@
         @php
             $totalQuantity = 0;
             $totalHarga = 0;
+            $startFrom = 2;
         @endphp
-        {{-- @foreach ($parts as $item) --}}
         <tr>
-            <td class="td" style="text-align: center;  font-size: 15px;">1
+            <td class="td" style="text-align: center;  font-size: 13px;">1
             </td>
-            <td class="info-text info-left" style="font-size: 15px; text-align: center;">
+            <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                 {{ $pelunasans->penjualan->kode_penjualan }}
             </td>
-            <td class="td" style="text-align: center;  font-size: 15px;">
+            <td class="td" style="text-align: right;  font-size: 13px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </td>
-            <td class="td" style="text-align: center; padding-right: 35px; font-size: 15px;">
+            </td>
+            <td class="td" style="text-align: right;  font-size: 13px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}
             </td>
         </tr>
-        {{-- @php
-            $startFrom = 2;
-            $totalSubtotal = $pelunasans->depositpemesanan->spk->harga; // Inisialisasi dengan harga awal
-        @endphp --}}
-
+        @foreach ($detail_penjualans as $item)
+            <tr>
+                <td class="td" style="text-align: center;  font-size: 13px;">{{ $startFrom }}
+                </td>
+                @php
+                    $startFrom++;
+                @endphp
+                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                    {{ $item->kode_types }} </td>
+                <td class="td" style="text-align: right;  font-size: 13px;">
+                    {{ number_format($item->total, 0, ',', '.') }}
+                </td>
+                <td class="td" style="text-align: right;  font-size: 13px;">
+                    {{ number_format($item->total, 0, ',', '.') }}
+                </td>
+            </tr>
+        @endforeach
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;">
             </td>
         </tr>
-
-        <table style="width: 100%; border-top: 1px solid black; margin-bottom:5px">
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px; font-weight:bold; padding-left: 5px;">Rincian
-                        Pembayaran:
-                    </span>
-                    <br>
-                </td>
-                <td colspan="4" style="text-align: right; padding-right: 215px;">
-                    <span class="info-item" style="font-size: 15px; font-weight:bold;">
-                        {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}</span>
-                    <br>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="info-item"
-                        style="font-size: 15px; padding-left: 5px;">-{{ $pelunasans->kategori }}({{ $pelunasans->nomor }})
-                        = ({{ number_format($pelunasans->nominal, 0, ',', '.') }}) ({{ $pelunasans->tanggal_awal }})
-                    </span>
-                    <br>
-                </td>
-            </tr>
-        </table>
-        <table style="width: 49%; margin-left:740px;margin-bottom:5px">
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Potongan Penjualan</span>
-                </td>
-                <td style="text-align: right; padding-right: 196px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 159px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        @if ($pelunasans->potongan == null)
-                            0
-                        @else
-                            {{ number_format($pelunasans->potongan, 0, ',', '.') }}
-                        @endif
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Sisa Tagihan</span>
-                </td>
-                <td style="text-align: right; padding-right: 196px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 159px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}
-                </td>
-            </tr>
-        </table>
-        <table style="width: 47%; margin-left:740px; margin-top:20px; border-top: 1px solid black; margin-bottom:5px">
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Total Tagihan</span>
-                </td>
-                <td style="text-align: right; padding-right: 184px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 128px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                @php
-                    $totalDP = 0;
-                @endphp
-                @foreach ($depositpemesanans as $index => $deposit)
-                    <td style="">
-                        <span class="info-item" style="font-size: 15px;"> DP
-                            ({{ $deposit->kode_deposit }} {{ $deposit->tanggal_transfer }})
-                        </span>
-                    </td>
-                    <td style="text-align: right; padding-right: 144px;">
-                        <span class="info-item" style="font-size: 15px; margin;"></span>
-                    </td>
-                    <td style="text-align: right; padding-right: 128px;">
-                        <span class="info-item" style="font-size: 15px; margin;">
-                            {{ number_format($deposit->harga, 0, ',', '.') }}
-                        </span>
-                    </td>
-                    @php
-                        $totalDP += $deposit->harga;
-                    @endphp
-                @endforeach
-            </tr>
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Pelunasan </span>
-                </td>
-                <td style="text-align: right; padding-right: 144px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 128px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->nominal, 0, ',', '.') }}</span>
-                </td>
-            </tr>
-        </table>
-
-        {{-- @php
-            $startFrom = 2;
-            $SisaTagihan = $pelunasans->depositpemesanan->spk->harga + $pelunasans->detail_penjualan->where('penjualan_id', $pelunasans->id)->sum('harga') - $pelunasans->nominal - $pelunasans->depositpemesanan->harga;
-        @endphp --}}
-
-        <table style="width: 47%; margin-left:740px; border-top: 1px solid black; margin-bottom:5px">
-            <tr>
-                <td>
-                    <span class="info-item" style="font-size: 15px;"></span>
-                    <br>
-                </td>
-                <td style="">
-                    <span class="info-item" style="font-size: 15px;">Selisih Tagihan</span>
-                </td>
-                <td style="text-align: right; padding-right: 169px;">
-                    <span class="info-item" style="font-size: 15px; margin;"></span>
-                </td>
-                <td style="text-align: right; padding-right: 127px;">
-                    <span class="info-item" style="font-size: 15px; margin;">
-                        {{ number_format($pelunasans->selisih, 0, ',', '.') }}
-                    </span>
-                </td>
-            </tr>
-        </table>
     </table>
-    <br>
+    <table style="width: 100%; border-top: 1px solid black; margin-bottom:5px">
+        <tr>
+            <td>
+                <span class="info-item" style="font-size: 13px; padding-left: 5px; font-weight:bold">RINCIAN
+                    PEMBAYARAN</span>
+                <br>
+            </td>
+            <td style="text-align: right;">
+                <span class="info-item" style="font-size: 13px;"><span
+                        style="font-style: bold">{{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan, 0, ',', '.') }}</span></span>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="info-item"
+                    style="font-size: 13px; padding-left: 5px;">-{{ $pelunasans->kategori }}({{ $pelunasans->nomor }})=({{ number_format($pelunasans->nominal, 0, ',', '.') }})({{ $pelunasans->tanggal_awal }})
+                </span>
+                <br>
+            </td>
+        </tr>
+    </table>
+
+
+    <table width="100%">
+        <tr>
+            <!-- First column (Nama PT) -->
+            <td style="width: 50%;">
+                <div class="info-catatan" style="max-width: 230px;">
+                    <table>
+                        <tr>
+                            <td class="info-catatan2" style="font-size: 13px; color:white">.</td>
+
+                        </tr>
+                        <tr>
+                            <td class="info-text info-left" style="font-size: 13px; color:white">.</td>
+
+                        </tr>
+                        <tr>
+                            <td class="info-text info-left" style="font-size: 13px; color:white">.</td>
+
+                        </tr>
+                        <tr>
+                            <td class="info-text info-left" style="font-size: 13px; color:white">.
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </td>
+            <!-- Second column (Nama Supplier) -->
+            <td style="width: 70%;" style="max-width: 230px;">
+                <div class="info-catatan">
+                    <hr>
+                    <table>
+                        <tr>
+                            <td class="" style="font-size: 13px;">Potongan penjualan</td>
+                            <td class="info-item" style="font-size: 13px;"></td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                @if ($pelunasans->potongan == null)
+                                    0
+                                @else
+                                    {{ number_format($pelunasans->potongan, 0, ',', '.') }}
+                                @endif
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="font-size: 13px;">Sisa Tagihan</td>
+                            <td class="info-item" style="font-size: 13px;"></td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                {{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan - $pelunasans->potongan, 0, ',', '.') }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="font-size: 13px;">
+                                <hr>
+                            </td>
+                            <td class="info-item" style="font-size: 13px;">
+                                <hr>
+                            </td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                <hr>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="font-size: 13px;">Total Tagihan</td>
+                            <td class="info-item" style="font-size: 13px;"></td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                {{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan - $pelunasans->potongan, 0, ',', '.') }}
+                                </span>
+                            </td>
+                        </tr>
+
+                        @php
+                            $totalDP = 0;
+                        @endphp
+                        @foreach ($depositpemesanans as $index => $deposit)
+                            <tr>
+                                <td class="" style="font-size: 13px;">DP
+                                    ({{ $deposit->kode_deposit }}
+                                    {{ \Carbon\Carbon::parse($deposit->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
+                                    </span>
+                                </td>
+                                <td class="info-item" style="font-size: 13px;"></td>
+                                <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                    {{ number_format($deposit->harga, 0, ',', '.') }}
+                                    </span>
+                                </td>
+                            </tr>
+                            @php
+                                $totalDP += $deposit->harga;
+                            @endphp
+                        @endforeach
+                        <tr>
+                            <td class="" style="font-size: 13px;">Pelunasan</td>
+                            <td class="info-item" style="font-size: 13px;"></td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                {{ number_format($pelunasans->nominal, 0, ',', '.') }} </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="font-size: 13px;">
+                                <hr>
+                            </td>
+                            <td class="info-item" style="font-size: 13px;">
+                                <hr>
+                            </td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                <hr>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="" style="font-size: 13px;">Selisih Tagihan</td>
+                            <td class="info-item" style="font-size: 13px;"></td>
+                            <td class="info-text info-left" style="font-size: 13px; text-align: right;">
+                                {{ number_format($pelunasans->selisih, 0, ',', '.') }}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
 
     @if ($pelunasans->penjualan)
         @if ($pelunasans->penjualan->perintah_kerja->spk->kategori == 'NON PPN')
             <table width="100%">
                 <tr>
                     <td>
-                        <div class="info-catatan" style="max-width: 400px;">
+                        <div class="info-catatan" style="max-width: 400px; font-size: 13px;">
                             <table>
                                 <tr>
-                                    <td class="info-catatan2">Nama Bank</td>
-                                    <td class="info-item">:</td>
+                                    <td>Nama Bank</td>
+                                    <td>:</td>
                                     <td>BCA</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">No. Rekening</td>
-                                    <td class="info-item">:</td>
+                                    <td>No. Rekening</td>
+                                    <td>:</td>
                                     <td>3629888889</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">Atas Nama</td>
-                                    <td class="info-item">:</td>
+                                    <td>Atas Nama</td>
+                                    <td>:</td>
                                     <td>DJOHAN WAHYUDI</td>
                                 </tr>
                             </table>
@@ -551,21 +549,21 @@
             <table width="100%">
                 <tr>
                     <td>
-                        <div class="info-catatan" style="max-width: 400px;">
+                        <div class="info-catatan" style="max-width: 400px; font-size: 13px;">
                             <table>
                                 <tr>
-                                    <td class="info-catatan2">Nama Bank</td>
-                                    <td class="info-item">:</td>
+                                    <td>Nama Bank</td>
+                                    <td>:</td>
                                     <td>BCA</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">No. Rekening</td>
-                                    <td class="info-item">:</td>
+                                    <td>No. Rekening</td>
+                                    <td>:</td>
                                     <td>3611889999</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">Atas Nama</td>
-                                    <td class="info-item">:</td>
+                                    <td>Atas Nama</td>
+                                    <td>:</td>
                                     <td>CV Tiger Load Engineering</td>
                                 </tr>
                             </table>
@@ -575,25 +573,25 @@
             </table>
         @endif
     @else
-        @if ($pelunasans->penjualan->perintah_kerja->spk->kategori == 'NON PPN')
+        @if ($pelunasans->penjualan->spk->kategori == 'NON PPN')
             <table width="100%">
                 <tr>
                     <td>
-                        <div class="info-catatan" style="max-width: 400px;">
+                        <div class="info-catatan" style="max-width: 400px; font-size: 13px;">
                             <table>
                                 <tr>
-                                    <td class="info-catatan2">Nama Bank</td>
-                                    <td class="info-item">:</td>
+                                    <td>Nama Bank</td>
+                                    <td>:</td>
                                     <td>BCA</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">No. Rekening</td>
-                                    <td class="info-item">:</td>
+                                    <td>No. Rekening</td>
+                                    <td>:</td>
                                     <td>3629888889</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">Atas Nama</td>
-                                    <td class="info-item">:</td>
+                                    <td>Atas Nama</td>
+                                    <td>:</td>
                                     <td>DJOHAN WAHYUDI</td>
                                 </tr>
                             </table>
@@ -605,21 +603,21 @@
             <table width="100%">
                 <tr>
                     <td>
-                        <div class="info-catatan" style="max-width: 400px;">
+                        <div class="info-catatan" style="max-width: 400px; font-size: 13px;">
                             <table>
                                 <tr>
-                                    <td class="info-catatan2">Nama Bank</td>
-                                    <td class="info-item">:</td>
+                                    <td>Nama Bank</td>
+                                    <td>:</td>
                                     <td>BCA</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">No. Rekening</td>
-                                    <td class="info-item">:</td>
+                                    <td>No. Rekening</td>
+                                    <td>:</td>
                                     <td>3611889999</td>
                                 </tr>
                                 <tr>
-                                    <td class="info-catatan2">Atas Nama</td>
-                                    <td class="info-item">:</td>
+                                    <td>Atas Nama</td>
+                                    <td>:</td>
                                     <td>CV Tiger Load Engineering</td>
                                 </tr>
                             </table>
@@ -629,7 +627,6 @@
             </table>
         @endif
     @endif
-
 
 
 
@@ -667,7 +664,6 @@
                     <tr style="text-align: center;">
                         <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
                     </tr>
-
                     <tr>
                         <td class="separator" colspan="2"><span></span></td>
                     </tr>
@@ -675,10 +671,12 @@
                         <td class="label">Accounting</td>
                     </tr>
                 </table>
+
             </td>
         </tr>
     </table>
 </body>
+
 
 <div class="container">
     <a href="{{ url('admin/inquery_pelunasan') }}" class="blue-button">Kembali</a>

@@ -57,7 +57,7 @@ class Penjualan extends Model
 
     public function detail_penjualan()
     {
-        return $this->hasMany(Spesifikasi::class);
+        return $this->hasMany(Detail_penjualan::class);
     }
 
     public function pelunasan()

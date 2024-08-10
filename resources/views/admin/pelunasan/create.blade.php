@@ -64,7 +64,7 @@
                             </button>
                         </div>
 
-                        <div class="form-group">
+                        <div hidden class="form-group">
                             <label for="penjualan_id">Penjualan Id</label>
                             <input type="text" class="form-control" id="penjualan_id" readonly name="penjualan_id"
                                 placeholder="" value="{{ old('penjualan_id') }}">
@@ -114,8 +114,6 @@
                         </table>
                     </div>
                 </div>
-
-
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Rincian Pembelian</h3>
@@ -268,11 +266,11 @@
                                                 @endif
                                             </td>
                                             <td>Rp
-                                                {{-- @if ($penjualan->detail_penjualan())
-                                                {{ $penjualan->detail_penjualan()->sum('total') }}
+                                                @if ($penjualan->detail_penjualan)
+                                                    {{ number_format($penjualan->detail_penjualan->sum('total'), 0, ',', '.') }}
                                                 @else
                                                     0
-                                                @endif --}}
+                                                @endif
                                             </td>
                                             <td>Rp
                                                 @if ($penjualan->perintah_kerja)
@@ -280,22 +278,20 @@
                                                 @else
                                                     {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}
                                                 @endif
-                                            </td> {{-- <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->nama_merek }}</td>
-                                            <td>{{ $penjualan->depositpemesanan->spk->detail_kendaraan->first()->merek->tipe->nama_tipe }}</td>
-                                            <td>{{ $penjualan->depositpemesanan->spk->typekaroseri->kode_type }}</td> --}}
+                                            </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-primary btn-sm"
                                                     onclick="getSelectedData('{{ $penjualan->id }}',
                                                     '{{ $penjualan->kode_penjualan }}',
                                                     '@if ($penjualan->perintah_kerja) {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }} @else {{ $penjualan->spk->pelanggan->nama_pelanggan }} @endif',
                                                     '{{ $penjualan->tanggal }}',
-                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga, 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga, 0, ',', '.') }} @endif',
                                                     '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif
 @else
 {{ 0 }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga') - $penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
-                                                    
+                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->spk->harga - $penjualan->perintah_kerja->depositpemesanan->first()->harga + $penjualan->detail_penjualan->sum('total'), 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->detail_penjualan) {{ number_format($penjualan->detail_penjualan->sum('total'), 0, ',', '.') }}@else {{ 0 }} @endif',
                                                     )">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -421,8 +417,13 @@
                 var nominalValue = nominalInput.value;
                 var nominal = parseFloat(hapusTitik(nominalValue)) || 0;
 
+                // Dapatkan nilai dari input "Biaya" dan hapus titik
+                var biayaTambahanInput = document.getElementById('biaya_tambahan');
+                var biayaTambahanlValue = biayaTambahanInput.value;
+                var biayaTambahan = parseFloat(hapusTitik(biayaTambahanlValue)) || 0;
+
                 // Hitung selisih
-                var selisih = totalPembayaran - DpPembayaran - nominal;
+                var selisih = totalPembayaran - DpPembayaran - nominal + biayaTambahan;
 
                 // Tampilkan hasil selisih dalam format mata uang Rupiah dengan tanda negatif
                 var hasilDP = document.getElementById('KurangiDP');
@@ -481,8 +482,13 @@
                 var nominalValue = nominalInput.value;
                 var nominal = parseFloat(hapusTitik(nominalValue)) || 0;
 
+                // Dapatkan nilai dari input "Biaya" dan hapus titik
+                var biayaTambahanInput = document.getElementById('biaya_tambahan');
+                var biayaTambahanlValue = biayaTambahanInput.value;
+                var biayaTambahan = parseFloat(hapusTitik(biayaTambahanlValue)) || 0;
+
                 // Hitung selisih
-                var selisih = totalPembayaran - DpPembayaran - potongans - nominal;
+                var selisih = totalPembayaran - DpPembayaran - potongans - nominal + biayaTambahan;
 
                 // Tampilkan hasil selisih dalam format mata uang Rupiah dengan tanda negatif
                 var hasilDP = document.getElementById('hasilDP');
@@ -493,15 +499,8 @@
                 } else {
                     hasilDP.value = '-' + formatRupiah(-selisih);
                 }
-
-                // Jika Anda ingin menampilkan selisih dalam format lain, sesuaikan kode di atas.
             }
-
-
-            // Panggil fungsi hitungSelisih saat input "Nominal" berubah
             document.getElementById('nominal').addEventListener('input', hitungSelisih);
-
-            // Panggil fungsi hitungSelisih saat halaman dimuat (untuk menginisialisasi nilai selisih)
             window.addEventListener('load', hitungSelisih);
         }
 
@@ -537,8 +536,6 @@
         document.getElementById('kategori').addEventListener('change', toggleLabels);
 
 
-
-
         function showPenjualan(selectedCategory) {
             $('#tablePenjualan').modal('show');
         }
@@ -554,38 +551,13 @@
             document.getElementById('totalpembayaran').value = TotalPenjualan;
             document.getElementById('dp').value = Dp;
             document.getElementById('KurangiDP').value = hasilDP;
-            document.getElementById('biaya_tambahan').value = hasilDP;
+            document.getElementById('biaya_tambahan').value = Biayatambahan;
             // Close the modal (if needed)
 
             $('#penjualan_id').trigger('input');
 
             $('#tablePenjualan').modal('hide');
         }
-
-        // document.addEventListener("DOMContentLoaded", function() {
-        //     const kategoriSelect = document.getElementById("kategori");
-        //     const BG = document.getElementById("bg");
-        //     const TRANS = document.getElementById("trans");
-        //     const TUN = document.getElementById("tun");
-
-        //     // Initial state
-        //     toggleFotoNpwpGroup();
-
-        //     kategoriSelect.addEventListener("change", function() {
-        //         toggleFotoNpwpGroup();
-        //     });
-
-        //     function toggleFotoNpwpGroup() {
-        //         const selectedOption = kategoriSelect.value;
-
-        //         if (selectedOption === "Bilyet Giro BG / Cek") {
-        //             BG.style.display = "block";
-        //         } else {
-        //             TRANS.style.display = "none";
-        //             TUN.style.display = "none";
-        //         }
-        //     }
-        // });
     </script>
 
     <script>

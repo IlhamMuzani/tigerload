@@ -316,8 +316,9 @@
                                     <td style="width: 150px;">
                                         <div class="form-group">
                                             <input type="text" style="font-size:14px"
-                                                class="form-control potongan_bpjs" readonly id="potongan_bpjs-0"
-                                                name="potongan_bpjs[]" data-row-id="0">
+                                                class="form-control potongan_bpjs" id="potongan_bpjs-0"
+                                                name="potongan_bpjs[]" data-row-id="0" oninput="formatRupiahform(this)"
+                                                onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                         </div>
                                     </td>
                                     <td style="width: 150px;">
@@ -802,9 +803,11 @@
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
             item_pembelian +=
-                '<input type="text" class="form-control potongan_bpjs" style="font-size:14px" readonly id="potongan_bpjs-' +
+                '<input type="text" class="form-control potongan_bpjs" style="font-size:14px" id="potongan_bpjs-' +
                 urutan +
                 '" name="potongan_bpjs[]" value="' + potongan_bpjs + '" ';
+            item_pembelian += 'oninput="formatRupiahform(this)" ';
+            item_pembelian += 'onkeypress="return event.charCode >= 48 && event.charCode <= 57">';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 

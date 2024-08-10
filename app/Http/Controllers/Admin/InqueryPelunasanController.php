@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Jenis_kendaraan;
 use App\Http\Controllers\Controller;
 use App\Models\Depositpemesanan;
+use App\Models\Detail_penjualan;
 use App\Models\Marketing;
 use App\Models\Merek;
 use App\Models\Modelken;
@@ -68,11 +69,12 @@ class InqueryPelunasanController extends Controller
         $pelunasans = Pelunasan::where('id', $id)->first();
         $pelunas = Pelunasan::find($id);
         $penjualans = Penjualan::where('id', $pelunas->penjualan_id)->first();
+        $detail_penjualans = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
         $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
         $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.inquerypelunasan.show', compact('depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
+        return view('admin.inquerypelunasan.show', compact('detail_penjualans', 'depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
     }
 
 
@@ -125,6 +127,7 @@ class InqueryPelunasanController extends Controller
                 'nomor' => $request->nomor,
                 'tanggal_transfer' => $request->tanggal_transfer,
                 'nominal' => $request->nominal,
+                'biaya_tambahan' => $request->biaya_tambahan ? str_replace('.', '', $request->biaya_tambahan) : 0,
                 'totalpenjualan' => $request->totalpenjualan ? str_replace('.', '', $request->totalpenjualan) : 0,
                 'dp' => $request->dp ? str_replace('.', '', $request->dp) : 0,
                 'totalpembayaran' => $request->totalpembayaran ? str_replace('.', '', $request->totalpembayaran) : 0,
@@ -137,11 +140,12 @@ class InqueryPelunasanController extends Controller
         $pelunasans = Pelunasan::where('id', $id)->first();
         $penjualan = Penjualan::where('id', $pelunasans->penjualan_id)->update(['status' => 'selesai', 'status_pelunasan' => 'pelunasan']);
         $penjualans = Penjualan::where('id', $pelunasans->penjualan_id)->first();
+        $detail_penjualans = Detail_penjualan::where('penjualan_id', $penjualans->id)->get();
         $perintah_kerja = Perintah_kerja::where('id', $penjualans->perintah_kerja_id)->first();
         $depositpemesanans = Depositpemesanan::where('perintah_kerja_id', $perintah_kerja->id)->get();
         $spesifikasis = Spesifikasi::where('penjualan_id', $penjualans->id)->get();
 
-        return view('admin.inquerypelunasan.show', compact('depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
+        return view('admin.inquerypelunasan.show', compact('detail_penjualans', 'depositpemesanans', 'pelunasans', 'penjualans', 'spesifikasis'));
     }
 
 

@@ -37,7 +37,7 @@
         }
 
         .label {
-            font-size: 16px;
+            font-size: 13px;
             /* Sesuaikan ukuran label sesuai preferensi Anda */
             text-align: center;
         }
@@ -231,29 +231,24 @@
                     <table>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">CV. TIGER LOAD ENGINEERING</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Name</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Jl. Ahmad Yani No. 42,</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Address</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Procot Slawi, Tegal 52411</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px;">Telp, (0283) 4563746
                             </td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                     </table>
                 </div>
             </td>
-            <!-- Second column (Nama Supplier) -->
             <td style="width: 70%;" style="max-width: 230px;">
                 <div class="info-catatan">
                     <table>
@@ -337,9 +332,9 @@
     <table style="width: 100%; border-top: 1px solid black;" cellpadding="2" cellspacing="0">
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">F. Penjualan</td>
-            <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">Total Penjualan</td>
-            <td class="td" style="text-align: right; padding: 5px; font-size: 13px;">Sub Total</td>
+            <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">F. Penjualan</td>
+            <td class="td" style="text-align: right; font-size: 13px;">Total Penjualan</td>
+            <td class="td" style="text-align: right; font-size: 13px;">Sub Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;"></td>
@@ -347,21 +342,38 @@
         @php
             $totalQuantity = 0;
             $totalHarga = 0;
+            $startFrom = 2;
         @endphp
-        {{-- @foreach ($parts as $item) --}}
         <tr>
             <td class="td" style="text-align: center;  font-size: 13px;">1
             </td>
             <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                 {{ $pelunasans->penjualan->kode_penjualan }}
             </td>
-            <td class="td" style="text-align: center;  font-size: 13px;">
+            <td class="td" style="text-align: right;  font-size: 13px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </td>
             </td>
             <td class="td" style="text-align: right;  font-size: 13px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}
             </td>
         </tr>
+        @foreach ($detail_penjualans as $item)
+            <tr>
+                <td class="td" style="text-align: center;  font-size: 13px;">{{ $startFrom }}
+                </td>
+                @php
+                    $startFrom++;
+                @endphp
+                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                    {{ $item->kode_types }} </td>
+                <td class="td" style="text-align: right;  font-size: 13px;">
+                    {{ number_format($item->total, 0, ',', '.') }}
+                </td>
+                <td class="td" style="text-align: right;  font-size: 13px;">
+                    {{ number_format($item->total, 0, ',', '.') }}
+                </td>
+            </tr>
+        @endforeach
         <tr style="border-bottom: 1px solid black;">
             <td colspan="4" style="padding: 0px;">
             </td>
@@ -376,7 +388,7 @@
             </td>
             <td style="text-align: right;">
                 <span class="info-item" style="font-size: 13px;"><span
-                        style="font-style: bold">{{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }}</span></span>
+                        style="font-style: bold">{{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan, 0, ',', '.') }}</span></span>
                 <br>
             </td>
         </tr>
@@ -389,8 +401,6 @@
             </td>
         </tr>
     </table>
-
-
     <table width="100%">
         <tr>
             <!-- First column (Nama PT) -->
@@ -399,24 +409,20 @@
                     <table>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px; color:white">.</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Name</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px; color:white">.</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">Company Address</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px; color:white">.</td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                         <tr>
                             <td class="info-text info-left" style="font-size: 13px; color:white">.
                             </td>
-                            {{-- <td class="info-item" style="font-size: 13px;">:</td>
-                            <td class="info-text info-left" style="font-size: 13px;">123-456-7890</td> --}}
+
                         </tr>
                     </table>
                 </div>
@@ -441,7 +447,7 @@
                             <td class="" style="font-size: 13px;">Sisa Tagihan</td>
                             <td class="info-item" style="font-size: 13px;"></td>
                             <td class="info-text info-left" style="font-size: 13px;  text-align: right;">
-                                {{ number_format($pelunasans->totalpenjualan - $pelunasans->potongan, 0, ',', '.') }}
+                                {{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan - $pelunasans->potongan, 0, ',', '.') }}
                             </td>
                         </tr>
                     </table>
@@ -451,7 +457,8 @@
                             <td class="" style="font-size: 13px;">Total Tagihan</td>
                             <td class="info-item" style="font-size: 13px;"></td>
                             <td class="info-text info-left" style="font-size: 13px; text-align: right;">
-                                {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </span>
+                                {{ number_format($pelunasans->totalpenjualan + $pelunasans->biaya_tambahan - $pelunasans->potongan, 0, ',', '.') }}
+                                </span>
                             </td>
                         </tr>
 
