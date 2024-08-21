@@ -26,6 +26,7 @@
             font-family: Arial, sans-serif;
             color: black;
             padding: 20px;
+            margin: 10px;
             */
             /* Gunakan Arial atau font sans-serif lainnya yang mudah dibaca */
             /* margin: 40px;
@@ -615,9 +616,6 @@
         @endif
     @endif
 
-
-
-    <br>
     <table class="tdd" cellpadding="10" cellspacing="0" style="margin: 0 auto;">
         <tr>
             <td style="text-align: center;">
