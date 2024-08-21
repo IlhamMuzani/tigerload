@@ -480,13 +480,13 @@
             </tr>
             <?php
             // Calculate the increase and round it
-            $total_price2 = $original_price + $totalSubtotalppn;
-            $tax_rate2 = 0.11;
+            $total_price22 = $penjualans->perintah_kerja->spk->harga;
+            $tax_rate22 = 0.11;
             // Calculate original price
-            $original_price2 = $total_price2 / (1 + $tax_rate2);
+            $original_price22 = $total_price22 / (1 + $tax_rate22);
             
             // Calculate tax amount
-            $tax_amount2 = $original_price2 * $tax_rate2;
+            $tax_amount22 = $original_price22 * $tax_rate22;
             ?>
             <tr>
                 <td colspan="6"
@@ -495,7 +495,7 @@
                 <td class="td"
                     style="font-size: 15px; text-align: right; text-decoration: underline; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($original_price2, 0, ',', '.') }}
+                        {{ number_format($tax_amount22, 0, ',', '.') }}
                 </td>
             </tr>
             <tr>
@@ -503,7 +503,7 @@
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 15px;">Sub Total</td>
                 <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($original_price + $totalSubtotalppn + $original_price2, 0, ',', '.') }}
+                        {{ number_format($original_price + $totalSubtotalppn + $tax_amount22, 0, ',', '.') }}
                 </td>
             </tr>
             <tr><br></tr>
@@ -535,7 +535,7 @@
                 <td class="td" style="font-size: 15px; text-align: right; font-weight: bold;">
                     <span style="float: right">
                         @if ($penjualans->depositpemesanan)
-                            {{ number_format($original_price + $totalSubtotalppn + $original_price2 - $totalDP1, 0, ',', '.') }}
+                            {{ number_format($original_price + $totalSubtotalppn + $tax_amount22 - $totalDP1, 0, ',', '.') }}
                         @else
                             {{ number_format($original_price + $totalSubtotalppn + $original_price2 - 0, 0, ',', '.') }}
                         @endif
