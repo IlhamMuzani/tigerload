@@ -9,7 +9,7 @@
     <style>
         html,
         body {
-            font-family: 'DOSVGA', monospace;
+            font-family: Arial, sans-serif;
             color: black;
             /* Gunakan Arial atau font sans-serif lainnya yang mudah dibaca */
             margin: 40px;
@@ -120,7 +120,7 @@
                 Barang</td>
             {{-- <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Harga
             </td> --}}
-            <td class="td" style="text-align: center; padding: 5px; font-size: 15px; border: 1px solid black;">Qty
+            <td class="td" style="text-align: right; padding-right: 10px; font-size: 15px; border: 1px solid black;">Qty
             </td>
             {{-- <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Satuan
             </td>
@@ -144,7 +144,7 @@
                 {{-- <td class="info-text info-left" style="font-size: 15px; text-align: left; border: 1px solid black;">
                     {{ number_format($item->harga, 0, ',', '.') }}
                 </td> --}}
-                <td class="td" style="text-align: center; font-size: 15px; border: 1px solid black;">
+                <td class="td" style="text-align: right; font-size: 15px; border: 1px solid black; padding-right:10px">
                     {{ $item->jumlah }}</td>
                 {{-- <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
                     {{ $item->satuan }}</td>

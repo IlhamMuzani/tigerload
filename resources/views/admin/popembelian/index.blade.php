@@ -128,10 +128,9 @@
                                     <th class="text-center">No</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
-                                    {{-- <th>Harga</th> --}}
+                                
                                     <th>Qty</th>
-                                    {{-- <th>Satuan</th> --}}
-                                    {{-- <th>Total</th> --}}
+                                 
                                     <th>Opsi</th>
                                 </tr>
                             </thead>

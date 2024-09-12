@@ -90,7 +90,7 @@
                                 <th>Kode PO Pembelian</th>
                                 <th>Tanggal</th>
                                 <th>Nama Supplier</th>
-                                <th>Total</th>
+                                {{-- <th>Total</th> --}}
                                 <th class="text-center" width="120">Opsi</th>
                             </tr>
                         </thead>
@@ -107,9 +107,9 @@
                                     <td>
                                         {{ $popembelian->supplier->nama_supp }}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         {{ 'Rp ' . number_format($popembelian->detail_popembelian->sum('total'), 0, ',', '.') }}
-                                    </td>
+                                    </td> --}}
                                     <td class="text-center">
                                         @if ($popembelian->status == 'unpost')
                                             <a href="{{ url('admin/inquery_popembelian/' . $popembelian->id) }}"
