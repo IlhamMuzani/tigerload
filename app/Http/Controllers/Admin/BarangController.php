@@ -11,9 +11,21 @@ use Illuminate\Support\Facades\Validator;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::where('kategori', 'besi')->get();
+        $query = Barang::where('kategori', 'besi');
+
+        if ($request->has('keyword')) {
+            $keyword = $request->keyword;
+
+            $query->where(function ($q) use ($keyword) {
+                $q->where('kode_barang', 'like', "%$keyword%")
+                    ->orWhere('nama_barang', 'like', "%$keyword%");
+            });
+        }
+
+        $barangs = $query->orderBy('created_at', 'desc')->paginate(10);
+
         return view('admin/barang.index', compact('barangs'));
     }
 

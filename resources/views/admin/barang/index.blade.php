@@ -73,6 +73,22 @@
                                     All Toggle Detail
                                 </button>
                             </div>
+
+                            <!-- Bagian pencarian berada di sebelah kanan -->
+                            <div class="col-md-4 offset-md-4">
+                                <label for="keyword">Cari Barang :</label>
+                                <div class="input-group">
+                                    <input type="search" class="form-control" name="keyword" id="keyword"
+                                        value="{{ Request::get('keyword') }}"
+                                        onsubmit="event.preventDefault();
+                                        document.getElementById('get-keyword').submit();">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
@@ -201,7 +217,13 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.card-body -->
+                @if ($barangs->total() > 10)
+                    <div class="card-footer">
+                        <div class="pagination float-right">
+                            {{ $barangs->appends(Request::all())->links('pagination::simple-bootstrap-4') }}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

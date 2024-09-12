@@ -57,24 +57,43 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <form method="GET" id="form-action">
+                    <form action="{{ url('admin/barangnonbesi') }}" method="GET" id="get-keyword" autocomplete="off">
+                        @csrf
                         <div class="row">
                             <div class="col-md-2 mb-3">
-                                <label for="created_at">Kategori</label>
+                                <label for="kategori">Kategori</label>
                                 <select class="custom-select form-control" id="kategori" name="kategori">
                                     <option value="">- Pilih -</option>
                                     <option value="barang">Barang Besi</option>
-                                    <option value="barangnon"selected>Barang Non Besi</option>
+                                    <option value="barangnon" selected>Barang Non Besi</option>
                                 </select>
                             </div>
+
                             <div class="col-md-2 mb-3">
-                                <label for="created_at">Show All</label>
+                                <label for="show_all">Show All</label>
                                 <button id="toggle-all" type="button" class="btn btn-info btn-block">
                                     All Toggle Detail
                                 </button>
                             </div>
+
+                            <!-- Bagian pencarian berada di sebelah kanan -->
+                            <div class="col-md-4 offset-md-4">
+                                <label for="keyword">Cari Barang :</label>
+                                <div class="input-group">
+                                    <input type="search" class="form-control" name="keyword" id="keyword"
+                                        value="{{ Request::get('keyword') }}"
+                                        onsubmit="event.preventDefault();
+                                        document.getElementById('get-keyword').submit();">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
+
                     <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
@@ -201,7 +220,13 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- /.card-body -->
+                @if ($barangs->total() > 10)
+                    <div class="card-footer">
+                        <div class="pagination float-right">
+                            {{ $barangs->appends(Request::all())->links('pagination::simple-bootstrap-4') }}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

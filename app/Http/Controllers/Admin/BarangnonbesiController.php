@@ -11,10 +11,22 @@ use Illuminate\Support\Facades\Validator;
 
 class BarangnonbesiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $barangs = Barang::where('kategori', 'non besi')->get();
-        return view('admin/barangnonbesi.index', compact('barangs'));
+        $query = Barang::where('kategori', 'non besi');
+
+        if ($request->has('keyword')) {
+            $keyword = $request->keyword;
+
+            $query->where(function ($q) use ($keyword) {
+                $q->where('kode_barang', 'like', "%$keyword%")
+                    ->orWhere('nama_barang', 'like', "%$keyword%");
+            });
+        }
+
+        $barangs = $query->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('admin.barangnonbesi.index', compact('barangs'));
     }
 
     public function create()
