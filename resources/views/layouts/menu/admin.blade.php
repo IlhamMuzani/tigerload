@@ -29,6 +29,7 @@
     request()->is('admin/user*') ||
     request()->is('admin/akses*') ||
     request()->is('admin/departemen*') ||
+    request()->is('admin/satuan*') ||
     request()->is('admin/pelanggan*') ||
     request()->is('admin/merek*') ||
     request()->is('admin/typekaroseri*') ||
@@ -48,6 +49,7 @@
         request()->is('admin/user*') ||
         request()->is('admin/akses*') ||
         request()->is('admin/departemen*') ||
+        request()->is('admin/satuan*') ||
         request()->is('admin/pelanggan*') ||
         request()->is('admin/merek*') ||
         request()->is('admin/typekaroseri*') ||
@@ -126,6 +128,15 @@
                     class="nav-link {{ request()->is('admin/pelanggan*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
                     <p style="font-size: 14px;">Data Pelanggan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['barang'])
+            <li class="nav-item">
+                <a href="{{ url('admin/satuan') }}"
+                    class="nav-link {{ request()->is('admin/satuan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Data Satuan</p>
                 </a>
             </li>
         @endif

@@ -270,12 +270,13 @@
             <td class="td" style="text-align: center; padding: 5px; font-size: 12px;">No.</td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Kode Barang</td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Nama Barang</td>
-            <td class="td" style="text-align: right; padding: 5px; font-size: 12px;">Qty</td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Satuan</td>
+            <td class="td" style="text-align: right; font-size: 12px;">Qty</td>
             <td class="td" style="text-align: right; padding: 5px; font-size: 12px;">Harga</td>
+            <td class="td" style="text-align: left; padding: 5px; font-size: 12px;">Satuan</td>
+            <td class="td" style="text-align: right; padding: 5px; font-size: 12px;">Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         @php
             $totalQuantity = 0;
@@ -292,23 +293,26 @@
                 <td class="td" style="text-align: right; font-size: 12px;">
                     {{ $item->jumlah }}
                 </td>
+                <td class="td" style="text-align: right;  font-size: 12px;">
+                    {{ number_format($item->harga, 2, ',', '.') }}
+                </td>
                 <td class="td" style="text-align: left;  font-size: 12px;">
                     {{ $item->satuan }}
                 </td>
-                <td class="td" style="text-align: right;  font-size: 12px;">Rp.
-                    {{ number_format($item->harga, 2, ',', '.') }}
+                <td class="td" style="text-align: right;  font-size: 12px;">
+                    {{ number_format($item->total, 2, ',', '.') }}
                 </td>
             </tr>
             @php
                 $totalQuantity += 1; // Increment by 1 for each item (you can use your actual quantity field here)
-                $totalHarga += $item->harga; // Add the item's harga to the total harga
+                $totalHarga += $item->total; // Add the item's harga to the total harga
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="6" style="padding: 0px;"></td>
+            <td colspan="7" style="padding: 0px;"></td>
         </tr>
         <tr>
-            <td colspan="5" style="text-align: right; font-weight: bold; padding: 5px; font-size: 12px;">Sub Total
+            <td colspan="6" style="text-align: right; font-weight: bold; padding: 5px; font-size: 12px;">Sub Total
             </td>
             <td class="td" style="text-align: right; font-weight: bold; font-size: 12px;">Rp.
                 {{ number_format($totalHarga, 2, ',', '.') }}
