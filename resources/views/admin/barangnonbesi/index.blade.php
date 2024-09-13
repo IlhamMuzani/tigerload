@@ -100,7 +100,7 @@
                                 <th class="text-center">No</th>
                                 <th>Kode Barang</th>
                                 <th>Nama Barang</th>
-                                <th>Ukuran</th>
+                                <th>Stok</th>
                                 {{-- <th>Harga</th> --}}
                                 <th class="text-center">Qr Code</th>
                                 <th class="text-center" width="120">Opsi</th>

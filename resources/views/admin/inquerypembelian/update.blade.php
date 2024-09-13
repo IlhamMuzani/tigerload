@@ -155,39 +155,18 @@
                                             </td>
                                             <td style="width: 150px">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="satuan-0" name="satuan[]">
-                                                        <option value="">- Pilih -</option>
-                                                        <option value="M3"
-                                                            {{ old('satuan', $detail['satuan']) == 'M3' ? 'selected' : null }}>
-                                                            M&sup3;</option>
-                                                        <option value="ton"
-                                                            {{ old('satuan', $detail['satuan']) == 'ton' ? 'selected' : null }}>
-                                                            ton</option>
-                                                        <option value="krtn"
-                                                            {{ old('satuan', $detail['satuan']) == 'krtn' ? 'selected' : null }}>
-                                                            krtn</option>
-                                                        <option value="dus"
-                                                            {{ old('satuan', $detail['satuan']) == 'dus' ? 'selected' : null }}>
-                                                            dus</option>
-                                                        <option value="rit"
-                                                            {{ old('satuan', $detail['satuan']) == 'rit' ? 'selected' : null }}>
-                                                            rit</option>
-                                                        <option value="kg"
-                                                            {{ old('satuan', $detail['satuan']) == 'kg' ? 'selected' : null }}>
-                                                            kg</option>
-                                                        <option value="ltr"
-                                                            {{ old('satuan', $detail['satuan']) == 'ltr' ? 'selected' : null }}>
-                                                            ltr</option>
-                                                        <option value="pcs"
-                                                            {{ old('satuan', $detail['satuan']) == 'pcs' ? 'selected' : null }}>
-                                                            pcs</option>
-                                                        <option value="hr"
-                                                            {{ old('satuan', $detail['satuan']) == 'hr' ? 'selected' : null }}>
-                                                            hr</option>
-                                                        <option value="ZAK"
-                                                            {{ old('satuan', $detail['satuan']) == 'ZAK' ? 'selected' : null }}>
-                                                            ZAK</option>
-                                                    </select>
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="satuan_id-{{ $loop->index }}"
+                                                            name="satuan_id[]">
+                                                            <option value="">Pilih Satuan..</option>
+                                                            @foreach ($satuans as $satuan_id)
+                                                                <option value="{{ $satuan_id->id }}"
+                                                                    {{ old('satuan_id.' . $loop->parent->index, $detail['satuan_id']) == $satuan_id->id ? 'selected' : '' }}>
+                                                                    {{ $satuan_id->nama_satuan }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td>
@@ -447,7 +426,8 @@
                                 @foreach ($barangs as $barang)
                                     <tr data-barang_id="{{ $barang->id }}"
                                         data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
+                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}"
+                                        onclick="getBarang({{ $loop->index }})">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
                                         <td>{{ $barang->nama_barang }}</td>
@@ -618,7 +598,7 @@
             var barang_id = '';
             var kode_barang = '';
             var nama_barang = '';
-            var satuan = '';
+            var satuan_id = '';
             var jumlah = '';
             var harga = '';
             var harga_jual = '';
@@ -629,7 +609,7 @@
                 barang_id = value.barang_id;
                 kode_barang = value.kode_barang;
                 nama_barang = value.nama_barang;
-                satuan = value.satuan;
+                satuan_id = value.satuan_id;
                 jumlah = value.jumlah;
                 harga = value.harga;
                 harga_jual = value.harga_jual;
@@ -651,7 +631,8 @@
             item_pembelian += '</td>';
 
             // kode_barang 
-            item_pembelian += '<td>';
+            item_pembelian += '<td onclick="barang(' + key +
+                ')">';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="kode_barang-' +
                 key +
@@ -660,7 +641,8 @@
             item_pembelian += '</td>';
 
             // nama_barang 
-            item_pembelian += '<td>';
+            item_pembelian += '<td onclick="barang(' + key +
+                ')">';
             item_pembelian += '<div class="form-group">'
             item_pembelian += '<input type="text" class="form-control" readonly style="font-size:14px" id="nama_barang-' +
                 key +
@@ -668,34 +650,20 @@
             item_pembelian += '</div>';
             item_pembelian += '</td>';
 
-            // satuan 
-            item_pembelian += '<td>';
+            // satuan_id 
+            item_pembelian += '<td style="width: 150px;>';
             item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select style="font-size:14px" class="form-control" id="satuan-' + key +
-                '" name="satuan[]">';
-            item_pembelian += '<option value="">- Pilih -</option>';
-            item_pembelian += '<option value="M3"' + (satuan === 'M3' ? ' selected' : '') +
-                '>M&sup3;</option>';
-            item_pembelian += '<option value="ton"' + (satuan === 'ton' ? ' selected' : '') +
-                '>ton</option>';
-            item_pembelian += '<option value="krtn"' + (satuan === 'krtn' ? ' selected' : '') +
-                '>krtn</option>';
-            item_pembelian += '<option value="dus"' + (satuan === 'dus' ? ' selected' : '') +
-                '>dus</option>';
-            item_pembelian += '<option value="rit"' + (satuan === 'rit' ? ' selected' : '') +
-                '>rit</option>';
-            item_pembelian += '<option value="kg"' + (satuan === 'kg' ? ' selected' : '') +
-                '>kg</option>';
-            item_pembelian += '<option value="ltr"' + (satuan === 'ltr' ? ' selected' : '') +
-                '>ltr</option>';
-            item_pembelian += '<option value="pcs"' + (satuan === 'pcs' ? ' selected' : '') + '>pcs</option>';
-            item_pembelian += '<option value="hr"' + (satuan === 'hr' ? ' selected' : '') +
-                '>hr</option>';
-            item_pembelian += '<option value="ZAK"' + (satuan === 'ZAK' ? ' selected' : '') +
-                '>ZAK</option>';
+            item_pembelian += '<select class="form-control select2bs4" id="satuan_id-' + key +
+                '" name="satuan_id[]">';
+            item_pembelian += '<option value="">Pilih Satuan..</option>';
+            item_pembelian += '@foreach ($satuans as $satuan_id)';
+            item_pembelian +=
+                '<option value="{{ $satuan_id->id }}" {{ $satuan_id->id == ' + satuan_id + ' ? 'selected' : '' }}>{{ $satuan_id->nama_satuan }}</option>';
+            item_pembelian += '@endforeach';
             item_pembelian += '</select>';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
+            item_pembelian += '</td>'
 
             // jumlah
             item_pembelian += '<td>';
@@ -752,6 +720,10 @@
             item_pembelian += '</tr>';
 
             $('#tabel-pembelian').append(item_pembelian);
+
+            if (value !== null) {
+                $('#satuan_id-' + key).val(value.satuan_id);
+            }
         }
     </script>
 

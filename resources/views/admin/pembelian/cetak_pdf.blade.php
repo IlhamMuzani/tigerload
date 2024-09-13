@@ -297,7 +297,8 @@
                     {{ number_format($item->harga, 2, ',', '.') }}
                 </td>
                 <td class="td" style="text-align: left;  font-size: 12px;">
-                    {{ $item->satuan }}
+
+                    {{ $item->satuan->nama_satuan ?? null }}
                 </td>
                 <td class="td" style="text-align: right;  font-size: 12px;">
                     {{ number_format($item->total, 2, ',', '.') }}

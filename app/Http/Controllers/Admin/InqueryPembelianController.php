@@ -19,6 +19,7 @@ use App\Models\Modelken;
 use App\Models\Pelanggan;
 use App\Models\Pembelian;
 use App\Models\Penjualan;
+use App\Models\Satuan;
 use App\Models\Spesifikasi;
 use App\Models\Supplier;
 use App\Models\Tipe;
@@ -79,9 +80,10 @@ class InqueryPembelianController extends Controller
         $inquery = Pembelian::where('id', $id)->first();
         $suppliers = Supplier::all();
         $barangs = Barang::all();
+        $satuans = Satuan::all();
         $details = Detailpembelian::where('pembelian_id', $id)->get();
 
-        return view('admin.inquerypembelian.update', compact('inquery', 'suppliers', 'barangs', 'details'));
+        return view('admin.inquerypembelian.update', compact('satuans','inquery', 'suppliers', 'barangs', 'details'));
     }
 
     public function update(Request $request, $id)
@@ -111,7 +113,7 @@ class InqueryPembelianController extends Controller
                     'barang_id.' . $i => 'required',
                     'kode_barang.' . $i => 'required',
                     'nama_barang.' . $i => 'required',
-                    'satuan.' . $i => 'required',
+                    'satuan_id.' . $i => 'required',
                     'jumlah.' . $i => 'required',
                     'harga.' . $i => 'required',
                     'harga_jual.' . $i => 'required',
@@ -126,7 +128,7 @@ class InqueryPembelianController extends Controller
                 $barang_id = is_null($request->barang_id[$i]) ? '' : $request->barang_id[$i];
                 $kode_barang = is_null($request->kode_barang[$i]) ? '' : $request->kode_barang[$i];
                 $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
-                $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
+                $satuan_id = is_null($request->satuan_id[$i]) ? '' : $request->satuan_id[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
                 $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
                 $harga_jual = is_null($request->harga_jual[$i]) ? '' : $request->harga_jual[$i];
@@ -138,7 +140,7 @@ class InqueryPembelianController extends Controller
                     'barang_id' => $barang_id,
                     'kode_barang' => $kode_barang,
                     'nama_barang' => $nama_barang,
-                    'satuan' => $satuan,
+                    'satuan_id' => $satuan_id,
                     'jumlah' => $jumlah,
                     'harga' => $harga,
                     'harga_jual' => $harga_jual,
@@ -184,7 +186,7 @@ class InqueryPembelianController extends Controller
                     'barang_id' => $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
-                    'satuan' => $data_pesanan['satuan'],
+                    'satuan_id' => $data_pesanan['satuan_id'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
                     'harga_jual' => $data_pesanan['harga_jual'],
@@ -224,7 +226,7 @@ class InqueryPembelianController extends Controller
                     'barang_id' =>  $data_pesanan['barang_id'],
                     'kode_barang' => $data_pesanan['kode_barang'],
                     'nama_barang' => $data_pesanan['nama_barang'],
-                    'satuan' => $data_pesanan['satuan'],
+                    'satuan_id' => $data_pesanan['satuan_id'],
                     'jumlah' => $data_pesanan['jumlah'],
                     'harga' => $data_pesanan['harga'],
                     'harga_jual' => $data_pesanan['harga_jual'],
@@ -239,7 +241,7 @@ class InqueryPembelianController extends Controller
                         'barang_id' =>  $data_pesanan['barang_id'],
                         'kode_barang' => $data_pesanan['kode_barang'],
                         'nama_barang' => $data_pesanan['nama_barang'],
-                        'satuan' => $data_pesanan['satuan'],
+                        'satuan_id' => $data_pesanan['satuan_id'],
                         'jumlah' => $data_pesanan['jumlah'],
                         'harga' => $data_pesanan['harga'],
                         'harga_jual' => $data_pesanan['harga_jual'],
@@ -285,7 +287,7 @@ class InqueryPembelianController extends Controller
         //             'barang_id' => $data_pesanan['barang_id'],
         //             'kode_barang' => $data_pesanan['kode_barang'],
         //             'nama_barang' => $data_pesanan['nama_barang'],
-        //             'satuan' => $data_pesanan['satuan'],
+        //             'satuan_id' => $data_pesanan['satuan_id'],
         //             'jumlah' => $data_pesanan['jumlah'],
         //             'harga' => $data_pesanan['harga'],
         //             'harga_jual' => $data_pesanan['harga_jual'],
@@ -314,7 +316,7 @@ class InqueryPembelianController extends Controller
         //             'barang_id' =>  $data_pesanan['barang_id'],
         //             'kode_barang' => $data_pesanan['kode_barang'],
         //             'nama_barang' => $data_pesanan['nama_barang'],
-        //             'satuan' => $data_pesanan['satuan'],
+        //             'satuan_id' => $data_pesanan['satuan_id'],
         //             'jumlah' => $data_pesanan['jumlah'],
         //             'harga' => $data_pesanan['harga'],
         //             'harga_jual' => $data_pesanan['harga_jual'],
@@ -329,7 +331,7 @@ class InqueryPembelianController extends Controller
         //                 'barang_id' =>  $data_pesanan['barang_id'],
         //                 'kode_barang' => $data_pesanan['kode_barang'],
         //                 'nama_barang' => $data_pesanan['nama_barang'],
-        //                 'satuan' => $data_pesanan['satuan'],
+        //                 'satuan_id' => $data_pesanan['satuan_id'],
         //                 'jumlah' => $data_pesanan['jumlah'],
         //                 'harga' => $data_pesanan['harga'],
         //                 'harga_jual' => $data_pesanan['harga_jual'],

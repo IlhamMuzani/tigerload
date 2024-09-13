@@ -21,7 +21,8 @@ class Detailpembelian extends Model
         'qrcode_barang',
         'nama_barang',
         'jumlah',
-        'satuan',
+        // 'satuan',
+        'satuan_id',
         'harga',
         'harga_jual',
         'diskon',
@@ -40,5 +41,16 @@ class Detailpembelian extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
+
+    public function pembelian()
+    {
+        return $this->belongsTo(Pembelian::class);
+    }
+
+    public function satuan()
+    {
+        return $this->belongsTo(Satuan::class);
+    }
+
 
 }
