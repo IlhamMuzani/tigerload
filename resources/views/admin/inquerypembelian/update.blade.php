@@ -162,7 +162,7 @@
                                                             @foreach ($satuans as $satuan_id)
                                                                 <option value="{{ $satuan_id->id }}"
                                                                     {{ old('satuan_id.' . $loop->parent->index, $detail['satuan_id']) == $satuan_id->id ? 'selected' : '' }}>
-                                                                    {{ $satuan_id->nama_satuan }}
+                                                                    {{ $satuan_id->kode_satuan }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -658,7 +658,7 @@
             item_pembelian += '<option value="">Pilih Satuan..</option>';
             item_pembelian += '@foreach ($satuans as $satuan_id)';
             item_pembelian +=
-                '<option value="{{ $satuan_id->id }}" {{ $satuan_id->id == ' + satuan_id + ' ? 'selected' : '' }}>{{ $satuan_id->nama_satuan }}</option>';
+                '<option value="{{ $satuan_id->id }}" {{ $satuan_id->id == ' + satuan_id + ' ? 'selected' : '' }}>{{ $satuan_id->kode_satuan }}</option>';
             item_pembelian += '@endforeach';
             item_pembelian += '</select>';
             item_pembelian += '</div>';

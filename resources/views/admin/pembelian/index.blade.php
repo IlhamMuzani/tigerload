@@ -175,7 +175,7 @@
                                                 id="satuan_id-0">
                                                 <option value="">- Pilih -</option>
                                                 @foreach ($satuans as $satuan)
-                                                    <option value="{{ $satuan->id }}">{{ $satuan->nama_satuan }}
+                                                    <option value="{{ $satuan->id }}">{{ $satuan->kode_satuan }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -651,7 +651,7 @@
             item_pembelian += '<option value="">Pilih Satuan..</option>';
             item_pembelian += '@foreach ($satuans as $satuan_id)';
             item_pembelian +=
-                '<option value="{{ $satuan_id->id }}" {{ $satuan_id->id == ' + satuan_id + ' ? 'selected' : '' }}>{{ $satuan_id->nama_satuan }}</option>';
+                '<option value="{{ $satuan_id->id }}" {{ $satuan_id->id == ' + satuan_id + ' ? 'selected' : '' }}>{{ $satuan_id->kode_satuan }}</option>';
             item_pembelian += '@endforeach';
             item_pembelian += '</select>';
             item_pembelian += '</div>';
