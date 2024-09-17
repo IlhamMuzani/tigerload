@@ -298,7 +298,7 @@
                 </td>
                 <td class="td" style="text-align: left;  font-size: 12px;">
 
-                    {{ $item->satuan->nama_satuan ?? null }}
+                    {{ $item->satuan->kode_satuan ?? null }}
                 </td>
                 <td class="td" style="text-align: right;  font-size: 12px;">
                     {{ number_format($item->total, 2, ',', '.') }}

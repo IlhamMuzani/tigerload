@@ -150,7 +150,7 @@
                     style="text-align: right; font-size: 15px; border: 1px solid black; padding-right:10px">
                     {{ $item->jumlah }}</td>
                 <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
-                    {{ $item->satuan->nama_satuan ?? null }}</td>
+                    {{ $item->satuan->kode_satuan ?? null }}</td>
                 {{--
                 <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
                     Rp.{{ number_format($item->total, 0, ',', '.') }}</td> --}}
