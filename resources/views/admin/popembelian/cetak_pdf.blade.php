@@ -120,15 +120,17 @@
                 Barang</td>
             {{-- <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Harga
             </td> --}}
-            <td class="td" style="text-align: right; padding-right: 10px; font-size: 15px; border: 1px solid black;">Qty
+            <td class="td"
+                style="text-align: right; padding-right: 10px; font-size: 15px; border: 1px solid black;">Qty
             </td>
-            {{-- <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Satuan
+            <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Satuan
             </td>
+            {{-- 
             <td class="td" style="text-align: left; padding: 5px; font-size: 15px; border: 1px solid black;">Total
             </td> --}}
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;"></td>
+            <td colspan="5" style="padding: 0px;"></td>
         </tr>
         @php
             $grandTotal = 0;
@@ -144,10 +146,12 @@
                 {{-- <td class="info-text info-left" style="font-size: 15px; text-align: left; border: 1px solid black;">
                     {{ number_format($item->harga, 0, ',', '.') }}
                 </td> --}}
-                <td class="td" style="text-align: right; font-size: 15px; border: 1px solid black; padding-right:10px">
+                <td class="td"
+                    style="text-align: right; font-size: 15px; border: 1px solid black; padding-right:10px">
                     {{ $item->jumlah }}</td>
-                {{-- <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
-                    {{ $item->satuan }}</td>
+                <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
+                    {{ $item->satuan->nama_satuan ?? null }}</td>
+                {{--
                 <td class="td" style="text-align: left; font-size: 15px; border: 1px solid black;">
                     Rp.{{ number_format($item->total, 0, ',', '.') }}</td> --}}
             </tr>
@@ -156,7 +160,7 @@
             @endphp
         @endforeach
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;"></td>
+            <td colspan="5" style="padding: 0px;"></td>
         </tr>
         {{-- <tr>
             <td colspan="6"

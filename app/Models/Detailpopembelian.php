@@ -20,7 +20,7 @@ class Detailpopembelian extends Model
         'kode_barang',
         'nama_barang',
         'jumlah',
-        'satuan',
+        'satuan_id',
         'harga',
         'total',
         'tanggal_awal',
@@ -39,6 +39,11 @@ class Detailpopembelian extends Model
     public function Popembelian()
     {
         return $this->belongsTo(Popembelian::class);
+    }
+
+    public function satuan()
+    {
+        return $this->belongsTo(Satuan::class);
     }
 
 

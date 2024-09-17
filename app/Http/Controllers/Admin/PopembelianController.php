@@ -12,6 +12,7 @@ use App\Models\Detailpembelian;
 use App\Models\Detailpopembelian;
 use App\Models\Pembelian;
 use App\Models\Popembelian;
+use App\Models\Satuan;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,8 @@ class PopembelianController extends Controller
             $poPembelians = Popembelian::all();
             $suppliers = Supplier::all();
             $barangs = Barang::all();
-            return view('admin.popembelian.index', compact('poPembelians', 'suppliers', 'barangs'));
+            $satuans = Satuan::all();
+            return view('admin.popembelian.index', compact('satuans','poPembelians', 'suppliers', 'barangs'));
         } else {
             // tidak memiliki akses
             return back()->with('error', array('Anda tidak memiliki akses'));
@@ -59,7 +61,7 @@ class PopembelianController extends Controller
                     'nama_barang.' . $i => 'required',
                     // 'harga.' . $i => 'required',
                     'jumlah.' . $i => 'required',
-                    // 'satuan.' . $i => 'required',
+                    'satuan_id.' . $i => 'required',
                     // 'total.' . $i => 'required',
                 ]);
 
@@ -73,7 +75,7 @@ class PopembelianController extends Controller
                 $nama_barang = is_null($request->nama_barang[$i]) ? '' : $request->nama_barang[$i];
                 // $harga = is_null($request->harga[$i]) ? '' : $request->harga[$i];
                 $jumlah = is_null($request->jumlah[$i]) ? '' : $request->jumlah[$i];
-                // $satuan = is_null($request->satuan[$i]) ? '' : $request->satuan[$i];
+                $satuan_id = is_null($request->satuan_id[$i]) ? '' : $request->satuan_id[$i];
                 // $total = is_null($request->total[$i]) ? '' : $request->total[$i];
 
                 $data_pembelians->push([
@@ -82,7 +84,7 @@ class PopembelianController extends Controller
                     'nama_barang' => $nama_barang,
                     // 'harga' => $harga,
                     'jumlah' => $jumlah,
-                    // 'satuan' => $satuan,
+                    'satuan_id' => $satuan_id,
                     // 'total' => $total
                 ]);
             }
@@ -125,7 +127,7 @@ class PopembelianController extends Controller
                     // 'harga' => $data_pembelian['harga'],
                     'jumlah' => $data_pembelian['jumlah'],
                     // 'total' => $data_pembelian['total'],
-                    // 'satuan' => $data_pembelian['satuan'],
+                    'satuan_id' => $data_pembelian['satuan_id'],
                 ]);
             }
         }
