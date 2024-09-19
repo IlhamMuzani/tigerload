@@ -99,7 +99,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group">
+                                                <div hidden class="form-group">
                                                     <label for="nopol">id SPK</label>
                                                     <input type="text" class="form-control" id="id_perintahkerja"
                                                         name="id_perintahkerja" readonly placeholder=""
