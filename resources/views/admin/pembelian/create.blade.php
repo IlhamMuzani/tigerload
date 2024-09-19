@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Pembelian')
+@section('title', 'Pembelian')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Pembelian</h1>
+                    <h1 class="m-0">Pembelian</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/inquery_pembelian') }}">Pembelian
-                                Kecil</a>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pembelian') }}">Pembelian
+                            </a>
                         </li>
                         <li class="breadcrumb-item active">Perbarui</li>
                     </ol>
@@ -55,28 +55,35 @@
                     @endif
                 </div>
             @endif
-            <form action="{{ url('admin/inquery_pembelian/' . $inquery->id) }}" method="POST" enctype="multipart/form-data"
-                autocomplete="off">
+            <form action="{{ url('admin/add_pembelian') }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                 @csrf
-                @method('put')
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Detail Supplier</h3>
                         <div class="float-right">
+
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <div hidden class="form-group">
-                            <input style="font-size:14px" type="text" class="form-control" id="popembelian_id"
-                                name="popembelian_id"
-                                value="{{ old('popembelian_id', $inquery->popembelian->id ?? null) }}">
+                        <div style="font-size:14px" class="form-group">
+                            <label class="form-label" for="jenis">Jenis Pembelian</label>
+                            <select style="font-size:14px" class="custom-select form-control" id="jenis" name="jenis">
+                                <option value="">- Pilih -</option>
+                                <option value="po" selected>Purchase Order</option>
+                                <option value="non_po">NON Purchase Order</option>
+                            </select>
+                        </div>
+                        <div style="font-size:14px" hidden class="form-group">
+                            <label class="form-label" for="popembelian_id">Popembelian_id</label>
+                            <input readonly type="text" class="form-control" id="popembelian_id" name="popembelian_id"
+                                value="{{ old('popembelian_id', $inquery->id) }}">
                         </div>
                         <div style="font-size:14px" class="form-group">
-                            <label for="supplier_id">Kode Po Pembelian</label>
+                            <label class="form-label" for="jenis">Kode Po Pembelian</label>
                             <input style="font-size:14px" readonly type="text" class="form-control"
                                 id="kode_po_pembelian" name="kode_po_pembelian"
-                                value="{{ old('kode_po_pembelian', $inquery->popembelian->kode_po_pembelian ?? null) }}">
+                                value="{{ old('kode_po_pembelian', $inquery->kode_po_pembelian) }}">
                         </div>
                         <div style="font-size:14px" class="form-group">
                             <label for="supplier_id">Nama Supplier</label>
@@ -135,8 +142,9 @@
                                             </td>
                                             <td hidden>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="id-{{ $loop->index }}"
-                                                        name="detail_ids[]" value="{{ $detail['id'] }}">
+                                                    <input style="font-size:14px" type="text" class="form-control"
+                                                        id="id-{{ $loop->index }}" name="detail_ids[]"
+                                                        value="{{ $detail['id'] }}">
                                                 </div>
                                             </td>
                                             <td hidden>
@@ -178,21 +186,21 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="number"
+                                                    <input type="number" style="font-size:14px"
                                                         class="form-control jumlah" id="jumlah-0" name="jumlah[]"
                                                         data-row-id="0" value="{{ $detail['jumlah'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="number"
+                                                    <input type="number" style="font-size:14px"
                                                         class="form-control harga" id="harga-0" name="harga[]"
                                                         data-row-id="0" value="{{ $detail['harga'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="number"
+                                                    <input type="number" style="font-size:14px"
                                                         class="form-control harga_jual" id="harga_jual-0"
                                                         name="harga_jual[]" data-row-id="0"
                                                         value="{{ $detail['harga_jual'] }}">
@@ -200,14 +208,14 @@
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="number"
+                                                    <input type="number" style="font-size:14px"
                                                         class="form-control diskon" id="diskon-0" name="diskon[]"
                                                         data-row-id="0" value="{{ $detail['diskon'] }}">
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <input style="font-size:14px" type="text"
+                                                    <input type="text" style="font-size:14px"
                                                         class="form-control total" id="total-0" name="total[]"
                                                         value="{{ $detail['total'] }}">
                                                 </div>
@@ -772,4 +780,26 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            // Detect the change event on the 'jenis' dropdown
+            $('#jenis').on('change', function() {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Check the selected value and redirect accordingly
+                switch (selectedValue) {
+                    case 'po':
+                        window.location.href = "{{ url('admin/pembelian') }}";
+                        break;
+                    case 'non_po':
+                        window.location.href = "{{ url('admin/pembeliannonpo') }}";
+                        break;
+                    default:
+                        // Handle other cases or do nothing
+                        break;
+                }
+            });
+        });
+    </script>
 @endsection

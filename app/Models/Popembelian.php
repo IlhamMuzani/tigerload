@@ -35,7 +35,7 @@ class Popembelian extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public static function getId()
     {
         return $getId = DB::table('popembelians')->orderBy('id', 'DESC')->take(1)->get();
@@ -49,5 +49,10 @@ class Popembelian extends Model
     public function detail_popembelian()
     {
         return $this->hasMany(Detailpopembelian::class);
+    }
+
+    public function pembelian()
+    {
+        return $this->hasMany(Pembelian::class);
     }
 }

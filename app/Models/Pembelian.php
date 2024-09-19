@@ -17,6 +17,7 @@ class Pembelian extends Model
 
     protected $fillable =
     [
+        'popembelian_id',
         'kode_pembelian',
         'qrcode_pembelian',
         'kategori',
@@ -38,7 +39,7 @@ class Pembelian extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public static function getId()
     {
         return $getId = DB::table('pembelians')->orderBy('id', 'DESC')->take(1)->get();
@@ -47,6 +48,11 @@ class Pembelian extends Model
     public function supplier()
     {
         return $this->belongsTo(Supplier::class);
+    }
+
+    public function popembelian()
+    {
+        return $this->belongsTo(Popembelian::class);
     }
 
     public function detail_pembelian()

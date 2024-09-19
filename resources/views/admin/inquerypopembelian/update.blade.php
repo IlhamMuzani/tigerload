@@ -76,7 +76,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="form-group">
+                        <div style="font-size:14px" class="form-group">
                             <label for="supplier_id">Nama Supplier</label>
                             <select class="select2bs4 select2-hidden-accessible" name="supplier_id"
                                 data-placeholder="Cari Supplier.." style="width: 100%;" tabindex="-1" aria-hidden="true"
@@ -90,9 +90,9 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <textarea type="text" class="form-control" readonly id="alamat" name="alamat" placeholder="Masukan alamat"
-                                value="">{{ old('alamat', $inquery->supplier->alamat) }}</textarea>
+                            <label style="font-size:14px" for="alamat">Alamat</label>
+                            <textarea style="font-size:14px" type="text" class="form-control" readonly id="alamat" name="alamat"
+                                placeholder="Masukan alamat" value="">{{ old('alamat', $inquery->supplier->alamat) }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
-                                <tr>
+                                <tr style="font-size:14px">
                                     <th class="text-center">No</th>
                                     <th>Kode Barang</th>
                                     <th>Nama Barang</th>
@@ -123,7 +123,8 @@
                             <tbody id="tabel-pembelian">
                                 @foreach ($details as $detail)
                                     <tr id="pembelian-{{ $loop->index }}">
-                                        <td class="text-center" id="urutan">{{ $loop->index + 1 }}</td>
+                                        <td class="text-center" style="font-size:14px" id="urutan">
+                                            {{ $loop->index + 1 }}</td>
                                         <td>
                                             <div class="form-group" hidden>
                                                 <input type="text" class="form-control" id="nomor_seri-0"
@@ -135,15 +136,17 @@
                                                     value="{{ $detail['barang_id'] }}">
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control"
-                                                    id="kode_barang-{{ $loop->index }}" name="kode_barang[]" readonly
+                                                <input style="font-size:14px" type="text" class="form-control"
+                                                    id="kode_barang-{{ $loop->index }}"
+                                                    onclick="barang({{ $loop->index }})" name="kode_barang[]" readonly
                                                     value="{{ $detail['kode_barang'] }}">
                                             </div>
                                         </td>
                                         <td>
                                             <div class="form-group">
-                                                <input type="text" class="form-control"
-                                                    id="nama_barang-{{ $loop->index }}" name="nama_barang[]" readonly
+                                                <input style="font-size:14px" type="text" class="form-control"
+                                                    id="nama_barang-{{ $loop->index }}"
+                                                    onclick="barang({{ $loop->index }})" name="nama_barang[]" readonly
                                                     value="{{ $detail['nama_barang'] }}">
                                             </div>
                                         </td>
@@ -155,15 +158,16 @@
                                         </td> --}}
                                         <td>
                                             <div class="form-group">
-                                                <input type="number" class="form-control jumlah" id="jumlah-0"
-                                                    name="jumlah[]" data-row-id="0" value="{{ $detail['jumlah'] }}">
+                                                <input style="font-size:14px" type="number" class="form-control jumlah"
+                                                    id="jumlah-0" name="jumlah[]" data-row-id="0"
+                                                    value="{{ $detail['jumlah'] }}">
                                             </div>
                                         </td>
                                         <td style="width: 150px">
                                             <div class="form-group">
                                                 <div class="form-group">
-                                                    <select class="form-control" id="satuan_id-{{ $loop->index }}"
-                                                        name="satuan_id[]">
+                                                    <select style="font-size:14px" class="form-control"
+                                                        id="satuan_id-{{ $loop->index }}" name="satuan_id[]">
                                                         <option value="">Pilih Satuan..</option>
                                                         @foreach ($satuans as $satuan_id)
                                                             <option value="{{ $satuan_id->id }}"
@@ -181,12 +185,12 @@
                                                     name="total[]" readonly value="{{ $detail['total'] }}">
                                             </div>
                                         </td> --}}
-                                        <td style="width: 120px">
-                                            <button type="button" class="btn btn-primary"
+                                        <td style="width: 100px">
+                                            <button type="button" class="btn btn-primary btn-sm"
                                                 onclick="barang({{ $loop->index }})">
                                                 <i class="fas fa-plus"></i>
                                             </button>
-                                            <button style="margin-left:5px" type="button" class="btn btn-danger"
+                                            <button style="margin-left:5px" type="button" class="btn btn-danger btn-sm"
                                                 onclick="removeBan({{ $loop->index }}, {{ $detail['id'] }})">
                                                 <i class="fas fa-trash"></i>
                                             </button>
@@ -399,7 +403,8 @@
                                 @foreach ($barangs as $barang)
                                     <tr data-barang_id="{{ $barang->id }}"
                                         data-kode_barang="{{ $barang->kode_barang }}"
-                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}">
+                                        data-nama_barang="{{ $barang->nama_barang }}" data-param="{{ $loop->index }}"
+                                        onclick="getBarang({{ $loop->index }})">
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $barang->kode_barang }}</td>
                                         <td>{{ $barang->nama_barang }}</td>
@@ -583,7 +588,7 @@
 
             // urutan 
             var item_pembelian = '<tr id="pembelian-' + key + '">';
-            item_pembelian += '<td class="text-center" id="urutan">' + key + '</td>';
+            item_pembelian += '<td style="font-size:14px" class="text-center" id="urutan">' + key + '</td>';
 
             // barang_id 
             item_pembelian += '<td hidden>';
@@ -596,14 +601,16 @@
             // kode_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control" readonly id="kode_barang-' + key +
+            item_pembelian += '<input style="font-size:14px" type="text" class="form-control" onclick="barang(' + key +
+                ')" readonly id="kode_barang-' + key +
                 '" name="kode_barang[]" value="' + kode_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
             // nama_barang 
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input readonly type="text" class="form-control" id="nama_barang-' + key +
+            item_pembelian += '<input style="font-size:14px" readonly type="text" class="form-control" onclick="barang(' +
+                key + ')" id="nama_barang-' + key +
                 '" name="nama_barang[]" value="' + nama_barang + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -619,7 +626,7 @@
             // jumlah
             item_pembelian += '<td>';
             item_pembelian += '<div class="form-group">'
-            item_pembelian += '<input type="text" class="form-control jumlah" id="jumlah-' + key +
+            item_pembelian += '<input style="font-size:14px" type="text" class="form-control jumlah" id="jumlah-' + key +
                 '" name="jumlah[]" value="' + jumlah + '" ';
             item_pembelian += '</div>';
             item_pembelian += '</td>';
@@ -627,7 +634,7 @@
             // satuan_id 
             item_pembelian += '<td style="width: 150px;>';
             item_pembelian += '<div class="form-group">';
-            item_pembelian += '<select class="form-control select2bs4" id="satuan_id-' + key +
+            item_pembelian += '<select style="font-size:14px" class="form-control select2bs4" id="satuan_id-' + key +
                 '" name="satuan_id[]">';
             item_pembelian += '<option value="">Pilih Satuan..</option>';
             item_pembelian += '@foreach ($satuans as $satuan_id)';
@@ -648,11 +655,12 @@
             // item_pembelian += '</div>';
             // item_pembelian += '</td>';
 
-            item_pembelian += '<td style="width: 120px">';
-            item_pembelian += '<button type="button" class="btn btn-primary" onclick="barang(' + key + ')">';
+            item_pembelian += '<td style="width: 100px">';
+            item_pembelian += '<button type="button" class="btn btn-primary btn-sm" onclick="barang(' + key + ')">';
             item_pembelian += '<i class="fas fa-plus"></i>';
             item_pembelian += '</button>';
-            item_pembelian += '<button style="margin-left:5px" type="button" class="btn btn-danger" onclick="removeBan(' +
+            item_pembelian +=
+                '<button style="margin-left:5px" type="button" class="btn btn-danger btn-sm" onclick="removeBan(' +
                 key + ')">';
             item_pembelian += '<i class="fas fa-trash"></i>';
             item_pembelian += '</button>';

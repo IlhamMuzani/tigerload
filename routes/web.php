@@ -357,8 +357,11 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::resource('project', \App\Http\Controllers\Admin\ProjectController::class);
     Route::resource('inquery_project', \App\Http\Controllers\Admin\InqueryProjectController::class);
     Route::resource('satuan', \App\Http\Controllers\Admin\SatuanController::class);
-
-
     Route::get('pelunasan/get_itemtambahan/{id}', [\App\Http\Controllers\Admin\PelunasanController::class, 'get_itemtambahan']);
+    
+    Route::get('pembeliannonpo', [\App\Http\Controllers\Admin\PembelianController::class, 'indexnon']);
+    Route::get('pembelian/popembelian/{id}', [\App\Http\Controllers\Admin\PembelianController::class, 'popembelian']);
+    Route::resource('pembelianpo', \App\Http\Controllers\Admin\PembelianpoController::class);
+    Route::post('add_pembelian', [\App\Http\Controllers\Admin\PembelianpoController::class, 'add_pembelian']);
 
 });
