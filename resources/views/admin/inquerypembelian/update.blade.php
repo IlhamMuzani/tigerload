@@ -72,6 +72,16 @@
                                 name="popembelian_id"
                                 value="{{ old('popembelian_id', $inquery->popembelian->id ?? null) }}">
                         </div>
+                        <div class="form-group">
+                            <label class="form-label" for="kategori">Kategori</label>
+                            <select class="form-control" id="kategori" name="kategori">
+                                <option value="">- Pilih -</option>
+                                <option value="PPN" {{ old('kategori', $inquery->kategori) == 'PPN' ? 'selected' : null }}>
+                                    PPN</option>
+                                <option value="NON PPN" {{ old('kategori', $inquery->kategori) == 'NON PPN' ? 'selected' : null }}>
+                                    NON PPN</option>
+                            </select>
+                        </div>
                         <div style="font-size:14px" class="form-group">
                             <label for="supplier_id">Kode Po Pembelian</label>
                             <input style="font-size:14px" readonly type="text" class="form-control"
@@ -135,8 +145,9 @@
                                             </td>
                                             <td hidden>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" id="id-{{ $loop->index }}"
-                                                        name="detail_ids[]" value="{{ $detail['id'] }}">
+                                                    <input type="text" class="form-control"
+                                                        id="id-{{ $loop->index }}" name="detail_ids[]"
+                                                        value="{{ $detail['id'] }}">
                                                 </div>
                                             </td>
                                             <td hidden>

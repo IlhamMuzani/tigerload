@@ -79,6 +79,16 @@
                             <input readonly type="text" class="form-control" id="popembelian_id" name="popembelian_id"
                                 value="{{ old('popembelian_id', $inquery->id) }}">
                         </div>
+                        <div class="form-group">
+                            <label class="form-label" for="kategori">Kategori</label>
+                            <select class="form-control" id="kategori" name="kategori">
+                                <option value="">- Pilih -</option>
+                                <option value="PPN" {{ old('kategori') == 'PPN' ? 'selected' : null }}>
+                                    PPN</option>
+                                <option value="NON PPN" {{ old('kategori') == 'NON PPN' ? 'selected' : null }}>
+                                    NON PPN</option>
+                            </select>
+                        </div>
                         <div style="font-size:14px" class="form-group">
                             <label class="form-label" for="jenis">Kode Po Pembelian</label>
                             <input style="font-size:14px" readonly type="text" class="form-control"
