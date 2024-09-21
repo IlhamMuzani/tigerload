@@ -242,7 +242,7 @@ class PerhitungangajibulananController extends Controller
 
         $kodepengeluaran = $this->kodepengeluaran();
 
-        Pengeluaran_kaskecil::create([
+        $pengeluarans = Pengeluaran_kaskecil::create([
             'perhitungan_gajikaryawan_id' => $cetakpdf->id,
             'user_id' => auth()->user()->id,
             'kode_pengeluaran' => $this->kodepengeluaran(),
@@ -257,10 +257,11 @@ class PerhitungangajibulananController extends Controller
         ]);
 
         Detail_pengeluaran::create([
+            'pengeluaran_kaskecil_id' => $pengeluarans->id,
             'perhitungan_gajikaryawan_id' => $cetakpdf->id,
             'barangakun_id' => 1,
             'kode_detailakun' => $this->kodeakuns(),
-            'kode_akun' => 'KA000004',
+            'kode_akun' => 'KA000001',
             'nama_akun' => 'GAJI & TUNJANGAN',
             'keterangan' => $request->keterangan,
             'nominal' => str_replace(',', '.', str_replace('.', '', $request->grand_total)),

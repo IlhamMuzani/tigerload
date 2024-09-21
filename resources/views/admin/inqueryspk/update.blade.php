@@ -64,7 +64,7 @@
                             <label class="form-label" for="surat_penawaran_id">Surat Penawaran Id</label>
                             <input class="form-control @error('surat_penawaran_id') is-invalid @enderror"
                                 id="surat_penawaran_id" name="surat_penawaran_id" type="text" placeholder=" "
-                                value="{{ old('surat_penawaran_id', $pembelian->id) }}" readonly />
+                                value="{{ old('surat_penawaran_id', $pembelian->surat_penawaran->id ?? null) }}" readonly />
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="kode_spk">Kode Penawaran</label>

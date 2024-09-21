@@ -150,7 +150,7 @@ class InquerySpkController extends Controller
         );
 
         $pembelians = Spk::find($id);
-        $SuratPenawaran = Surat_penawaran::where('id', $pembelian->surat_penawaran_id)->update(['status_pesanan' => 'aktif', 'status' => 'selesai']);
+        $SuratPenawaran = Surat_penawaran::where('id', $pembelians->surat_penawaran_id)->update(['status_pesanan' => 'aktif', 'status' => 'selesai']);
 
         $kendaraans = Kendaraan::where('spk_id', $pembelians->id)->first();
         $karoseries = Typekaroseri::where('id', $pembelians->typekaroseri_id)->first();
