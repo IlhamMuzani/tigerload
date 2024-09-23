@@ -399,7 +399,7 @@
         <tr>
             <td>
                 <span class="info-item"
-                    style="font-size: 11px; padding-left: 5px;">-{{ $pelunasans->kategori }}({{ $pelunasans->nomor }})=({{ number_format($pelunasans->nominal, 0, ',', '.') }})({{ $pelunasans->tanggal_awal }})
+                    style="font-size: 11px; padding-left: 5px;">-{{ $pelunasans->kategori }}({{ $pelunasans->nomor }})=({{ number_format($pelunasans->nominal, 0, ',', '.') }})({{ $pelunasans->tanggal_transfer }})
                 </span>
                 <br>
             </td>

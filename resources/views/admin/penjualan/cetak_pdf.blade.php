@@ -26,8 +26,8 @@
             font-family: Arial, sans-serif;
             color: black;
             /* Gunakan Arial atau font sans-serif lainnya yang mudah dibaca */
-            /* margin: 40px;
-            padding: 10px; */
+            margin: 15px;
+            /* padding: 10px; */
         }
 
         span.h2 {
@@ -613,39 +613,39 @@
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        <td style="font-size: 14px" class="label" style="min-height: 16px;">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="separator" colspan="2"><span></span></td>
+                        <td style="font-size: 14px" class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Pelanggan</td>
+                        <td style="font-size: 14px" class="label">Pelanggan</td>
                     </tr>
                 </table>
             </td>
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label" style="min-height: 16px;">&nbsp;</td>
+                        <td class="label" style="min-height: 16px; font-size:14px">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="separator" colspan="2"><span></span></td>
+                        <td style="font-size: 14px" class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Direktur</td>
+                        <td style="font-size: 14px" class="label">Direktur</td>
                     </tr>
                 </table>
             </td>
             <td style="text-align: center;">
                 <table style="margin: 0 auto;">
                     <tr style="text-align: center;">
-                        <td class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
+                        <td style="font-size: 14px" class="label">{{ auth()->user()->karyawan->nama_lengkap }}</td>
                     </tr>
                     <tr>
-                        <td class="separator" colspan="2"><span></span></td>
+                        <td style="font-size: 14px" class="separator" colspan="2"><span></span></td>
                     </tr>
                     <tr style="text-align: center;">
-                        <td class="label">Admin Penjualan</td>
+                        <td style="font-size: 14px" class="label">Admin Penjualan</td>
                     </tr>
                 </table>
             </td>
