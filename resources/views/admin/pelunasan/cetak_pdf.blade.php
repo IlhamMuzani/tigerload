@@ -337,11 +337,12 @@
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 11px;">No.</td>
             <td class="td" style="text-align: center; paddin 5px; font-size: 11px;">F. Penjualan</td>
+            <td class="td" style="text-align: center; paddin 5px; font-size: 11px;">Nama Produk</td>
             <td class="td" style="text-align: right; font-size: 11px;">Total Penjualan</td>
             <td class="td" style="text-align: right; font-size: 11px;">Sub Total</td>
         </tr>
         <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;"></td>
+            <td colspan="5" style="padding: 0px;"></td>
         </tr>
         @php
             $totalQuantity = 0;
@@ -353,6 +354,15 @@
             </td>
             <td class="info-text info-left" style="font-size: 11px; text-align: center;">
                 {{ $pelunasans->penjualan->kode_penjualan }}
+            </td>
+            <td class="info-text info-left" style="font-size: 11px; text-align: center;">
+                @if ($pelunasans->penjualan->perintah_kerja)
+                    {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}
+                @else
+                    {{ $pelunasans->penjualan->spk->typekaroseri->nama_karoseri }}
+                    {{ $pelunasans->penjualan->spk->typekaroseri->merek->tipe->nama_tipe }}
+                @endif
             </td>
             <td class="td" style="text-align: right;  font-size: 11px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </td>
@@ -370,6 +380,9 @@
                 @endphp
                 <td class="info-text info-left" style="font-size: 11px; text-align: center;">
                     {{ $item->kode_types }} </td>
+                <td class="info-text info-left" style="font-size: 11px; text-align: center;">
+                    {{ $item->nama_karoseri }}
+                </td>
                 <td class="td" style="text-align: right;  font-size: 11px;">
                     {{ number_format($item->total, 0, ',', '.') }}
                 </td>
@@ -378,10 +391,10 @@
                 </td>
             </tr>
         @endforeach
-        <tr style="border-bottom: 1px solid black;">
-            <td colspan="4" style="padding: 0px;">
+        {{-- <tr style="border-bottom: 0.1px solid black;">
+            <td colspan="5" style="padding: 0px;">
             </td>
-        </tr>
+        </tr> --}}
     </table>
     <table style="width: 100%; border-top: 1px solid black; margin-bottom:5px">
         <tr>
@@ -455,7 +468,7 @@
                             </td>
                         </tr>
                     </table>
-                    <hr>
+                    <hr style="border-top: 0.1px solid black; margin: 3px 0;">
                     <table>
                         <tr>
                             <td class="" style="font-size: 11px;">Total Tagihan</td>
@@ -487,14 +500,16 @@
                             @endphp
                         @endforeach
                         <tr>
-                            <td class="" style="font-size: 11px;">Pelunasan</td>
+                            <td class="" style="font-size: 11px;">Pelunasan
+                                ({{ \Carbon\Carbon::parse($pelunasans->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
+                            </td>
                             <td class="info-item" style="font-size: 11px;"></td>
                             <td class="info-text info-left" style="font-size: 11px; text-align: right;">
                                 {{ number_format($pelunasans->nominal, 0, ',', '.') }} </span>
                             </td>
                         </tr>
                     </table>
-                    <hr>
+                    <hr style="border-top: 0.1px solid black; margin: 3px 0;">
                     <table>
                         <tr>
                             <td class="" style="font-size: 11px;">Selisih Tagihan</td>

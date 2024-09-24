@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Faktur Pelunasan')
+@section('title', 'Faktur Pelunasan Penjualan')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -23,11 +23,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Faktur Pelunasan</h1>
+                    <h1 class="m-0">Faktur Pelunasan Penjualan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan_penjualan') }}">Faktur Pelunasan</a>
+                        <li class="breadcrumb-item"><a href="{{ url('admin/pelunasan_penjualan') }}">Faktur Pelunasan Penjualan</a>
                         </li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>

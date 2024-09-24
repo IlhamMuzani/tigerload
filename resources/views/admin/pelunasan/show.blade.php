@@ -324,6 +324,7 @@
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
             <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">F. Penjualan</td>
+            <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">Nama Produk</td>
             <td class="td" style="text-align: right; font-size: 13px;">Total Penjualan</td>
             <td class="td" style="text-align: right; font-size: 13px;">Sub Total</td>
         </tr>
@@ -341,6 +342,15 @@
             <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                 {{ $pelunasans->penjualan->kode_penjualan }}
             </td>
+            <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                @if ($pelunasans->penjualan->perintah_kerja)
+                    {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}
+                @else
+                    {{ $pelunasans->penjualan->spk->typekaroseri->nama_karoseri }}
+                    {{ $pelunasans->penjualan->spk->typekaroseri->merek->tipe->nama_tipe }}
+                @endif
+            </td>
             <td class="td" style="text-align: right;  font-size: 13px;">
                 {{ number_format($pelunasans->totalpenjualan, 0, ',', '.') }} </td>
             </td>
@@ -357,6 +367,9 @@
                 @endphp
                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                     {{ $item->kode_types }} </td>
+                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                    {{ $item->nama_karoseri }}
+                </td>
                 <td class="td" style="text-align: right;  font-size: 13px;">
                     {{ number_format($item->total, 0, ',', '.') }}
                 </td>
@@ -487,7 +500,9 @@
                             @endphp
                         @endforeach
                         <tr>
-                            <td class="" style="font-size: 13px;">Pelunasan</td>
+                            <td class="" style="font-size: 13px;">Pelunasan
+                                ({{ \Carbon\Carbon::parse($pelunasans->tanggal_transfer)->locale('id')->isoFormat('D MMMM YYYY') }})
+                            </td>
                             <td class="info-item" style="font-size: 13px;"></td>
                             <td class="info-text info-left" style="font-size: 13px; text-align: right;">
                                 {{ number_format($pelunasans->nominal, 0, ',', '.') }} </span>
@@ -676,6 +691,7 @@
         </tr>
     </table>
 </body>
+
 
 <div class="container">
     <a href="{{ url('admin/tablepelunasanpenjualan') }}" class="blue-button">Kembali</a>
