@@ -8,9 +8,11 @@
     <title>Laporan Surat Perintah Kerja</title>
     <style>
         body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'DOSVGA', monospace;
+            margin-top: 10px;
+            margin-left: opx;
+            margin-right: 5px;
+            /* padding: 20px; */
+            font-family: Arial, sans-serif;
             color: black;
         }
 
@@ -120,7 +122,7 @@
 
 <body>
     <div class="container">
-        <h1>LAPORAN SURAT PERINTAH KERJA - RANGKUMAN</h1>
+        <h1 style="font-size:21px">LAPORAN SURAT PERINTAH KERJA - RANGKUMAN</h1>
     </div>
     <table class="tabelatas" width="100%">
         <tr>
@@ -147,18 +149,20 @@
     </table>
     <table>
         <tr>
-            <th style="width: 35%;">No Surat</th>
-            <th style="width: 35%;">Bentuk Karoseri</th>
-            <th style="width: 35%;">Merek</th>
-            <th style="width: 35%;">Type</th>
-            <th style="width: 30%;">Tanggal</th>
-            <th style="width: 30%;">Pelanggan</th>
+            <th style="text-align: center; width: 5%">No</th>
+            <th style="text-align: center; width: 10%">No Surat</th>
+            <th style="text-align: center; width: 35%">Bentuk Karoseri</th>
+            <th style="text-align: center; width: 15%">Merek</th>
+            <th style="text-align: center; width: 15%">Type</th>
+            <th style="text-align: center; width: 15%">Tanggal</th>
+            <th style="text-align: center; width: 15%">Pelanggan</th>
         </tr>
         @php
             $total = 0; // Inisialisasi total
         @endphp
         @foreach ($inquery as $spk)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $spk->kode_perintah }}</td>
                 <td>
                     @if ($spk->typekaroseri)

@@ -18,10 +18,10 @@ class LaporanperintahkerjaController extends Controller
 
         $inquery = Perintah_kerja::orderBy('id', 'DESC');
 
-        if ($status == "posting") {
+        if ($status == "posting" || $status == "selesai") {
             $inquery->where('status', $status);
         } else {
-            $inquery->where('status', 'posting');
+            $inquery->whereIn('status', ['posting', 'selesai']);
         }
 
         if ($tanggal_awal && $tanggal_akhir) {
@@ -43,10 +43,10 @@ class LaporanperintahkerjaController extends Controller
 
         $query = Perintah_kerja::orderBy('id', 'DESC');
 
-        if ($status == "posting") {
+        if ($status == "posting" || $status == "selesai") {
             $query->where('status', $status);
         } else {
-            $query->where('status', 'posting');
+            $query->whereIn('status', ['posting', 'selesai']);
         }
 
         if ($tanggal_awal && $tanggal_akhir) {
