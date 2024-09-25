@@ -74,6 +74,11 @@ class Dokumen_project extends Model
         return $this->belongsTo(Typekaroseri::class);
     }
 
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
     public static function getId()
     {
         return $getId = DB::table('dokumen_projects')->orderBy('id', 'DESC')->take(1)->get();

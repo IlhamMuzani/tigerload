@@ -41,7 +41,7 @@ class Pelanggan extends Model
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public function penjualan()
     {
         return $this->hasMany(Penjualan::class);
@@ -50,6 +50,11 @@ class Pelanggan extends Model
     public function penerimaan_pembayaran()
     {
         return $this->hasMany(Penerimaan_pembayaran::class);
+    }
+
+    public function dokumen_project()
+    {
+        return $this->hasMany(Dokumen_project::class);
     }
 
 
