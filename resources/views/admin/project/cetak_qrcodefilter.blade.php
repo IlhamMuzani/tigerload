@@ -16,12 +16,12 @@
 
         .box1 {
             margin-left: 6px;
-            margin-top: 6px;
+            margin-top: 14px;
         }
 
         .text-container {
             position: relative;
-            margin-top: 8px;
+            /* margin-top: 8px; */
 
         }
 

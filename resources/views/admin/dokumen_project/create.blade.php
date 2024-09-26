@@ -278,7 +278,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group mb-3">
+                        {{-- <div class="form-group mb-3">
                             <label for="gambardepan_serongkanan">Foto Depan Serong Kanan</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="gambardepan_serongkanan"
@@ -312,7 +312,7 @@
                                     name="gambarbelakang_serongkekiri" accept="image/*">
                                 <label class="custom-file-label" for="gambarbelakang_serongkekiri">Masukkan foto</label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <div class="form-group mb-3">
                             <label for="gambarbelakang_serongkiri">Foto Belakang Serong Kiri</label>

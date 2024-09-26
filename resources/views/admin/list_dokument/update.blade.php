@@ -249,7 +249,7 @@
                         <div class="form-group">
                             <label for="no_mesin">No Mesin</label>
                             <input type="text" class="form-control" id="no_mesin" name="no_mesin" placeholder=""
-                                value="{{ old('no_mesin', $inquery->no_rangka) }}">
+                                value="{{ old('no_mesin', $inquery->no_mesin) }}">
                         </div>
 
                         <div class="form-group">
@@ -340,7 +340,7 @@
                                 <label class="custom-file-label" for="gambar_kiri">Masukkan foto</label>
                             </div>
                         </div>
-                        <div class="form-group mb-3">
+                        {{-- <div class="form-group mb-3">
                             @if ($inquery->gambardepan_serongkanan == null)
                                 <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
                                     alt="tigerload" height="180" width="200">
@@ -411,7 +411,7 @@
                                     name="gambarbelakang_serongkekiri" accept="image/*">
                                 <label class="custom-file-label" for="gambarbelakang_serongkekiri">Masukkan foto</label>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group mb-3">
                             @if ($inquery->gambar_faktur == null)
                                 <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
