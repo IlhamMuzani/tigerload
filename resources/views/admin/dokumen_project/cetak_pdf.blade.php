@@ -335,7 +335,7 @@
                 </tr>
             </table>
         </tr>
-        <tr>
+        {{-- <tr>
             <table style="width: 100%;">
                 <tr>
                     <td style="width: 50%; text-align: center;">
@@ -398,7 +398,7 @@
                     </td>
                 </tr>
             </table>
-        </tr>
+        </tr> --}}
         <tr>
             <table style="width: 100%;">
                 <tr>

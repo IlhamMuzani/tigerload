@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Inquery Kasbon Karyawan')
+@section('title', 'Kasbon Karyawan')
 
 @section('content')
     <div id="loadingSpinner" style="display: flex; align-items: center; justify-content: center; height: 100vh;">
@@ -22,11 +22,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Inquery Kasbon Karyawan</h1>
+                    <h1 class="m-0">Kasbon Karyawan</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item active">Inquery Kasbon Karyawan</li>
+                        <li class="breadcrumb-item active">Kasbon Karyawan</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -48,7 +48,7 @@
             @endif
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Data Inquery Kasbon Karyawan</h3>
+                    <h3 class="card-title">Data Kasbon Karyawan</h3>
                     <div class="float-right">
                         <a href="{{ url('admin/kasbon_karyawan') }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-plus"></i> Tambah

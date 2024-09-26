@@ -316,7 +316,7 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td>
                 <br>
             </td>
@@ -381,7 +381,7 @@
                         style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
                 </div>
             </td>
-        </tr>
+        </tr> --}}
         <tr>
             <td>
                 <br>
