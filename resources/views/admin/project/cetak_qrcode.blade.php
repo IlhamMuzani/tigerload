@@ -60,10 +60,10 @@
                                     </p>
                                     <p class="bold-text">
                                         @if ($projects->perintah_kerja)
-                                            {{ $projects->perintah_kerja->spk->surat_penawaran->typekaroseri->nama_karoseri }}
-                                        @else
+                                            {{ \Illuminate\Support\Str::limit($projects->perintah_kerja->spk->surat_penawaran->typekaroseri->nama_karoseri, 20) }}
                                         @endif
                                     </p>
+
                                     <p class="bold-text">
                                         @if ($projects->perintah_kerja->dokumen_project->first())
                                             {{ $projects->perintah_kerja->dokumen_project->first()->tahun }}

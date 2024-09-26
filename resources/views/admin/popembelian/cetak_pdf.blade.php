@@ -117,7 +117,7 @@
         <tr>
             <td class="td" style="text-align: left; padding: 5px; font-size: 13px; border: 1px solid black;">No.
             </td>
-            <td class="td" style="text-align: left; padding: 5px; font-size: 13px; border: 1px solid black;">kode
+            <td class="td" style="text-align: left; padding: 5px; font-size: 13px; border: 1px solid black;">Kode
                 Barang</td>
             <td class="td" style="text-align: left; padding: 5px; font-size: 13px; border: 1px solid black;">Nama
                 Barang</td>
@@ -132,9 +132,9 @@
             <td class="td" style="text-align: left; padding: 5px; font-size: 13px; border: 1px solid black;">Total
             </td> --}}
         </tr>
-        <tr style="border-bottom: 1px solid black;">
+        {{-- <tr style="border-bottom: 0.1px solid black;">
             <td colspan="5" style="padding: 0px;"></td>
-        </tr>
+        </tr> --}}
         @php
             $grandTotal = 0;
         @endphp
@@ -162,9 +162,9 @@
                 $grandTotal += $item->total;
             @endphp
         @endforeach
-        <tr style="border-bottom: 1px solid black;">
+        {{-- <tr style="border-bottom: 0.1px solid black;">
             <td colspan="5" style="padding: 0px;"></td>
-        </tr>
+        </tr> --}}
         {{-- <tr>
             <td colspan="6"
                 style="text-align: right; font-weight: bold; padding: 5px; font-size: 13px; border: 1px solid black;">
