@@ -84,10 +84,10 @@
                                     <i class="fas fa-search"></i> Cari
                                 </button>
                                 <input type="hidden" name="ids" id="selectedIds" value="">
-                                <button type="button" class="btn btn-outline-primary btn-block mt-1" id="checkfilter"
+                                {{-- <button type="button" class="btn btn-outline-primary btn-block mt-1" id="checkfilter"
                                     onclick="printSelectedData()" target="_blank">
                                     <i class="fas fa-print"></i> Cetak Qrcode
-                                </button>
+                                </button> --}}
                             </div>
                         </div>
                     </form>
