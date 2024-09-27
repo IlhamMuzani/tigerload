@@ -66,7 +66,6 @@
                                 <th>Kode SPK</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Kode Karoseri</th>
-                                <th>Kode Deposit</th>
                                 <th>Kode Penjualan</th>
                                 <th style="width: 70px">Tanggal</th>
                                 {{-- <th class="text-center">Harga</th> --}}
@@ -79,32 +78,33 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pelunasan->kode_pelunasan }}</td>
                                     <td>
-                                        @if ($pelunasan->penjualan->perintah_kerja)
-                                            {{ $pelunasan->penjualan->perintah_kerja->kode_perintah }}
-                                        @else
-                                            data tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
                                         @if ($pelunasan->penjualan)
-                                            {{ $pelunasan->penjualan->perintah_kerja->pelanggan->nama_pelanggan }}
-                                        @else
-                                            data tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($pelunasan->penjualan->perintah_kerja->spk)
-                                            {{ $pelunasan->penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
-                                        @else
-                                            data tidak ada
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($pelunasan->penjualan)
-                                            @if ($pelunasan->penjualan->depositpemesanan->first())
-                                                {{ $pelunasan->penjualan->depositpemesanan->first()->kode_deposit }}
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->kode_spk }}
                                             @else
-                                                tidak dp
+                                                {{ $pelunasan->penjualan->spk->kode_spk }}
+                                            @endif
+                                        @else
+                                            data tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($pelunasan->penjualan)
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                            @else
+                                                {{ $pelunasan->penjualan->spk->pelanggan->nama_pelanggan }}
+                                            @endif
+                                        @else
+                                            data tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($pelunasan->penjualan)
+                                            @if ($pelunasan->penjualan->perintah_kerja)
+                                                {{ $pelunasan->penjualan->perintah_kerja->spk->typekaroseri->kode_type }}
+                                            @else
+                                                {{ $pelunasan->penjualan->spk->typekaroseri->kode_type }}
                                             @endif
                                         @else
                                             data tidak ada
