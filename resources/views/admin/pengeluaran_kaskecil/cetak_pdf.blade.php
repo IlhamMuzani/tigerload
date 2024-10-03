@@ -9,10 +9,10 @@
     <style>
         html,
         body {
-            font-family: 'DOSVGA', monospace;
+            font-family: Arial, sans-serif;
             color: black;
             /* Gunakan Arial atau font sans-serif lainnya yang mudah dibaca */
-            margin: 40px;
+            margin: 20px;
         }
 
         .container {
@@ -96,7 +96,7 @@
             <td class="td" style="text-align: center; padding: 0px; font-size: 15px; width:4%">No.</td>
             <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:15%">Kode Akun</td>
             <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:20%">Nama Akun</td>
-            <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:40%">Keterangan</td>
+            <td class="td" style="text-align: left; padding: 0px; font-size: 15px; width:46%">Keterangan</td>
             <td class="td" style="text-align: right; font-size: 15px width:10%; padding-right:8px">Total</td>
         </tr>
         <!-- Add horizontal line below this row -->
