@@ -119,13 +119,13 @@
                     {{ $cetakpdf->tanggal_awal }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $cetakpdf->perintah_kerja->kode_perintah }}
+                    {{ $cetakpdf->perintah_kerja->kode_perintah ?? 'tidak ada' }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $cetakpdf->perintah_kerja->spk->nama_pelanggan }}
+                    {{ $cetakpdf->perintah_kerja->spk->nama_pelanggan ?? 'tidak ada' }}
                 </td>
                 <td class="td" style="text-align: left; padding: 5px; font-size: 11px;">
-                    {{ $cetakpdf->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $cetakpdf->perintah_kerja->spk->typekaroseri->nama_karoseri ?? 'tidak ada' }}
                 </td>
             </tr>
             <tr>

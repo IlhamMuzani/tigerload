@@ -116,11 +116,12 @@
                                     </td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $pengambilan->kode_pengambilan }}</td>
-                                    <td>{{ $pengambilan->perintah_kerja->kode_perintah }}</td>
+                                    <td>{{ $pengambilan->perintah_kerja->kode_perintah ?? 'tidak ada' }}</td>
                                     <td>{{ $pengambilan->tanggal_awal }}</td>
-                                    <td> {{ $pengambilan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                    <td> {{ $pengambilan->perintah_kerja->spk->pelanggan->nama_pelanggan ?? 'tidak ada' }}
                                     </td>
-                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri }}</td>
+                                    <td>{{ $pengambilan->perintah_kerja->spk->typekaroseri->nama_karoseri ?? 'tidak ada' }}
+                                    </td>
                                     {{-- <td>
                                         <!-- Tombol untuk Menampilkan/Menyembunyikan Detail -->
                                     </td> --}}

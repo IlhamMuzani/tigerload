@@ -236,28 +236,28 @@
                             <td class="info-catatan2" style="font-size: 13px;">Nomor SPK</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->perintah_kerja->kode_perintah }}
+                                {{ $pengambilans->perintah_kerja->kode_perintah ?? 'tidak ada' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Nama Pelanggan</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->perintah_kerja->pelanggan->nama_pelanggan }}
+                                {{ $pengambilans->perintah_kerja->pelanggan->nama_pelanggan ?? 'tidak ada' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px;">Type Karoseri</td>
                             <td class="info-item" style="font-size: 13px;">:</td>
                             <td class="info-text info-left" style="font-size: 13px;">
-                                {{ $pengambilans->perintah_kerja->typekaroseri->nama_karoseri }}
+                                {{ $pengambilans->perintah_kerja->typekaroseri->nama_karoseri ?? 'tidak ada' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="info-catatan2" style="font-size: 13px; color:white">Type Karoseri</td>
                             <td class="info-item" style="font-size: 13px;color:white">:</td>
                             <td class="info-text info-left" style="font-size: 13px;color:white">
-                                {{ $pengambilans->perintah_kerja->typekaroseri->kode_type }}
+                                {{ $pengambilans->perintah_kerja->typekaroseri->kode_type ?? 'tidak ada' }}
                             </td>
                         </tr>
                     </table>

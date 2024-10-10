@@ -75,6 +75,7 @@
                                 <th>Kode SPK</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Kode Karoseri</th>
+                                <th>No Serut</th>
                                 <th>No Rangka</th>
                                 <th>No Mesin</th>
                                 <th>Merek</th>
@@ -96,6 +97,9 @@
                                         @else
                                             data tidak ada
                                         @endif
+                                    </td>
+                                    <td>
+                                        {{ $kendaraan->no_serut }}
                                     </td>
                                     <td>
                                         {{ $kendaraan->no_rangka }}
