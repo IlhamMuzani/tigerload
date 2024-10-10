@@ -180,7 +180,7 @@
                             <label for="karoseri_id">Id Karoseri</label>
                             <input type="text" class="form-control" id="karoseri_id" name="typekaroseri_id"
                                 placeholder=""
-                                value="{{ old('typekaroseri_id', $inquery->perintah_kerja->typekaroseri->typekaroseri_id) }}">
+                                value="{{ old('typekaroseri_id', $inquery->perintah_kerja->typekaroseri->id) }}">
                         </div>
                     </div>
                 </div>
@@ -235,9 +235,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="no_seru">No Serut</label>
-                            <input type="text" class="form-control" id="no_seru" name="no_seru" placeholder=""
-                                value="{{ old('no_seru', $inquery->no_serut) }}">
+                            <label for="no_serut">No Serut</label>
+                            <input type="text" class="form-control" id="no_serut" name="no_serut" placeholder=""
+                                value="{{ old('no_serut', $inquery->no_serut) }}">
                         </div>
 
                         <div class="form-group">

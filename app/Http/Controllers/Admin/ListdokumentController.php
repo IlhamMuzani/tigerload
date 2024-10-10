@@ -370,8 +370,8 @@ class ListdokumentController extends Controller
 
         // Update the main transaction
         $dokumen_project->update([
-            'pelanggan_id' > $request->perintah_kerja_id,
-            'typekaroseri_id' > $request->typekaroseri_id,
+            'pelanggan_id' => $request->perintah_kerja_id,
+            'typekaroseri_id' => $request->typekaroseri_id,
             'gambar_rancangbangun' => $namaGambar,
             'gambar_gesekannomesin' => $namaGambar2,
             'gambar_serut' => $namaGambar4,
@@ -387,11 +387,12 @@ class ListdokumentController extends Controller
             // 'gambarbelakang_serongkiri	' => $namaGambar13,
             'gambarbelakang_serongkekiri	' => $namaGambar15,
             'gambarberita_acara' => $namaGambar14,
-            'no_serut' > $request->no_serut,
-            'no_rangka' > $request->no_rangka,
-            'no_mesin' > $request->no_mesin,
-            'no_skrb' > $request->no_skrb,
-            'tahun' > $request->tahun,
+            'no_serut' => $request->no_serut,
+            'no_rangka' => $request->no_rangka,
+            'no_mesin' => $request->no_mesin,
+            'no_skrb' => $request->no_skrb,
+            'tahun' => $request->tahun,
+            'keterangan' => $request->keterangan,
             'status' => 'posting',
         ]);
 
