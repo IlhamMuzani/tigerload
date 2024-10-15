@@ -57,6 +57,10 @@ class Pelanggan extends Model
         return $this->hasMany(Dokumen_project::class);
     }
 
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
     public static function getId()
     {

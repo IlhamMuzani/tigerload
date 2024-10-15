@@ -30,6 +30,28 @@ class Perintah_kerja extends Model
         'status_penjualan',
         'status_deposit',
         'status_dokumen',
+
+        'tgl_tungguproduksi',
+        'tgl_naikproduksi',
+        'ft_pengerjaanlantai',
+        'tgl_pengerjaanlantai',
+        'ft_pengerjaandinding',
+        'tgl_pengerjaandinding',
+        'ft_pengelasan',
+        'tgl_pengelasan',
+        'ft_naiksasis',
+        'tgl_naiksasis',
+        'ft_prosespengecatan',
+        'tgl_prosespengecatan',
+        'ft_selesaiproduksi',
+        'tgl_selesaiproduksi',
+        'ft_pengajuanserut',
+        'tgl_pengajuanserut',
+        'ft_selesaipemeriksaan',
+        'tgl_selesaipemeriksaan',
+        'ft_ditrimacustomer',
+        'tgl_ditrimacustomer',
+        'status_pengerjaan',
     ];
 
     use SoftDeletes;

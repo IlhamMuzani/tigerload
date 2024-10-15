@@ -71,9 +71,9 @@
                                 <tr>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $user->kode_user }}</td>
-                                    <td>{{ $user->karyawan->nama_lengkap }}</td>
-                                    <td>{{ $user->karyawan->telp }}</td>
-                                    <td>{{ $user->karyawan->departemen->nama }}</td>
+                                    <td>{{ $user->karyawan->nama_lengkap ?? null }}</td>
+                                    <td>{{ $user->karyawan->telp ?? null }}</td>
+                                    <td>{{ $user->karyawan->departemen->nama ?? null }}</td>
                                     {{-- <td data-toggle="modal" data-target="#modal-qrcode-{{ $user->id }}"
                                         style="text-align: center;">
                                         <div style="display: inline-block;">
@@ -98,7 +98,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Yakin hapus user <strong>{{ $user->karyawan->nama_lengkap }}</strong>?
+                                                <p>Yakin hapus user <strong>{{ $user->karyawan->nama_lengkap ?? null }}</strong>?
                                                 </p>
                                             </div>
                                             <div class="modal-footer justify-content-between">

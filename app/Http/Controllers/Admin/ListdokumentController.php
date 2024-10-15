@@ -21,7 +21,6 @@ class ListdokumentController extends Controller
         return view('admin/list_dokument.index', compact('inquery'));
     }
 
-
     public function create()
     {
         $spks = Perintah_kerja::get();
@@ -215,7 +214,6 @@ class ListdokumentController extends Controller
         return view('admin/list_dokument.show', compact('inquery'));
     }
 
-
     public function edit($id)
     {
         // Fetch the Dokumen_project record by its ID
@@ -229,7 +227,6 @@ class ListdokumentController extends Controller
         // Pass the retrieved data to the view
         return view('admin.list_dokument.update', compact('inquery', 'spks'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -266,7 +263,7 @@ class ListdokumentController extends Controller
             $namaGambar2 = 'gambar_gesekannomesin/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar_gesekannomesin->storeAs('public/uploads/', $namaGambar2);
         } else {
-            $namaGambar2 = $dokumen_project->gambar_notisgambar_gesekannomesin;
+            $namaGambar2 = $dokumen_project->gambar_gesekannomesin;
         }
 
         if ($request->gambar_serut) {
@@ -402,7 +399,6 @@ class ListdokumentController extends Controller
         return view('admin.list_dokument.show', compact('inquery'));
     }
 
-
     public function cetakpdf($id)
     {
         $cetakpdf = Dokumen_project::where('id', $id)->first();
@@ -445,4 +441,5 @@ class ListdokumentController extends Controller
         $kode_type = $data . $num;
         return $kode_type;
     }
+    
 }

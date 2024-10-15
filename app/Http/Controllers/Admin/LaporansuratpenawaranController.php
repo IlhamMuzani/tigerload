@@ -33,7 +33,7 @@ class LaporansuratpenawaranController extends Controller
 
         return view('admin.laporansuratpenawaran.index', compact('inquery'));
     }
-
+    
     public function print_laporansuratpenawaran(Request $request)
     {
 

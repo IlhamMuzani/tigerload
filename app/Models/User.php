@@ -26,6 +26,7 @@ class User extends Authenticatable
     use LogsActivity;
     protected $fillable = [
         'karyawan_id',
+        'pelanggan_id',
         'kode_user',
         'qrcode_user',
         'password',
@@ -61,10 +62,11 @@ class User extends Authenticatable
     }
 
 
-    protected function menu(): Attribute{
+    protected function menu(): Attribute
+    {
         return Attribute::make(
-            get: fn ($value) => json_decode($value, true),
-            set: fn ($value) => json_encode($value),
+            get: fn($value) => json_decode($value, true),
+            set: fn($value) => json_encode($value),
         );
     }
 
@@ -76,7 +78,7 @@ class User extends Authenticatable
         }
         return false;
     }
-    
+
     public function isOwner()
     {
         if ($this->level == 'owner') {
@@ -84,12 +86,15 @@ class User extends Authenticatable
         }
         return false;
     }
-    
-    public function karyawan()
+
+    public function isPelanggan()
     {
-        return $this->belongsTo(Karyawan::class);
+        if ($this->level == 'pelanggan') {
+            return true;
+        }
+        return false;
     }
-    
+
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
@@ -98,7 +103,7 @@ class User extends Authenticatable
         return LogOptions::defaults()
             ->logFillable('*');
     }
-    
+
     public function kendaraan()
     {
         return $this->hasMany(Kendaraan::class);
@@ -107,5 +112,15 @@ class User extends Authenticatable
     public function penerimaan_pembayaran()
     {
         return $this->hasMany(Penerimaan_pembayaran::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class);
     }
 }

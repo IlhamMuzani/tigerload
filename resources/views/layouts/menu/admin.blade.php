@@ -213,6 +213,38 @@
         @endif
     </ul>
 </li>
+<li
+    class="nav-item {{ request()->is('admin/progres_pengerjaan*') || request()->is('admin/pemakaian_peralatan*') || request()->is('admin/monitoring_project*') ? 'menu-open' : '' }}">
+    <a href="#"
+        class="nav-link {{ request()->is('admin/progres_pengerjaan*') || request()->is('admin/pemakaian_peralatan*') || request()->is('admin/monitoring_project*') ? 'active' : '' }}">
+
+        <i class="nav-icon fas fa-users-cog"></i>
+        <p>
+            <strong style="color: rgb(255, 255, 255);">OPERASIONAL</strong>
+            <i class="right fas fa-angle-left"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        @if (auth()->check() && auth()->user()->menu['spk'])
+            <li class="nav-item">
+                <a href="{{ url('admin/progres_pengerjaan') }}"
+                    class="nav-link {{ request()->is('admin/progres_pengerjaan*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Progres Pengerjaan</p>
+                </a>
+            </li>
+        @endif
+        @if (auth()->check() && auth()->user()->menu['spk'])
+            <li class="nav-item">
+                <a href="{{ url('admin/monitoring_project') }}"
+                    class="nav-link {{ request()->is('admin/monitoring_project*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon" style="font-size: 12px;"></i>
+                    <p style="font-size: 14px;">Monitoring Project</p>
+                </a>
+            </li>
+        @endif
+    </ul>
+</li>
 
 <li
     class="nav-item {{ request()->is('admin/pengambilanbahan*') ||

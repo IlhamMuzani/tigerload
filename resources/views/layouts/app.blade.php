@@ -74,11 +74,23 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="" class="brand-link">
-                <img src="{{ asset('storage/uploads/gambar_logo/lingkaran.png') }}" alt="Tigerload"
-                    class="brand-image">
-                <span style="font-size: 18px"
-                    class="brand-text font-wight-bold">{{ auth()->user()->karyawan->nama_lengkap }}</span>
+            <a href="" class="brand-link d-flex align-items-center">
+                @if (auth()->user()->karyawan)
+                    @if (auth()->user()->karyawan->gambar)
+                        <img src="{{ asset('storage/uploads/' . auth()->user()->karyawan->gambar) }}" alt="Tigerload"
+                            class="brand-image rounded-circle">
+                    @else
+                        <img src="{{ asset('storage/uploads/gambar_logo/lingkaran.png') }}" alt="Tigerload"
+                            class="brand-image">
+                    @endif
+                    <span style="font-size: 18px"
+                        class="brand-text font-wight-bold">{{ implode(' ', array_slice(str_word_count(auth()->user()->karyawan->nama_lengkap, 1), 0, 2)) }}</span>
+                @else
+                    <img src="{{ asset('storage/uploads/gambar_logo/lingkaran.png') }}" alt="Tigerload"
+                        class="brand-image">
+                    <span style="font-size: 18px"
+                        class="brand-text font-wight-bold">{{ implode(' ', array_slice(str_word_count(auth()->user()->pelanggan->nama_pelanggan, 1), 0, 2)) }}</span>
+                @endif
             </a>
             <div class="sidebar">
                 <!-- Sidebar Menu -->
@@ -89,9 +101,9 @@
                         @if (auth()->user()->isAdmin())
                             @include('layouts.menu.admin')
                         @endif
-                        {{-- @if (auth()->user()->isOwner())
-                            @include('layouts.menu.owner')
-                        @endif --}}
+                        @if (auth()->user()->isPelanggan())
+                            @include('layouts.menu.pelanggan')
+                        @endif
 
                     </ul>
                 </nav>

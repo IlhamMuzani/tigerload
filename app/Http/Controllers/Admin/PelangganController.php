@@ -66,7 +66,7 @@ class PelangganController extends Controller
         $kode = $this->kode();
 
         $tanggal = Carbon::now()->format('Y-m-d');
-        Pelanggan::create(array_merge(
+        $pelanggan = Pelanggan::create(array_merge(
             $request->all(),
             [
                 'gambar_ktp' => $namaGambar,
@@ -74,6 +74,16 @@ class PelangganController extends Controller
                 'qrcode_pelanggan' => 'https://tigerload.id/pelanggan/' . $kode,
                 'tanggal_awal' => $tanggal,
 
+            ]
+        ));
+
+        User::create(array_merge(
+            $request->all(),
+            [
+                'pelanggan_id' => $pelanggan->id,
+                'karyawan_id' => null,
+                'kode_user' => $pelanggan->kode_pelanggan,
+                'level' => 'pelanggan',
             ]
         ));
 
@@ -146,7 +156,7 @@ class PelangganController extends Controller
         }
 
         Pelanggan::where('id', $id)->update([
-            'gambar_ktp'=> $namaGambar,
+            'gambar_ktp' => $namaGambar,
             'nama_pelanggan' => $request->nama_pelanggan,
             'nama_alias' => $request->nama_alias,
             // 'gender' => $request->gender,
