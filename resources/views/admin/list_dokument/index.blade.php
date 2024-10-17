@@ -90,12 +90,18 @@
                                             value="{{ $kendaraan->id }}">
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $kendaraan->kode_dokumen }}</td>
-                                    <td>{{ $kendaraan->pelanggan->nama_pelanggan ?? null }}</td>
                                     <td>
-                                        @if ($kendaraan->typekaroseri)
-                                            {{ $kendaraan->typekaroseri->kode_type }}
+                                        @if ($kendaraan->perintah_kerja)
+                                            {{ $kendaraan->perintah_kerja->pelanggan->nama_pelanggan }}
                                         @else
-                                            data tidak ada
+                                            tidak ada
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($kendaraan->perintah_kerja)
+                                            {{ $kendaraan->perintah_kerja->typekaroseri->kode_type }}
+                                        @else
+                                            tidak ada
                                         @endif
                                     </td>
                                     <td>
