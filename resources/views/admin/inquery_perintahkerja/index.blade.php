@@ -93,6 +93,7 @@
                                 <th>Bag.Input</th>
                                 <th>Pelanggan</th>
                                 <th>Produk</th>
+                                <th>Type</th>
                                 <th style="width:20px">Opsi</th>
                             </tr>
                         </thead>
@@ -121,6 +122,9 @@
                                     </td>
                                     <td>
                                         {{ $surat->spk->typekaroseri->nama_karoseri ?? null }}
+                                    </td>
+                                    <td>
+                                        {{ $surat->spk->tipe ?? null }}
                                     </td>
                                     <td class="text-center">
                                         @if ($surat->status == 'posting')
