@@ -549,7 +549,7 @@
 
             if (detailId) {
                 $.ajax({
-                    url: "{{ url('admin/ban/') }}/" + detailId,
+                    url: "{{ url('admin/inquery_popembelian/deletedetailpo/') }}/" + detailId,
                     type: "POST",
                     data: {
                         _method: 'DELETE',

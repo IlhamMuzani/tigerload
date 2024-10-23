@@ -223,6 +223,18 @@ class InqueryPopembelianController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
+    public function deletedetailpo($id)
+    {
+        $item = Detailpopembelian::find($id);
+
+        if ($item) {
+            $item->delete();
+            return response()->json(['message' => 'Data deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Detail Faktur not found'], 404);
+        }
+    }
+
     public function destroy($id)
     {
         $pembelian = Popembelian::find($id);
