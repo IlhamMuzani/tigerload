@@ -339,9 +339,11 @@
                 style="font-size: 14px; text-align: left; word-wrap: break-word; white-space: normal;">
                 @if ($penjualans->perintah_kerja)
                     {{ $penjualans->perintah_kerja->spk->typekaroseri->nama_karoseri }}
+                    {{ $penjualans->perintah_kerja->spk->typekaroseri->merek->nama_merek }}
                     {{ $penjualans->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}
                 @else
                     {{ $penjualans->spk->typekaroseri->nama_karoseri }}
+                    {{ $penjualans->spk->typekaroseri->merek->nama_merek }}
                     {{ $penjualans->spk->typekaroseri->merek->tipe->nama_tipe }}
                 @endif
             </td>
