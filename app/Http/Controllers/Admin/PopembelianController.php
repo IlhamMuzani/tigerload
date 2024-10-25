@@ -26,7 +26,7 @@ class PopembelianController extends Controller
             $suppliers = Supplier::all();
             $barangs = Barang::all();
             $satuans = Satuan::all();
-            return view('admin.popembelian.index', compact('satuans','poPembelians', 'suppliers', 'barangs'));
+            return view('admin.popembelian.index', compact('satuans', 'poPembelians', 'suppliers', 'barangs'));
         } else {
             // tidak memiliki akses
             return back()->with('error', array('Anda tidak memiliki akses'));
@@ -251,19 +251,22 @@ class PopembelianController extends Controller
     public function cetakpdf($id)
     {
         if (auth()->check() && auth()->user()->menu['po pembelian']) {
-
             $pembelians = Popembelian::find($id);
             $parts = Detailpopembelian::where('popembelian_id', $pembelians->id)->get();
+            $supplier = Supplier::where('id', $pembelians->supplier_id)->first();
+
+            // Ubah tanggal pembelian menjadi objek Carbon dan format
+            $tanggalPembelian = Carbon::parse($pembelians->tanggal)->format('Y-m-d');
+            $namaSupplier = str_replace(' ', '_', $supplier->nama_supp);
+            $namaFile = "{$namaSupplier}-{$tanggalPembelian}.pdf";
 
             // Load the view and set the paper size to portrait letter
-            $pembelianss = Popembelian::where('id', $id)->first();
-            $pdf = PDF::loadView('admin.popembelian.cetak_pdf', compact('parts', 'pembelians', 'pembelianss'));
-            $pdf->setPaper('letter', 'portrait'); // Set the paper size to portrait letter
+            $pdf = PDF::loadView('admin.popembelian.cetak_pdf', compact('parts', 'pembelians'));
+            $pdf->setPaper('letter', 'portrait');
 
-            return $pdf->stream('Faktur_PO_Pembelian.pdf');
+            return $pdf->stream($namaFile);
         } else {
-            // tidak memiliki akses
-            return back()->with('error', array('Anda tidak memiliki akses'));
+            return back()->with('error', 'Anda tidak memiliki akses');
         }
     }
 }
