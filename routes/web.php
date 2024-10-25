@@ -377,5 +377,7 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::post('add_pembelian', [\App\Http\Controllers\Admin\PembelianpoController::class, 'add_pembelian']);
 
     Route::delete('inquery_popembelian/deletedetailpo/{id}', [\App\Http\Controllers\Admin\InqueryPopembelianController::class, 'deletedetailpo']);
+    Route::delete('inquery_penjualan/deletedetails/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'deletedetails']);
+
 
 });

@@ -287,7 +287,17 @@ class InqueryPenjualanController extends Controller
         return back()->with('success', 'Berhasil');
     }
 
+    public function deletedetails($id)
+    {
+        $item = Detail_penjualan::find($id);
 
+        if ($item) {
+            $item->delete();
+            return response()->json(['message' => 'Data deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Detail Faktur not found'], 404);
+        }
+    }
 
     public function hapuspenjualan($id)
     {
