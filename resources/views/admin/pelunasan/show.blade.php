@@ -324,7 +324,7 @@
         <tr>
             <td class="td" style="text-align: center; padding: 5px; font-size: 13px;">No.</td>
             <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">F. Penjualan</td>
-            <td class="td" style="text-align: center; paddin 5px; font-size: 13px;">Nama Produk</td>
+            <td class="td" style="text-align: left; paddin 5px; font-size: 13px;">Nama Produk</td>
             <td class="td" style="text-align: right; font-size: 13px;">Total Penjualan</td>
             <td class="td" style="text-align: right; font-size: 13px;">Sub Total</td>
         </tr>
@@ -342,7 +342,7 @@
             <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                 {{ $pelunasans->penjualan->kode_penjualan }}
             </td>
-            <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+            <td class="info-text info-left" style="font-size: 13px; text-align: left;">
                 @if ($pelunasans->penjualan->perintah_kerja)
                     {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->nama_karoseri }}
                     {{ $pelunasans->penjualan->perintah_kerja->spk->typekaroseri->merek->tipe->nama_tipe }}
@@ -367,7 +367,7 @@
                 @endphp
                 <td class="info-text info-left" style="font-size: 13px; text-align: center;">
                     {{ $item->kode_types }} </td>
-                <td class="info-text info-left" style="font-size: 13px; text-align: center;">
+                <td class="info-text info-left" style="font-size: 13px; text-align: left;">
                     {{ $item->nama_karoseri }}
                 </td>
                 <td class="td" style="text-align: right;  font-size: 13px;">

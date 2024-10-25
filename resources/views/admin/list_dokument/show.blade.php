@@ -286,16 +286,57 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_depan) }}"
-                        alt="{{ $inquery->gambar_depan }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_depan == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_depan, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon" height="180"
+                                width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_depan) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_depan) }}"
+                                alt="{{ $inquery->gambar_depan }}" style="width: 100%; height: auto; max-width: 100%;"
+                                alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
+
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_belakang) }}"
-                        alt="{{ $inquery->gambar_belakang }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_belakang == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_belakang, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon" height="180"
+                                width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_belakang) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_belakang) }}"
+                                alt="{{ $inquery->gambar_belakang }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -319,16 +360,56 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_kanan) }}"
-                        alt="{{ $inquery->gambar_kanan }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_kanan == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_kanan, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_kanan) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_kanan) }}"
+                                alt="{{ $inquery->gambar_kanan }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_kiri) }}"
-                        alt="{{ $inquery->gambar_kiri }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_kiri == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_kiri, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_kiri) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_kiri) }}"
+                                alt="{{ $inquery->gambar_kiri }}" style="width: 100%; height: auto; max-width: 100%;"
+                                alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -352,16 +433,58 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkanan) }}"
-                        alt="{{ $inquery->gambardepan_serongkanan }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambardepan_serongkanan == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambardepan_serongkanan, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkanan) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkanan) }}"
+                                alt="{{ $inquery->gambardepan_serongkanan }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkiri) }}"
-                        alt="{{ $inquery->gambardepan_serongkiri }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambardepan_serongkiri == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambardepan_serongkiri, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkiri) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambardepan_serongkiri) }}"
+                                alt="{{ $inquery->gambardepan_serongkiri }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -385,16 +508,58 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkanan) }}"
-                        alt="{{ $inquery->gambarbelakang_serongkanan }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambarbelakang_serongkanan == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambarbelakang_serongkanan, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkanan) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkanan) }}"
+                                alt="{{ $inquery->gambarbelakang_serongkanan }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkekiri) }}"
-                        alt="{{ $inquery->gambarbelakang_serongkekiri }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambarbelakang_serongkiri == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambarbelakang_serongkiri, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkiri) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambarbelakang_serongkiri) }}"
+                                alt="{{ $inquery->gambarbelakang_serongkiri }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -418,16 +583,57 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_gesekannomesin) }}"
-                        alt="{{ $inquery->gambar_gesekannomesin }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambar_gesekannomesin == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_gesekannomesin, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_gesekannomesin) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_gesekannomesin) }}"
+                                alt="{{ $inquery->gambar_gesekannomesin }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_faktur) }}"
-                        alt="{{ $inquery->gambar_faktur }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_faktur == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_faktur, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_faktur) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_faktur) }}"
+                                alt="{{ $inquery->gambar_faktur }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -451,16 +657,57 @@
         <tr>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_serut) }}"
-                        alt="{{ $inquery->gambar_serut }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambar_serut == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_serut, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_serut) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_serut) }}"
+                                alt="{{ $inquery->gambar_serut }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
             <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambarberita_acara) }}"
-                        alt="{{ $inquery->gambarberita_acara }}" style="width: 100%; height: auto; max-width: 100%;"
-                        alt="Logo Tigerload">
+                    @if ($inquery->gambarberita_acara == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambarberita_acara, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambarberita_acara) }}"
+                                target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambarberita_acara) }}"
+                                alt="{{ $inquery->gambarberita_acara }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
@@ -470,11 +717,31 @@
     <div style="font-size: 15px;">Gambar Rancang Bangun</div>
     <table width="100%">
         <tr>
-            <td style="width: 100%; text-align: center;">
+            <td style="width: 50%; text-align: center;">
                 <div style="width: 100%;">
-                    <img src="{{ asset('storage/uploads/' . $inquery->gambar_rancangbangun) }}"
-                        alt="{{ $inquery->gambar_rancangbangun }}"
-                        style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                    @if ($inquery->gambar_rancangbangun == null)
+                        <img class="mt-3" src="{{ asset('storage/uploads/gambaricon/imagenoimage.jpg') }}"
+                            alt="tigerload" height="180" width="200">
+                    @else
+                        @php
+                            // Mendapatkan ekstensi file
+                            $extension = pathinfo($inquery->gambar_rancangbangun, PATHINFO_EXTENSION);
+                        @endphp
+
+                        @if (strtolower($extension) === 'pdf')
+                            <!-- Jika file adalah PDF, tampilkan ikon PDF atau pesan -->
+                            <img src="{{ asset('storage/uploads/gambaricon/pdf.png') }}" alt="PDF Icon"
+                                height="180" width="200">
+                            <p>File PDF tidak dapat ditampilkan sebagai gambar.</p>
+                            <a href="{{ asset('storage/uploads/' . $inquery->gambar_rancangbangun) }}" target="_blank">Unduh
+                                PDF</a>
+                        @else
+                            <!-- Jika file adalah gambar, tampilkan gambar -->
+                            <img src="{{ asset('storage/uploads/' . $inquery->gambar_rancangbangun) }}"
+                                alt="{{ $inquery->gambar_rancangbangun }}"
+                                style="width: 100%; height: auto; max-width: 100%;" alt="Logo Tigerload">
+                        @endif
+                    @endif
                 </div>
             </td>
         </tr>
