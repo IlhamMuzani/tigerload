@@ -91,6 +91,7 @@
                                 <th>Merek</th>
                                 <th>Type Unit</th>
                                 <th class="text-center">Qr Code</th>
+                                <th class="text-right">Harga</th>
                                 <th class="text-center" width="50">Opsi</th>
                             </tr>
                         </thead>
@@ -119,6 +120,9 @@
                                         <div style="display: inline-block;">
                                             {!! DNS2D::getBarcodeHTML("$typekaroseri->qrcode_karoseri", 'QRCODE', 1, 1) !!}
                                         </div>
+                                    </td>
+                                    <td style="text-align: end">
+                                        {{ number_format($typekaroseri->harga, 0, ',', '.') }}
                                     </td>
                                     <td class="text-center">
                                         <a href="{{ url('admin/typekaroseri/' . $typekaroseri->id . '/edit') }}"
