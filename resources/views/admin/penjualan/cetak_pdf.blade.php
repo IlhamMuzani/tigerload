@@ -534,7 +534,7 @@
                         @if ($penjualans->depositpemesanan)
                             {{ number_format($original_price + $totalSubtotalppn + $tax_amount22 - $totalDP, 2, ',', '.') }}
                         @else
-                            {{ number_format($original_price + $totalSubtotalppn + $tax_amount22 - 0, 2, ',', '.') }}
+                            {{ number_format($original_price + $totalSubtotalppn + $tax_amount22 - $totalDP, 2, ',', '.') }}
                         @endif
                 </td>
             </tr>
