@@ -391,7 +391,7 @@
             </td>
             <td>Uang Muka 50% dibayar saat pemesanan</td>
         </tr>
-        <tr>
+        {{-- <tr>
             <td>
                 <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"
                     width="8" height="8" alt="Logo Tigerload">
@@ -403,7 +403,7 @@
                 </div>
             </td>
             <td>+/- 30 Hari</td>
-        </tr>
+        </tr> --}}
         <tr>
             <td>
                 <img style="margin-top: 5px" src="{{ asset('storage/uploads/gambar_logo/arrows.png') }}"

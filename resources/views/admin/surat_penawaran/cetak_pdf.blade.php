@@ -438,7 +438,7 @@
                     </td>
                     <td>Uang Muka 50% dibayar saat pemesanan</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <td>
                         <img style="margin-top: 5px"
                             src="{{ public_path('storage/uploads/gambar_logo/arrows.png') }}" width="8"
@@ -451,7 +451,7 @@
                         </div>
                     </td>
                     <td>+/- 30 Hari</td>
-                </tr>
+                </tr> --}}
                 <tr>
                     <td>
                         <img style="margin-top: 5px"
