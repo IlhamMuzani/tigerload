@@ -72,6 +72,7 @@
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
                                 <th>Kode Cetak</th>
+                                <th>Nama Pelanggan</th>
                                 <th>Kode Project</th>
                                 <th>Jenis Karoseri</th>
                                 <th>Tahun Pembuatan</th>
@@ -89,6 +90,13 @@
                                             value="{{ $project->id }}">
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $project->kode_project }}</td>
+                                    <td>
+                                        @if ($project->perintah_kerja)
+                                            {{ $project->perintah_kerja->spk->pelanggan->nama_pelanggan }}
+                                        @else
+                                            tidak ada
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($project->perintah_kerja)
                                             {{ $project->perintah_kerja->kode_perintah }}
