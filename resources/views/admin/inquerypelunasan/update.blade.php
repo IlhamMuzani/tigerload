@@ -249,9 +249,10 @@
                                             <td>{{ $penjualan->tanggal }}</td>
                                             <td>Rp
                                                 @if ($penjualan->perintah_kerja)
-                                                    @if ($penjualan->perintah_kerja->depositpemesanan->first())
-                                                        {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }}
+                                                    @if ($penjualan->perintah_kerja)
+                                                        {{ number_format($penjualan->perintah_kerja->depositpemesanan->sum('harga'), 0, ',', '.') }}
                                                     @else
+                                                        0
                                                     @endif
                                                 @else
                                                     0
@@ -279,10 +280,10 @@
                                                     '{{ $penjualan->tanggal }}',
                                                     '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}@else {{ number_format($penjualan->spk->harga, 0, ',', '.') }} @endif',
                                                     '@if ($penjualan->perintah_kerja) {{ number_format($penjualan->perintah_kerja->spk->harga, 0, ',', '.') }}@else{{ number_format($penjualan->spk->harga, 0, ',', '.') }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->depositpemesanan->first()->harga, 0, ',', '.') }} @endif
+                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan)  {{ number_format($penjualan->perintah_kerja->depositpemesanan->sum('harga'), 0, ',', '.') }} @endif
 @else
 {{ 0 }} @endif',
-                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan->first())  {{ number_format($penjualan->perintah_kerja->spk->harga - $penjualan->perintah_kerja->depositpemesanan->first()->harga + $penjualan->detail_penjualan->sum('total'), 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
+                                                    '@if ($penjualan->perintah_kerja) @if ($penjualan->perintah_kerja->depositpemesanan)  {{ number_format($penjualan->perintah_kerja->spk->harga - $penjualan->perintah_kerja->depositpemesanan->sum('harga') + $penjualan->detail_penjualan->sum('total'), 0, ',', '.') }} @endif @else{{ number_format($penjualan->perintah_kerja->spk->harga + $penjualan->detail_penjualan->where('penjualan_id', $penjualan->id)->sum('harga'), 0, ',', '.') }} @endif',
                                                     '@if ($penjualan->detail_penjualan) {{ number_format($penjualan->detail_penjualan->sum('total'), 0, ',', '.') }}@else {{ 0 }} @endif',
                                                     )">
                                                     <i class="fas fa-plus"></i>
