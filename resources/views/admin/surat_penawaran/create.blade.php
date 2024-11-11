@@ -601,7 +601,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive scrollbar m-2">
-                        <table id="example2" class="table table-bordered table-striped">
+                        <table id="datatables66" class="table table-bordered table-striped">
                             <thead class="bg-200 text-900">
                                 <tr>
                                     <th class="text-center">No</th>
