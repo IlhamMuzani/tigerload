@@ -16,7 +16,7 @@ class KaryawanController extends Controller
     public function index()
     {
         if (auth()->check() && auth()->user()->menu['karyawan']) {
-            // $karyawans = Karyawan::all();
+            $karyawans = Karyawan::all();
             return view('admin.karyawan.index', compact('karyawans'));
         } else {
             // tidak memiliki akses
