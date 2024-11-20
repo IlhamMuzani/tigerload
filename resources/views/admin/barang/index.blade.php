@@ -41,7 +41,7 @@
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <h5>
-                        <i class="icon fas fa-check"></i> Success!
+                        <i class="icon fas fa-check"></i> Berhasil!
                     </h5>
                     {{ session('success') }}
                 </div>
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                     </form>
-                    <table id="datatables66" class="table table-bordered table-striped table-hover" style="font-size: 13px">
+                    <table class="table table-bordered table-striped table-hover" style="font-size: 13px">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">No</th>
@@ -100,14 +100,17 @@
                                 <th>Stok</th>
                                 {{-- <th>Harga</th> --}}
                                 <th class="text-center">Qr Code</th>
-                                <th class="text-center" width="120">Opsi</th>
+                                <th class="text-center" width="140">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($barangs as $index => $barang)
                                 <tr data-toggle="collapse" data-target="#barang-{{ $index }}"
-                                    class="accordion-toggle" style="background: rgb(240, 242, 246)">
-                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    class="accordion-toggle{{ $loop->iteration % 2 == 0 ? 'bg-light' : '' }}"
+                                    style="background: rgb(240, 242, 246)">
+                                    <td class="text-center">
+                                        {{ ($barangs->currentPage() - 1) * $barangs->perPage() + $loop->iteration }}
+                                    </td>
                                     <td>{{ $barang->kode_barang }}</td>
                                     <td>{{ $barang->nama_barang }}</td>
                                     <td>{{ $barang->detail_barang->where('status', 'posting')->sum('jumlah') }}</td>
@@ -216,14 +219,10 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
-                @if ($barangs->total() > 10)
-                    <div class="card-footer">
-                        <div class="pagination float-right">
-                            {{ $barangs->appends(Request::all())->links('pagination::simple-bootstrap-4') }}
-                        </div>
+                    <div class="d-flex justify-content-end">
+                        {{ $barangs->links('pagination::bootstrap-4') }}
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </section>
