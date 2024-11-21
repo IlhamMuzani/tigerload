@@ -104,9 +104,9 @@
                                     <td>{{ $penjualan->kode_penjualan }}</td>
                                     <td>
                                         @if ($penjualan->perintah_kerja)
-                                            {{ $penjualan->perintah_kerja->spk->kode_spk }}
+                                            {{ $penjualan->perintah_kerja->kode_perintah }}
                                         @else
-                                            {{ $penjualan->spk->kode_spk }}
+                                            {{-- {{ $penjualan->spk->kode_spk }} --}}
                                         @endif
                                     </td>
                                     <td>
