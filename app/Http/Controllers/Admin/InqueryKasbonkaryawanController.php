@@ -142,6 +142,12 @@ class InqueryKasbonkaryawanController extends Controller
                     $voucher->delete();
                 }
             }
+
+            foreach ($existing_vouchers as $voucher) {
+                $voucher->update([
+                    'nominal_cicilan' => str_replace(',', '.', str_replace('.', '', $request->nominal_cicilan)),
+                ]);
+            }
         }
 
         $nominal_lebih = $request->nominal_lebih;
