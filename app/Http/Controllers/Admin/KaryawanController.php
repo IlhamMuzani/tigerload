@@ -233,6 +233,9 @@ class KaryawanController extends Controller
         $karyawan->tanggal_gabung = $request->tanggal_gabung;
         $karyawan->telp = $request->telp;
         $karyawan->alamat = $request->alamat;
+        $karyawan->alamat2 = $request->alamat2;
+        $karyawan->alamat3 = $request->alamat3;
+        $karyawan->gmail = $request->gmail;
         $karyawan->gambar = $namaGambar;
         $karyawan->tanggal_awal = Carbon::now('Asia/Jakarta');
         $karyawan->save();
