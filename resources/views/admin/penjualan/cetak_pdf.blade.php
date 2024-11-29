@@ -431,7 +431,12 @@
                 <td class="td" style="text-align: left; font-size:14px; padding: 2px;">{{ $item->jumlah }}</td>
                 <td class="td" style="font-size: 14px; padding-right: 20px; text-align: right;">
                     {{-- <span style="float: center;">Rp.</span> --}}
-                    <span style="float: right"> {{ number_format($item->harga, 2, ',', '.') }}
+                    <span style="float: right">
+                        @if ($penjualans->perintah_kerja->spk->surat_penawaran->kategori == 'PPN')
+                            {{ number_format(($item->harga * 100) / 111, 2, ',', '.') }}
+                        @else
+                            {{ number_format($item->harga, 2, ',', '.') }}
+                        @endif
                         {{-- </span> --}}
                 </td>
                 <td class="td" style="font-size: 14px; padding-right: 20px; text-align: right;">
@@ -441,7 +446,12 @@
                 </td>
                 <td class="td" style="font-size: 14px; text-align: right;">
                     {{-- <span style="float: center;">Rp.</span> --}}
-                    <span style="float: right"> {{ number_format($item->total, 2, ',', '.') }}
+                    <span style="float: right">
+                        @if ($penjualans->perintah_kerja->spk->surat_penawaran->kategori == 'PPN')
+                            {{ number_format(($item->total * 100) / 111, 2, ',', '.') }}
+                        @else
+                            {{ number_format($item->total, 2, ',', '.') }}
+                        @endif
                         {{-- </span> --}}
                 </td>
             </tr>
@@ -461,7 +471,7 @@
                     style="text-align: right; padding-right: 10px; font-weight: bold; font-size: 14px;">Total</td>
                 <td class="td" style="font-size: 14px; text-align: right; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($original_price + $totalSubtotalppn, 2, ',', '.') }}
+                        {{ number_format($original_price + ($totalSubtotalppn * 100) / 111, 2, ',', '.') }}
                 </td>
             </tr>
             <?php
@@ -481,7 +491,7 @@
                 <td class="td"
                     style="font-size: 14px; text-align: right; text-decoration: underline; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($tax_amount22, 2, ',', '.') }}
+                        {{ number_format($tax_amount22 - $totalSubtotalppn - ($totalSubtotalppn * 100) / 111, 2, ',', '.') }}
                 </td>
             </tr>
             <tr>
