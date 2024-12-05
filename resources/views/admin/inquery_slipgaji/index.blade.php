@@ -106,12 +106,13 @@
                                 <th>Bag.Input</th>
                                 <th>Nama</th>
                                 <th>Gaji Mingguan</th>
+                                <th>Opsi</th>
                                 <th class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($inquery as $slips)
-                                <tr class="dropdown"{{ $slips->id }}>
+                                <tr class="dropdown" data-id="{{ $slips->id }}" data-telp="{{ $slips->karyawan->telp }}">
                                     <td><input type="checkbox" name="selectedIds[]" class="checkbox_ids"
                                             value="{{ $slips->id }}">
                                     </td>
@@ -138,6 +139,14 @@
                                         @endif
                                     </td>
                                     <td class="text-right">{{ number_format($slips->gajinol_pelunasan, 2, ',', '.') }}</td>
+                                    <td>
+                                        {{-- <button class="waButton"  style="background-color: #25D366;">WhatsApp</button> --}}
+                                        <span></span><button class="waButton" type="submit"
+                                            style="background-color: #25D366;" class="btn btn-success btn-sm">
+                                            <img src="{{ asset('storage/uploads/gambar_logo/whatsapp.png') }}"
+                                                height="19" width="19" alt="whatsapp">
+                                        </button>
+                                    </td>
                                     <td class="text-center">
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($slips->status == 'posting')
@@ -292,4 +301,36 @@
             }
         }
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Ketika tombol WhatsApp diklik
+            $('.waButton').click(function() {
+                // Ambil nomor telepon yang sesuai dengan baris yang berisi tombol WhatsApp yang diklik
+                var nomorPenerima = $(this).closest('tr').data('telp');
+
+                // Jika nomor telepon tidak ditemukan, berikan peringatan
+                if (!nomorPenerima) {
+                    alert("Nomor telepon tidak tersedia untuk pengiriman pesan WhatsApp.");
+                    return; // Berhenti eksekusi fungsi
+                }
+
+                // Ambil ID dari atribut data pada baris yang berisi tombol WhatsApp yang diklik
+                var slipId = $(this).closest('tr').data('id');
+
+                // Pesan yang ingin Anda kirim
+                var pesan =
+                    'Ini adalah gaji yang Anda terima. Silakan lihat detailnya disini dengan cara login terlebih dahulu menggunakan akun anda di web, kemudian klik link ini: ' +
+                    'https://tigerload.id/admin/report_slipgajimingguan/' + slipId;
+
+                // Membuat URL dengan format URL Scheme WhatsApp
+                var url = 'https://api.whatsapp.com/send?phone=' + nomorPenerima + '&text=' +
+                    encodeURIComponent(pesan);
+
+                // Buka URL dalam tab atau jendela baru
+                window.open(url, '_blank');
+            });
+        });
+    </script>
+
 @endsection

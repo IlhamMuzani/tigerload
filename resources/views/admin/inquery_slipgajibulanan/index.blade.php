@@ -189,7 +189,7 @@
 
                 // Pesan yang ingin Anda kirim
                 var pesan = 'Ini adalah gaji yang Anda terima. Silakan lihat detailnya disini: ' +
-                    'https://javaline.id/admin/report_slipgajibulanan/' + slipId;
+                    'https://tigerload.id/admin/report_slipgajibulanan/' + slipId;
 
                 // Membuat URL dengan format URL Scheme WhatsApp
                 var url = 'https://api.whatsapp.com/send?phone=' + nomorPenerima + '&text=' +
@@ -362,4 +362,36 @@
             }
         }
     </script> --}}
+
+    <script>
+        $(document).ready(function() {
+            // Ketika tombol WhatsApp diklik
+            $('.waButton').click(function() {
+                // Ambil nomor telepon yang sesuai dengan baris yang berisi tombol WhatsApp yang diklik
+                var nomorPenerima = $(this).closest('tr').data('telp');
+
+                // Jika nomor telepon tidak ditemukan, berikan peringatan
+                if (!nomorPenerima) {
+                    alert("Nomor telepon tidak tersedia untuk pengiriman pesan WhatsApp.");
+                    return; // Berhenti eksekusi fungsi
+                }
+
+                // Ambil ID dari atribut data pada baris yang berisi tombol WhatsApp yang diklik
+                var slipId = $(this).closest('tr').data('id');
+
+                // Pesan yang ingin Anda kirim
+                var pesan =
+                    'Ini adalah gaji yang Anda terima. Silakan lihat detailnya disini dengan cara login terlebih dahulu menggunakan akun anda di web, kemudian klik link ini: ' +
+                    'https://tigerload.id/admin/report_slipgajibulanan/' + slipId;
+
+                // Membuat URL dengan format URL Scheme WhatsApp
+                var url = 'https://api.whatsapp.com/send?phone=' + nomorPenerima + '&text=' +
+                    encodeURIComponent(pesan);
+
+                // Buka URL dalam tab atau jendela baru
+                window.open(url, '_blank');
+            });
+        });
+    </script>
+
 @endsection

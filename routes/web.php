@@ -380,4 +380,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
     Route::delete('inquery_penjualan/deletedetails/{id}', [\App\Http\Controllers\Admin\InqueryPenjualanController::class, 'deletedetails']);
 
 
+    Route::get('inquery_perhitungangaji/export-gm/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajiController::class, 'export_gm']);
+    Route::get('inquery_perhitungangajibulanan/export-gm/{id}', [\App\Http\Controllers\Admin\InqueryPerhitungangajibulananController::class, 'export_gm']);
+
+    Route::resource('report_slipgajibulanan', \App\Http\Controllers\Admin\ReportgajibulananController::class);
+    Route::resource('report_slipgajimingguan', \App\Http\Controllers\Admin\ReportgajimingguanController::class);
+
+    Route::get('inquery_slipgajibulanan', [\App\Http\Controllers\Admin\InqueryslipgajibulananController::class, 'index']);
+    Route::get('inquery_printslipgajibulanan', [\App\Http\Controllers\Admin\InqueryslipgajibulananController::class, 'inquery_printslipgajibulanan']);
+
 });
