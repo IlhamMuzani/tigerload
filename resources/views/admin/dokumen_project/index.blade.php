@@ -72,7 +72,7 @@
                             <tr>
                                 <th> <input type="checkbox" name="" id="select_all_ids"></th>
                                 <th class="text-center">No</th>
-                                <th>Kode SPK</th>
+                                <th>Kode Dokumen</th>
                                 <th>Kode Karoseri</th>
                                 <th>Merek</th>
                                 <th>Model</th>

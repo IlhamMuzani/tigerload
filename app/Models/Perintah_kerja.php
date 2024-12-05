@@ -30,7 +30,6 @@ class Perintah_kerja extends Model
         'status_penjualan',
         'status_deposit',
         'status_dokumen',
-
         'tgl_tungguproduksi',
         'tgl_naikproduksi',
         'ft_pengerjaanlantai',

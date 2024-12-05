@@ -23,7 +23,7 @@ class ListdokumentController extends Controller
 
     public function create()
     {
-        $spks = Perintah_kerja::get();
+        $spks = Perintah_kerja::where('status_dokumen', null)->get();
         return view('admin/list_dokument.create', compact('spks'));
     }
 
@@ -203,6 +203,8 @@ class ListdokumentController extends Controller
         $encryptedId = Crypt::encryptString($dokumen_project->id);
         $dokumen_project->qrcode_dokumen = 'https://tigerload.id/dokumen_project/' . $encryptedId;
         $dokumen_project->save();
+
+        $spk = Perintah_kerja::where('id', $dokumen_project->perintah_kerja_id)->update(['status_dokumen' => 'aktif']);
 
         return redirect('admin/list_dokument')->with('success', 'Berhasil menambahkan dokumen_project');
     }
@@ -396,6 +398,9 @@ class ListdokumentController extends Controller
         $inquery = Dokumen_project::where('id', $id)->first();
         $pengambil = Dokumen_project::find($id);
 
+        $spk = Perintah_kerja::where('id', $pengambil->perintah_kerja_id)->update(['status_dokumen' => 'aktif']);
+
+
         return view('admin.list_dokument.show', compact('inquery'));
     }
 
@@ -441,5 +446,4 @@ class ListdokumentController extends Controller
         $kode_type = $data . $num;
         return $kode_type;
     }
-    
 }
