@@ -60,20 +60,20 @@ class TypekaroseriController extends Controller
                 'kategori_produk_id' => 'required',
                 'nama_karoseri' => 'required',
                 // 'type_kendaraan' => 'required',
-                'panjang' => 'required',
-                'lebar' => 'required',
-                'tinggi' => 'required',
-                'merek_id' => 'required',
+                // 'panjang' => 'required',
+                // 'lebar' => 'required',
+                // 'tinggi' => 'required',
+                // 'merek_id' => 'required',
                 'harga' => 'required',
             ],
             [
                 'kategori_produk_id.required' => 'Pilih Kategori',
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
                 // 'type_kendaraan.required' => 'Masukkan tipe kendaraan',
-                'panjang.required' => 'Masukkan panjang',
-                'lebar.required' => 'Masukkan lebar',
-                'tinggi.required' => 'Masukkan tinggi',
-                'merek_id.required' => 'Pilih merek',
+                // 'panjang.required' => 'Masukkan panjang',
+                // 'lebar.required' => 'Masukkan lebar',
+                // 'tinggi.required' => 'Masukkan tinggi',
+                // 'merek_id.required' => 'Pilih merek',
                 'harga.required' => 'Masukkan harga',
             ]
         );
@@ -198,19 +198,19 @@ class TypekaroseriController extends Controller
             [
                 'kategori_produk_id' => 'required',
                 'nama_karoseri' => 'required',
-                'panjang' => 'required',
-                'lebar' => 'required',
-                'tinggi' => 'required',
-                'merek_id' => 'required',
+                // 'panjang' => 'required',
+                // 'lebar' => 'required',
+                // 'tinggi' => 'required',
+                // 'merek_id' => 'required',
 
             ],
             [
                 'kategori_produk_id' => 'Pilih kategori',
                 'nama_karoseri.required' => 'Masukkan bentuk karoseri',
-                'panjang.required' => 'Masukkan panjang',
-                'lebar.required' => 'Masukkan lebar',
-                'tinggi.required' => 'Masukkan tinggi',
-                'merek_id.required' => 'Pilih merek',
+                // 'panjang.required' => 'Masukkan panjang',
+                // 'lebar.required' => 'Masukkan lebar',
+                // 'tinggi.required' => 'Masukkan tinggi',
+                // 'merek_id.required' => 'Pilih merek',
 
             ]
         );
