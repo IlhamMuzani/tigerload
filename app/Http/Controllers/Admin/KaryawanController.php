@@ -135,7 +135,7 @@ class KaryawanController extends Controller
             'deposit' => 0,
             'status' => 'null',
             'kode_karyawan' => $kode_karyawan,
-            'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode_karyawan,
+            'qrcode_karyawan' => 'https://tigerload.id/karyawan/' . $kode_karyawan,
             'tanggal' => Carbon::now('Asia/Jakarta'),
         ]);
 
