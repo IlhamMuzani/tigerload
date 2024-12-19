@@ -59,7 +59,6 @@ class KaryawanController extends Controller
                 'gender' => 'required',
                 'tanggal_lahir' => 'required',
                 'tanggal_gabung' => 'required',
-                // 'jabatan' => 'required',
                 'telp' => 'required',
                 'alamat' => 'required',
                 'gambar' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
@@ -73,7 +72,6 @@ class KaryawanController extends Controller
                 'gender.required' => 'Pilih gender',
                 'tanggal_lahir.required' => 'Masukkan tanggal lahir',
                 'tanggal_gabung.required' => 'Masukkan tanggal gabung',
-                // 'jabatan.required' => 'Pilih jabatan',
                 'telp.required' => 'Masukkan no telepon',
                 'alamat.required' => 'Masukkan alamat',
                 'gambar.image' => 'Gambar yang dimasukan salah!',
@@ -85,36 +83,61 @@ class KaryawanController extends Controller
             return back()->withInput()->with('error', $errors);
         }
 
-        if ($request->gambar) {
+        $namaGambar = '';
+        if ($request->hasFile('gambar')) {
             $gambar = str_replace(' ', '', $request->gambar->getClientOriginalName());
             $namaGambar = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $gambar;
             $request->gambar->storeAs('public/uploads/', $namaGambar);
-        } else {
-            $namaGambar = null;
         }
-        $kode = $this->kode();
 
-        Karyawan::create(array_merge(
-            $request->all(),
-            [
-                'gambar' => $namaGambar,
-                'tanggal_keluar' => '-',
-                'gaji' => 0,
-                'pembayaran' => 0,
-                'tabungan' => 0,
-                'kasbon' => 0,
-                'bayar_kasbon' => 0,
-                'deposit' => 0,
-                'bayar_kasbon' => 0,
-                'pembayaran' => 0,
-                'status' => 'null',
-                'kode_karyawan' => $this->kode(),
-                'qrcode_karyawan' => 'https://tigerload.id/karyawan/' . $kode,
-                // 'qrcode_karyawan' => 'http://192.168.1.46/tigerload/karyawan/' . $kode
-                'tanggal' => Carbon::now('Asia/Jakarta'),
+        $namaGambar2 = '';
+        if ($request->hasFile('ft_ktp')) {
+            $ft_ktp = str_replace(' ', '', $request->ft_ktp->getClientOriginalName());
+            $namaGambar2 = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $ft_ktp;
+            $request->ft_ktp->storeAs('public/uploads/', $namaGambar2);
+        }
 
-            ]
-        ));
+        $namaGambar3 = '';
+        if ($request->hasFile('ft_sim')) {
+            $ft_sim = str_replace(' ', '', $request->ft_sim->getClientOriginalName());
+            $namaGambar3 = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $ft_sim;
+            $request->ft_sim->storeAs('public/uploads/', $namaGambar3);
+        }
+
+        // Pemilihan kode karyawan berdasarkan departemen
+        $kode_karyawan = ($request->departemen_id == 2) ? $this->kodedriver() : $this->kode();
+
+        Karyawan::create([
+            'departemen_id' => $request->departemen_id,
+            'no_ktp' => $request->no_ktp,
+            'no_sim' => $request->no_sim,
+            'nama_lengkap' => $request->nama_lengkap,
+            'nama_kecil' => $request->nama_kecil,
+            'gender' => $request->gender,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'tanggal_gabung' => $request->tanggal_gabung,
+            'telp' => $request->telp,
+            'alamat' => $request->alamat,
+            'alamat2' => $request->alamat2,
+            'alamat3' => $request->alamat3,
+            'gmail' => $request->gmail,
+            'nama_bank' => $request->nama_bank,
+            'atas_nama' => $request->atas_nama,
+            'norek' => $request->norek,
+            'gambar' => $namaGambar,
+            'ft_ktp' => $namaGambar2,
+            'ft_sim' => $namaGambar3,
+            'gaji' => 0,
+            'pembayaran' => 0,
+            'tabungan' => 0,
+            'kasbon' => 0,
+            'bayar_kasbon' => 0,
+            'deposit' => 0,
+            'status' => 'null',
+            'kode_karyawan' => $kode_karyawan,
+            'qrcode_karyawan' => 'https://javaline.id/karyawan/' . $kode_karyawan,
+            'tanggal' => Carbon::now('Asia/Jakarta'),
+        ]);
 
         return redirect('admin/karyawan')->with('success', 'Berhasil menambahkan karyawan');
     }
@@ -223,6 +246,24 @@ class KaryawanController extends Controller
             $namaGambar = $karyawan->gambar;
         }
 
+        if ($request->ft_ktp) {
+            Storage::disk('local')->delete('public/uploads/' . $karyawan->ft_ktp);
+            $ft_ktp = str_replace(' ', '', $request->ft_ktp->getClientOriginalName());
+            $namaGambar2 = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $ft_ktp;
+            $request->ft_ktp->storeAs('public/uploads/', $namaGambar2);
+        } else {
+            $namaGambar2 = $karyawan->ft_ktp;
+        }
+
+        if ($request->ft_sim) {
+            Storage::disk('local')->delete('public/uploads/' . $karyawan->ft_sim);
+            $ft_sim = str_replace(' ', '', $request->ft_sim->getClientOriginalName());
+            $namaGambar3 = 'karyawan/' . date('mYdHs') . rand(1, 10) . '_' . $ft_sim;
+            $request->ft_sim->storeAs('public/uploads/', $namaGambar3);
+        } else {
+            $namaGambar3 = $karyawan->ft_sim;
+        }
+
         $karyawan->departemen_id = $request->departemen_id;
         $karyawan->no_ktp = $request->no_ktp;
         $karyawan->no_sim = $request->no_sim;
@@ -236,7 +277,12 @@ class KaryawanController extends Controller
         $karyawan->alamat2 = $request->alamat2;
         $karyawan->alamat3 = $request->alamat3;
         $karyawan->gmail = $request->gmail;
+        $karyawan->nama_bank = $request->nama_bank;
+        $karyawan->atas_nama = $request->atas_nama;
+        $karyawan->norek = $request->norek;
         $karyawan->gambar = $namaGambar;
+        $karyawan->ft_ktp = $namaGambar2;
+        $karyawan->ft_sim = $namaGambar3;
         $karyawan->tanggal_awal = Carbon::now('Asia/Jakarta');
         $karyawan->save();
 
