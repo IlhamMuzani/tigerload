@@ -511,7 +511,7 @@
                 <td class="td"
                     style="font-size: 14px; text-align: right; text-decoration: underline; font-weight: bold;">
                     <span style="float: right">
-                        {{ number_format($tax_amount22 - $totalSubtotalppn - ($totalSubtotalppn * 100) / 111, 2, ',', '.') }}
+                        {{ number_format($tax_amount22 + $totalSubtotalppn - ($totalSubtotalppn * 100) / 111, 2, ',', '.') }}
                 </td>
             </tr>
             <tr>
