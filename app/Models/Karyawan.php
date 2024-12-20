@@ -42,6 +42,8 @@ class Karyawan extends Model
         'deposit',
         'bayar_kasbon',
         'bpjs',
+        'ft_ktp',
+        'ft_sim',
         'potongan_ke',
         'potongan_backup',
         'kasbon_backup',

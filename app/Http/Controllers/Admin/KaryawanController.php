@@ -104,9 +104,7 @@ class KaryawanController extends Controller
             $request->ft_sim->storeAs('public/uploads/', $namaGambar3);
         }
 
-        // Pemilihan kode karyawan berdasarkan departemen
-        $kode_karyawan = ($request->departemen_id == 2) ? $this->kodedriver() : $this->kode();
-
+        $kode = $this->kode();
         Karyawan::create([
             'departemen_id' => $request->departemen_id,
             'no_ktp' => $request->no_ktp,
@@ -134,8 +132,8 @@ class KaryawanController extends Controller
             'bayar_kasbon' => 0,
             'deposit' => 0,
             'status' => 'null',
-            'kode_karyawan' => $kode_karyawan,
-            'qrcode_karyawan' => 'https://tigerload.id/karyawan/' . $kode_karyawan,
+            'kode_karyawan' => $kode,
+            'qrcode_karyawan' => 'https://tigerload.id/karyawan/' . $kode,
             'tanggal' => Carbon::now('Asia/Jakarta'),
         ]);
 
