@@ -61,6 +61,8 @@
                                 <th>Nama</th>
                                 <th>Telepon</th>
                                 <th>Departemen</th>
+                                <th>Nama Bank</th>
+                                <th>Nomor Rek</th>
                                 <th class="text-center">Qr Code</th>
                                 <th class="text-center" width="100">Opsi</th>
                             </tr>
@@ -73,6 +75,8 @@
                                     <td>{{ $karyawan->nama_lengkap }}</td>
                                     <td>{{ $karyawan->telp }}</td>
                                     <td>{{ $karyawan->departemen->nama }}</td>
+                                    <td>{{ $karyawan->nama_bank }}</td>
+                                    <td>{{ $karyawan->norek }}</td>
                                     <td data-toggle="modal" data-target="#modal-qrcode-{{ $karyawan->id }}"
                                         style="text-align: center;">
                                         <div style="display: inline-block;">
