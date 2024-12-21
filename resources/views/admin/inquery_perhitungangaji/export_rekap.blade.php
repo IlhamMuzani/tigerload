@@ -5,7 +5,7 @@
 
             <th>{{ str_replace('-', '', $perhitungan_gaji->tanggal_awal) }}</th>
 
-            <th>1390025262829</th>
+            <th>1390030242188</th>
 
             <th>{{ $perhitungan_gaji->detail_gajikaryawan->count() }}</th>
 
