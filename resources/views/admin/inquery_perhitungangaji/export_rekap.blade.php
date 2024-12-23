@@ -161,7 +161,9 @@
                 <td>IDR</td>
                 <td>{{ $detail->gaji_bersih }}</td>
                 <td></td>
-                <td></td>
+                <td>
+                    {{ $detail->karyawan->nama_bank === 'BRI' ? 'BRINIDJA' : ($detail->karyawan->nama_bank === 'BNI' ? 'BNINIDJA' : ($detail->karyawan->nama_bank === 'BCA' ? 'CENAIDJA' : '')) }}
+                </td>
                 <td>{{ $detail->karyawan->nama_bank === 'MANDIRI' ? 'IBU' : 'LBU' }}</td>
                 <td></td>
                 <td>{{ $detail->karyawan->nama_bank ?? null }}</td>
