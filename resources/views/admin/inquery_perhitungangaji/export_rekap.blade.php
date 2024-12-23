@@ -175,7 +175,7 @@
                 <td>
                 </td>
                 <td>{{ $detail->karyawan->nama_bank === 'MANDIRI' ? '' : 'BEN' }}</td>
-                <td>1</td>
+                {{-- <td>1</td> --}}
                 <td></td>
                 <td></td>
                 <td></td>
