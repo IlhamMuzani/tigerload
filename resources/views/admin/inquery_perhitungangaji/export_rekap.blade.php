@@ -154,7 +154,7 @@
             <tr>
 
                 <td>{{ $detail->karyawan->norek ?? null }}</td>
-                <td>{{ $detail->karyawan->nama_lengkap ?? null }}</td>
+                <td>{{ $detail->karyawan->atas_nama ?? null }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
