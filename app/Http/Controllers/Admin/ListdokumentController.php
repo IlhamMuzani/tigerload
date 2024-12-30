@@ -178,7 +178,7 @@ class ListdokumentController extends Controller
             [
                 'user_id' => auth()->user()->id,
                 'perintah_kerja_id' > $request->perintah_kerja_id,
-                'pelanggan_id' > $request->perintah_kerja_id,
+                'pelanggan_id' => $request->pelanggan_id,
                 'typekaroseri_id' > $request->typekaroseri_id,
                 'gambar_rancangbangun' => $namaGambar,
                 'gambar_gesekannomesin' => $namaGambar2,
@@ -369,7 +369,7 @@ class ListdokumentController extends Controller
 
         // Update the main transaction
         $dokumen_project->update([
-            'pelanggan_id' => $request->perintah_kerja_id,
+            'pelanggan_id' => $request->pelanggan_id,
             'typekaroseri_id' => $request->typekaroseri_id,
             'gambar_rancangbangun' => $namaGambar,
             'gambar_gesekannomesin' => $namaGambar2,
