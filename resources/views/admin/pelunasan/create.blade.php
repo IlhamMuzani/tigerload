@@ -234,6 +234,7 @@
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th>Kode Penjualan</th>
+                                        <th>Kode SPK</th>
                                         <th>Nama Pelanggan</th>
                                         <th>Tanggal</th>
                                         <th>DP</th>
@@ -247,6 +248,7 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td>{{ $penjualan->kode_penjualan }}</td>
+                                            <td>{{ $penjualan->perintah_kerja->kode_perintah }}</td>
                                             <td>
                                                 @if ($penjualan->perintah_kerja)
                                                     {{ $penjualan->perintah_kerja->spk->pelanggan->nama_pelanggan }}
@@ -504,7 +506,7 @@
             document.getElementById('nominal').addEventListener('input', hitungSelisih);
             window.addEventListener('load', hitungSelisih);
         }
-        
+
 
         function toggleLabels() {
             var kategori = document.getElementById('kategori');

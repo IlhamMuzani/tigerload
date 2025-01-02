@@ -446,7 +446,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['penjualan'])
+        @if (auth()->check() && auth()->user()->menu['pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/dokumen_project') }}"
                     class="nav-link {{ request()->is('admin/dokumen_project*') ? 'active' : '' }}">
@@ -482,7 +482,7 @@
                 </a>
             </li>
         @endif
-        @if (auth()->check() && auth()->user()->menu['pelunasan'])
+        @if (auth()->check() && auth()->user()->menu['pembelian'])
             <li class="nav-item">
                 <a href="{{ url('admin/project') }}"
                     class="nav-link {{ request()->is('admin/project*') ? 'active' : '' }}">
