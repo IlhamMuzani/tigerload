@@ -504,6 +504,7 @@
             document.getElementById('nominal').addEventListener('input', hitungSelisih);
             window.addEventListener('load', hitungSelisih);
         }
+        
 
         function toggleLabels() {
             var kategori = document.getElementById('kategori');
